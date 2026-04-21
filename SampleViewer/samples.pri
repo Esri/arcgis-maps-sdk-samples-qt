@@ -19,17 +19,17 @@
 
 HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.h" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.h" \
-    "$$SAMPLEPATHCPP/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.h" \
-    "$$SAMPLEPATHCPP/Analysis/LineOfSightLocation/LineOfSightLocation.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticResultListModel.h" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedCamera/ViewshedCamera.h" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedGeoElement/ViewshedGeoElement.h" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedLocation/ViewshedLocation.h" \
     "$$SAMPLEPATHCPP/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.h" \
     "$$SAMPLEPATHCPP/CloudAndPortal/TokenAuthentication/TokenAuthentication.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.h" \
@@ -46,30 +46,29 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.h" \
-    "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap/SketchOnMap.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
-    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.h" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h" \
-    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h" \
+    "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.h" \
+    "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
+    "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.h" \
-    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h" \
-    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.h" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.h" \
@@ -82,9 +81,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.h" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.h" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.h" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.h" \
+    "$$SAMPLEPATHCPP/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.h" \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.h" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.h" \
@@ -100,10 +97,12 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.h" \
     "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.h" \
+    "$$SAMPLEPATHCPP/Layers/AddBuildingSceneLayer/AddBuildingSceneLayer.h" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
-    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.h" \
+    "$$SAMPLEPATHCPP/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.h" \
+    "$$SAMPLEPATHCPP/Layers/ApplyMapAlgebra/ApplyMapAlgebra.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h" \
@@ -113,6 +112,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers/BrowseWfsLayers.h" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.h" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.h" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.h" \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.h" \
@@ -129,6 +129,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.h" \
+    "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.h" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.h" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.h" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.h" \
@@ -187,7 +188,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.h" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.h" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.h" \
-    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/IndoorsLocationDataSourceCreator.h" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.h" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.h" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.h" \
@@ -212,9 +212,11 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.h" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.h" \
+    "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.h" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h" \
-    "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.h" \
+    "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.h" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.h" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.h" \
@@ -238,6 +240,9 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Search/OfflineGeocode/OfflineGeocode.h" \
     "$$SAMPLEPATHCPP/Search/ReverseGeocodeOnline/ReverseGeocodeOnline.h" \
     "$$SAMPLEPATHCPP/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.h" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/QueryDynamicEntities.h" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/FlightInfoListModel.h" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/CustomDynamicEntityDataSource.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ConfigureSubnetworkTrace/ConfigureSubnetworkTrace.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/CreateLoadReport/CreateLoadReport.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.h" \
@@ -248,17 +253,17 @@ HEADERS += \
 
 SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.cpp" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.cpp" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/LineOfSightLocation/LineOfSightLocation.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticResultListModel.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedCamera/ViewshedCamera.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedGeoElement/ViewshedGeoElement.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedLocation/ViewshedLocation.cpp" \
     "$$SAMPLEPATHCPP/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.cpp" \
     "$$SAMPLEPATHCPP/CloudAndPortal/TokenAuthentication/TokenAuthentication.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.cpp" \
@@ -275,30 +280,29 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.cpp" \
-    "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap/SketchOnMap.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
-    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.cpp" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.cpp" \
-    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.cpp" \
+    "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.cpp" \
+    "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
+    "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.cpp" \
-    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.cpp" \
-    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.cpp" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.cpp" \
@@ -311,9 +315,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.cpp" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.cpp" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.cpp" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.cpp" \
+    "$$SAMPLEPATHCPP/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.cpp" \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.cpp" \
@@ -329,10 +331,12 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.cpp" \
     "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddBuildingSceneLayer/AddBuildingSceneLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
-    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ApplyMapAlgebra/ApplyMapAlgebra.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.cpp" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.cpp" \
@@ -342,6 +346,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers/BrowseWfsLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.cpp" \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.cpp" \
@@ -358,6 +363,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.cpp" \
+    "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.cpp" \
@@ -416,7 +422,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.cpp" \
-    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/IndoorsLocationDataSourceCreator.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.cpp" \
@@ -441,9 +446,11 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.cpp" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.cpp" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.cpp" \
-    "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.cpp" \
@@ -467,6 +474,9 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Search/OfflineGeocode/OfflineGeocode.cpp" \
     "$$SAMPLEPATHCPP/Search/ReverseGeocodeOnline/ReverseGeocodeOnline.cpp" \
     "$$SAMPLEPATHCPP/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.cpp" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/QueryDynamicEntities.cpp" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/FlightInfoListModel.cpp" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/CustomDynamicEntityDataSource.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ConfigureSubnetworkTrace/ConfigureSubnetworkTrace.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/CreateLoadReport/CreateLoadReport.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.cpp" \
@@ -477,16 +487,16 @@ SOURCES += \
 
 RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.qrc" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qrc" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/LineOfSightLocation/LineOfSightLocation.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedCamera/ViewshedCamera.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedGeoElement/ViewshedGeoElement.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedLocation/ViewshedLocation.qrc" \
     "$$SAMPLEPATHCPP/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.qrc" \
     "$$SAMPLEPATHCPP/CloudAndPortal/TokenAuthentication/TokenAuthentication.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.qrc" \
@@ -502,28 +512,27 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.qrc" \
-    "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap/SketchOnMap.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
-    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.qrc" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.qrc" \
-    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.qrc" \
+    "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.qrc" \
+    "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.qrc" \
+    "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.qrc" \
-    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
-    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.qrc" \
@@ -533,9 +542,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
     "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.qrc" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.qrc" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.qrc" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.qrc" \
+    "$$SAMPLEPATHCPP/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.qrc" \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.qrc" \
@@ -550,10 +557,12 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
+    "$$SAMPLEPATHCPP/Layers/AddBuildingSceneLayer/AddBuildingSceneLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
-    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
+    "$$SAMPLEPATHCPP/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ApplyMapAlgebra/ApplyMapAlgebra.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.qrc" \
@@ -563,6 +572,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers/BrowseWfsLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.qrc" \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.qrc" \
@@ -579,6 +589,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.qrc" \
+    "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.qrc" \
@@ -657,9 +668,11 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.qrc" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.qrc" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.qrc" \
-    "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.qrc" \
@@ -683,6 +696,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Search/OfflineGeocode/OfflineGeocode.qrc" \
     "$$SAMPLEPATHCPP/Search/ReverseGeocodeOnline/ReverseGeocodeOnline.qrc" \
     "$$SAMPLEPATHCPP/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.qrc" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/QueryDynamicEntities.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ConfigureSubnetworkTrace/ConfigureSubnetworkTrace.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/CreateLoadReport/CreateLoadReport.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.qrc" \

@@ -43,7 +43,7 @@ Item {
             margins: -5
             fill: controlColumn
         }
-        color: "lightgray"
+        color: palette.base
         radius: 5
         border {
             color: "darkgray"
@@ -60,14 +60,14 @@ Item {
         }
         spacing: 5
 
-        Text {
-            text: "Buffer size (miles):"
+        Label {
+            text: qsTr("Buffer size (miles):")
         }
 
         TextField {
             id: bufferSizeText
             validator: IntValidator { bottom: 1; top: 10000 }
-            text: "1000"
+            text: qsTr("1000")
             selectByMouse: true
             onTextChanged: model.bufferSize = Number(text);
         }
@@ -83,8 +83,8 @@ Item {
                 opacity: 0.5
             }
 
-            Text {
-                text: "Planar Buffer"
+            Label {
+                text: qsTr("Planar Buffer")
             }
         }
 
@@ -99,14 +99,14 @@ Item {
                 opacity: 0.5
             }
 
-            Text {
-                text: "Geodesic Buffer"
+            Label {
+                text: qsTr("Geodesic Buffer")
             }
         }
 
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Clear"
+            text: qsTr("Clear")
             onClicked: {
                 model.clear();
             }

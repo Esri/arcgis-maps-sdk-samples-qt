@@ -36,40 +36,29 @@
 using namespace Esri::ArcGISRuntime;
 
 // helper method to get cross platform data path
-namespace {
-QString defaultDataPath()
+namespace
 {
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
-}
+    return dataPath;
+  }
+} // namespace
 
 // sample MMPK location
-const QString sampleMmpk {"/ArcGIS/Runtime/Data/mmpk/LothianRiversAnno.mmpk"};
+const QString sampleMmpk{"/ArcGIS/Runtime/Data/mmpk/LothianRiversAnno.mmpk"};
 
-HonorMobileMapPackageExpiration::HonorMobileMapPackageExpiration(QObject* parent /* = nullptr */):
+HonorMobileMapPackageExpiration::HonorMobileMapPackageExpiration(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_dataPath(defaultDataPath() + sampleMmpk)
 {
-  // connect to the Mobile Map Package instance to know when errors occur
-  connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
-          [](const Error& e)
-  {
-    if (e.isEmpty())
-    {
-      return;
-    }
-
-    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
-  });
-
 }
 
 HonorMobileMapPackageExpiration::~HonorMobileMapPackageExpiration() = default;
@@ -90,7 +79,9 @@ MapQuickView* HonorMobileMapPackageExpiration::mapView() const
 void HonorMobileMapPackageExpiration::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
 
@@ -103,6 +94,17 @@ void HonorMobileMapPackageExpiration::createMapPackage(const QString& path)
 {
   // instatiate a mobile map package
   m_mobileMapPackage = new MobileMapPackage(path, this);
+
+  // connect to the Mobile Map Package errorOccurred to know when errors occur
+  connect(m_mobileMapPackage, &MobileMapPackage::errorOccurred, [](const Error& e)
+  {
+    if (e.isEmpty())
+    {
+      return;
+    }
+
+    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
+  });
 
   // wait for the mobile map package to load
   connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](const Error& error)
@@ -132,7 +134,9 @@ void HonorMobileMapPackageExpiration::createMapPackage(const QString& path)
 
         // return if access after expiration is not allowed
         if (expiration.type() == ExpirationType::PreventExpiredAccess)
+        {
           return;
+        }
       }
     }
 

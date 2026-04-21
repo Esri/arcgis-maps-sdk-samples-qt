@@ -35,54 +35,52 @@ ChangeViewpointSample {
     }
     mapView: mapQuickView
 
-    ComboBox {
-        id: comboBoxViewpoint
+    Pane {
         anchors {
             left: parent.left
             top: parent.top
             margins: 15
         }
 
-        // Add a background to the ComboBox
-        Rectangle {
-            anchors.fill: parent
-            radius: 10
-            // Make the rectangle visible if a dropdown indicator exists
-            // An indicator only exists if a theme is set
-            visible: parent.indicator
-            border.width: 1
-        }
+        width: comboBoxViewpoint.width + leftPadding + rightPadding
+        height: comboBoxViewpoint.height + topPadding + bottomPadding
+        padding: 8
 
-        property int bestWidth: implicitWidth
+        ComboBox {
+            id: comboBoxViewpoint
+            anchors.centerIn: parent
 
-        width: bestWidth + rightPadding + leftPadding + 20
+            property int bestWidth: implicitWidth
 
-        model: [ "Center",
-                 "Center and scale",
-                 "Geometry",
-                 "Geometry and padding",
-                 "Rotation",
-                 "Scale 1:5,000,000",
-                 "Scale 1:10,000,000",
-                 "Animation" ]
+            width: bestWidth + rightPadding + leftPadding + 20
 
-        onCurrentTextChanged: {
-            // Call C++ invokable function to change the viewpoint
-            changeViewpointSample.changeViewpoint(comboBoxViewpoint.currentText);
-        }
+            model: [ qsTr("Center"),
+                qsTr("Center and scale"),
+                qsTr("Geometry"),
+                qsTr("Geometry and padding"),
+                qsTr("Rotation"),
+                qsTr("Scale 1:5,000,000"),
+                qsTr("Scale 1:10,000,000"),
+                qsTr("Animation") ]
 
-        onModelChanged: {
-            let w = bestWidth;
-            for (let i = 0; i < comboBoxViewpoint.model.length; ++i) {
-                metrics.text = comboBoxViewpoint.model[i];
-                w = Math.max(w, metrics.width);
+            onCurrentTextChanged: {
+                // Call C++ invokable function to change the viewpoint
+                changeViewpointSample.changeViewpoint(comboBoxViewpoint.currentText);
             }
-            bestWidth = w;
-        }
 
-        TextMetrics {
-            id: metrics
-            font: comboBoxViewpoint.font
+            onModelChanged: {
+                let w = bestWidth;
+                for (let i = 0; i < comboBoxViewpoint.model.length; ++i) {
+                    metrics.text = comboBoxViewpoint.model[i];
+                    w = Math.max(w, metrics.width);
+                }
+                bestWidth = w;
+            }
+
+            TextMetrics {
+                id: metrics
+                font: comboBoxViewpoint.font
+            }
         }
     }
 }

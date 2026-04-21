@@ -74,7 +74,9 @@ void ExportTiles::componentComplete()
   connect(basemap, &Basemap::doneLoading, this, [this]()
   {
     if (!m_map->basemap()->baseLayers()->isEmpty())
+    {
       createExportTileCacheTask();
+    }
   });
 
   // create a new map instance
@@ -117,10 +119,10 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
 
   // generate parameters
   m_exportTileCacheTask->createDefaultExportTileCacheParametersAsync(tileCacheExtent, m_mapView->mapScale(), m_mapView->mapScale() * 0.1)
-      .then(this, [this](const ExportTileCacheParameters& parameters)
-      {
-        onDefaultExportTileCacheParametersCompleted_(parameters);
-      });
+    .then(this, [this](const ExportTileCacheParameters& parameters)
+  {
+    onDefaultExportTileCacheParametersCompleted_(parameters);
+  });
 }
 
 void ExportTiles::onDefaultExportTileCacheParametersCompleted_(const ExportTileCacheParameters& parameters)
@@ -142,7 +144,8 @@ void ExportTiles::onDefaultExportTileCacheParametersCompleted_(const ExportTileC
     connect(exportJob, &ExportTileCacheJob::statusChanged, this, [this, exportJob](JobStatus jobStatus)
     {
       // connect to the job's status changed signal to know once it is done
-      switch (jobStatus) {
+      switch (jobStatus)
+      {
         case JobStatus::Failed:
           emit updateStatus("Export failed");
           emit hideWindow(5000, false);

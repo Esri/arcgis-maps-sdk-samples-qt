@@ -30,18 +30,18 @@ class QTextToSpeech;
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Graphic;
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-class RouteParameters;
-class RouteTask;
-class RouteTracker;
-class SimulatedLocationDataSource;
-}
-}
+  namespace ArcGISRuntime
+  {
+    class Graphic;
+    class GraphicsOverlay;
+    class Map;
+    class MapQuickView;
+    class RouteParameters;
+    class RouteTask;
+    class RouteTracker;
+    class SimulatedLocationDataSource;
+  } // namespace ArcGISRuntime
+} // namespace Esri
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

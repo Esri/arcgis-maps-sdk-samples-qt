@@ -35,17 +35,16 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ChangeAtmosphereEffect::ChangeAtmosphereEffect(QObject* parent /* = nullptr */):
+ChangeAtmosphereEffect::ChangeAtmosphereEffect(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from %{ElevationOption} rest service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
-
 }
 
 ChangeAtmosphereEffect::~ChangeAtmosphereEffect() = default;
@@ -56,6 +55,7 @@ void ChangeAtmosphereEffect::init()
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ChangeAtmosphereEffect>("Esri.Samples", 1, 0, "ChangeAtmosphereEffectSample");
 }
+
 SceneQuickView* ChangeAtmosphereEffect::sceneView() const
 {
   return m_sceneView;
@@ -90,6 +90,8 @@ void ChangeAtmosphereEffect::setAtmosphereEffect(AtmosphereEnum atmosphereEffect
 ChangeAtmosphereEffect::AtmosphereEnum ChangeAtmosphereEffect::atmosphereEffect() const
 {
   if (m_sceneView)
+  {
     return static_cast<AtmosphereEnum>(m_sceneView->atmosphereEffect());
+  }
   return static_cast<AtmosphereEnum>(AtmosphereEffect::None);
 }

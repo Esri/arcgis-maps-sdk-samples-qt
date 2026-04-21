@@ -18,19 +18,41 @@ import QtQuick.Controls
 import Qt.labs.platform
 import QtQuick.Layouts
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Page {
     id: manageOfflineDataViewPage
     visible: SampleManager.currentMode === SampleManager.ManageOfflineDataView
 
-    onVisibleChanged: {
-        if (!manageOfflineDataViewPage.visible && SampleManager.downloadInProgress)
-            SampleManager.cancelDownload = true;
+    background: Rectangle {
+        color: Calcite.foreground1
     }
 
+    onVisibleChanged: {
+        if (!manageOfflineDataViewPage.visible && SampleManager.downloadsManager.downloadInProgress)
+            SampleManager.cancelAllDownloads();
+        else if (manageOfflineDataViewPage.visible)
+            SampleManager.getOfflineDataProjects();
+    }
+
+    Connections {
+        target: SampleManager.downloadsManager
+        function onDoneDownloadingChanged() {
+            SampleManager.getOfflineDataProjects();
+        }
+    }
+
+    property bool showOnlyDownloaded: false
+    property real scaleFactor: Math.min(1.0, Math.max(0.5, Math.min(width / 800, height / 600)))
+    property real baseFontSize: 12 * scaleFactor
+    property real baseSpacing: 10 * scaleFactor
+    property real baseMargin: Math.max(15, 20 * scaleFactor)
+
+    // Full page download view - bulk download
     ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
+        visible: SampleManager.downloadsManager.downloadInProgress && SampleManager.downloadsManager.isBulkDownload
 
         Image {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -38,9 +60,8 @@ Page {
             clip: true
         }
 
-        Text {
-            id: name
-            text: qsTr("Currently downloading offline data.")
+        Label {
+            text: qsTr("Currently downloading all offline data.")
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             font {
@@ -49,39 +70,13 @@ Page {
             }
             Layout.fillWidth: true
             clip: true
-            visible: SampleManager.downloadInProgress
-        }
-
-        Button {
-            text: SampleManager.downloadFailed ?  "Retry download all offline data" : "Download all offline data"
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            visible: !SampleManager.downloadInProgress
-            onClicked: {
-                if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
-                    SampleManager.downloadAllDataItems();
-                } else {
-                    SampleManager.currentMode = SampleManager.NetworkRequiredView;
-                }
-            }
-            clip: true
-        }
-
-        Button {
-            text: qsTr("Delete all offline data")
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            visible: !SampleManager.downloadInProgress
-            onClicked: {
-                messageDialog.visible = SampleManager.deleteAllOfflineData();
-            }
-            clip: true
         }
 
         Label {
-            text: SampleManager.downloadText
+            text: SampleManager.downloadsManager.downloadText
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Label.AlignHCenter
-            visible: SampleManager.downloadInProgress || SampleManager.downloadFailed
             font {
                 family: fontFamily
             }
@@ -89,11 +84,11 @@ Page {
         }
 
         Label {
-            text: "%1% complete".arg(SampleManager.downloadProgress)
+            text: qsTr("%1% complete").arg(SampleManager.downloadsManager.downloadProgress)
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-            visible: SampleManager.downloadInProgress
+            visible: !SampleManager.downloadsManager.cancelDownload
             font {
                 family: fontFamily
             }
@@ -106,32 +101,142 @@ Page {
             Layout.fillWidth: true
             from: 0
             to: 100
-            value: SampleManager.downloadProgress
-            visible: SampleManager.downloadInProgress
+            value: SampleManager.downloadsManager.downloadProgress
+            visible: !SampleManager.downloadsManager.cancelDownload
             clip: true
         }
 
         Button {
             // PortalItem::fetchData does not have a cancel method so we can only clear the remaining items from the download queue
-            text: SampleManager.cancelDownload ? "Cancelling remaining downloads..." : "Cancel remaining downloads"
+            id: cancelAllButton
+            text: qsTr("Cancel remaining downloads")
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            visible: SampleManager.downloadInProgress
-            enabled: !SampleManager.cancelDownload
+            padding: 12
             onClicked: {
-                SampleManager.cancelDownload = true;
+                SampleManager.cancelAllDownloads();
             }
             clip: true
+
+            background: Rectangle {
+                radius: 4
+                color: cancelAllButton.down ? Qt.darker(Calcite.brand, 1.2) : (cancelAllButton.hovered ? Calcite.brandHover : Calcite.brand)
+            }
         }
     }
 
+    // Individual sample list
+    OfflineDataListView {
+        visible: !(SampleManager.downloadsManager.downloadInProgress && SampleManager.downloadsManager.isBulkDownload)
+        scaleFactor: manageOfflineDataViewPage.scaleFactor
+        baseMargin: manageOfflineDataViewPage.baseMargin
+        baseSpacing: manageOfflineDataViewPage.baseSpacing
+        baseFontSize: manageOfflineDataViewPage.baseFontSize
+        deleteProjectDialog: deleteProjectDialog
+        deleteAllDialog: deleteAllDialog
+        showOnlyDownloaded: manageOfflineDataViewPage.showOnlyDownloaded
+        onShowOnlyDownloadedChanged: {
+            manageOfflineDataViewPage.showOnlyDownloaded = showOnlyDownloaded;
+        }
+    }
+
+    // Delete all offline data confirmation dialog
     MessageDialog {
-        id: messageDialog
-        title: "Delete all offline data"
-        text: "Delete all offline data was successful"
+        id: deleteAllDialog
+        title: qsTr("Delete all offline data")
+        text: qsTr("Are you sure you want to delete all offline data?")
         visible: false
-        onRejected: {
+        buttons: MessageDialog.Yes | MessageDialog.No
+
+        function resetDialog() {
+            text = qsTr("Are you sure you want to delete all offline data?");
+            buttons = MessageDialog.Yes | MessageDialog.No;
             visible = false;
+        }
+
+        onClicked: function(button) {
+            if (button === MessageDialog.Yes){
+                if (SampleManager.deleteAllOfflineData()) {
+                    text = qsTr("Project data deleted successfully");
+                    buttons = MessageDialog.Ok;
+                    visible = true;
+                } else {
+                    text = qsTr("Failed to delete project data");
+                    buttons = MessageDialog.Ok;
+                    visible = true;
+                }
+            }
+            else if (button === MessageDialog.No){
+                visible = false;
+            }
+            else if (button === MessageDialog.Ok){
+                resetDialog();
+            }
+        }
+    }
+
+    // Delete individual project data confirmation dialog
+    MessageDialog {
+        id: deleteProjectDialog
+        property string sampleName: ""
+        title: qsTr("Delete project data")
+        text: qsTr("Are you sure you want to delete offline data for '") + sampleName + "'?"
+        visible: false
+        buttons: MessageDialog.Yes | MessageDialog.No
+
+        function resetDialog() {
+            text = qsTr("Are you sure you want to delete offline data for '") + sampleName + "'?";
+            buttons = MessageDialog.Yes | MessageDialog.No;
+            visible = false;
+        }
+
+        onClicked: function(button) {
+            if (button === MessageDialog.Yes){
+                if (SampleManager.deleteProjectOfflineData(sampleName)) {
+                    text = qsTr("Project data deleted successfully");
+                    buttons = MessageDialog.Ok;
+                    visible = true;
+                }
+                else {
+                    text = qsTr("Failed to delete project data");
+                    buttons = MessageDialog.Ok;
+                    visible = true;
+                }
+            }
+            else if (button === MessageDialog.No){
+                visible = false;
+            }
+            else if (button === MessageDialog.Ok){
+                resetDialog();
+            }
+        }
+    }
+
+    // Busy overlay for cancelling downloads
+    Rectangle {
+        anchors.fill: parent
+        color: "#CC000000"
+        visible: SampleManager.downloadsManager.cancelDownload && SampleManager.downloadsManager.downloadInProgress
+        z: 1000
+
+        ColumnLayout {
+            anchors.centerIn: parent
+            spacing: baseSpacing * 2
+
+            BusyIndicator {
+                Layout.alignment: Qt.AlignHCenter
+                running: parent.parent.visible
+            }
+
+            Label {
+                text: qsTr("Canceling remaining downloads...")
+                color: Calcite.offWhite
+                font {
+                    family: fontFamily
+                    pixelSize: Math.max(12, baseFontSize + 2)
+                    weight: Font.Medium
+                }
+                Layout.alignment: Qt.AlignHCenter
+            }
         }
     }
 }
-

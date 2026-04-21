@@ -1,11 +1,11 @@
 // [Legal]
 // Copyright 2022 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,11 +15,12 @@
 
 #include "pch.hpp"
 
-#include <QTextDocument>
+// Qt headers
 #include <QQuickTextDocument>
+#include <QTextDocument>
 
+// Other headers
 #include "QmlHighlighter.h"
-
 #include "SyntaxHighlighter.h"
 
 SyntaxHighlighter::SyntaxHighlighter(QObject* parent) :
@@ -27,9 +28,20 @@ SyntaxHighlighter::SyntaxHighlighter(QObject* parent) :
 {
 }
 
-void SyntaxHighlighter::setHighlighter(QObject* textArea) {
-    QQuickTextDocument* quickTextDocument = qvariant_cast<QQuickTextDocument*>(textArea->property("textDocument"));
-    QTextDocument* document = quickTextDocument->textDocument();
-    QmlHighlighter* highlighter = new QmlHighlighter(document);
-    highlighter->rehighlight();
+void SyntaxHighlighter::setHighlighter(QObject* textArea, bool isDarkTheme)
+{
+  QQuickTextDocument* quickTextDocument = qvariant_cast<QQuickTextDocument*>(textArea->property("textDocument"));
+  QTextDocument* document = quickTextDocument->textDocument();
+  m_highlighter = new QmlHighlighter(document, isDarkTheme);
+  m_highlighter->rehighlight();
+}
+
+void SyntaxHighlighter::updateHighlighter(QObject* textArea, bool isDarkTheme)
+{
+  if (m_highlighter)
+  {
+    delete m_highlighter;
+  }
+
+  setHighlighter(textArea, isDarkTheme);
 }

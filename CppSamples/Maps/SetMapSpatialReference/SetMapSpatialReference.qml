@@ -19,6 +19,7 @@ import QtQuick.Controls
 import Esri.Samples
 
 SetMapSpatialReferenceSample {
+    id: srSample
     width: 800
     height: 600
 
@@ -31,5 +32,17 @@ SetMapSpatialReferenceSample {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
+    }
+    ComboBox {
+        id: srComboBox
+        anchors {
+            top: parent.top
+            right: parent.right
+            margins: 10
+        }
+        width: 220
+        model: srSample.spatialReferenceNames
+        currentIndex: 6
+        onActivated: srSample.setSpatialReference(currentIndex)
     }
 }

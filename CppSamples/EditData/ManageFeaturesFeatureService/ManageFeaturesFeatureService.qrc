@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Samples/EditData/ManageFeaturesFeatureService">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>screenshot.png</file>
+        <file>trash-24.svg</file>
+        <file>ManageFeaturesFeatureService.qml</file>
+        <file>ManageFeaturesFeatureService.h</file>
+        <file>ManageFeaturesFeatureService.cpp</file>
+        <file>main.qml</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

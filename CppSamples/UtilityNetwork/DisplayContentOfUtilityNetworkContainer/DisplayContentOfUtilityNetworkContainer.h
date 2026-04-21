@@ -39,7 +39,7 @@ namespace Esri::ArcGISRuntime
   class UtilityAssociation;
   class UtilityElement;
   class UtilityNetwork;
-}
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {

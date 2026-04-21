@@ -50,6 +50,8 @@ Item {
                     id: grid
                     rows: phases.length + 1
                     flow: GridLayout.TopToBottom
+                    columnSpacing: 10
+                    rowSpacing: 10
 
                     CheckBox { id: parentBox; checkState: checkBoxes.checkState }
                     Repeater {
@@ -58,32 +60,32 @@ Item {
                         CheckBox { onCheckedChanged: selectedPhases[modelData] = !selectedPhases[modelData]; ButtonGroup.group: checkBoxes }
                     }
 
-                    Text { text: "Phase"; font.pointSize: 18; font.bold: true }
+                    Label { text: qsTr("Phase"); font.pointSize: 18; font.bold: true }
                     Repeater {
                         id: phaseLabels
                         model: phases
-                        Text { text: modelData }
+                        Label { text: modelData }
                     }
 
-                    Text { text: "Total customers"; font.pointSize: 18; font.bold: true; }
+                    Label { text: qsTr("Total customers"); font.pointSize: 18; font.bold: true; }
                     Repeater {
                         id: phaseCustomerValues
                         model: phases
-                        Text { text: modelData in sampleModel.phaseCust ? sampleModel.phaseCust[modelData].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                        Label { text: modelData in sampleModel.phaseCust ? sampleModel.phaseCust[modelData].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     }
 
-                    Text { text: "Total load"; font.bold: true; font.pointSize: 18 }
+                    Label { text: qsTr("Total load"); font.bold: true; font.pointSize: 18 }
                     Repeater {
                         id: phaseLoadValues
                         model: phases
-                        Text { text: modelData in sampleModel.phaseLoad ? sampleModel.phaseLoad[modelData].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                        Label { text: modelData in sampleModel.phaseLoad ? sampleModel.phaseLoad[modelData].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     }
                 }
             }
 
             Row {
                 Button {
-                    text: checkBoxes.checkState !== 0 || !reportHasRun ? "Run Report" : "Reset"
+                    text: checkBoxes.checkState !== 0 || !reportHasRun ? qsTr("Run Report") : qsTr("Reset")
 
                     enabled: ((reportHasRun || checkBoxes.checkState !== 0) && sampleModel.sampleStatus === 2) ? true : false
 
@@ -101,28 +103,28 @@ Item {
             }
 
             Row {
-                Text {
+                Label {
                     id: noticeText
                     text: {
                         switch (sampleModel.sampleStatus) {
                         case CreateLoadReportSample.SampleError: // SampleError
-                            "Error initializing sample";
+                            qsTr("Error initializing sample");
                             break;
                         case CreateLoadReportSample.SampleNotLoaded: // SampleNotLoaded
-                            "Sample initializing...";
+                            qsTr("Sample initializing...");
                             break;
                         case CreateLoadReportSample.SampleBusy: // SampleBusy
-                            "Generating load report...";
+                            qsTr("Generating load report...");
                             break;
                         case CreateLoadReportSample.SampleReady: // SampleReady
                             if (checkBoxes.checkState === 0 && !reportHasRun) {
-                                "Select phases to include in the load report";
+                                qsTr("Select phases to include in the load report");
                             } else {
-                                "Tap the \"Run Report\" button to create the load report";
+                                qsTr("Tap the \"Run Report\" button to create the load report");
                             }
                             break;
                         default:
-                            "Sample status is not defined";
+                            qsTr("Sample status is not defined");
                             break;
                         }
                     }

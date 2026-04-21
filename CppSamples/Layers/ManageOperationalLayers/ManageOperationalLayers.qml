@@ -17,6 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Effects
 import Esri.Samples
 
 Item {
@@ -43,7 +44,7 @@ Item {
             fill: layerListColumn
             margins: -3
         }
-        color: "#F5F5F5"
+        color: palette.base
     }
 
     Column {
@@ -56,7 +57,7 @@ Item {
         spacing: 2
 
         Label {
-            text: "Layers in map"
+            text: qsTr("Layers in map")
             visible: layersList.count > 0
             font {
                 pixelSize: 14
@@ -89,7 +90,13 @@ Item {
                         Layout.alignment: Qt.AlignRight
                         Layout.preferredHeight: 25
                         Layout.preferredWidth: 25
-                        source: "qrc:/Samples/Layers/ManageOperationalLayers/menu.png"
+                        source: "qrc:/Samples/Layers/ManageOperationalLayers/handle-vertical-24.svg"
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
 
                         MouseArea {
                             anchors.fill: parent
@@ -109,7 +116,7 @@ Item {
 
                                 Label {
                                     id: moveUpLabel
-                                    text: "  Move down  "
+                                    text: qsTr("  Move down  ")
                                     visible: layersList.currentIndex + 1 !== layersList.count
 
                                     MouseArea {
@@ -123,7 +130,7 @@ Item {
 
                                 Label {
                                     id: moveDownLabel
-                                    text: "  Move up  "
+                                    text: qsTr("  Move up  ")
                                     visible: layersList.currentIndex !== 0
 
                                     MouseArea {
@@ -136,7 +143,7 @@ Item {
                                 }
 
                                 Label {
-                                    text: "  Remove  "
+                                    text: qsTr("  Remove  ")
 
                                     MouseArea {
                                         anchors.fill: parent
@@ -154,7 +161,7 @@ Item {
         }
 
         Label {
-            text: "Deleted layers"
+            text: qsTr("Deleted layers")
             visible: deletedLayersListView.count > 0
             font {
                 pixelSize: 14
@@ -188,7 +195,13 @@ Item {
                         Layout.alignment: Qt.AlignRight
                         Layout.preferredHeight: 25
                         Layout.preferredWidth: 25
-                        source: "qrc:/Samples/Layers/ManageOperationalLayers/menu.png"
+                        source: "qrc:/Samples/Layers/ManageOperationalLayers/handle-vertical-24.svg"
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
 
                         MouseArea {
                             anchors.fill: parent
@@ -208,7 +221,7 @@ Item {
                                 spacing: 10
 
                                 Label {
-                                    text: "  Add to map  "
+                                    text: qsTr("  Add to map  ")
 
                                     MouseArea {
                                         anchors.fill: parent

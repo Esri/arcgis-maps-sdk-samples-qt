@@ -49,21 +49,21 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
-IdentifyRasterCell::IdentifyRasterCell(QObject* parent /* = nullptr */):
+IdentifyRasterCell::IdentifyRasterCell(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
@@ -93,7 +93,9 @@ MapQuickView* IdentifyRasterCell::mapView() const
 void IdentifyRasterCell::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -118,7 +120,8 @@ void IdentifyRasterCell::connectSignals()
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayerAsync(m_rasterLayer, e.position(), 10, false, 1).then(this, [this](IdentifyLayerResult* rawIdentifyResult)
+    m_mapView->identifyLayerAsync(m_rasterLayer, e.position(), 10, false, 1)
+      .then(this, [this](IdentifyLayerResult* rawIdentifyResult)
     {
       onIdentifyLayerCompleted_(rawIdentifyResult);
     });
@@ -127,7 +130,8 @@ void IdentifyRasterCell::connectSignals()
 
   connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayerAsync(m_rasterLayer, e.position(), 10, false, 1).then(this, [this](IdentifyLayerResult* rawIdentifyResult)
+    m_mapView->identifyLayerAsync(m_rasterLayer, e.position(), 10, false, 1)
+      .then(this, [this](IdentifyLayerResult* rawIdentifyResult)
     {
       onIdentifyLayerCompleted_(rawIdentifyResult);
     });
@@ -145,7 +149,8 @@ void IdentifyRasterCell::connectSignals()
   {
     if (m_mousePressed)
     {
-      m_mapView->identifyLayerAsync(m_rasterLayer, e.position(), 10, false, 1).then(this, [this](IdentifyLayerResult* rawIdentifyResult)
+      m_mapView->identifyLayerAsync(m_rasterLayer, e.position(), 10, false, 1)
+        .then(this, [this](IdentifyLayerResult* rawIdentifyResult)
       {
         onIdentifyLayerCompleted_(rawIdentifyResult);
       });

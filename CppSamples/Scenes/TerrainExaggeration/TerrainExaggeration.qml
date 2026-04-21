@@ -43,17 +43,30 @@ TerrainExaggerationSample {
 
             width: childrenRect.width
             height: childrenRect.height
-            radius: 10
-            opacity: 0.8
+            radius: 5
+            color: palette.base
+
+            border {
+                width: 1
+                color: "darkgrey"
+            }
+            
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: mouse => mouse.accepted = true
+                onDoubleClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
 
             // sliderCombo: A slider and text for its value
             Row {
                 id: sliderCombo
-                spacing: 5
+                spacing: 10
+                padding: 8
 
                 Slider {
                     id: slider
-                    opacity: 0.7
                     anchors {
                         verticalCenter: parent.verticalCenter
                     }
@@ -65,7 +78,7 @@ TerrainExaggerationSample {
                     }
                 }
 
-                Text {
+                Label {
                     anchors {
                         verticalCenter: parent.verticalCenter
                         margins: 5

@@ -98,7 +98,7 @@ void FindAddress::componentComplete()
   m_locatorTask = new LocatorTask(QUrl("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
   //! [FindAddress create LocatorTask]
   m_geocodeParameters.setMinScore(75);
-  m_geocodeParameters.setResultAttributeNames(QStringList { "Place_addr", "Match_addr" });
+  m_geocodeParameters.setResultAttributeNames(QStringList{"Place_addr", "Match_addr"});
 
   connectSignals();
 }
@@ -115,17 +115,22 @@ void FindAddress::connectSignals()
     emit hideCallout();
 
     // call identify on the map view
-    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 5, false, 1).then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 5, false, 1)
+      .then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
     {
       // Delete rawIdentifyResult on leaving scope.
       auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
 
       if (!identifyResult)
+      {
         return;
+      }
 
       const QList<Graphic*> graphics = identifyResult->graphics();
       if (graphics.isEmpty())
+      {
         return;
+      }
 
       const AttributeListModel* attributes = graphics.at(0)->attributes();
       const QString calloutText = attributes->attributeValue("Match_addr").toString();
@@ -138,10 +143,13 @@ void FindAddress::connectSignals()
 void FindAddress::geocodeAddress(const QString& address)
 {
   //! [FindAddress geocodeWithParameters]
-  m_locatorTask->geocodeWithParametersAsync(address, m_geocodeParameters).then(this, [this](const QList<GeocodeResult>& geocodeResults)
+  m_locatorTask->geocodeWithParametersAsync(address, m_geocodeParameters)
+    .then(this, [this](const QList<GeocodeResult>& geocodeResults)
   {
     if (geocodeResults.isEmpty())
+    {
       return;
+    }
 
     m_graphic->setGeometry(geocodeResults.at(0).displayLocation());
     m_graphic->attributes()->setAttributesMap(geocodeResults.at(0).attributes());

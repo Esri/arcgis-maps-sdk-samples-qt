@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/AddVectorTiledLayerFromCustomStyle">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>AddVectorTiledLayerFromCustomStyle.qml</file>
+        <file>AddVectorTiledLayerFromCustomStyle.h</file>
+        <file>AddVectorTiledLayerFromCustomStyle.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

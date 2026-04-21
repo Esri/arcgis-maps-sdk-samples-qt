@@ -35,7 +35,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Web_Tiled_Layer::Web_Tiled_Layer(QQuickItem* parent /* = nullptr */):
+Web_Tiled_Layer::Web_Tiled_Layer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

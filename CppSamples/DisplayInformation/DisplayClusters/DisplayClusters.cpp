@@ -36,15 +36,18 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Popup.h"
-#include "PopupManager.h"
+#include "PopupElement.h"
+#include "PopupExpressionEvaluation.h"
+#include "PopupTypes.h"
 #include "PortalItem.h"
+#include "TextPopupElement.h"
 
 // Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayClusters::DisplayClusters(QObject* parent /* = nullptr */):
+DisplayClusters::DisplayClusters(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(new PortalItem("8916d50c44c746c1aafae001552bad23", this), this))
 {
@@ -81,7 +84,9 @@ MapQuickView* DisplayClusters::mapView() const
 void DisplayClusters::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -91,10 +96,12 @@ void DisplayClusters::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void DisplayClusters::onMouseClicked(const QMouseEvent &mouseClick)
+void DisplayClusters::onMouseClicked(const QMouseEvent& mouseClick)
 {
   if (m_taskRunning)
+  {
     return;
+  }
 
   m_taskRunning = true;
   emit taskRunningChanged();
@@ -103,21 +110,25 @@ void DisplayClusters::onMouseClicked(const QMouseEvent &mouseClick)
 
   // clear cluster selection
   if (m_aggregateGeoElement)
+  {
     m_aggregateGeoElement->setSelected(false);
+  }
 
   // Clean up any children objects associated with this parent
   m_resultParent.reset(new QObject(this));
   m_aggregateGeoElement = nullptr;
 
   m_mapView->identifyLayerAsync(m_powerPlantsLayer, mouseClick.position(), 3, false, m_resultParent.get())
-      .then(this, [this](IdentifyLayerResult* identifyResult)
+    .then(this, [this](IdentifyLayerResult* identifyResult)
   {
     m_taskRunning = false;
     emit taskRunningChanged();
 
     // Invalid identify result
     if (!identifyResult)
+    {
       return;
+    }
 
     if (!identifyResult->error().isEmpty())
     {
@@ -126,31 +137,42 @@ void DisplayClusters::onMouseClicked(const QMouseEvent &mouseClick)
     }
 
     if (identifyResult->popups().isEmpty())
+    {
       return;
+    }
 
     Popup* popup = identifyResult->popups().constFirst();
 
     // if the identified object is a cluster, select it
     m_aggregateGeoElement = dynamic_cast<AggregateGeoElement*>(popup->geoElement());
     if (m_aggregateGeoElement)
+    {
       m_aggregateGeoElement->setSelected(true);
+    }
 
-    // Create a PopupManager with the IdentifyLayerResult's parent so it will get cleaned up as well.
-    PopupManager* popupManager = new PopupManager(popup, identifyResult->parent());
+    popup->evaluateExpressionsAsync(this).then([this, popup](const QList<PopupExpressionEvaluation*>&)
+    {
+      QList<PopupElement*> elements = popup->evaluatedElements();
+      if (!elements.isEmpty() && (elements.at(0)->popupElementType() == PopupElementType::TextPopupElement))
+      {
+        TextPopupElement* textElement = static_cast<TextPopupElement*>(elements.at(0));
+        m_calloutText = textElement->text();
+        m_mapView->calloutData()->setDetail(m_calloutText);
+        emit calloutTextChanged();
+      }
+    });
 
-    // Use the custom HTML description in the PopupManager to popuplate a Callout and display it.
-    m_calloutText = popupManager->customHtmlDescription();
     m_mapView->calloutData()->setLocation(Point(popup->geoElement()->geometry()));
     m_mapView->calloutData()->setVisible(true);
-
-    emit calloutTextChanged();
   });
 }
 
 void DisplayClusters::toggleClustering()
 {
   if (m_map->loadStatus() != LoadStatus::Loaded)
+  {
     return;
+  }
 
   if (!m_powerPlantsLayer)
   {
@@ -158,7 +180,9 @@ void DisplayClusters::toggleClustering()
 
     // Check if the cast was successful
     if (!m_powerPlantsLayer)
+    {
       return;
+    }
   }
 
   m_powerPlantsLayer->featureReduction()->setEnabled(!m_powerPlantsLayer->featureReduction()->isEnabled());

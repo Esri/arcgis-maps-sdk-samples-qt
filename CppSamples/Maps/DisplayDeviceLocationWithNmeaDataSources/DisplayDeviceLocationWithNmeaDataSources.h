@@ -25,10 +25,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class NmeaLocationDataSource;
-}
+  class Map;
+  class MapQuickView;
+  class NmeaLocationDataSource;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

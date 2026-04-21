@@ -29,9 +29,7 @@ public:
 
   ~SearchFilterCriteria() override;
 
-  Q_INVOKABLE virtual SearchResult  scoreValue(
-          const QModelIndex& index,
-          const QString& searchString) const = 0;
+  Q_INVOKABLE virtual SearchResult scoreValue(const QModelIndex& index, const QString& searchString) const = 0;
 };
 
 #endif

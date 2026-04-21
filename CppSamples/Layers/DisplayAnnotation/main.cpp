@@ -1,3 +1,4 @@
+// [WriteFile Name=DisplayAnnotation, Category=Layers]
 // [Legal]
 // Copyright 2020 Esri.
 //
@@ -29,9 +30,8 @@
 #include <Windows.h>
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("DisplayAnnotation"));
 
@@ -53,28 +53,28 @@ int main(int argc, char *argv[])
 
   if (accessToken.isEmpty())
   {
-      qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                    "you to authenticate with an ArcGIS account or set the API Key property.";
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
 
-    // Initialize the sample
-    DisplayAnnotation::init();
+  // Initialize the sample
+  DisplayAnnotation::init();
 
-    // Initialize application view
-    QQmlApplicationEngine engine;
-    // Add the import Path
-    engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Initialize application view
+  QQmlApplicationEngine engine;
+  // Add the import Path
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
-    engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-    // Set the source
-    engine.load(QUrl("qrc:/Samples/Layers/DisplayAnnotation/main.qml"));
+  // Set the source
+  engine.load(QUrl("qrc:/Samples/Layers/DisplayAnnotation/main.qml"));
 
-    return app.exec();
+  return app.exec();
 }

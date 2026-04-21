@@ -40,7 +40,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ProjectGeometry::ProjectGeometry(QQuickItem* parent /* = nullptr */):
+ProjectGeometry::ProjectGeometry(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

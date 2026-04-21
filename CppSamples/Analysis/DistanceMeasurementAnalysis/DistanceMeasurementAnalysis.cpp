@@ -31,9 +31,9 @@
 #include "CoreTypes.h"
 #include "Distance.h"
 #include "ElevationSourceListModel.h"
+#include "ExploratoryLocationDistanceMeasurement.h"
 #include "LayerListModel.h"
 #include "LinearUnit.h"
-#include "LocationDistanceMeasurement.h"
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
@@ -48,20 +48,22 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DistanceMeasurementAnalysis::DistanceMeasurementAnalysis(QObject* parent /* = nullptr */):
+DistanceMeasurementAnalysis::DistanceMeasurementAnalysis(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISTopographic, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // Add a Scene Layer
-  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
-  sceneLayer->setAltitudeOffset(1); // The elevation source is a very fine resolution so we raise the scene layer slightly so it does not clip the surface
+  ArcGISSceneLayer* sceneLayer =
+    new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
+  sceneLayer->setAltitudeOffset(
+    1); // The elevation source is a very fine resolution so we raise the scene layer slightly so it does not clip the surface
 
   m_scene->operationalLayers()->append(sceneLayer);
 }
@@ -84,7 +86,9 @@ SceneQuickView* DistanceMeasurementAnalysis::sceneView() const
 void DistanceMeasurementAnalysis::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
@@ -94,10 +98,10 @@ void DistanceMeasurementAnalysis::setSceneView(SceneQuickView* sceneView)
   AnalysisOverlay* analysisOverlay = new AnalysisOverlay(this);
   m_sceneView->analysisOverlays()->append(analysisOverlay);
 
-  // Create and add the LocationDistanceMeasurement
+  // Create and add the ExploratoryLocationDistanceMeasurement
   const Point startLocation(-4.494677, 48.384472, 24.772694, SpatialReference::wgs84());
   const Point endLocation(-4.495646, 48.384377, 58.501115, SpatialReference::wgs84());
-  m_distanceAnalysis = new LocationDistanceMeasurement(startLocation, endLocation, this);
+  m_distanceAnalysis = new ExploratoryLocationDistanceMeasurement(startLocation, endLocation, this);
   m_distanceAnalysis->setUnitSystem(UnitSystem::Metric);
   analysisOverlay->analyses()->append(m_distanceAnalysis);
 
@@ -116,9 +120,8 @@ void DistanceMeasurementAnalysis::setSceneView(SceneQuickView* sceneView)
 void DistanceMeasurementAnalysis::connectSignals()
 {
   // connect to signal to obtain updated distances
-  connect(m_distanceAnalysis, &LocationDistanceMeasurement::measurementChanged, this, [this](const Distance& directDistance,
-                                                                                             const Distance& horizontalDistance,
-                                                                                             const Distance& verticalDistance)
+  connect(m_distanceAnalysis, &ExploratoryLocationDistanceMeasurement::measurementChanged, this,
+          [this](const Distance& directDistance, const Distance& horizontalDistance, const Distance& verticalDistance)
   {
     m_directDistance = QString::number(directDistance.value(), 'f', 2) + QString(" %1").arg(directDistance.unit().abbreviation());
     m_horizontalDistance = QString::number(horizontalDistance.value(), 'f', 2) + QString(" %1").arg(horizontalDistance.unit().abbreviation());
@@ -134,7 +137,8 @@ void DistanceMeasurementAnalysis::connectSignals()
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
   {
     m_isPressAndHold = true;
-    m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y()).then(this, [this](const Point& pt)
+    m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y())
+      .then(this, [this](const Point& pt)
     {
       onScreenToLocationCompleted_(pt);
     });
@@ -152,27 +156,37 @@ void DistanceMeasurementAnalysis::connectSignals()
 
     // Ignore if Right click
     if (mouseEvent.button() == Qt::RightButton)
+    {
       return;
+    }
 
     // If pressing and holding, do nothing
     if (m_isPressAndHold)
+    {
       m_isPressAndHold = false;
+    }
     // Else get the location from the screen coordinates
     else
-      m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y()).then(this, [this](const Point& pt)
+    {
+      m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y())
+        .then(this, [this](const Point& pt)
       {
         onScreenToLocationCompleted_(pt);
       });
+    }
   });
 
   // Update the distance analysis when the mouse moves if it is a press and hold movement
   connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_isPressAndHold)
-      m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y()).then(this, [this](const Point& pt)
+    {
+      m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y())
+        .then(this, [this](const Point& pt)
       {
         onScreenToLocationCompleted_(pt);
       });
+    }
   });
 
   // Set a flag when mousePressed signal emits
@@ -192,21 +206,31 @@ void DistanceMeasurementAnalysis::onScreenToLocationCompleted_(const Point& pt)
 {
   // If it was from a press and hold, update the end location
   if (m_isPressAndHold)
+  {
     m_distanceAnalysis->setEndLocation(pt);
+  }
   // Else if it was a normal mouse click (press and release), update the start location
   else
+  {
     m_distanceAnalysis->setStartLocation(pt);
+  }
 }
 
 void DistanceMeasurementAnalysis::setUnits(const QString& unitName)
 {
   if (!m_distanceAnalysis)
+  {
     return;
+  }
 
   if (unitName == "Metric")
+  {
     m_distanceAnalysis->setUnitSystem(UnitSystem::Metric);
+  }
   else
+  {
     m_distanceAnalysis->setUnitSystem(UnitSystem::Imperial);
+  }
 }
 
 QString DistanceMeasurementAnalysis::directDistance() const

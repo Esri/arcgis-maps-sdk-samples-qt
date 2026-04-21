@@ -24,7 +24,7 @@ namespace Esri::ArcGISRuntime
 {
   class Map;
   class MapQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class Web_Tiled_Layer : public QQuickItem
 {

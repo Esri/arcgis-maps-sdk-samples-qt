@@ -68,7 +68,7 @@
 using namespace Esri::ArcGISRuntime;
 using namespace Esri::ArcGISRuntime::Authentication;
 
-DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer(QObject* parent /* = nullptr */):
+DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer(QObject* parent /* = nullptr */) :
   ArcGISAuthenticationChallengeHandler(parent)
 {
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
@@ -106,7 +106,9 @@ MapQuickView* DisplayContentOfUtilityNetworkContainer::mapView() const
 void DisplayContentOfUtilityNetworkContainer::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -145,15 +147,20 @@ void DisplayContentOfUtilityNetworkContainer::onTaskFailed(const QString& errorM
 void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMouseEvent& mouseEvent)
 {
   if (m_map->loadStatus() != LoadStatus::Loaded || m_utilityNetwork->loadStatus() != LoadStatus::Loaded || !m_featuresFuture.isFinished())
+  {
     return;
+  }
 
   constexpr double tolerance = 5;
   constexpr bool returnPopupsOnly = false;
 
-  m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopupsOnly).then(this, [this](const QList<IdentifyLayerResult*>& identifyResults)
+  m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopupsOnly)
+    .then(this,
+          [this](const QList<IdentifyLayerResult*>& identifyResults)
   {
     getUtilityAssociationsOfFeature(identifyResults);
-  }).onFailed(this, [this](const ErrorException& e)
+  })
+    .onFailed(this, [this](const ErrorException& e)
   {
     onTaskFailed("MapView error: ", e);
   });
@@ -162,7 +169,9 @@ void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMous
 void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(const QList<IdentifyLayerResult*>& identifyResults)
 {
   if (identifyResults.isEmpty())
+  {
     return;
+  }
 
   if (m_containerElement)
   {
@@ -185,14 +194,19 @@ void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(co
           {
             m_containerElement = m_utilityNetwork->createElementWithArcGISFeature(feature);
             if (!m_containerElement)
+            {
               return;
+            }
 
             // Queries for a list of all UtilityAssociation objects of containment association types present in the geodatabase for the m_containerElement.
             m_utilityAssociationFuture = m_utilityNetwork->associationsAsync(m_containerElement, UtilityAssociationType::Containment);
-            m_utilityAssociationFuture.then(this, [this](const QList<UtilityAssociation*>& containmentAssociations)
+            m_utilityAssociationFuture
+              .then(this,
+                    [this](const QList<UtilityAssociation*>& containmentAssociations)
             {
               onAssociationsCompleted_(containmentAssociations);
-            }).onFailed(this, [this](const ErrorException& e)
+            })
+              .onFailed(this, [this](const ErrorException& e)
             {
               onTaskFailed("Utility Network error occured: ", e);
             });
@@ -207,10 +221,14 @@ void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(co
 void DisplayContentOfUtilityNetworkContainer::onAssociationsCompleted_(const QList<UtilityAssociation*>& containmentAssociations)
 {
   if (!m_showContainerView)
+  {
     getFeaturesForElementsOfUtilityAssociations(containmentAssociations);
+  }
   else
+  {
     showAttachmentAndConnectivitySymbols(containmentAssociations);
-};
+  }
+}
 
 void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAssociations(const QList<UtilityAssociation*>& containmentAssociations)
 {
@@ -218,7 +236,8 @@ void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAss
   QList<UtilityElement*> contentElements;
   for (UtilityAssociation* association : containmentAssociations)
   {
-    UtilityElement* otherElement = association->fromElement()->objectId() == m_containerElement->objectId() ? association->toElement() : association->fromElement();
+    UtilityElement* otherElement =
+      association->fromElement()->objectId() == m_containerElement->objectId() ? association->toElement() : association->fromElement();
     contentElements.append(otherElement);
   }
 
@@ -229,10 +248,13 @@ void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAss
 
     // Get the features for the UtilityElements
     m_featuresFuture = m_utilityNetwork->featuresForElementsAsync(contentElements);
-    m_featuresFuture.then(this, [this](QList<ArcGISFeature*>)
+    m_featuresFuture
+      .then(this,
+            [this](QList<ArcGISFeature*>)
     {
       displayFeaturesAndGetAssociations();
-    }).onFailed(this, [this](const ErrorException& e)
+    })
+      .onFailed(this, [this](const ErrorException& e)
     {
       onTaskFailed("Utility Network error occured: ", e);
     });
@@ -251,10 +273,13 @@ void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(
 
   // Get the associations for each feature within the graphics overlay extent
   m_utilityAssociationFuture = m_utilityNetwork->associationsAsync(m_containerGraphicsOverlay->extent());
-  m_utilityAssociationFuture.then(this, [this](const QList<UtilityAssociation*>& containmentAssociations)
+  m_utilityAssociationFuture
+    .then(this,
+          [this](const QList<UtilityAssociation*>& containmentAssociations)
   {
     onAssociationsCompleted_(containmentAssociations);
-  }).onFailed(this, [this](const ErrorException& e)
+  })
+    .onFailed(this, [this](const ErrorException& e)
   {
     onTaskFailed("Utility Network error occured: ", e);
   });
@@ -270,9 +295,11 @@ void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbo
   }
 
   // If there are no associations, create a bounding box graphic using the viewpoint, otherwise use the extent of the graphics overlay
-  if (m_containerGraphicsOverlay->graphics()->size() == 1 && m_containerGraphicsOverlay->graphics()->first()->geometry().geometryType() == GeometryType::Point)
+  if (m_containerGraphicsOverlay->graphics()->size() == 1 &&
+      m_containerGraphicsOverlay->graphics()->first()->geometry().geometryType() == GeometryType::Point)
   {
-    m_mapView->setViewpointAndWait(Viewpoint(Point(m_containerGraphicsOverlay->graphics()->first()->geometry()), m_containerElement->assetType()->containerViewScale()));
+    m_mapView->setViewpointAndWait(
+      Viewpoint(Point(m_containerGraphicsOverlay->graphics()->first()->geometry()), m_containerElement->assetType()->containerViewScale()));
     m_boundingBox = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry();
     m_mapView->setViewpointAndWait(m_previousViewpoint);
 
@@ -343,7 +370,9 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
   m_attachmentSymbol->createSwatchAsync().then(this, [this](const QImage& image)
   {
     if (!m_symbolImageProvider)
+    {
       return;
+    }
 
     // convert the QUuid into a QString
     const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
@@ -361,7 +390,9 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
   m_connectivitySymbol->createSwatchAsync().then(this, [this](const QImage& image)
   {
     if (!m_symbolImageProvider)
+    {
       return;
+    }
 
     // convert the QUuid into a QString
     const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
@@ -379,7 +410,9 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
   m_boundingBoxSymbol->createSwatchAsync().then(this, [this](const QImage& image)
   {
     if (!m_symbolImageProvider)
+    {
       return;
+    }
 
     // convert the QUuid into a QString
     const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
@@ -412,10 +445,13 @@ QString DisplayContentOfUtilityNetworkContainer::boundingBoxSymbolUrl() const
 
 void DisplayContentOfUtilityNetworkContainer::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
 {
-  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this)
+    .then(this,
+          [challenge](TokenCredential* tokenCredential)
   {
     challenge->continueWithCredential(tokenCredential);
-  }).onFailed(this, [challenge](const ErrorException& e)
+  })
+    .onFailed(this, [challenge](const ErrorException& e)
   {
     challenge->continueWithError(e.error());
   });

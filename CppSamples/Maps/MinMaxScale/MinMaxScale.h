@@ -22,9 +22,9 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-}
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 class MinMaxScale : public QQuickItem
 {

@@ -17,6 +17,7 @@
 import QtQuick
 import Esri.Samples
 import QtQuick.Controls
+import QtQuick.Effects
 import QtQuick.Layouts
 import Esri.ArcGISRuntime.Toolkit
 
@@ -61,7 +62,7 @@ OfflineGeocodeSample {
             }
             height: childrenRect.height
 
-            color: "#f7f8fa"
+            color: palette.base
             border {
                 color: "#7B7C7D"
                 width: 1
@@ -79,7 +80,7 @@ OfflineGeocodeSample {
                     leftPadding: 5
                     selectByMouse: true
 
-                    placeholderText: "Enter an Address"
+                    placeholderText: qsTr("Enter an Address")
 
                     // set the SuggestListModel searchText whenever text is changed
                     onTextChanged: {
@@ -94,29 +95,33 @@ OfflineGeocodeSample {
 
                     // initial text
                     Component.onCompleted: {
-                        text = "910 N Harbor Dr, San Diego, CA 92101";
+                        text = qsTr("910 N Harbor Dr, San Diego, CA 92101")
                         suggestionRect.visible = false;
                     }
                 }
 
                 // button to close and open suggestions
-                Rectangle {
-                    Layout.margins: 5
+                ToolButton {
+                    Layout.rightMargin: 5
+                    Layout.topMargin: 5
+                    Layout.bottomMargin: 5
                     width: height
                     height: textField.contentHeight
-                    color: "#f7f8fa"
-                    radius: 2
+                    padding: 0
+                    display: AbstractButton.IconOnly
+                    icon {
+                        source: suggestionRect.visible ? "qrc:/Samples/Search/OfflineGeocode/x-24.svg" : "qrc:/Samples/Search/OfflineGeocode/chevron-down-24.svg"
+                        width: textField.contentHeight
+                        height: textField.contentHeight
+                        color: palette.text
+                    }
+                    onClicked: {
+                        suggestionRect.visible = !suggestionRect.visible
+                    }
 
-                    Image {
-                        anchors.fill: parent
-                        source: suggestionRect.visible ? "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                suggestionRect.visible = !suggestionRect.visible;
-                            }
-                        }
+                    background: Rectangle {
+                        color: "transparent"
+                        radius: 2
                     }
                 }
             }
@@ -126,7 +131,7 @@ OfflineGeocodeSample {
             id: suggestionRect
             width: addressSearchRect.width
             height: 20 * suggestView.count
-            color: "#f7f8fa"
+            color: palette.base
             opacity: 0.85
             visible: false
 
@@ -139,10 +144,10 @@ OfflineGeocodeSample {
                     Rectangle {
                         width: addressSearchRect.width
                         height: 20
-                        color: "#f7f8fa"
+                        color: palette.mid
                         border.color: "darkgray"
 
-                        Text {
+                        Label {
                             anchors {
                                 verticalCenter: parent.verticalCenter
                                 margins: 10
@@ -156,7 +161,6 @@ OfflineGeocodeSample {
                             text: label
                             elide: Text.ElideRight
                             leftPadding: 5
-                            color: "black"
                         }
 
                         // when user clicks suggestion, geocode with the selected address
@@ -185,15 +189,15 @@ OfflineGeocodeSample {
         anchors.centerIn: parent
         height: 50
         width: 200
-        color: "#f7f8fa"
+        color: palette.base
         visible: offlineGeocodeSample.noResults
         radius: 2
         opacity: 0.85
         border.color: "black"
 
-        Text {
+        Label {
             anchors.centerIn: parent
-            text: "No matching address"
+            text: qsTr("No matching address")
             font.pixelSize: 18
         }
     }
@@ -215,17 +219,17 @@ OfflineGeocodeSample {
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
         visible: text.length > 0
-        title: "Error"
+        title: qsTr("Error")
         property alias text : textLabel.text
         property alias informativeText : detailsLabel.text
         ColumnLayout {
-            Text {
+            Label {
                 id: textLabel
                 text: errorMessage
             }
-            Text {
+            Label {
                 id: detailsLabel
-                text: "please consult README.md"
+                text: qsTr("please consult README.md")
             }
         }
     }

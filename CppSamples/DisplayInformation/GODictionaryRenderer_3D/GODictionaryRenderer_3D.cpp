@@ -52,11 +52,11 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
@@ -93,7 +93,9 @@ void GODictionaryRenderer_3D::componentComplete()
 
   // Set up DictionaryRenderer
   if (!QFileInfo::exists(m_dataPath + "/styles/arcade_style/mil2525d.stylx"))
+  {
     setErrorMessage("mil2525d.stylx not found");
+  }
 
   DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(m_dataPath + "/styles/arcade_style/mil2525d.stylx", this);
   connect(dictionarySymbolStyle, &DictionarySymbolStyle::errorOccurred, this, &GODictionaryRenderer_3D::logError);
@@ -112,9 +114,7 @@ void GODictionaryRenderer_3D::componentComplete()
   Surface* surface = new Surface(this);
   connect(surface, &Surface::errorOccurred, this, &GODictionaryRenderer_3D::logError);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this));
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);
   m_sceneView->setArcGISScene(scene);
   m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);
@@ -133,7 +133,9 @@ void GODictionaryRenderer_3D::parseXmlFile()
   QString currentElementName;
 
   if (!QFileInfo::exists(m_dataPath + "/xml/arcade_style/Mil2525DMessages.xml"))
+  {
     setErrorMessage("xml/Mil2525DMessages.xml file is missing");
+  }
 
   QFile xmlFile(m_dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
   // Open the file for reading
@@ -165,7 +167,7 @@ void GODictionaryRenderer_3D::parseXmlFile()
         /**
                  * This is the end of a message element. Here we have a complete message that defines
                  * a military feature to display on the map. Create a graphic from its attributes.
-                 */
+ */
         createGraphic(elementValues);
       }
       // Either we just started reading a message, or we just finished reading a message.
@@ -217,7 +219,7 @@ void GODictionaryRenderer_3D::createGraphic(QVariantMap rawAttributes)
     /**
          * Get rid of _control_points and _wkid. They are not needed in the graphic's
          * attributes.
-         */
+ */
     rawAttributes.remove(FIELD_CONTROL_POINTS);
     rawAttributes.remove(FIELD_WKID);
 

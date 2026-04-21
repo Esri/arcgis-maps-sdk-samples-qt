@@ -22,12 +22,12 @@ mac {
 CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl widgets
+QT += widgets
 
 TEMPLATE = app
 TARGET = BuildLegend
 
-ARCGIS_RUNTIME_VERSION = 200.8.0
+include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
 win32:CONFIG += \

@@ -70,18 +70,18 @@ Item {
             width: 100
             height: 30
 
-            color: selected ? "#959595" : "#D6D6D6"
+            color: selected ? palette.highlight : palette.base
             radius: 8
             border {
-                color: selected ? "#7938b6" : "#585858"
+                color: selected ? palette.base : palette.highlight
                 width: selected ? 2 : 1
             }
 
-            Text {
+            Label {
                 anchors.centerIn: parent
-                text: "Map View"
+                text: qsTr("Map View")
                 font.pixelSize: 14
-                color: "#474747"
+                color: mapViewButton.selected ? "#F8F8F8" : palette.text
             }
 
             MouseArea {
@@ -100,18 +100,18 @@ Item {
             width: 100
             height: 30
 
-            color: selected ? "#959595" : "#D6D6D6"
+            color: selected ? palette.highlight : palette.base
             radius: 8
             border {
-                color: selected ? "#7938b6" : "#585858"
+                color: selected ? palette.base : palette.highlight
                 width: selected ? 2 : 1
             }
 
-            Text {
+            Label {
                 anchors.centerIn: parent
-                text: "Scene View"
+                text: qsTr("Scene View")
                 font.pixelSize: 14
-                color: "#474747"
+                color: sceneViewButton.selected ? "#F8F8F8": palette.text
             }
 
             MouseArea {
@@ -130,9 +130,8 @@ Item {
     }
 
     // Button to view the styling window
-    Rectangle {
+    Button {
         id: styleButton
-        property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -141,28 +140,12 @@ Item {
 
         width: 150
         height: 30
-        color: pressed ? "#959595" : "#D6D6D6"
-        radius: 8
-        border {
-            color: "#585858"
-            width: 1
-        }
+        text: qsTr("Change grid style")
+        font.pixelSize: 14
 
-        Text {
-            anchors.centerIn: parent
-            text: "Change grid style"
-            font.pixelSize: 14
-            color: "#474747"
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed: styleButton.pressed = true
-            onReleased: styleButton.pressed = false
-            onClicked: {
-                background.visible = true;
-                showAnimation.restart()
-            }
+        onClicked: {
+            background.visible = true;
+            showAnimation.restart();
         }
     }
 
@@ -190,10 +173,10 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
         y: parent.height // initially display below the page
-        height: childrenRect.height
-        width: childrenRect.width
+        height: childrenRect.height + 16
+        width: childrenRect.width + 16
 
-        color: "lightgray"
+        color: palette.base
         radius: 4
         border {
             color: "black"
@@ -213,10 +196,11 @@ Item {
         GridLayout {
             id: grid
             columns: 2
+            anchors.centerIn: parent
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Grid type"
+                text: qsTr("Grid type")
             }
 
             ComboBox {
@@ -247,9 +231,9 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Grid visible"
+                text: qsTr("Grid visible")
             }
 
             Switch {
@@ -260,10 +244,10 @@ Item {
             }
 
             Text {
-                text: "Labels visible"
+                text: qsTr("Labels visible")
                 Layout.leftMargin: 10
                 enabled: gridVisibleSwitch.checked
-                color: enabled ? "black" : "gray"
+                color: enabled ? palette.text : "gray"
             }
 
             Switch {
@@ -274,9 +258,9 @@ Item {
                 onCheckedChanged: gridSample.setLabelsVisible(checked);
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Grid color"
+                text: qsTr("Grid color")
             }
 
             ComboBox {
@@ -299,9 +283,9 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Label color"
+                text: qsTr("Label color")
             }
 
             ComboBox {
@@ -324,11 +308,11 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Label position"
+                text: qsTr("Label position")
                 enabled: positionCombo.enabled
-                color: enabled ? "black"  : "gray"
+                color: enabled ? palette.text  : "gray"
             }
 
             ComboBox {
@@ -351,11 +335,11 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Label format"
+                text: qsTr("Label format")
                 enabled: formatCombo.enabled
-                color: enabled ? "black"  : "gray"
+                color: enabled ? palette.text  : "gray"
             }
 
             ComboBox {
@@ -379,11 +363,11 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Label offset"
+                text: qsTr("Label offset")
                 enabled: offsetSlider.enabled
-                color: enabled ? "black"  : "gray"
+                color: enabled ? palette.text  : "gray"
             }
 
             Slider {
@@ -406,13 +390,13 @@ Item {
                     implicitWidth: 26
                     implicitHeight: 26
 
-                    color: offsetSlider.enabled ? "white" : "lightgrey"
+                    color: offsetSlider.enabled ? palette.highlight : "gray"
                     border.color: "gray"
-                    Text {
+                    Label {
                         anchors.centerIn: parent
                         text: offsetSlider.value.toFixed(0)
                         font.pixelSize: 14
-                        color: offsetSlider.enabled ? "black" : "gray"
+                        color: offsetSlider.enabled ? palette.text : "gray"
                         onWidthChanged: {
                             parent.width = Math.max(width + 10, 26)
                         }
@@ -420,38 +404,28 @@ Item {
                 }
             }
 
+            // Spacer
+            Item {
+                height: 8
+                Layout.fillWidth: true
+                Layout.columnSpan: 2
+            }
+
             // Button to hide the styling window
-            Rectangle {
+            Button {
                 id: hideButton
-                property bool pressed: false
                 Layout.alignment: Qt.AlignHCenter
                 Layout.columnSpan: 2
                 Layout.bottomMargin: 5
 
                 width: 150
                 height: 30
-                color: pressed ? "#959595" : "#D6D6D6"
-                radius: 8
-                border {
-                    color: "#585858"
-                    width: 1
-                }
+                text: qsTr("Hide window")
+                font.pixelSize: 14
 
-                Text {
-                    anchors.centerIn: parent
-                    text: "Hide window"
-                    font.pixelSize: 14
-                    color: "#474747"
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: hideButton.pressed = true
-                    onReleased: hideButton.pressed = false
-                    onClicked: {
-                        background.visible = false;
-                        hideAnimation.restart();
-                    }
+                onClicked: {
+                    background.visible = false;
+                    hideAnimation.restart();
                 }
             }
         }

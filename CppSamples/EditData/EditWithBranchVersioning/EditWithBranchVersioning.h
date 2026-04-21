@@ -27,19 +27,19 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ServiceVersionParameters;
-class Map;
-class MapQuickView;
-class ServiceGeodatabase;
-class FeatureLayer;
-class ServiceFeatureTable;
-class ServiceVersionInfo;
-class ArcGISFeature;
-class Point;
-class IdentifyLayerResult;
-class ErrorException;
-class FeatureTableEditResult;
-}
+  class ServiceVersionParameters;
+  class Map;
+  class MapQuickView;
+  class ServiceGeodatabase;
+  class FeatureLayer;
+  class ServiceFeatureTable;
+  class ServiceVersionInfo;
+  class ArcGISFeature;
+  class Point;
+  class IdentifyLayerResult;
+  class ErrorException;
+  class FeatureTableEditResult;
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {

@@ -30,15 +30,14 @@
 #include <Windows.h>
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
-    // Linux requires 3.2 OpenGL Context
-    // in order to instance 3D symbols
-    QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
-    fmt.setVersion(3, 2);
-    QSurfaceFormat::setDefaultFormat(fmt);
+  // Linux requires 3.2 OpenGL Context
+  // in order to instance 3D symbols
+  QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
+  fmt.setVersion(3, 2);
+  QSurfaceFormat::setDefaultFormat(fmt);
 #endif
 
   QGuiApplication app(argc, argv);
@@ -62,32 +61,32 @@ int main(int argc, char *argv[])
 
   if (accessToken.isEmpty())
   {
-      qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                    "you to authenticate with an ArcGIS account or set the API Key property.";
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
 
-    // Initialize the sample
-    RealisticLightingAndShadows::init();
+  // Initialize the sample
+  RealisticLightingAndShadows::init();
 
-    // Initialize application view
-    QQmlApplicationEngine engine;
-    // Add the import Path
-    engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Initialize application view
+  QQmlApplicationEngine engine;
+  // Add the import Path
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
-    engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
 #ifdef ARCGIS_TOOLKIT_IMPORT_PATH_2
-    engine.addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH_2);
+  engine.addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH_2);
 #endif
 
-    // Set the source
-    engine.load(QUrl("qrc:/Samples/Scenes/RealisticLightingAndShadows/main.qml"));
+  // Set the source
+  engine.load(QUrl("qrc:/Samples/Scenes/RealisticLightingAndShadows/main.qml"));
 
-    return app.exec();
+  return app.exec();
 }

@@ -36,28 +36,33 @@ Item {
             left: parent.left
             top: parent.top
         }
-        width: childrenRect.width
+        width: 200
         height: childrenRect.height
-        color: "#000000"
-        opacity: .75
+        color: palette.base
         radius: 5
 
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         ColumnLayout {
-            Text {
-                color: "#ffffff"
-                text: "Current scale: 1:" + Math.round(model.currentScale)
+            width: parent.width
+            Label {
+                text: qsTr("Current scale: 1:" + Math.round(model.currentScale))
                 Layout.fillWidth: true
                 Layout.margins: 3
                 font {
                     weight: Font.DemiBold
-                    pointSize: 10
                 }
             }
             Button {
                 text: qsTr("Reset Viewpoint")
                 font {
                     weight: Font.DemiBold
-                    pointSize: 10
                 }
                 Layout.margins: 3
                 Layout.fillWidth: true

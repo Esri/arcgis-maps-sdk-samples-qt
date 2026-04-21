@@ -1,0 +1,36 @@
+{
+    "category": "Edit data",
+    "description": "Manage features in a feature layer.",
+    "featured": true,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "edit",
+        "feature",
+        "online service",
+        "Feature",
+        "FeatureEditResult",
+        "FeatureLayer",
+        "ServiceFeatureTable"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-addfeaturesfeatureservice.htm",
+        "/qt/latest/cpp/sample-code/sample-qt-deletefeaturesfeatureservice.htm",
+        "/qt/latest/cpp/sample-code/sample-qt-updateattributesfeatureservice.htm",
+        "/qt/latest/cpp/sample-code/sample-qt-updategeometryfeatureservice.htm"
+    ],
+    "relevant_apis": [
+        "Feature",
+        "FeatureEditResult",
+        "FeatureLayer",
+        "ServiceFeatureTable"
+    ],
+    "snippets": [
+        "ManageFeaturesFeatureService.cpp",
+        "ManageFeaturesFeatureService.h",
+        "ManageFeaturesFeatureService.qml"
+    ],
+    "title": "Manage features (feature service)"
+}

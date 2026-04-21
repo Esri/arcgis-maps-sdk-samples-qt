@@ -32,6 +32,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
+        color: palette.base
 
         GridLayout {
             columns: 2
@@ -49,7 +50,7 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 id: labelDD
                 font.pixelSize: fontPixelSize
                 Layout.margins: 5
@@ -69,7 +70,7 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 id: labelDMS
                 font.pixelSize: fontPixelSize
                 Layout.margins: 5
@@ -89,7 +90,7 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 id: labelUtm
                 font.pixelSize: fontPixelSize
                 Layout.margins: 5
@@ -109,7 +110,7 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 id: labelUsng
                 font.pixelSize: fontPixelSize
                 Layout.margins: 5

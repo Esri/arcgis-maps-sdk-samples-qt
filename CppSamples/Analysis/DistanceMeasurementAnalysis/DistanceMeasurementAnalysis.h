@@ -22,11 +22,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class LocationDistanceMeasurement;
-class Point;
-class Scene;
-class SceneQuickView;
-}
+  class ExploratoryLocationDistanceMeasurement;
+  class Point;
+  class Scene;
+  class SceneQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h");
 
@@ -59,7 +59,7 @@ private:
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-  Esri::ArcGISRuntime::LocationDistanceMeasurement* m_distanceAnalysis = nullptr;
+  Esri::ArcGISRuntime::ExploratoryLocationDistanceMeasurement* m_distanceAnalysis = nullptr;
   QString m_directDistance;
   QString m_horizontalDistance;
   QString m_verticalDistance;

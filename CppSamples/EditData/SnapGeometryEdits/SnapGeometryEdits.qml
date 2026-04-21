@@ -59,8 +59,16 @@ Item {
             width: 140
 
             background: Rectangle {
-                color: "black"
-                opacity: .5
+                color: palette.base
+                opacity: .9
+
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: mouse => mouse.accepted = true
+                    onDoubleClicked: mouse => mouse.accepted = true
+                    onWheel: wheel => wheel.accepted = true
+                }
             }
 
             contentItem: ColumnLayout {
@@ -75,12 +83,11 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     columns: 2
 
-                    Text {
+                    Label {
                         id: geometryHeader
                         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         Layout.columnSpan: 2
-                        text: "Create"
-                        color: "white"
+                        text: qsTr("Create")
                         font.pixelSize: 16
                         font.bold: true
                     }
@@ -88,7 +95,7 @@ Item {
                     GeometryEditorButton {
                         id: pointButton
                         buttonName: qsTr("Point")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/point-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/point-24.svg"
                         checkable: true
                         enabled: !snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.startEditor(SnapGeometryEditsSample.PointMode);
@@ -97,7 +104,7 @@ Item {
                     GeometryEditorButton {
                         id: multiPointButton
                         buttonName: qsTr("Multipoint")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/multipoint-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/layer-points-24.svg"
                         checkable: true
                         enabled: !snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.startEditor(SnapGeometryEditsSample.MultipointMode);
@@ -106,7 +113,7 @@ Item {
                     GeometryEditorButton {
                         id: lineButton
                         buttonName: qsTr("Line")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/line-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/line-24.svg"
                         checkable: true
                         enabled: !snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.startEditor(SnapGeometryEditsSample.PolylineMode);
@@ -115,7 +122,7 @@ Item {
                     GeometryEditorButton {
                         id: polygonButton
                         buttonName: qsTr("Polygon")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/polygon-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/polygon-24.svg"
                         checkable: true
                         enabled: !snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.startEditor(SnapGeometryEditsSample.PolygonMode);
@@ -128,12 +135,11 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     columns: 2
 
-                    Text {
+                    Label {
                         id: editingHeader
                         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         Layout.columnSpan: 2
                         text: qsTr("Edit")
-                        color: "white"
                         font.pixelSize: 16
                         font.bold: true
                     }
@@ -141,7 +147,7 @@ Item {
                     GeometryEditorButton {
                         id: undoButton
                         buttonName: qsTr("Undo")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/undo-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/undo-24.svg"
                         enabled: snapGeometryEditsSampleModel.geometryEditorStarted && snapGeometryEditsSampleModel.canUndo
                         onClicked: snapGeometryEditsSampleModel.editorUndo();
                     }
@@ -149,7 +155,7 @@ Item {
                     GeometryEditorButton {
                         id: deleteButton
                         buttonName: qsTr("Delete")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/erase-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/erase-24.svg"
                         enabled: snapGeometryEditsSampleModel.geometryEditorStarted || snapGeometryEditsSampleModel.isElementSelected
                         onClicked: snapGeometryEditsSampleModel.deleteSelection();
                     }
@@ -157,7 +163,7 @@ Item {
                     GeometryEditorButton {
                         id: saveEditsButton
                         buttonName: qsTr("Save")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/save-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/save-24.svg"
                         Layout.columnSpan: 2
                         enabled: snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.stopEditing();
@@ -166,7 +172,7 @@ Item {
                     GeometryEditorButton {
                         id: snapSettingsButton
                         buttonName: qsTr("Snap Settings")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/settings.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/gear-24.svg"
                         Layout.columnSpan: 2
                         enabled: snapGeometryEditsSampleModel.layersLoaded
                         onClicked: {
@@ -186,9 +192,18 @@ Item {
             top: parent.top
             bottom: parent.bottom
         }
+
+        MouseArea {
+            anchors.fill: optionPanel
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         width: 360
         visible: false
-        color: "white"
+        color: palette.base
         opacity: 1
 
         ListView {
@@ -206,23 +221,21 @@ Item {
                     Layout.minimumWidth: optionPanel.width
                     Layout.minimumHeight: 35
 
-                    Text {
+                    Label {
                         Layout.alignment: Qt.AlignLeft
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width * 0.75
-                        text: "Snapping"
+                        text: qsTr("Snapping")
                         font.pixelSize: 15
-                        color: "#8434C1"
                         font.bold: true
                     }
 
-                    Text {
+                    Label {
                         Layout.alignment: Qt.AlignRight
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width * 0.25
-                        text: "Done"
+                        text: qsTr("Done")
                         font.pixelSize: 15
-                        color: "#8434C1"
                         font.bold: true
                         MouseArea {
                             anchors.fill: parent
@@ -239,9 +252,9 @@ Item {
                         Layout.alignment: Qt.AlignLeft
                         Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
                         Layout.minimumHeight: 35
-                        color: "#E9DFEA"
+                        color: palette.mid
 
-                        Text {
+                        Label {
                             text: qsTr("Snapping enabled")
                             font.pixelSize: 15
                             anchors {
@@ -264,9 +277,9 @@ Item {
                         Layout.alignment: Qt.AlignLeft
                         Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
                         Layout.minimumHeight: 35
-                        color: "#E9DFEA"
+                        color: palette.mid
 
-                        Text {
+                        Label {
                             text: qsTr("Geometry guides")
                             font.pixelSize: 15
                             anchors {
@@ -289,10 +302,10 @@ Item {
                         Layout.alignment: Qt.AlignLeft
                         Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
                         Layout.minimumHeight: 35
-                        color: "#E9DFEA"
+                        color: palette.mid
 
 
-                        Text {
+                        Label {
                             text: qsTr("Feature snapping")
                             font.pixelSize: 15
                             anchors {
@@ -328,12 +341,11 @@ Item {
                         Layout.minimumWidth: optionPanel.width
                         Layout.minimumHeight: 25
 
-                        Text {
+                        Label {
                             Layout.alignment: Qt.AlignLeft
                             Layout.fillWidth: true
                             Layout.minimumWidth: optionPanel.width * 0.5
                             Layout.minimumHeight: 25
-                            color: "#8434C1"
                             text: section + " layers"
                             font.pixelSize: 15
                             font.bold: true
@@ -341,13 +353,12 @@ Item {
                             Layout.bottomMargin: 10
                         }
 
-                        Text {
+                        Label {
                             Layout.alignment: Qt.AlignRight
                             Layout.minimumWidth: optionPanel.width * 0.5
                             Layout.minimumHeight: 25
-                            text: "Enable All Sources"
+                            text: qsTr("Enable All Sources")
                             font.pixelSize: 15
-                            color: "#8434C1"
                             font.bold: true
                             Layout.topMargin: 10
                             Layout.bottomMargin: 10
@@ -367,7 +378,7 @@ Item {
                 id:delegate
                 Rectangle {
                     id: wrapper
-                    color: "#E9DFEA"
+                    color: palette.mid
                     width: snapSourceView.width - (snapSourceView.anchors.margins / 2)
                     height: delegate.height
                     anchors {
@@ -380,7 +391,7 @@ Item {
                         Layout.minimumWidth: optionPanel.width
                         width: wrapper.width
 
-                        Text {
+                        Label {
                             Layout.alignment: Qt.AlignLeft
                             Layout.fillWidth: true
                             Layout.minimumWidth: optionPanel.width / 2
@@ -393,7 +404,11 @@ Item {
                             Layout.alignment: Qt.AlignRight
                             Layout.fillWidth: true
                             checked: isEnabled
-                            onCheckedChanged: isEnabled = checked;
+                            onCheckedChanged: {
+                                if (isEnabled !== checked) {
+                                    isEnabled = checked
+                                }
+                            }
                         }
                     }
                 }

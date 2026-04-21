@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Samples/EditData/EditGeometriesWithProgrammaticReticleTool">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>EditGeometriesWithProgrammaticReticleTool.qml</file>
+        <file>EditGeometriesWithProgrammaticReticleTool.h</file>
+        <file>EditGeometriesWithProgrammaticReticleTool.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>GeometryEditorPopup.qml</file>
+    </qresource>
+</RCC>

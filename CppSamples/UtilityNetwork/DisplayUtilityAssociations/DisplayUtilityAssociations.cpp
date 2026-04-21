@@ -65,11 +65,11 @@ using namespace Esri::ArcGISRuntime::Authentication;
 
 namespace
 {
-const int maxScale = 2000;
-constexpr int targetScale = 50;
-}
+  const int maxScale = 2000;
+  constexpr int targetScale = 50;
+} // namespace
 
-DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */):
+DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */) :
   ArcGISAuthenticationChallengeHandler(parent),
   m_map(new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=be0e4637620a453584118107931f718b"), this)),
   m_associationsOverlay(new GraphicsOverlay(this)),
@@ -93,10 +93,13 @@ DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = null
 
 void DisplayUtilityAssociations::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
 {
-  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this)
+    .then(this,
+          [challenge](TokenCredential* tokenCredential)
   {
     challenge->continueWithCredential(tokenCredential);
-  }).onFailed(this, [challenge](const ErrorException& e)
+  })
+    .onFailed(this, [challenge](const ErrorException& e)
   {
     challenge->continueWithError(e.error());
   });
@@ -105,8 +108,10 @@ void DisplayUtilityAssociations::handleArcGISAuthenticationChallenge(ArcGISAuthe
 void DisplayUtilityAssociations::addAssociations()
 {
   // check if current viewpoint is outside the max scale
-  if(m_mapView->currentViewpoint(ViewpointType::CenterAndScale).targetScale() >= maxScale)
+  if (m_mapView->currentViewpoint(ViewpointType::CenterAndScale).targetScale() >= maxScale)
+  {
     return;
+  }
 
   // check if current viewpoint has a valid extent
   const Envelope extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
@@ -125,10 +130,10 @@ void DisplayUtilityAssociations::addAssociations()
     {
       // check if the graphics overlay already contains the association
       const bool uniqueGraphic = std::none_of(graphics->begin(), graphics->end(), [association](const Graphic* graphic)
-                                              {
-                                                const AttributeListModel* attributes = graphic->attributes();
-                                                return attributes->containsAttribute("GlobalId") && qvariant_cast<QUuid>((*graphic->attributes())["GlobalId"]) == association->globalId();
-                                              });
+      {
+        const AttributeListModel* attributes = graphic->attributes();
+        return attributes->containsAttribute("GlobalId") && qvariant_cast<QUuid>((*graphic->attributes())["GlobalId"]) == association->globalId();
+      });
 
       if (uniqueGraphic)
       {
@@ -162,7 +167,9 @@ MapQuickView* DisplayUtilityAssociations::mapView() const
 void DisplayUtilityAssociations::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -177,7 +184,9 @@ void DisplayUtilityAssociations::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
   {
     if (!m_mapView->isNavigating())
+    {
       addAssociations();
+    }
   });
 
   emit mapViewChanged();
@@ -193,28 +202,33 @@ void DisplayUtilityAssociations::connectSignals()
       return;
     }
 
-    m_mapView->setViewpointAsync(Viewpoint(Point(-9812698.37297436, 5131928.33743317, SpatialReference::webMercator()), targetScale)).then(this, [this](bool succeeded)
+    m_mapView->setViewpointAsync(Viewpoint(Point(-9812698.37297436, 5131928.33743317, SpatialReference::webMercator()), targetScale))
+      .then(this, [this](bool succeeded)
     {
       if (!succeeded)
+      {
         return;
+      }
 
       addAssociations();
     });
 
     // create a renderer for the associations
-    UniqueValue* attachmentValue = new UniqueValue("Attachment", "",
-                                                   QVariantList{static_cast<int>(UtilityAssociationType::Attachment)}, m_attachmentSymbol, this);
-    UniqueValue* connectivityValue = new UniqueValue("Connectivity", "",
-                                                     QVariantList{static_cast<int>(UtilityAssociationType::Connectivity)}, m_connectivitySymbol, this);
-    UniqueValueRenderer* uniqueValueRenderer = new UniqueValueRenderer("", nullptr,
-                                                                       QStringList{"AssociationType"}, QList<UniqueValue*>{attachmentValue, connectivityValue}, this);
+    UniqueValue* attachmentValue =
+      new UniqueValue("Attachment", "", QVariantList{static_cast<int>(UtilityAssociationType::Attachment)}, m_attachmentSymbol, this);
+    UniqueValue* connectivityValue =
+      new UniqueValue("Connectivity", "", QVariantList{static_cast<int>(UtilityAssociationType::Connectivity)}, m_connectivitySymbol, this);
+    UniqueValueRenderer* uniqueValueRenderer =
+      new UniqueValueRenderer("", nullptr, QStringList{"AssociationType"}, QList<UniqueValue*>{attachmentValue, connectivityValue}, this);
     m_associationsOverlay->setRenderer(uniqueValueRenderer);
 
     // populate the legend
     m_attachmentSymbol->createSwatchAsync().then(this, [this](const QImage& image)
     {
       if (!m_symbolImageProvider)
+      {
         return;
+      }
 
       const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
 
@@ -231,7 +245,9 @@ void DisplayUtilityAssociations::connectSignals()
     m_connectivitySymbol->createSwatchAsync().then(this, [this](const QImage& image)
     {
       if (!m_symbolImageProvider)
+      {
         return;
+      }
 
       const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
 

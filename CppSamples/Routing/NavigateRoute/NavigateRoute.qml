@@ -36,11 +36,19 @@ Item {
             z: 1
             width: buttonRow.width * 1.5
             height: 200
-            color: "#FBFBFB"
+            color: palette.base
             border.color: "black"
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.margins: 20
+            
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: mouse => mouse.accepted = true
+                onDoubleClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
 
             RowLayout {
                 id: buttonRow
@@ -50,14 +58,14 @@ Item {
                     margins: 5
                 }
                 Button {
-                    text: "Navigate"
+                    text: qsTr("Navigate")
                     enabled: model.navigationEnabled
                     onClicked: {
                         model.startNavigation();
                     }
                 }
                 Button {
-                    text: "Recenter"
+                    text: qsTr("Recenter")
                     enabled: model.recenterEnabled
                     onClicked: {
                         model.recenterMap();
@@ -72,7 +80,8 @@ Item {
                     margins: 5
                 }
                 width: parent.width
-                Text {
+                color: palette.base
+                Label {
                     padding: 5
                     width: parent.width
                     wrapMode: Text.Wrap

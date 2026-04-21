@@ -7,9 +7,9 @@
         <file>MobileMap_SearchAndRoute.cpp</file>
         <file>README.md</file>
         <file>bluePinSymbol.png</file>
-        <file>discardSymbol.png</file>
-        <file>pinOutlineSymbol.png</file>
-        <file>routingSymbol.png</file>
-        <file>forwardIcon.png</file>
+        <file>trash-24.svg</file>
+        <file>pin-24.svg</file>
+        <file>road-sign-24.svg</file>
+        <file>chevron-right-24.svg</file>
     </qresource>
 </RCC>

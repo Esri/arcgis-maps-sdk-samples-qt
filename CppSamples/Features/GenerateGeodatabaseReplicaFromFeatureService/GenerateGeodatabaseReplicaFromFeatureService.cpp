@@ -62,11 +62,11 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
@@ -141,7 +141,6 @@ void GenerateGeodatabaseReplicaFromFeatureService::componentComplete()
       // add the layer id to the string list
       m_serviceIds << id;
     }
-
   });
 
   // connect to map doneLoading signal
@@ -207,27 +206,28 @@ void GenerateGeodatabaseReplicaFromFeatureService::generateGeodatabaseFromCorner
     connect(generateJob, &GenerateGeodatabaseJob::statusChanged, this, [this, generateJob](JobStatus jobStatus)
     {
       // connect to the job's status changed signal to know once it is done
-      switch (jobStatus) {
-      case JobStatus::Failed:
-        emit updateStatus("Generate failed");
-        emit hideWindow(5000, false);
-        break;
-      case JobStatus::NotStarted:
-        emit updateStatus("Job not started");
-        break;
-      case JobStatus::Paused:
-        emit updateStatus("Job paused");
-        break;
-      case JobStatus::Started:
-        emit updateStatus("In progress...");
-        break;
-      case JobStatus::Succeeded:
-        emit updateStatus("Complete");
-        emit hideWindow(1500, true);
-        addOfflineData(generateJob->result());
-        break;
-      default:
-        break;
+      switch (jobStatus)
+      {
+        case JobStatus::Failed:
+          emit updateStatus("Generate failed");
+          emit hideWindow(5000, false);
+          break;
+        case JobStatus::NotStarted:
+          emit updateStatus("Job not started");
+          break;
+        case JobStatus::Paused:
+          emit updateStatus("Job paused");
+          break;
+        case JobStatus::Started:
+          emit updateStatus("In progress...");
+          break;
+        case JobStatus::Succeeded:
+          emit updateStatus("Complete");
+          emit hideWindow(1500, true);
+          addOfflineData(generateJob->result());
+          break;
+        default:
+          break;
       }
     });
 
@@ -240,6 +240,7 @@ void GenerateGeodatabaseReplicaFromFeatureService::generateGeodatabaseFromCorner
     emit hideWindow(5000, false);
   }
 }
+
 //! [Features GenerateGeodatabase Part 2]
 
 void GenerateGeodatabaseReplicaFromFeatureService::addOfflineData(Geodatabase* gdb)

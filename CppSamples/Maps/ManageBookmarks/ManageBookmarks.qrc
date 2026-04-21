@@ -6,6 +6,6 @@
 		<file>ManageBookmarks.h</file>
 		<file>ManageBookmarks.cpp</file>
         <file>README.md</file>
-        <file>add.png</file>
+        <file>plus-24.svg</file>
     </qresource>
 </RCC>

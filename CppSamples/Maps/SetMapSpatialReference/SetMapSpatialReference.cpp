@@ -72,3 +72,22 @@ void SetMapSpatialReference::componentComplete()
   // set map on the map view
   m_mapView->setMap(m_map);
 }
+
+QStringList SetMapSpatialReference::spatialReferenceNames() const
+{
+  QStringList names;
+  for (const auto& option : m_srOptions)
+  {
+    names << option.first;
+  }
+  return names;
+}
+
+void SetMapSpatialReference::setSpatialReference(int index)
+{
+  if (index < 0 || index >= m_srOptions.size())
+  {
+    return;
+  }
+  m_map->setSpatialReference(SpatialReference(m_srOptions[index].second));
+}

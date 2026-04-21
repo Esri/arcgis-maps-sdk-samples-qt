@@ -1,0 +1,38 @@
+{
+    "category": "Analysis",
+    "description": "Calculate a viewshed using a geoprocessing service, in this case showing which parts of a landscape are visible from points on mountainous terrain.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "geoprocessing",
+        "heat map",
+        "heatmap",
+        "viewshed",
+        "FeatureCollectionTable",
+        "GeoprocessingFeatures",
+        "GeoprocessingJob",
+        "GeoprocessingParameters",
+        "GeoprocessingResult",
+        "GeoprocessingTask"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-analyzeviewshed.htm"
+    ],
+    "relevant_apis": [
+        "FeatureCollectionTable",
+        "GeoprocessingFeatures",
+        "GeoprocessingJob",
+        "GeoprocessingParameters",
+        "GeoprocessingResult",
+        "GeoprocessingTask"
+    ],
+    "snippets": [
+        "ShowViewshedCalculatedFromGeoprocessingTask.cpp",
+        "ShowViewshedCalculatedFromGeoprocessingTask.h",
+        "ShowViewshedCalculatedFromGeoprocessingTask.qml"
+    ],
+    "title": "Show viewshed calculated from geoprocessing task"
+}

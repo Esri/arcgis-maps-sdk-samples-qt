@@ -45,17 +45,17 @@ namespace
   {
     QString dataPath;
 
-    #ifdef Q_OS_IOS
-      dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    #else
-      dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    #endif
+#ifdef Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#endif
 
     return dataPath;
   }
-}
+} // namespace
 
-CreateTerrainSurfaceFromLocalRaster::CreateTerrainSurfaceFromLocalRaster(QObject* parent /* = nullptr */):
+CreateTerrainSurfaceFromLocalRaster::CreateTerrainSurfaceFromLocalRaster(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
@@ -67,13 +67,14 @@ CreateTerrainSurfaceFromLocalRaster::CreateTerrainSurfaceFromLocalRaster(QObject
   //Before attempting to add any layers, check that the file for the elevation source exists at all.
   const bool srcElevationFileExists = QFileInfo::exists(montereyRasterElevationPath);
 
-  if(srcElevationFileExists)
+  if (srcElevationFileExists)
   {
     //Create the elevation source from the local raster(s). RasterElevationSource can take multiple files as inputs, but in this case only takes one.
     RasterElevationSource* elevationSrc = new RasterElevationSource{QStringList{montereyRasterElevationPath}, this};
 
     //When the elevation source is finished loading, call the elevationSrcFinishedLoading callback, so we can tell if it loaded succesfully.
-    connect(elevationSrc, &RasterElevationSource::doneLoading, this, &CreateTerrainSurfaceFromLocalRaster::elevationSrcFinishedLoading, Qt::UniqueConnection);
+    connect(elevationSrc, &RasterElevationSource::doneLoading, this, &CreateTerrainSurfaceFromLocalRaster::elevationSrcFinishedLoading,
+            Qt::UniqueConnection);
 
     // add the elevation source to the scene to display elevation
     m_scene->baseSurface()->elevationSources()->append(elevationSrc);
@@ -86,12 +87,13 @@ CreateTerrainSurfaceFromLocalRaster::CreateTerrainSurfaceFromLocalRaster(QObject
 
 void CreateTerrainSurfaceFromLocalRaster::elevationSrcFinishedLoading(const Error& loadError)
 {
-  if(loadError.isEmpty())
+  if (loadError.isEmpty())
   {
     //Succesful load
     qInfo() << "Loaded raster elevation source succesfully";
   }
-  else {
+  else
+  {
     //Log failure to load
     qWarning() << "Error loading elevation source : " << loadError.message();
   }

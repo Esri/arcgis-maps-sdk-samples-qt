@@ -1,11 +1,11 @@
 // [Legal]
-// COPYRIGHT 2025 ESRI
-
+// Copyright 2025 Esri.
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,7 +31,7 @@
 #endif
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#  include <QtWebEngineQuick>
+#include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #include "ArcGISRuntimeEnvironment.h"
@@ -59,16 +59,16 @@
 
 // All Samples
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
-#include "../CppSamples/Analysis/AnalyzeViewshed/AnalyzeViewshed.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
-#include "../CppSamples/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.h"
-#include "../CppSamples/Analysis/LineOfSightLocation/LineOfSightLocation.h"
+#include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
+#include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h"
+#include "../CppSamples/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
 #include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
-#include "../CppSamples/Analysis/ViewshedCamera/ViewshedCamera.h"
-#include "../CppSamples/Analysis/ViewshedGeoElement/ViewshedGeoElement.h"
-#include "../CppSamples/Analysis/ViewshedLocation/ViewshedLocation.h"
 #include "../CppSamples/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.h"
 #include "../CppSamples/CloudAndPortal/TokenAuthentication/TokenAuthentication.h"
 #include "../CppSamples/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.h"
@@ -84,28 +84,27 @@
 #include "../CppSamples/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.h"
 #include "../CppSamples/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.h"
 #include "../CppSamples/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h"
+#include "../CppSamples/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.h"
 #include "../CppSamples/DisplayInformation/ShowCallout/ShowCallout.h"
 #include "../CppSamples/DisplayInformation/ShowGrid/ShowGrid.h"
 #include "../CppSamples/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.h"
 #include "../CppSamples/DisplayInformation/ShowPopup/ShowPopup.h"
 #include "../CppSamples/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.h"
 #include "../CppSamples/DisplayInformation/Simple_Renderer/Simple_Renderer.h"
-#include "../CppSamples/DisplayInformation/SketchOnMap/SketchOnMap.h"
 #include "../CppSamples/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h"
 #include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
-#include "../CppSamples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h"
 #include "../CppSamples/EditData/ContingentValues/ContingentValues.h"
 #include "../CppSamples/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h"
-#include "../CppSamples/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h"
 #include "../CppSamples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h"
 #include "../CppSamples/EditData/EditFeatureAttachments/EditFeatureAttachments.h"
 #include "../CppSamples/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h"
+#include "../CppSamples/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.h"
+#include "../CppSamples/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h"
 #include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
 #include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
+#include "../CppSamples/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.h"
 #include "../CppSamples/EditData/SnapGeometryEdits/SnapGeometryEdits.h"
 #include "../CppSamples/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h"
-#include "../CppSamples/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h"
-#include "../CppSamples/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h"
 #include "../CppSamples/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h"
 #include "../CppSamples/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.h"
 #include "../CppSamples/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.h"
@@ -115,9 +114,7 @@
 #include "../CppSamples/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.h"
 #include "../CppSamples/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.h"
 #include "../CppSamples/Features/ListRelatedFeatures/ListRelatedFeatures.h"
-#include "../CppSamples/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.h"
-#include "../CppSamples/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.h"
-#include "../CppSamples/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.h"
+#include "../CppSamples/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.h"
 #include "../CppSamples/Geometry/Buffer/Buffer.h"
 #include "../CppSamples/Geometry/ClipGeometry/ClipGeometry.h"
 #include "../CppSamples/Geometry/ConvexHull/ConvexHull.h"
@@ -132,9 +129,11 @@
 #include "../CppSamples/Geometry/ProjectGeometry/ProjectGeometry.h"
 #include "../CppSamples/Geometry/SpatialOperations/SpatialOperations.h"
 #include "../CppSamples/Geometry/SpatialRelationships/SpatialRelationships.h"
+#include "../CppSamples/Layers/AddBuildingSceneLayer/AddBuildingSceneLayer.h"
 #include "../CppSamples/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h"
 #include "../CppSamples/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h"
-#include "../CppSamples/Layers/AddEncExchangeSet/AddEncExchangeSet.h"
+#include "../CppSamples/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.h"
+#include "../CppSamples/Layers/ApplyMapAlgebra/ApplyMapAlgebra.h"
 #include "../CppSamples/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h"
 #include "../CppSamples/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h"
 #include "../CppSamples/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h"
@@ -145,6 +144,7 @@
 #include "../CppSamples/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.h"
 #include "../CppSamples/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.h"
 #include "../CppSamples/Layers/ConfigureClusters/ConfigureClusters.h"
+#include "../CppSamples/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.h"
 #include "../CppSamples/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.h"
 #include "../CppSamples/Layers/DisplayAnnotation/DisplayAnnotation.h"
 #include "../CppSamples/Layers/DisplayDimensions/DisplayDimensions.h"
@@ -161,6 +161,7 @@
 #include "../CppSamples/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h"
 #include "../CppSamples/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.h"
 #include "../CppSamples/Layers/Feature_Collection_Layer/Feature_Collection_Layer.h"
+#include "../CppSamples/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.h"
 #include "../CppSamples/Layers/GroupLayers/GroupLayers.h"
 #include "../CppSamples/Layers/Hillshade_Renderer/Hillshade_Renderer.h"
 #include "../CppSamples/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.h"
@@ -240,9 +241,11 @@
 #include "../CppSamples/Scenes/BasicSceneView/BasicSceneView.h"
 #include "../CppSamples/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h"
 #include "../CppSamples/Scenes/ChooseCameraController/ChooseCameraController.h"
+#include "../CppSamples/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h"
 #include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.h"
 #include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h"
-#include "../CppSamples/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.h"
+#include "../CppSamples/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.h"
+#include "../CppSamples/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h"
 #include "../CppSamples/Scenes/DisplaySceneLayer/DisplaySceneLayer.h"
 #include "../CppSamples/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h"
 #include "../CppSamples/Scenes/ExtrudeGraphics/ExtrudeGraphics.h"
@@ -266,6 +269,7 @@
 #include "../CppSamples/Search/OfflineGeocode/OfflineGeocode.h"
 #include "../CppSamples/Search/ReverseGeocodeOnline/ReverseGeocodeOnline.h"
 #include "../CppSamples/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.h"
+#include "../CppSamples/Search/QueryDynamicEntities/QueryDynamicEntities.h"
 #include "../CppSamples/UtilityNetwork/ConfigureSubnetworkTrace/ConfigureSubnetworkTrace.h"
 #include "../CppSamples/UtilityNetwork/CreateLoadReport/CreateLoadReport.h"
 #include "../CppSamples/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.h"
@@ -300,13 +304,11 @@ QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 void registerClasses();
 void registerCppSampleClasses();
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
-
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
 
   QGuiApplication::setApplicationName("ArcGIS Maps Qt Samples");
   QGuiApplication::setOrganizationName("Esri");
@@ -375,16 +377,16 @@ void registerCppSampleClasses()
   // Register the Samples under the Esri.Samples namespace
   Add3DTilesLayer::init();
   AddAPointSceneLayer::init();
+  AddBuildingSceneLayer::init();
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
-  AddEncExchangeSet::init();
-  AddFeaturesFeatureService::init();
   AddGraphicsWithRenderer::init();
   AddIntegratedMeshLayer::init();
+  AddVectorTiledLayerFromCustomStyle::init();
   AnalyzeHotspots::init();
-  AnalyzeViewshed::init();
   Animate3DSymbols::init();
   AnimateImagesWithImageOverlay::init();
+  ApplyMapAlgebra::init();
   ApplyMosaicRuleToRasters::init();
   ApplyScheduledMapUpdates::init();
   ApplyUniqueValuesWithAlternateSymbols::init();
@@ -407,6 +409,8 @@ void registerCppSampleClasses()
   ClosestFacility::init();
   ConfigureBasemapStyleLanguage::init();
   ConfigureClusters::init();
+  ConfigureElectronicNavigationalCharts::init();
+  ConfigureSceneEnvironment::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();
   CreateKmlMultiTrack::init();
@@ -425,9 +429,8 @@ void registerCppSampleClasses()
   CreateTerrainSurfaceFromLocalTilePackage::init();
   CustomDictionaryStyle::init();
   CutGeometry::init();
-  DeleteFeaturesFeatureService::init();
   DensifyAndGeneralize::init();
-  Display3DLabelsInScene::init();
+  ShowLabelsOnLayerIn3D::init();
   DisplayAnnotation::init();
   DisplayClusters::init();
   DisplayContentOfUtilityNetworkContainer::init();
@@ -439,6 +442,7 @@ void registerCppSampleClasses()
   DisplayKml::init();
   DisplayKmlNetworkLinks::init();
   DisplayLayerViewDrawState::init();
+  DisplayLocalSceneView::init();
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
@@ -453,6 +457,8 @@ void registerCppSampleClasses()
   EditAndSyncFeatures::init();
   EditFeatureAttachments::init();
   EditFeaturesWithFeatureLinkedAnnotation::init();
+  EditGeodatabaseWithTransactions::init();
+  EditGeometriesWithProgrammaticReticleTool::init();
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
   ExportTiles::init();
@@ -469,6 +475,7 @@ void registerCppSampleClasses()
   FeatureLayerSelection::init();
   Feature_Collection_Layer::init();
   FilterByDefinitionExpressionOrDisplayFilter::init();
+  FilterBuildingSceneLayer::init();
   FilterFeaturesInScene::init();
   FindAddress::init();
   FindClosestFacilityToMultipleIncidentsService::init();
@@ -494,13 +501,12 @@ void registerCppSampleClasses()
   IdentifyLayers::init();
   IdentifyRasterCell::init();
   IntegratedWindowsAuthentication::init();
-  LineOfSightGeoElement::init();
-  LineOfSightLocation::init();
   ListKmlContents::init();
   ListRelatedFeatures::init();
   ListTransformations::init();
   LoadWfsXmlQuery::init();
   ManageBookmarks::init();
+  ManageFeaturesFeatureService::init();
   ManageOperationalLayers::init();
   MapLoaded::init();
   MapReferenceScale::init();
@@ -536,15 +542,15 @@ void registerCppSampleClasses()
   ReadGeoPackage::init();
   ReadSymbolsFromMobileStyle::init();
   RealisticLightingAndShadows::init();
+  RenderMultilayerSymbols::init();
   ReverseGeocodeOnline::init();
   RouteAroundBarriers::init();
   SceneLayerSelection::init();
   ScenePropertiesExpressions::init();
   SearchDictionarySymbolStyle::init();
+  QueryDynamicEntities::init();
   ServiceArea::init();
-  ServiceFeatureTableCache::init();
-  ServiceFeatureTableManualCache::init();
-  ServiceFeatureTableNoCache::init();
+  ToggleBetweenFeatureRequestModes::init();
   SetInitialMapArea::init();
   SetInitialMapLocation::init();
   SetMapSpatialReference::init();
@@ -552,6 +558,12 @@ void registerCppSampleClasses()
   SetSurfacePlacementMode::init();
   ShowCallout::init();
   ShowDeviceLocationUsingIndoorPositioning::init();
+  ShowExploratoryLineOfSightBetweenGeoElements::init();
+  ShowExploratoryLineOfSightBetweenPoints::init();
+  ShowExploratoryViewshedFromCameraInScene::init();
+  ShowExploratoryViewshedFromGeoElementInScene::init();
+  ShowExploratoryViewshedFromPointInScene::init();
+  ShowViewshedCalculatedFromGeoprocessingTask::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();
@@ -559,7 +571,6 @@ void registerCppSampleClasses()
   ShowPopup::init();
   Simple_Marker_Symbol::init();
   Simple_Renderer::init();
-  SketchOnMap::init();
   SnapGeometryEdits::init();
   SnapGeometryEditsWithRules::init();
   SpatialOperations::init();
@@ -576,14 +587,9 @@ void registerCppSampleClasses()
   TokenAuthentication::init();
   TraceUtilityNetwork::init();
   Unique_Value_Renderer::init();
-  UpdateAttributesFeatureService::init();
-  UpdateGeometryFeatureService::init();
   ValidateUtilityNetworkTopology::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
-  ViewshedCamera::init();
-  ViewshedGeoElement::init();
-  ViewshedLocation::init();
   WMTS_Layer::init();
   Web_Tiled_Layer::init();
   WmsLayerUrl::init();
@@ -605,32 +611,22 @@ void registerCppSampleClasses()
   LocalServerFeatureLayer::init();
   LocalServerGeoprocessing::init();
 #endif // LOCALSERVER_SUPPORTED
-
 }
 
 void registerClasses()
 {
-  qmlRegisterSingletonType<SampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
-                                                  &esriSampleManagerProvider);
+  qmlRegisterSingletonType<SampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager", &esriSampleManagerProvider);
 
-  qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter",
-                                              &syntaxHighlighterProvider);
-  qmlRegisterUncreatableType<DataItem>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                       "DataItem", "DataItem is an uncreatable type");
-  qmlRegisterUncreatableType<DataItemListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                                "DataItemListModel", "DataItemListModel is an uncreatable type");
-  qmlRegisterUncreatableType<CategoryListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                                "CategoryListModel", "CategoryListModel is an uncreatable type");
-  qmlRegisterUncreatableType<SampleListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                              "SampleListModel", "SampleListModel is an uncreatable type");
-  qmlRegisterUncreatableType<SampleCategory>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                             "SampleCategory", "SampleCategory is an uncreatable type");
-  qmlRegisterUncreatableType<Sample>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                     "Sample", "Sample is an uncreatable type");
-  qmlRegisterUncreatableType<SourceCodeListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                                  "SourceCodeListModel", "SourceCodeListModel is an uncreatable type");
-  qmlRegisterUncreatableType<SourceCode>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                         "SourceCode", "SourceCode is an uncreatable type");
+  qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter", &syntaxHighlighterProvider);
+  qmlRegisterUncreatableType<DataItem>("Esri.ArcGISRuntimeSamples", 1, 0, "DataItem", "DataItem is an uncreatable type");
+  qmlRegisterUncreatableType<DataItemListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "DataItemListModel", "DataItemListModel is an uncreatable type");
+  qmlRegisterUncreatableType<CategoryListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "CategoryListModel", "CategoryListModel is an uncreatable type");
+  qmlRegisterUncreatableType<SampleListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleListModel", "SampleListModel is an uncreatable type");
+  qmlRegisterUncreatableType<SampleCategory>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleCategory", "SampleCategory is an uncreatable type");
+  qmlRegisterUncreatableType<Sample>("Esri.ArcGISRuntimeSamples", 1, 0, "Sample", "Sample is an uncreatable type");
+  qmlRegisterUncreatableType<SourceCodeListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SourceCodeListModel",
+                                                  "SourceCodeListModel is an uncreatable type");
+  qmlRegisterUncreatableType<SourceCode>("Esri.ArcGISRuntimeSamples", 1, 0, "SourceCode", "SourceCode is an uncreatable type");
 
   qmlRegisterType<SampleSearchFilterModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleSearchFilterModel");
   qmlRegisterUncreatableType<SearchFilterCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterCriteria", "Abstract base class");

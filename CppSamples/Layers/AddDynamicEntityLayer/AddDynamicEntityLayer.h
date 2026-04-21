@@ -22,11 +22,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ArcGISStreamService;
-class DynamicEntityLayer;
-class Map;
-class MapQuickView;
-}
+  class ArcGISStreamService;
+  class DynamicEntityLayer;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 class QMouseEvent;
 

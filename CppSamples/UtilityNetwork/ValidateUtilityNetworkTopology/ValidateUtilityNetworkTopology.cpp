@@ -125,19 +125,15 @@ MapQuickView* ValidateUtilityNetworkTopology::mapView() const
 void ValidateUtilityNetworkTopology::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_progressBarVisibility = true;
   emit progressBarVisibilityChanged();
   updateMessage("Loading a webmap...");
 
-  const Envelope envelope(
-      -9815489.0660101417,
-      5128463.4221229386,
-      -9814625.2768726498,
-      5128968.4911854975,
-      SpatialReference::webMercator()
-      );
+  const Envelope envelope(-9815489.0660101417, 5128463.4221229386, -9814625.2768726498, 5128968.4911854975, SpatialReference::webMercator());
 
   Viewpoint initialViewpoint(envelope);
 
@@ -181,7 +177,7 @@ void ValidateUtilityNetworkTopology::onMapLoaded()
   m_utilityNetwork->load();
   m_serviceGeodatabase = m_utilityNetwork->serviceGeodatabase();
 
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this, params](const Esri::ArcGISRuntime::Error &loadError)
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this, params](const Esri::ArcGISRuntime::Error& loadError)
   {
     onServiceGeodatabaseLoaded(params, loadError);
   });
@@ -192,11 +188,14 @@ void ValidateUtilityNetworkTopology::onMapLoaded()
 void ValidateUtilityNetworkTopology::onServiceGeodatabaseLoaded(ServiceVersionParameters* params, const Error& loadError)
 {
   if (!loadError.isEmpty())
+  {
     return;
+  }
 
   m_serviceGeodatabase->createVersionAsync(params).then(this, [this](ServiceVersionInfo* serviceVersionInfo)
   {
-    m_serviceGeodatabase->switchVersionAsync(serviceVersionInfo->name()).then(this, [this]()
+    m_serviceGeodatabase->switchVersionAsync(serviceVersionInfo->name())
+      .then(this, [this]()
     {
       displayLabelDefinitions();
 
@@ -224,10 +223,13 @@ void ValidateUtilityNetworkTopology::connectSignals()
       updateMessage("Identifying feature to edit...");
 
       if (m_map->loadStatus() != LoadStatus::Loaded)
+      {
         return;
+      }
 
       // Perform an identify to determine if a user tapped on a feature.
-      m_mapView->identifyLayersAsync(mouseEvent.position(), 5.0, false).then(this, [this](const QList<IdentifyLayerResult*>& results)
+      m_mapView->identifyLayersAsync(mouseEvent.position(), 5.0, false)
+        .then(this, [this](const QList<IdentifyLayerResult*>& results)
       {
         onIdentifyLayersAsyncCompleted(results);
       });
@@ -241,7 +243,8 @@ void ValidateUtilityNetworkTopology::onIdentifyLayersAsyncCompleted(const QList<
   {
     for (IdentifyLayerResult* result : results)
     {
-      if (result && (result->layerContent()->name() == "Electric Distribution Device" || result->layerContent()->name() == "Electric Distribution Line"))
+      if (result &&
+          (result->layerContent()->name() == "Electric Distribution Device" || result->layerContent()->name() == "Electric Distribution Line"))
       {
         m_feature = static_cast<ArcGISFeature*>(std::as_const(result)->geoElements().first());
         break;
@@ -267,15 +270,21 @@ void ValidateUtilityNetworkTopology::onIdentifyLayersAsyncCompleted(const QList<
   }
 
   if (m_feature->loadStatus() != LoadStatus::Loaded)
+  {
     m_feature->load();
+  }
 
   m_featureToEdit = m_feature;
 
   // Select the feature.
   if (m_fieldName == "nominalvoltage")
+  {
     m_lineFeatureLayer->selectFeature(m_featureToEdit);
+  }
   else if (m_fieldName == "devicestatus")
+  {
     m_deviceFeatureLayer->selectFeature(m_featureToEdit);
+  }
 
   m_choices.clear();
 
@@ -283,9 +292,13 @@ void ValidateUtilityNetworkTopology::onIdentifyLayersAsyncCompleted(const QList<
   for (const CodedValue& codedValue : m_codedValues)
   {
     if (codedValue.code() == m_featureToEdit->attributes()->attributeValue(m_fieldName))
+    {
       m_choices.replace(0, codedValue.name());
+    }
     else
+    {
       m_choices.append(codedValue.name());
+    }
   }
   emit choicesChanged();
 
@@ -312,20 +325,26 @@ void ValidateUtilityNetworkTopology::onApplyEdits(const QString& choice)
   m_progressBarVisibility = true;
   emit progressBarVisibilityChanged();
 
-  for (const CodedValue &codedValue : m_codedValues)
+  for (const CodedValue& codedValue : m_codedValues)
   {
     if (codedValue.name() == choice)
+    {
       choiceCodeValue = codedValue;
+    }
   }
 
   m_featureToEdit->attributes()->replaceAttribute(m_fieldName, choiceCodeValue.code());
 
   updateMessage("Updating feature...");
 
-  m_featureToEdit->featureTable()->updateFeatureAsync(m_featureToEdit).then(this, [this]()
+  m_featureToEdit->featureTable()
+    ->updateFeatureAsync(m_featureToEdit)
+    .then(this, [this]()
   {
     updateMessage("Applying edits...");
-    m_serviceGeodatabase->applyEditsAsync().then(this, [this](const QList<FeatureTableEditResult*>& featureTableEditResults)
+    m_serviceGeodatabase->applyEditsAsync()
+      .then(this,
+            [this](const QList<FeatureTableEditResult*>& featureTableEditResults)
     {
       for (FeatureTableEditResult* featureTableEditResult : featureTableEditResults)
       {
@@ -340,14 +359,15 @@ void ValidateUtilityNetworkTopology::onApplyEdits(const QString& choice)
           else
           {
             updateMessage("Apply edits completed successfully.\n"
-                "Click 'Get State' to check the updated network state.");
+                          "Click 'Get State' to check the updated network state.");
           }
         }
       }
 
       m_progressBarVisibility = false;
       emit progressBarVisibilityChanged();
-    }).onFailed(this, [this]()
+    })
+      .onFailed(this, [this]()
     {
       updateMessage("Apply edits failed.");
 
@@ -410,9 +430,14 @@ void ValidateUtilityNetworkTopology::onGetState()
       emit traceButtonAvailabilityChanged();
 
       m_message = QString("Utility Network State:\n"
-          "    Has Dirty Areas: " + QString(m_utilityNetworkstate && m_utilityNetworkstate->hasDirtyAreas() ? "true" : "false") + "\n"
-          "    Has Errors: " + QString(m_utilityNetworkstate && m_utilityNetworkstate->hasErrors() ? "true" : "false") + "\n"
-          "    Is Network Topology Enabled: " + QString(m_utilityNetworkstate && m_utilityNetworkstate->isNetworkTopologyEnabled() ? "true" : "false") + "\n");
+                          "    Has Dirty Areas: " +
+                          QString(m_utilityNetworkstate && m_utilityNetworkstate->hasDirtyAreas() ? "true" : "false") +
+                          "\n"
+                          "    Has Errors: " +
+                          QString(m_utilityNetworkstate && m_utilityNetworkstate->hasErrors() ? "true" : "false") +
+                          "\n"
+                          "    Is Network Topology Enabled: " +
+                          QString(m_utilityNetworkstate && m_utilityNetworkstate->isNetworkTopologyEnabled() ? "true" : "false") + "\n");
 
       if (m_utilityNetworkstate->hasDirtyAreas() || m_utilityNetworkstate->hasErrors())
       {
@@ -459,9 +484,13 @@ void ValidateUtilityNetworkTopology::onValidate()
         result->hasErrors();
 
         updateMessage("Utility Validation Result:\n"
-            "    Has Dirty Areas: " + QString(result->hasDirtyAreas() ? "true" : "false") + "\n"
-            "    Has Errors: " + QString(result->hasErrors() ? "true" : "false") + "\n"
-            "    Click 'Get State' to check the updated network state.");
+                      "    Has Dirty Areas: " +
+                      QString(result->hasDirtyAreas() ? "true" : "false") +
+                      "\n"
+                      "    Has Errors: " +
+                      QString(result->hasErrors() ? "true" : "false") +
+                      "\n"
+                      "    Click 'Get State' to check the updated network state.");
 
         m_validateButtonAvailability = result->hasDirtyAreas();
         emit validateButtonAvailabilityChanged();
@@ -510,7 +539,9 @@ void ValidateUtilityNetworkTopology::onTrace()
     m_lineFeatureLayer->clearSelection();
 
     //  Get the trace result from the utility network.
-    m_utilityNetwork->traceAsync(m_traceParameters).then(this, [this](QList<UtilityTraceResult*>)
+    m_utilityNetwork->traceAsync(m_traceParameters)
+      .then(this,
+            [this](QList<UtilityTraceResult*>)
     {
       m_progressBarVisibility = false;
       emit progressBarVisibilityChanged();
@@ -528,30 +559,37 @@ void ValidateUtilityNetworkTopology::onTrace()
       for (UtilityElement* item : elements)
       {
         if (item->networkSource()->name() == "Electric Distribution Device")
+        {
           deviceObjIds.append(item->objectId());
+        }
         else if (item->networkSource()->name() == "Electric Distribution Line")
+        {
           lineObjIds.append(item->objectId());
+        }
       }
 
       deviceParams.setObjectIds(deviceObjIds);
       lineParams.setObjectIds(lineObjIds);
 
-      m_deviceFeatureLayer->selectFeaturesAsync(deviceParams, SelectionMode::Add).then(this, [](FeatureQueryResult* rawResult)
+      m_deviceFeatureLayer->selectFeaturesAsync(deviceParams, SelectionMode::Add)
+        .then(this, [](FeatureQueryResult* rawResult)
       {
-        std::unique_ptr<FeatureQueryResult> {rawResult};
+        std::unique_ptr<FeatureQueryResult>{rawResult};
       });
-      m_lineFeatureLayer->selectFeaturesAsync(lineParams, SelectionMode::Add).then(this, [this](FeatureQueryResult* rawResult)
+      m_lineFeatureLayer->selectFeaturesAsync(lineParams, SelectionMode::Add)
+        .then(this, [this](FeatureQueryResult* rawResult)
       {
-        std::unique_ptr<FeatureQueryResult> {rawResult};
+        std::unique_ptr<FeatureQueryResult>{rawResult};
 
         m_clearButtonAvailability = true;
         emit clearButtonAvailabilityChanged();
       });
       result->deleteLater();
-    }).onFailed(this, [this]()
+    })
+      .onFailed(this, [this]()
     {
       updateMessage("Trace failed.\n"
-          "Click 'Get State' to check the updated network state.");
+                    "Click 'Get State' to check the updated network state.");
 
       m_progressBarVisibility = false;
       emit progressBarVisibilityChanged();
@@ -598,11 +636,10 @@ void ValidateUtilityNetworkTopology::displayLabelDefinitions()
 void ValidateUtilityNetworkTopology::setupTraceParameters()
 {
   // Trace with a subnetwork controller as default starting location
-  m_utilityAssetType = m_utilityNetwork ? m_utilityNetwork->definition()->
-                            networkSource("Electric Distribution Device")->
-                            assetGroup("Circuit Breaker")->
-                            assetType("Three Phase") :
-                            nullptr;
+  m_utilityAssetType =
+    m_utilityNetwork ?
+      m_utilityNetwork->definition()->networkSource("Electric Distribution Device")->assetGroup("Circuit Breaker")->assetType("Three Phase") :
+      nullptr;
 
   if (m_utilityAssetType)
   {
@@ -619,13 +656,17 @@ void ValidateUtilityNetworkTopology::setupTraceParameters()
         break;
       }
     }
-    m_startingLocation = m_utilityNetwork->createElementWithAssetType(m_utilityAssetType, QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}"), loadTerminal, this);
+    m_startingLocation =
+      m_utilityNetwork->createElementWithAssetType(m_utilityAssetType, QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}"), loadTerminal, this);
   }
   else
+  {
     return;
+  }
 
   // Display starting location as graphic
-  m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*> {m_startingLocation}).then(this, [this](QList<ArcGISFeature*>)
+  m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*>{m_startingLocation})
+    .then(this, [this](QList<ArcGISFeature*>)
   {
     ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
     const Point startingLocationGeometry = geometry_cast<Point>(elementFeaturesList->first()->geometry());
@@ -658,10 +699,10 @@ void ValidateUtilityNetworkTopology::setupTraceParameters()
   emit clearButtonAvailabilityChanged();
 
   updateMessage("Utility Network Loaded\n"
-      "Tap on a feature to edit.\n"
-      "Click 'Get State' to check if validating is\n"
-      "necessary or if tracing is available.\n"
-      "Click 'Trace' to run a trace.");
+                "Tap on a feature to edit.\n"
+                "Click 'Get State' to check if validating is\n"
+                "necessary or if tracing is available.\n"
+                "Click 'Trace' to run a trace.");
 
   m_progressBarVisibility = false;
   emit progressBarVisibilityChanged();
@@ -699,10 +740,13 @@ LabelDefinition* ValidateUtilityNetworkTopology::createLineLabelDefinition()
 
 void ValidateUtilityNetworkTopology::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
 {
-  TokenCredential::createWithChallengeAsync(challenge, "editor01", "S7#i2LWmYH75", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  TokenCredential::createWithChallengeAsync(challenge, "editor01", "S7#i2LWmYH75", {}, this)
+    .then(this,
+          [challenge](TokenCredential* tokenCredential)
   {
     challenge->continueWithCredential(tokenCredential);
-  }).onFailed(this, [challenge](const ErrorException& e)
+  })
+    .onFailed(this, [challenge](const ErrorException& e)
   {
     challenge->continueWithError(e.error());
   });

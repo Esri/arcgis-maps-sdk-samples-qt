@@ -1,26 +1,11 @@
-// COPYRIGHT 2025 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
+// [Legal]
+// Copyright 2022 Esri.
 //
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file SampleManager.cpp
-
-#include "pch.hpp"
-
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,6 +13,17 @@
 // limitations under the License.
 // [Legal]
 
+#include "pch.hpp"
+
+// ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/ArcGISCredentialStore.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/NetworkCredentialStore.h"
+#include "ErrorException.h"
+#include "Portal.h"
+
+// Qt headers
 #include <QByteArray>
 #include <QDebug>
 #include <QDir>
@@ -38,6 +34,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkProxy>
+#include <QQmlEngine>
+#include <QSet>
 #include <QStandardPaths>
 #include <QStringList>
 #include <QTemporaryDir>
@@ -45,18 +43,15 @@
 #include <QVariant>
 #include <QVariantList>
 #include <QVariantMap>
-#include <QQmlEngine>
+
+// STL headers
 #include <NetworkRequestProgress.h>
 
+// Other headers
 #include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
-#include "ArcGISRuntimeEnvironment.h"
-#include "Authentication/ArcGISCredentialStore.h"
-#include "Authentication/AuthenticationManager.h"
-#include "Authentication/NetworkCredentialStore.h"
-#include "ErrorException.h"
-#include "Portal.h"
 
 // toolkit authentication support
+#include "AuthenticatorController.h"
 #include "OAuthUserConfigurationManager.h"
 
 #include "ZipHelper.h"
@@ -64,8 +59,10 @@
 #include "CategoryListModel.h"
 #include "DataItem.h"
 #include "DataItemListModel.h"
+#include "DownloadsManager.h"
 #include "Error.h"
 #include "MapTypes.h"
+#include "OfflineDataProjectsModel.h"
 #include "PortalTypes.h"
 #include "SampleCategory.h"
 #include "Sample.h"
@@ -83,16 +80,20 @@ using namespace Esri::ArcGISRuntime;
 #include "LocalServer.h"
 #endif // LOCALSERVER_SUPPORTED
 
+// Forward declaration for file-scoped helper function
+static QString homePath();
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 namespace
 {
-QString apiKey = ""; // Provide your API key here
+  QString apiKey = ""; // Provide your API key here
 }
 
-SampleManager::SampleManager(QObject *parent):
+SampleManager::SampleManager(QObject* parent) :
   QObject(parent),
+  m_downloadsManager(new DownloadsManager(this)),
   m_categories(new CategoryListModel(this)),
   m_allSamples(new SampleListModel(this))
 {
@@ -107,14 +108,87 @@ SampleManager::SampleManager(QObject *parent):
       connect(networkInfo, &QNetworkInformation::reachabilityChanged, this, &SampleManager::reachabilityChanged);
     }
   }
+
+  // Initialize Portal for downloads
+  m_portal = new Portal(QUrl("https://www.arcgis.com"), this);
+  m_portal->load();
+
+  // Initialize DownloadsManager with Portal and home path
+  m_downloadsManager->initialize(m_portal, homePath());
 }
 
 SampleManager::~SampleManager() = default;
 
+SampleListModel* SampleManager::samples() const
+{
+  return m_allSamples;
+}
+
+SampleListModel* SampleManager::featuredSamples() const
+{
+  return m_featuredSamples;
+}
+
+CategoryListModel* SampleManager::categories()
+{
+  return m_categories;
+}
+
+SampleManager::CurrentMode SampleManager::currentMode()
+{
+  return m_currentMode;
+}
+
+Sample* SampleManager::currentSample() const
+{
+  return m_currentSample;
+}
+
+SampleCategory* SampleManager::currentCategory() const
+{
+  return m_currentCategory;
+}
+
+QString SampleManager::currentSourceCode() const
+{
+  return m_currentSourceCode;
+}
+
+QUrl SampleManager::apiReferenceUrl() const
+{
+  return m_apiReferenecUrl;
+}
+
+QUrl SampleManager::qtSdkUrl() const
+{
+  return m_qtSdkUrl;
+}
+
+QUrl SampleManager::qtSamplesUrl() const
+{
+  return m_qtSamplesUrl;
+}
+
+DownloadsManager* SampleManager::downloadsManager() const
+{
+  return m_downloadsManager;
+}
+
 void SampleManager::init()
 {
   m_featuredSamples = new SampleListModel(this);
+  m_offlineDataSamples = new SampleListModel(this);
+
+  // Offline data samples get populated when we buildCategoriesList
   buildCategoriesList();
+
+  // Initialize favorites (must be after buildCategoriesList so m_allSamples is populated)
+  initFavorites();
+
+  // sort so downloads list is in ascending order
+  m_offlineDataSamples->sortSamples();
+  m_downloadsManager->setSamples(m_offlineDataSamples);
+
   emit sampleInitComplete();
 }
 
@@ -129,9 +203,13 @@ void SampleManager::createAndSetTempDirForLocalServer()
 
   // use whichever is shorter, temp or home path
   if (homePath.length() > tmpPath.length())
+  {
     localServerTempDir = tmpPath + "/EsriQtTemp";
+  }
   else
+  {
     localServerTempDir = homePath + "/EsriQtTemp";
+  }
 
   // create the directory
   m_tempDir = std::make_unique<QTemporaryDir>(localServerTempDir);
@@ -142,17 +220,6 @@ void SampleManager::createAndSetTempDirForLocalServer()
 #endif // LOCALSERVER_SUPPORTED
 }
 
-void SampleManager::setCancelDownload(bool cancel)
-{
-  m_cancelDownload = cancel;
-  emit cancelDownloadChanged();
-}
-
-void SampleManager::setDownloadFailed(bool didFail)
-{
-  m_downloadFailed = didFail;
-  emit downloadFailedChanged();
-}
 // Build the Categories List
 void SampleManager::buildCategoriesList()
 {
@@ -197,14 +264,16 @@ SampleCategory* SampleManager::createCategory(const QString& name, const QString
   QDir categoryDir(dir.filePath(name));
   QString path = "qrc" + categoryDir.path();
   // get thumbnail URL
-  QString thumbnailUrl = "qrc" + dir.filePath(name + ".png");
+  QString thumbnailUrl = "qrc" + dir.filePath(name + ".svg");
   // get background thumbnail URL
   QString backgroundThumbnailUrl = "qrc" + dir.filePath("BG_" + name + ".png");
   // get the samples in the category
   auto samples = buildSamplesList(categoryDir, "qrc");
   // make sure the category has samples in it
   if (samples->rowCount() == 0)
+  {
     return nullptr;
+  }
   // add to the list model
   return new SampleCategory(name, displayName, path, thumbnailUrl, backgroundThumbnailUrl, samples, this);
 }
@@ -218,6 +287,12 @@ bool SampleManager::appendCategoryToManager(SampleCategory* category)
     for (int i = 0; i < totalRows; ++i)
     {
       m_allSamples->addSample(category->samples()->at(i));
+
+      // Maintain offline data list for downloads manager
+      if (m_offlineDataSamples && category->samples()->at(i)->dataItems()->size() > 0)
+      {
+        m_offlineDataSamples->addSample(category->samples()->at(i));
+      }
     }
     return true;
   }
@@ -336,9 +411,7 @@ QString SampleManager::readTextFile(const QString& filePath)
 
 QVariant SampleManager::fileUrl(const QString& scheme, const QString& path)
 {
-  return scheme.isEmpty()
-      ? QUrl::fromLocalFile(path)
-      : scheme + path;
+  return scheme.isEmpty() ? QUrl::fromLocalFile(path) : scheme + path;
 }
 
 void SampleManager::setCurrentMode(const CurrentMode& mode)
@@ -365,9 +438,7 @@ void SampleManager::setCurrentSample(Sample* sample)
   // following samples since they use named user login instead.
 
   const QString sampleName = m_currentSample->name().toString();
-  if (sampleName == "Create and save map" ||
-      sampleName == "Add items to portal" ||
-      sampleName == "Search for web map by keyword")
+  if (sampleName == "Create and save map" || sampleName == "Add items to portal" || sampleName == "Search for web map by keyword")
   {
     setApiKey(false);
   }
@@ -399,18 +470,6 @@ void SampleManager::setCurrentCategory(SampleCategory* category)
   emit currentCategoryChanged();
 }
 
-void SampleManager::setDownloadInProgress(bool inProgress)
-{
-  m_downloadInProgress = inProgress;
-  emit downloadInProgressChanged();
-}
-
-void SampleManager::setDownloadText(const QString& downloadText)
-{
-  m_downloadText = downloadText;
-  emit downloadTextChanged();
-}
-
 void SampleManager::setApiKey(bool isSupportsApiKey)
 {
 #ifdef SAMPLE_VIEWER_API_KEY
@@ -428,12 +487,6 @@ void SampleManager::setApiKey(bool isSupportsApiKey)
   ArcGISRuntimeEnvironment::setApiKey(sampleApiKey);
 }
 
-void SampleManager::setDownloadProgress(double progress)
-{
-  m_downloadProgress = progress;
-  emit downloadProgressChanged();
-}
-
 void SampleManager::resetAuthenticationState()
 {
   // clear all credentials
@@ -449,13 +502,20 @@ void SampleManager::resetAuthenticationState()
     // when sample changes, restore the original toolkit challenge handler
     ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_toolkitChallengeHandler);
   }
+
+  if (auto* authController = Toolkit::AuthenticatorController::instance(); authController)
+  {
+    authController->cancelOutstandingChallenges();
+  }
 }
 
 bool SampleManager::dataItemsExists()
 {
   // Sample has no data items, return true
   if (currentSample()->dataItems()->size() == 0)
+  {
     return true;
+  }
 
   for (auto dataItem : *currentSample()->dataItems())
   {
@@ -469,38 +529,17 @@ bool SampleManager::dataItemsExists()
 
 void SampleManager::downloadAllDataItems()
 {
-    setDownloadFailed(false);
-
-    if (!m_dataItems.isEmpty())
-      m_dataItems.clear();
-
-    // populate list of data items needed to be downloaded.
-    for (auto sample : *samples())
-    {
-      for (auto dataItem : *sample->dataItems())
-      {
-        if (!dataItem->exists())
-          m_dataItems.enqueue(dataItem);
-      }
-    }
-
-    downloadNextDataItem();
+  m_downloadsManager->downloadAllDataItems();
 }
 
 void SampleManager::downloadDataItemsCurrentSample()
 {
-  setDownloadFailed(false);
+  m_downloadsManager->downloadDataItemsForSample(m_currentSample);
+}
 
-  if (!m_dataItems.isEmpty())
-    m_dataItems.clear();
-
-  for (auto dataItem : *currentSample()->dataItems())
-  {
-    if (!dataItem->exists())
-      m_dataItems.enqueue(dataItem);
-  }
-
-  downloadNextDataItem();
+void SampleManager::cancelAllDownloads()
+{
+  m_downloadsManager->cancelAllDownloads();
 }
 
 static QString homePath()
@@ -516,154 +555,33 @@ static QString homePath()
   return homePath;
 }
 
-void SampleManager::downloadNextDataItem()
-{
-  if (cancelDownload())
-  {
-    m_dataItems.clear();
-  }
-
-  if (!m_dataItems.isEmpty())
-  {
-    if (!m_portal)
-    {
-      m_portal = new Portal(QUrl("https://www.arcgis.com"), this);
-      connect(m_portal, &Portal::doneLoading, this, [this](const Error& error)
-      {
-        if (!error.isEmpty())
-        {
-          setDownloadFailed(true);
-          setDownloadText(QString("Download failed: %1").arg(error.message()));
-          setDownloadInProgress(false);
-          return;
-        }
-
-        setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
-        auto item = m_dataItems.dequeue();
-        fetchPortalItemData(item->itemId(), homePath() + item->path().mid(1));
-      });
-      m_portal->load();
-    }
-    else {
-      setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
-      auto item = m_dataItems.dequeue();
-      fetchPortalItemData(item->itemId(), homePath() + item->path().mid(1));
-    }
-  }
-  else {
-    setDownloadText("Downloads complete");
-
-    setDownloadProgress(0.0);
-    setDownloadInProgress(false);
-    if (cancelDownload())
-      setCancelDownload(false);
-    else
-      emit doneDownloadingChanged();
-  }
-}
-
-void SampleManager::fetchPortalItemData(const QString& itemId, const QString& outputPath)
-{
-  auto portalItem = new PortalItem(m_portal, itemId, this);
-  if (portalItem)
-  {
-    connect(portalItem, &PortalItem::doneLoading, this, [this, portalItem, outputPath]()
-    {
-      if (portalItem->loadStatus() == LoadStatus::Loaded)
-      {
-        auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
-        QString formattedPath = SampleManager::formattedPath(outputPath, folder);
-        portalItem->fetchDataAsync(formattedPath).then(this, [this, portalItem, formattedPath]()
-        {
-          setDownloadProgress(0.0);
-          if (QFileInfo(formattedPath).suffix() == "zip")
-          {
-            auto zipHelper = new ZipHelper(formattedPath, this);
-            connect(zipHelper, &ZipHelper::extractCompleted, this, [this, formattedPath, portalItem, zipHelper]()
-            {
-                downloadNextDataItem();
-                portalItem->deleteLater();
-                zipHelper->deleteLater();
-            });
-            zipHelper->extractAll(QFileInfo(formattedPath).dir().absolutePath());
-          }
-          else
-          {
-            downloadNextDataItem();
-            portalItem->deleteLater();
-          }
-        }).onFailed([this, portalItem](const ErrorException&)
-        {
-          setDownloadFailed(true);
-          setDownloadText(QString("Download failed for item ").arg(portalItem->itemId()));
-          setDownloadInProgress(false);
-        });
-      }
-    });
-
-    connect(portalItem, &PortalItem::fetchDataProgressChanged, this,
-            [this](const NetworkRequestProgress& progress)
-    {
-      if (!downloadInProgress())
-        setDownloadInProgress(true);
-      setDownloadProgress(progress.progressPercentage());
-    });
-    portalItem->load();
-  }
-}
-
-QString SampleManager::formattedPath(const QString& outputPath,
-                                             const QString& folderName)
-{
-  // first make sure output path exists
-  if (!QFile::exists(outputPath))
-  {
-    QFileInfo fileInfo = QFileInfo(outputPath);
-    QDir dir = fileInfo.dir();
-    if (!dir.exists())
-      dir.mkpath(".");
-  }
-
-  // create the download data task
-  QString formattedFilePath = outputPath;
-
-  // check if the item is code sample
-  if (!folderName.isEmpty())
-  {
-    QFileInfo fileInfo = QFileInfo(outputPath);
-    QString dir = fileInfo.dir().absolutePath();
-    formattedFilePath = dir + "/" + folderName;
-  }
-
-  return formattedFilePath;
-}
-
 SampleManager::Reachability SampleManager::reachability() const
 {
-    auto* instance = QNetworkInformation::instance();
+  auto* instance = QNetworkInformation::instance();
 
-    if(!instance)
-        return SampleManager::Reachability::ReachabilityUnknown;
-    switch (instance->reachability())
-    {
-        case QNetworkInformation::Reachability::Online:
-            return SampleManager::Reachability::ReachabilityOnline;
-        case QNetworkInformation::Reachability::Site:
-            return SampleManager::Reachability::ReachabilitySite;
-        case QNetworkInformation::Reachability::Local:
-            return SampleManager::Reachability::ReachabilityLocal;
-        case QNetworkInformation::Reachability::Disconnected:
-            return SampleManager::Reachability::ReachabilityDisconnected;
-        case QNetworkInformation::Reachability::Unknown:
-        default:
-            return SampleManager::Reachability::ReachabilityUnknown;
-    };
+  if (!instance)
+  {
+    return SampleManager::Reachability::ReachabilityUnknown;
+  }
+  switch (instance->reachability())
+  {
+    case QNetworkInformation::Reachability::Online:
+      return SampleManager::Reachability::ReachabilityOnline;
+    case QNetworkInformation::Reachability::Site:
+      return SampleManager::Reachability::ReachabilitySite;
+    case QNetworkInformation::Reachability::Local:
+      return SampleManager::Reachability::ReachabilityLocal;
+    case QNetworkInformation::Reachability::Disconnected:
+      return SampleManager::Reachability::ReachabilityDisconnected;
+    case QNetworkInformation::Reachability::Unknown:
+    default:
+      return SampleManager::Reachability::ReachabilityUnknown;
+  };
 }
 
 bool SampleManager::deleteAllOfflineData()
 {
-  QDir dir(homePath() + "/ArcGIS/Runtime/Data");
-  return dir.removeRecursively();
+  return m_downloadsManager->deleteAllOfflineData();
 }
 
 QString SampleManager::api() const
@@ -674,9 +592,13 @@ QString SampleManager::api() const
 void SampleManager::setSourceCodeIndex(int i)
 {
   if (m_currentSample)
+  {
     m_currentSourceCode = m_currentSample->codeFiles()->get(i)->code();
+  }
   else
+  {
     m_currentSourceCode = "Sample Viewer Error.";
+  }
   emit currentSourceCodeChanged();
 }
 
@@ -689,4 +611,122 @@ void SampleManager::setupProxy(const QString& hostName, quint16 port, const QStr
   proxy.setUser(user);
   proxy.setPassword(pw);
   QNetworkProxy::setApplicationProxy(proxy);
+}
+
+OfflineDataProjectsModel* SampleManager::getOfflineDataProjects()
+{
+  return m_downloadsManager->getOfflineDataProjects();
+}
+
+bool SampleManager::hasOfflineData(const QString& sampleName)
+{
+  return m_downloadsManager->hasOfflineData(sampleName);
+}
+
+bool SampleManager::hasAnyDataToDownload() const
+{
+  return m_downloadsManager->hasAnyDataToDownload();
+}
+
+bool SampleManager::hasAnyDataToDelete() const
+{
+  return m_downloadsManager->hasAnyDataToDelete();
+}
+
+bool SampleManager::deleteProjectOfflineData(const QString& sampleName)
+{
+  return m_downloadsManager->deleteProjectOfflineData(sampleName);
+}
+
+void SampleManager::downloadProjectData(const QString& sampleName)
+{
+  // Find the sample
+  const SampleListModel* sampleList = samples();
+  const int totalSamples = sampleList->size();
+
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = sampleList->at(i);
+    if (sample->name().toString() == sampleName)
+    {
+      m_downloadsManager->downloadDataItemsForSample(sample);
+      return;
+    }
+  }
+}
+
+SampleListModel* SampleManager::favoriteSamples() const
+{
+  return m_favoriteSamples;
+}
+
+void SampleManager::initFavorites()
+{
+  m_favoriteSamples = new SampleListModel(this);
+
+  // Restore favorites from QSettings
+  QSettings settings;
+  const QStringList favoriteNames = settings.value("favorites/samples").toStringList();
+
+  for (const QString& favoriteName : favoriteNames)
+  {
+    for (Sample* sample : *m_allSamples)
+    {
+      if (sample->name().toString() == favoriteName)
+      {
+        m_favoriteSamples->addSample(sample);
+        break;
+      }
+    }
+  }
+
+  if (m_favoriteSamples->size() > 0)
+  {
+    emit favoriteSamplesChanged();
+  }
+}
+
+void SampleManager::saveSampleListToFavorites(const SampleListModel* samples)
+{
+  // Persist to QSettings
+  QSettings settings;
+  QStringList favoriteNames;
+  for (const auto* favoriteSample : *samples)
+  {
+    favoriteNames.append(favoriteSample->name().toString());
+  }
+  settings.setValue("favorites/samples", favoriteNames);
+}
+
+void SampleManager::addSampleToFavorites(Sample* sample)
+{
+  if (m_favoriteSamples->containsSample(sample))
+  {
+    qWarning() << "Skipping addSampleToFavorites() - Sample" << sample->name() << " already exists in favorites";
+    return;
+  }
+  m_favoriteSamples->addSample(sample);
+
+  saveSampleListToFavorites(m_favoriteSamples);
+
+  emit favoriteSamplesChanged();
+}
+
+void SampleManager::removeSampleFromFavorites(Sample* sample)
+{
+  if (!m_favoriteSamples->containsSample(sample))
+  {
+    qWarning() << "Skipping removeSampleFromFavorites() - Sample" << sample->name() << " does not exist in favorites";
+    return;
+  }
+  m_favoriteSamples->removeSample(sample);
+
+  saveSampleListToFavorites(m_favoriteSamples);
+
+  emit favoriteSamplesChanged();
+}
+
+bool SampleManager::isFavorite(Sample* sample) const
+{
+  return m_favoriteSamples->containsSample(sample);
 }

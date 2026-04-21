@@ -23,7 +23,7 @@
         }
     ],
     "description": "Demonstrates how to animate a graphic's position and rotation and follow it using a `OrbitGeoElementCameraController`.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"
@@ -67,7 +67,6 @@
     "snippets": [
         "Animate3DSymbols.cpp",
         "Animate3DSymbols.h",
-        "LabeledSlider.qml",
         "MissionData.cpp",
         "MissionData.h",
         "Animate3DSymbols.qml"

@@ -16,6 +16,7 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Page {
     id: categoryView
@@ -24,6 +25,7 @@ Page {
         spacing: 2
         ToolBar {
             height: 42
+
             Label {
                 id: titleText
                 anchors.centerIn: parent
@@ -32,7 +34,7 @@ Page {
                     family: fontFamily
                     pixelSize: 18
                 }
-                color: "white"
+                color: Calcite.text1
             }
             anchors.left: parent.left
             anchors.right: parent.right
@@ -54,13 +56,25 @@ Page {
     GridView {
         anchors {
             fill: parent
-            leftMargin: 10
-            topMargin: 10
-            bottomMargin: 10
+            leftMargin: 7
+            rightMargin: 7
+            topMargin: 7
+            bottomMargin: 7
         }
         clip: true
         model: SampleManager.categories
-        delegate: categoryCard
+        delegate: Component {
+            Item {
+                width: GridView.view.cellWidth
+                height: GridView.view.cellHeight
+                CategoryCard {
+                    anchors.centerIn: parent
+                    thumbnailUrl: model.thumbnailUrl
+                    displayName: model.displayName
+                    backgroundThumbnailUrl: model.backgroundThumbnailUrl
+                }
+            }
+        }
         cellWidth: width / 2
         cellHeight: cellWidth
         visible: searchBar.text === ""

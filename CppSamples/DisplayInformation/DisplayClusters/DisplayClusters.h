@@ -23,11 +23,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class AggregateGeoElement;
-class FeatureLayer;
-class Map;
-class MapQuickView;
-}
+  class AggregateGeoElement;
+  class FeatureLayer;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
 

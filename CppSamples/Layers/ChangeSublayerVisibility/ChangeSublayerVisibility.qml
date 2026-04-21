@@ -48,7 +48,9 @@ ChangeSublayerVisibilitySample {
 
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
 
@@ -56,7 +58,7 @@ ChangeSublayerVisibilitySample {
             anchors.fill: parent
             width: layerVisibilityRect.width
             height: layerVisibilityRect.height
-            color: "lightgrey"
+            color: palette.base
             opacity: .9
             radius: 5
             border {
@@ -71,9 +73,9 @@ ChangeSublayerVisibilitySample {
                     margins: 10
                 }
 
-                Text {
+                Label {
                     width: parent.width
-                    text: "Sublayers"
+                    text: qsTr("Sublayers")
                     wrapMode: Text.WordWrap
                     clip: true
                     font {
@@ -101,7 +103,7 @@ ChangeSublayerVisibilitySample {
 
                         Row {
                             spacing: 5
-                            Text {
+                            Label {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width: 75
                                 text: name
@@ -113,7 +115,7 @@ ChangeSublayerVisibilitySample {
                                 anchors.verticalCenter: parent.verticalCenter
                                 checked: sublayerVisible
 
-                                onCheckedChanged: {
+                                onToggled: {
                                     sublayerVisible = checked;
                                 }
                             }

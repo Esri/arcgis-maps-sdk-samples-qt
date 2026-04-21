@@ -93,10 +93,10 @@ private:
   QString m_filterString;
   SearchFilterCriteria* m_searchCriteria = nullptr;
 
-  QMap<int, SearchResult > m_filterResults;
+  QMap<int, SearchResult> m_filterResults;
 
-  int m_blurbRole { Qt::UserRole };
-  int m_scoreRole { Qt::UserRole + 1};
+  int m_blurbRole{Qt::UserRole};
+  int m_scoreRole{Qt::UserRole + 1};
 };
 
 #endif // SAMPLESEARCHFILTERMODEL_H

@@ -24,7 +24,7 @@ namespace Esri::ArcGISRuntime
 {
   class Geodatabase;
   class MapQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class FeatureLayerDictionaryRenderer : public QQuickItem
 {

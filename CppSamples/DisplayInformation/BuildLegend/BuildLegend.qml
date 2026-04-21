@@ -45,7 +45,7 @@ BuildLegendSample {
         property bool expanded: true
         height: 200
         width: 175
-        color: "lightgrey"
+        color: palette.base
         opacity: 0.95
         radius: 10
         clip: true
@@ -65,7 +65,9 @@ BuildLegendSample {
         // Catch mouse signals so they don't propagate to the map
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
 
@@ -80,7 +82,7 @@ BuildLegendSample {
             Row {
                 spacing: 55
 
-                Text {
+                Label {
                     text: qsTr("Legend")
                     font {
                         pixelSize: 18
@@ -89,22 +91,33 @@ BuildLegendSample {
                 }
 
                 // Legend icon to allow expanding and collapsing
-                Image {
-                    source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light.png"
-                    width: 28
-                    height: width
+                ToolButton {
+                    width: 24
+                    height: 24
+                    padding: 0
+                    display: AbstractButton.IconOnly
+                    icon {
+                        source: legendRect.expanded ?
+                                    "qrc:/Samples/DisplayInformation/BuildLegend/legend-24.svg" :
+                                    "qrc:/Samples/DisplayInformation/BuildLegend/expand-24.svg"
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            if (legendRect.expanded) {
-                                legendRect.height = 40;
-                                legendRect.expanded = false;
-                            } else {
-                                legendRect.height = 200;
-                                legendRect.expanded = true;
-                            }
+                        width: 24
+                        height: 24
+                        color: palette.text
+                    }
+                    onClicked: {
+                        if (legendRect.expanded) {
+                            legendRect.height = 36;
+                            legendRect.expanded = false;
+                        } else {
+                            legendRect.height = 200;
+                            legendRect.expanded = true;
                         }
+                    }
+
+                    background: Rectangle {
+                        color: parent.hovered ? palette.midlight : "transparent"
+                        radius: 4
                     }
                 }
             }
@@ -134,7 +147,7 @@ BuildLegendSample {
                             height: width
                             source: symbolUrl
                         }
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 125
                             text: name
@@ -152,12 +165,13 @@ BuildLegendSample {
                     delegate: Rectangle {
                         width: 180
                         height: childrenRect.height
-                        color: "lightsteelblue"
+                        color: palette.highlight
 
-                        Text {
+                        Label {
                             text: section
                             font.bold: true
                             font.pixelSize: 13
+                            color: "#F8F8F8"
                         }
                     }
                 }

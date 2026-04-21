@@ -38,9 +38,9 @@ OpenMapUrlSample {
     // Create a list model with information about different webmaps
     ListModel {
        id: webmapsListModel
-       ListElement { itemTitle: "Geology of United States"; imageUrl: "qrc:/Samples/Maps/OpenMapUrl/geology.jpg"; itemId: "92ad152b9da94dee89b9e387dfe21acd"}
-       ListElement { itemTitle: "Terrestrial Ecosystems of the World"; imageUrl: "qrc:/Samples/Maps/OpenMapUrl/ecosystems.png"; itemId: "5be0bc3ee36c4e058f7b3cebc21c74e6"}
-       ListElement { itemTitle: "Recent Hurricanes, Cyclones, and Typhoons"; imageUrl: "qrc:/Samples/Maps/OpenMapUrl/traces.png"; itemId: "064f2e898b094a17b84e4a4cd5e5f549"}
+       ListElement { itemTitle: qsTr("Geology of United States"); imageUrl: "qrc:/Samples/Maps/OpenMapUrl/geology.jpg"; itemId: "92ad152b9da94dee89b9e387dfe21acd"}
+       ListElement { itemTitle: qsTr("Terrestrial Ecosystems of the World"); imageUrl: "qrc:/Samples/Maps/OpenMapUrl/ecosystems.png"; itemId: "5be0bc3ee36c4e058f7b3cebc21c74e6"}
+       ListElement { itemTitle: qsTr("Recent Hurricanes, Cyclones, and Typhoons"); imageUrl: "qrc:/Samples/Maps/OpenMapUrl/traces.png"; itemId: "064f2e898b094a17b84e4a4cd5e5f549"}
     }
 
     // Create a delegate for how the webmaps display in the view
@@ -59,7 +59,7 @@ OpenMapUrlSample {
                }
                Row {
                    anchors.verticalCenter: parent.verticalCenter
-                   Text {
+                   Label {
                        width: 100
                        text: itemTitle
                        wrapMode: Text.WordWrap
@@ -92,7 +92,9 @@ OpenMapUrlSample {
 
        MouseArea {
            anchors.fill: parent
+           acceptedButtons: Qt.LeftButton | Qt.RightButton
            onClicked: mouse => mouse.accepted = true
+           onDoubleClicked: mouse => mouse.accepted = true
            onWheel: wheel => wheel.accepted = true
        }
 
@@ -100,8 +102,7 @@ OpenMapUrlSample {
            anchors.centerIn: parent
            width: 250
            height: 200
-           color: "lightgrey"
-           opacity: .8
+           color: palette.base
            radius: 5
            border {
                color: "#4D4D4D"
@@ -122,48 +123,45 @@ OpenMapUrlSample {
                spacing: 10
                clip: true
                highlightFollowsCurrentItem: true
-               highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+               highlight: Rectangle { color: palette.highlight; radius: 5 }
                focus: true
            }
        }
     }
 
     // Create a button to show the map picker window
-    Rectangle {
-       id: switchButton
-       property bool pressed: false
-       visible: !mapPickerWindow.visible
-       anchors {
-           right: parent.right
-           bottom: parent.bottom
-           rightMargin: 20
-           bottomMargin: 40
-       }
+    ToolButton {
+        id: switchButton
+        visible: !mapPickerWindow.visible
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+            rightMargin: 20
+            bottomMargin: 40
+        }
+        width: 45
+        height: 45
+        padding: 0
+        display: AbstractButton.IconOnly
+        icon {
+            source: "qrc:/Samples/Maps/OpenMapUrl/map-24.svg"
+            width: 35
+            height: 35
+            color: hovered ? palette.text : palette.buttonText
+        }
+        onClicked: {
+            mapPickerWindow.visible = true
+        }
 
-       width: 45
-       height: width
-       color: pressed ? "#959595" : "#D6D6D6"
-       radius: 100
-       border {
-           color: "#585858"
-           width: 1
-       }
-
-       Image {
-           anchors.centerIn: parent
-           width: 35
-           height: width
-           source: "qrc:/Samples/Maps/OpenMapUrl/SwitchMap.png"
-       }
-
-       MouseArea {
-           anchors.fill: parent
-           onPressed: switchButton.pressed = true
-           onReleased: switchButton.pressed = false
-           onClicked: {
-               // Show the add window when it is clicked
-               mapPickerWindow.visible = true;
-           }
-       }
+        background: Rectangle {
+            implicitWidth: 45
+            implicitHeight: 45
+            color: parent.hovered ? palette.base : palette.highlight
+            radius: 100
+            border {
+                color: "#585858"
+                width: 1
+            }
+        }
     }
 }

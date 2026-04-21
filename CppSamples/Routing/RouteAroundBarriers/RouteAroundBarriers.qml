@@ -49,7 +49,13 @@ Item {
                 Layout.bottomMargin: 0
                 implicitWidth: grid.implicitWidth
                 height: childrenRect.height
-                color: "lightgrey"
+                color: palette.base
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: mouse => mouse.accepted = true
+                    onWheel: wheel => wheel.accepted = true
+                }
 
                 GridLayout {
                     id: grid
@@ -63,37 +69,34 @@ Item {
                         Layout.alignment: Qt.AlignHCenter
                         spacing: 5
                         padding: 5
+
+                        readonly property real buttonWidth: Math.max(stopButton.implicitWidth, barrierButton.implicitWidth)
+
                         Button {
                             id: stopButton
-                            text: "Add stop"
+                            width: buttonsRow.buttonWidth
+                            text: qsTr("Add stop")
                             checked: true
                             highlighted: checked
-                            onClicked: {
-                                checked = true;
-                            }
-                            onCheckedChanged: {
-                                sampleModel.addStops = checked;
-                            }
+                            onClicked: checked = true
+                            onCheckedChanged: sampleModel.addStops = checked
                         }
                         Button {
                             id: barrierButton
-                            text: "Add barrier"
-                            highlighted: checked;
-                            onClicked: {
-                                checked = true;
-                            }
-                            onCheckedChanged: {
-                                sampleModel.addBarriers = checked;
-                            }
+                            width: buttonsRow.buttonWidth
+                            text: qsTr("Add barrier")
+                            highlighted: checked
+                            onClicked: checked = true
+                            onCheckedChanged: sampleModel.addBarriers = checked
                         }
                     }
 
                     Column {
-                        spacing: 2
-
+                        spacing: 8
+                        Layout.alignment: Qt.AlignHCenter
                         CheckBox {
                             id: bestSequenceBox
-                            text: "Find best sequence"
+                            text: qsTr("Find best sequence")
                             onCheckedChanged: {
                                 sampleModel.findBestSequence = checked;
                                 sampleModel.createAndDisplayRoute();
@@ -101,7 +104,7 @@ Item {
                         }
                         CheckBox {
                             id: firstStopBox
-                            text: "Preserve first stop"
+                            text: qsTr("Preserve first stop")
                             leftPadding: checkBoxPadding
                             enabled: bestSequenceBox.checked
                             onCheckedChanged: {
@@ -111,7 +114,7 @@ Item {
                         }
                         CheckBox {
                             id: lastStopBox
-                            text: "Preserve last stop"
+                            text: qsTr("Preserve last stop")
                             leftPadding: checkBoxPadding
                             enabled: bestSequenceBox.checked
                             onCheckedChanged: {
@@ -125,7 +128,7 @@ Item {
                         Layout.alignment: Qt.AlignHCenter
                         Button {
                             id: resetButton
-                            text: "Reset"
+                            text: qsTr("Reset")
                             onClicked: {
                                 sampleModel.clearRouteAndGraphics();
                                 sampleModel.clearDirections();
@@ -135,17 +138,13 @@ Item {
 
                     Row {
                         Layout.alignment: Qt.AlignHCenter
+                        Layout.bottomMargin: 10
                         Button {
-                            text: "Hide directions"
-                            onClicked: {
-                                if (text === "Hide directions") {
-                                    directionsView.delegate = blankDelegate;
-                                    text = "Show directions";
-                                } else {
-                                    directionsView.delegate = directionDelegate;
-                                    text = "Hide directions";
-                                }
-                            }
+                            id: toggleDirectionsButton
+                            property bool userWantsVisible: false
+                            enabled: sampleModel.directions !== null
+                            text: directionWindow.visible ? qsTr("Hide directions") : qsTr("Show directions")
+                            onClicked: userWantsVisible = !userWantsVisible
                         }
                     }
                 }
@@ -156,23 +155,25 @@ Item {
                 id: directionWindow
                 Layout.alignment: Qt.AlignBottom
                 Layout.topMargin: 0
-                visible: true
+                visible: toggleDirectionsButton.userWantsVisible && sampleModel.directions !== null
                 Layout.preferredWidth: backBox.width
                 Layout.preferredHeight: 300
                 Layout.margins: 3
-                color: "lightgrey"
+                color: palette.base
 
                 ScrollView {
                     anchors.fill: parent
 
                     ListView {
                         id: directionsView
+                        implicitHeight: contentHeight
+                        clip: true
                         anchors {
                             fill: parent
                             margins: 5
                         }
-                        header: Text {
-                            text: "Directions:"
+                        header: Label {
+                            text: qsTr("Directions:")
                             font.pixelSize: 22
                             bottomPadding: 8
                         }
@@ -183,15 +184,6 @@ Item {
                     }
                 }
             }
-        }
-    }
-
-    Component {
-        id: blankDelegate
-        Rectangle {
-            width: parent.width
-            height: 35
-            color: directionWindow.color
         }
     }
 
@@ -212,11 +204,11 @@ Item {
                     leftMargin: 20
                     rightMargin: 20
                 }
-                color: "darkgrey"
+                color: palette.mid
                 height: 1
             }
 
-            Text {
+            Label {
                 text: directionText
                 anchors {
                     fill: parent

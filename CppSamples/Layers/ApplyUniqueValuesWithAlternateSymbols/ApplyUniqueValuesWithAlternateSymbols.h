@@ -22,14 +22,14 @@
 
 namespace Esri::ArcGISRuntime
 {
-class FeatureLayer;
-class Map;
-class MapQuickView;
-class Renderer;
-class ServiceFeatureTable;
-class Symbol;
-class UniqueValueRenderer;
-}
+  class FeatureLayer;
+  class Map;
+  class MapQuickView;
+  class Renderer;
+  class ServiceFeatureTable;
+  class Symbol;
+  class UniqueValueRenderer;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
@@ -62,7 +62,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-  Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer  = nullptr;
+  Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
   double m_currentScale;
 };
 

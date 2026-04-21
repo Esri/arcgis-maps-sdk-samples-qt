@@ -47,7 +47,9 @@ LocalServerMapImageLayer::LocalServerMapImageLayer(QQuickItem* parent) :
 {
   // Create a temporary directory for the local server if one has not already been created
   if (!LocalServer::appDataPath().isEmpty() && !LocalServer::tempDataPath().isEmpty())
+  {
     return;
+  }
 
   // create temp/data path
   const QString tempPath = LocalServerMapImageLayer::shortestTempPath() + "/EsriQtTemp";
@@ -91,9 +93,13 @@ void LocalServerMapImageLayer::componentComplete()
   {
     connectSignals();
     if (LocalServer::status() == LocalServerStatus::Started)
+    {
       m_localMapService->start();
+    }
     else
+    {
       LocalServer::start();
+    }
   }
 }
 
@@ -136,7 +142,11 @@ QString LocalServerMapImageLayer::shortestTempPath()
 
   // return whichever is shorter, temp or home path
   if (homePath.length() > tmpPath.length())
+  {
     return tmpPath;
+  }
   else
+  {
     return homePath;
+  }
 }

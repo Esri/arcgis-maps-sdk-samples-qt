@@ -31,7 +31,7 @@ namespace Esri::ArcGISRuntime
   class FeatureCollection;
   class FeatureCollectionLayer;
   class FeatureCollectionTable;
-}
+} // namespace Esri::ArcGISRuntime
 
 class Feature_Collection_Layer : public QQuickItem
 {
@@ -49,8 +49,14 @@ private:
   void createPolylineTable();
   void createPolygonTable();
   void addPointToTable(QString attrName, QString attrValue, Esri::ArcGISRuntime::Point point, Esri::ArcGISRuntime::FeatureCollectionTable* table);
-  void addPolylineToTable(QString attrName, QString attrValue, QList<Esri::ArcGISRuntime::Point> points, Esri::ArcGISRuntime::FeatureCollectionTable* table);
-  void addPolygonToTable(QString attrName, QString attrValue, QList<Esri::ArcGISRuntime::Point> points, Esri::ArcGISRuntime::FeatureCollectionTable* table);
+  void addPolylineToTable(QString attrName,
+                          QString attrValue,
+                          QList<Esri::ArcGISRuntime::Point> points,
+                          Esri::ArcGISRuntime::FeatureCollectionTable* table);
+  void addPolygonToTable(QString attrName,
+                         QString attrValue,
+                         QList<Esri::ArcGISRuntime::Point> points,
+                         Esri::ArcGISRuntime::FeatureCollectionTable* table);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

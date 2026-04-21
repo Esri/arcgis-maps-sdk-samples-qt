@@ -42,9 +42,18 @@ Item {
     {
         width: childrenRect.width
         height: childrenRect.height
-        color: "white"
+        color: palette.base
         border.color: "black"
         border.width: 2
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+        
         Label {
             id: distancesLabel
             text: "Vertex distance: " + model.vertexDistance + " mi\nCoordinate distance: " + model.coordinateDistance + " mi";

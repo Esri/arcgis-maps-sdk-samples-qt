@@ -22,15 +22,15 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
-class KmlTour;
-class KmlTourController;
-class KmlLayer;
-class KmlDataset;
-class KmlNode;
-class KmlNodeListModel;
-}
+  class Scene;
+  class SceneQuickView;
+  class KmlTour;
+  class KmlTourController;
+  class KmlLayer;
+  class KmlDataset;
+  class KmlNode;
+  class KmlNodeListModel;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 
@@ -76,7 +76,6 @@ private:
   bool m_playButtonEnabled = false;
   bool m_pauseButtonEnabled = false;
   bool m_resetButtonEnabled = false;
-
 };
 
 #endif // PLAYAKMLTOUR_H

@@ -1,4 +1,4 @@
-// [WriteFile Name=GORenderers, Category=DisplayInformation]
+// [WriteFile Name=%{SampleName}, Category=%{SampleCategory}]
 // [Legal]
 // Copyright %{CurrentYear} Esri.
 //
@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
 @endif
 @if %{ThreeDSample}
   class Scene;
-  class SceneGraphicsView;
+  class %{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneGraphicsView' : 'LocalSceneWidget' )};
 @else
   class Map;
   class MapGraphicsView;
@@ -48,7 +48,7 @@ private:
 
 @if %{ThreeDSample}
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneGraphicsView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneGraphicsView' : 'LocalSceneWidget' )}* m_sceneView = nullptr;
 @else
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;

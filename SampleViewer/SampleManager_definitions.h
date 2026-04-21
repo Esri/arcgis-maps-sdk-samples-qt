@@ -16,17 +16,17 @@
 #ifndef SAMPLEMANAGER_DEFINITIONS_H
 #define SAMPLEMANAGER_DEFINITIONS_H
 
-#define DIRNAMESAMPLES                 ":/Samples"
-#define PROPERTYITEMID                 "itemId"
-#define PROPERTYPATH                   "path"
-#define PROPERTYNAME                   "title"
-#define PROPERTYDISPLAYNAME            "displayname"
-#define PROPERTYTHUMBNAIL              "thumbnail"
-#define PROPERTYSAMPLES                "samples"
-#define PROPERTYDESCRIPTION            "description"
-#define PROPERTYSOURCE                 "snippets"
-#define PROPERTYSOURCETEXT             "sourceText"
-#define PROPERTYDATAITEMS              "dataItems"
-#define PROPERTYFEATURED               "featured"
+#define DIRNAMESAMPLES ":/Samples"
+#define PROPERTYITEMID "itemId"
+#define PROPERTYPATH "path"
+#define PROPERTYNAME "title"
+#define PROPERTYDISPLAYNAME "displayname"
+#define PROPERTYTHUMBNAIL "thumbnail"
+#define PROPERTYSAMPLES "samples"
+#define PROPERTYDESCRIPTION "description"
+#define PROPERTYSOURCE "snippets"
+#define PROPERTYSOURCETEXT "sourceText"
+#define PROPERTYDATAITEMS "dataItems"
+#define PROPERTYFEATURED "featured"
 
 #endif // SAMPLEMANAGER_DEFINITIONS_H

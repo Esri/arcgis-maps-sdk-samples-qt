@@ -47,7 +47,7 @@ RasterStretchRendererSample {
         radius: 8
         height: editButton.height + (16)
         width: editButton.width + (16)
-        color: "lightgrey"
+        color: palette.base
         border.color: "darkgrey"
         border.width: 2
         opacity: 0.75
@@ -61,7 +61,7 @@ RasterStretchRendererSample {
             margins: 32
         }
         visible: rendererBox.width === 0
-        text: "Edit Renderer"
+        text: qsTr("Edit Renderer")
         onClicked: editingRenderer = true;
     }
 
@@ -74,7 +74,7 @@ RasterStretchRendererSample {
             bottom: parent.bottom
         }
 
-        color: "white"
+        color: palette.base
         opacity: 0.75
         width: editingRenderer ? parent.width : 0
 
@@ -100,16 +100,6 @@ RasterStretchRendererSample {
                     }
                 }
 
-                // Add a background to the ComboBox
-                Rectangle {
-                    anchors.fill: parent
-                    radius: 10
-                    // Make the rectangle visible if a dropdown indicator exists
-                    // An indicator only exists if a theme is set
-                    visible: parent.indicator
-                    border.width: 1
-                }
-
                 TextMetrics {
                     id: metrics
                     font: stretchTypeCombo.font
@@ -120,7 +110,7 @@ RasterStretchRendererSample {
                 id: minMaxMin
                 visible: stretchTypeCombo.currentText === minMax
                 spacing: 8
-                label: "min value"
+                label: qsTr("min value")
                 maxRange: 255
                 value: 0
             }
@@ -129,7 +119,7 @@ RasterStretchRendererSample {
                 id: minMaxMax
                 visible: stretchTypeCombo.currentText === minMax
                 spacing: 8
-                label: "max value"
+                label: qsTr("max value")
                 maxRange: 255
                 value: 255
             }
@@ -138,7 +128,7 @@ RasterStretchRendererSample {
                 id: percentClipMin
                 visible: stretchTypeCombo.currentText === percentClip
                 spacing: 8
-                label: "min value"
+                label: qsTr("min value")
                 maxRange: 100
                 value: 0
             }
@@ -147,7 +137,7 @@ RasterStretchRendererSample {
                 id: percentClipMax
                 visible: stretchTypeCombo.currentText === percentClip
                 spacing: 8
-                label: "max value"
+                label: qsTr("max value")
                 maxRange: 100
                 value: 100
             }
@@ -156,13 +146,13 @@ RasterStretchRendererSample {
                 id: sdFactor
                 visible: stretchTypeCombo.currentText === stdDeviation
                 spacing: 8
-                label: "factor"
+                label: qsTr("factor")
                 maxRange: 25
                 value: 0
             }
 
             Button {
-                text: "Render"
+                text: qsTr("Render")
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     editingRenderer = false;

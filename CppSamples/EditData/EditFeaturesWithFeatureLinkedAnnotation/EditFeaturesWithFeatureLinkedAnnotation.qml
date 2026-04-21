@@ -41,22 +41,26 @@ Item {
     Rectangle {
         id: updateWindow
         anchors.centerIn: parent
-        width: childrenRect.width
-        height: childrenRect.height
+        width: gridLayout.implicitWidth + 10
+        height: gridLayout.implicitHeight + 10
         radius: 10
         visible: false
+        color: palette.base
 
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true;
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true;
         }
 
         GridLayout {
+            id: gridLayout
             columns: 2
             anchors.margins: 5
 
-            Text {
+            Label {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.alignment: Qt.AlignHCenter
@@ -64,7 +68,7 @@ Item {
                 font.pixelSize: 16
             }
 
-            Text {
+            Label {
                 text: qsTr("AD_ADDRESS:")
                 Layout.margins: 5
             }
@@ -74,7 +78,7 @@ Item {
                 selectByMouse: true
             }
 
-            Text {
+            Label {
                 text: qsTr("ST_STR_NAM:")
                 Layout.margins: 5
             }

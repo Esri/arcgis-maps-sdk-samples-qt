@@ -36,38 +36,27 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 
-// sample MMPK location
-const QString sampleFileYellowstone {"/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"};
+  // sample MMPK location
+  const QString sampleFileYellowstone{"/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"};
 
 } // namespace
 
 OpenMobileMap_MapPackage::OpenMobileMap_MapPackage(QQuickItem* parent) :
   QQuickItem(parent)
 {
-  // connect to the Mobile Map Package instance to know when errors occur
-  connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
-          [](const Error& e)
-  {
-    if (e.isEmpty())
-    {
-      return;
-    }
-
-    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
-  });
 }
 
 OpenMobileMap_MapPackage::~OpenMobileMap_MapPackage() = default;
@@ -101,6 +90,17 @@ void OpenMobileMap_MapPackage::createMapPackage(const QString& path)
   // instatiate a mobile map package
   m_mobileMapPackage = new MobileMapPackage(path, this);
 
+  // connect to the Mobile Map Package errorOccurred to know when errors occur
+  connect(m_mobileMapPackage, &MobileMapPackage::errorOccurred, [](const Error& e)
+  {
+    if (e.isEmpty())
+    {
+      return;
+    }
+
+    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
+  });
+
   // wait for the mobile map package to load
   connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](const Error& error)
   {
@@ -119,7 +119,6 @@ void OpenMobileMap_MapPackage::createMapPackage(const QString& path)
     // For simplicity, obtain the first map in the list of maps.
     // set the map on the map view to display
     m_mapView->setMap(m_mobileMapPackage->maps().at(0));
-
   });
 
   m_mobileMapPackage->load();

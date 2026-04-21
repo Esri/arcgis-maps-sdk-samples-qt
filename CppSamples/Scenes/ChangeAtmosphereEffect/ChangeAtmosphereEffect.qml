@@ -67,23 +67,31 @@ Item {
             margins: 5
         }
 
-        color: Qt.rgba(1, 1, 1, 0.3);
+        color: palette.base
         width: childrenRect.width
         height: childrenRect.height
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+        
         ColumnLayout {
             id: layout
 
-            Text {
+            Label {
                 Layout.margins: 5
-                color: "white"
-                text: "Atmosphere effects"
+                text: qsTr("Atmosphere effects")
             }
 
             Button {
                 id: noAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "None"
+                text: qsTr("None")
                 checkable: true
             }
 
@@ -91,7 +99,7 @@ Item {
                 id: realisticAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Realistic"
+                text: qsTr("Realistic")
                 checkable: true
             }
 
@@ -99,7 +107,7 @@ Item {
                 id: horizonAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Horizon Only"
+                text: qsTr("Horizon Only")
                 checkable: true
                 checked: true
             }

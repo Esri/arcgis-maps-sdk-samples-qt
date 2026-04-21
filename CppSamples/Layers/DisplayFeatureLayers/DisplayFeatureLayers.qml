@@ -47,12 +47,22 @@ Item {
         }
         width: 225
         height: column.height + 10
+        color: palette.base
         border.color: "black"
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+        
         ColumnLayout {
             id: column
             anchors.centerIn: parent
-            Text {
-                text: "Feature Layer Mode"
+            Label {
+                text: qsTr("Feature Layer Mode")
             }
             ComboBox {
                 implicitWidth: layerSelectRectangle.width - 10

@@ -28,13 +28,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class CalloutData;
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-    class LocatorTask;
-    class GeocodeResult;
-}
+  class CalloutData;
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
+  class LocatorTask;
+  class GeocodeResult;
+} // namespace Esri::ArcGISRuntime
 
 class FindPlace : public QQuickItem
 {
@@ -75,7 +75,12 @@ private:
   void addGraphicsOverlay();
   void createLocator();
   void connectSignals();
-  bool poiTextHasFocus() const { return m_poiTextHasFocus; }
+
+  bool poiTextHasFocus() const
+  {
+    return m_poiTextHasFocus;
+  }
+
   void setPoiTextHasFocus(bool hasFocus);
   Esri::ArcGISRuntime::GeocodeParameters createParameters();
   void onGeocodingCompleted_(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);

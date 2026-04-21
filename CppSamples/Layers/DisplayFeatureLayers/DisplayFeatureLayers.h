@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class FeatureLayer;
-class Map;
-class MapQuickView;
-}
+  class FeatureLayer;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
@@ -39,7 +39,8 @@ public:
   explicit DisplayFeatureLayers(QObject* parent = nullptr);
   ~DisplayFeatureLayers() override;
 
-  enum class FeatureLayerType {
+  enum class FeatureLayerType
+  {
     Geodatabase,
     Geopackage,
     PortalItem,

@@ -22,13 +22,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class FeatureLayer;
-class Map;
-class MapQuickView;
-class PortalItem;
-class Layer;
-class LayerViewState;
-}
+  class FeatureLayer;
+  class Map;
+  class MapQuickView;
+  class PortalItem;
+  class Layer;
+  class LayerViewState;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

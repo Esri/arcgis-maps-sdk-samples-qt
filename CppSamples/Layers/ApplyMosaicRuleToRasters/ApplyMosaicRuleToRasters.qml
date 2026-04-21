@@ -39,12 +39,20 @@ Item {
                 bottom: view.attributionTop
                 horizontalCenter: view.horizontalCenter
             }
-            color: "lightgrey"
+            color: palette.base
             opacity: 0.8
             visible: model.rasterLoaded
 
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: mouse => mouse.accepted = true
+                onDoubleClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
+
             Column {
-                Text {
+                Label {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("Select Mosaic Rule")
                 }

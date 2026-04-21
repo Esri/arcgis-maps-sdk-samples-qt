@@ -17,11 +17,12 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Rectangle {
     visible: SampleManager.currentMode === SampleManager.HomepageView
 
-    color: "white"
+    color: Calcite.foreground1
 
     Flickable {
         anchors {
@@ -30,7 +31,8 @@ Rectangle {
         }
 
         contentHeight: {
-            featuredSamplesText.height + featuredSamplesGrid.height + 20
+            (favoriteSamplesGrid.visible ? favoritesText.height + favoriteSamplesGrid.height + 30 : 0) +
+                    featuredSamplesText.height + featuredSamplesGrid.height + 20
         }
 
         clip: true
@@ -39,25 +41,164 @@ Rectangle {
 
         interactive: true
 
-        Text {
-            id: featuredSamplesText
+        // Delegate component for sample cards
+        Component {
+            id: sampleCardDelegate
+            Item {
+                id: cell
+                width: GridView.view ? GridView.view.delegateItemSize : 175
+                height: GridView.view ? GridView.view.delegateItemSize : 175
+
+                Rectangle {
+                    id: cardContainer
+                    anchors.centerIn: parent
+                    height: cell.height * .90
+                    width: cell.width * .90
+                    color: "transparent"
+
+                    // Hover/press scale effect
+                    scale: cardMouseArea.pressed ? 0.97 : (cardMouseArea.containsMouse ? 1.03 : 1.0)
+                    z: cardMouseArea.containsMouse ? 1 : 0
+                    Behavior on scale {
+                        NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
+                    }
+
+                    Rectangle {
+                        id: backgroundRectangle
+                        anchors.fill: parent
+                        color: "black"
+                        border.width: cardMouseArea.containsMouse ? 2 : 1
+                        border.color: cardMouseArea.containsMouse ? Calcite.brand : (Calcite.theme !== Calcite.Theme.Light ? "#555555" : Calcite.border1)
+                        Behavior on border.width {
+                            NumberAnimation { duration: 150 }
+                        }
+                        Behavior on border.color {
+                            ColorAnimation { duration: 150 }
+                        }
+
+                        Image {
+                            id: img
+                            anchors.fill: parent
+                            anchors.margins: cardMouseArea.containsMouse ? 3 : 1
+                            source: thumbnailUrl
+                            fillMode: Image.PreserveAspectCrop
+                            Behavior on anchors.margins {
+                                NumberAnimation { duration: 150 }
+                            }
+                        }
+
+                        Rectangle {
+                            id: txtBackground
+                            anchors {
+                                bottom: img.bottom
+                                left: img.left
+                                right: img.right
+                            }
+                            height: txt.height
+                            color: "#80000000"
+
+                            Text {
+                                id: txt
+                                padding: 5
+                                width: txtBackground.width - (padding * 2)
+                                text: name
+                                wrapMode: Text.WordWrap
+                                font.bold: true
+                                clip: true
+                                color: "white"
+                            }
+                        }
+                    }
+
+                    MouseArea {
+                        id: cardMouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onClicked: {
+                            drawer.close();
+                            SampleManager.currentSample = sample;
+                            SampleManager.currentMode = SampleManager.LiveSampleView
+                        }
+                    }
+                }
+            }
+        }
+
+        // Favorites section - only visible when favorites exist
+        Label {
+            id: favoritesText
+            visible: SampleManager.favoriteSamples && SampleManager.favoriteSamples.size > 0
             anchors {
                 left: parent.left
                 right: parent.right
             }
             horizontalAlignment: Text.AlignHCenter
-            text: "# Featured Samples"
+            text: qsTr("# Favorites")
             wrapMode: Text.WordWrap
             textFormat: Text.MarkdownText
-            color: "#7938b6"
+            color: Calcite.text2
+        }
+
+        GridView {
+            id: favoriteSamplesGrid
+            visible: SampleManager.favoriteSamples && SampleManager.favoriteSamples.size > 0
+
+            property int cellsPerRow: 3
+            property int rowCount: 1
+            property int minColumnCount: 2
+            property int delegateItemSize: 175
+            property int originalItemSize: 175
+
+            anchors {
+                top: favoritesText.bottom
+                topMargin: visible ? 10 : 0
+                left: parent.left
+                right: parent.right
+            }
+
+            height: visible ? rowCount * delegateItemSize : 0
+            interactive: false
+
+            onWidthChanged: updateCellsPerRow()
+            onCountChanged: updateCellsPerRow()
+            onVisibleChanged: if (visible) updateCellsPerRow()
+
+            function updateCellsPerRow() {
+                if (SampleManager.favoriteSamples && SampleManager.favoriteSamples.size > 0) {
+                    delegateItemSize = Math.min(originalItemSize, (parent.width / minColumnCount));
+                    cellsPerRow = Math.max(1, Math.floor(favoriteSamplesGrid.width / delegateItemSize));
+                    rowCount = Math.ceil(favoriteSamplesGrid.count / cellsPerRow);
+                }
+            }
+
+            cellWidth: favoriteSamplesGrid.width / cellsPerRow
+            cellHeight: delegateItemSize
+            clip: true
+            model: SampleManager.favoriteSamples
+            delegate: sampleCardDelegate
+        }
+
+        Label {
+            id: featuredSamplesText
+            anchors {
+                top: favoriteSamplesGrid.visible ? favoriteSamplesGrid.bottom : parent.top
+                topMargin: favoriteSamplesGrid.visible ? 20 : 0
+                left: parent.left
+                right: parent.right
+            }
+            horizontalAlignment: Text.AlignHCenter
+            text: qsTr("# Featured Samples")
+            wrapMode: Text.WordWrap
+            textFormat: Text.MarkdownText
+            color: Calcite.text2
         }
 
         GridView {
             id: featuredSamplesGrid
-            property int cellsPerRow: 3 // This initial value is almost immediately overwritten when the window width is determined
+            property int cellsPerRow: 3
             property int rowCount: 1
             property int minColumnCount: 2
-            property int delegateItemSize: 175 // The width (and height) of the item container within the grid
+            property int delegateItemSize: 175
             property int originalItemSize: 175
 
             anchors {
@@ -91,89 +232,7 @@ Rectangle {
             cellHeight: delegateItemSize
             clip: true
             model: SampleManager.featuredSamples
-            delegate: Item {
-                id: cell
-                width: featuredSamplesGrid.delegateItemSize
-                height: featuredSamplesGrid.delegateItemSize
-
-                Rectangle {
-                    // This transparent rectangle is included to ensure items are spread out evenly and are repositioned as the window resizes
-                    id: paddingRect
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                    }
-                    width: (featuredSamplesGrid.cellWidth - featuredSamplesGrid.delegateItemSize)/2
-                    height: 1
-                    color: "#00000000"
-                }
-
-                Rectangle {
-                    id: backgroundRectangle
-                    // This rectangle acts as a border around each grid item
-                    anchors {
-                        top: parent.top
-                        left: paddingRect.right
-                    }
-                    height: cell.height * .90
-                    width: cell.width * .90
-                    color: "black"
-
-                    Image {
-                        id: img
-
-                        anchors.fill: parent
-                        anchors.margins: 1
-                        source: thumbnailUrl
-                        fillMode: Image.PreserveAspectCrop
-                    }
-
-                    Rectangle {
-                        id: txtBackground
-                        anchors {
-                            bottom: img.bottom
-                            topMargin: cell.height * .05
-                            left: img.left
-                            right: img.right
-                        }
-                        height: txt.height
-                        color: "#80000000"
-
-                        Text {
-                            id: txt
-                            padding: 5
-                            width: txtBackground.width - (padding * 2)
-                            text: name
-                            wrapMode: Text.WordWrap
-                            font.bold: true
-                            clip: true
-
-                            color: "white"
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        onClicked: {
-                            drawer.close();
-                            // launch sample...
-                            SampleManager.currentSample = sample;
-                            SampleManager.currentMode = SampleManager.LiveSampleView
-                        }
-                        onContainsMouseChanged: {
-                            if (containsMouse) {
-                                backgroundRectangle.color = "#7938b6"
-                                img.anchors.margins = 3
-
-                            } else {
-                                backgroundRectangle.color = "black"
-                                img.anchors.margins = 1
-                            }
-                        }
-                    }
-                }
-            }
+            delegate: sampleCardDelegate
         }
     }
 }

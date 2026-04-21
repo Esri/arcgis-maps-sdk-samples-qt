@@ -1,3 +1,4 @@
+// [WriteFile Name=AddCustomDynamicEntityDataSource, Category=Layers]
 // [Legal]
 // Copyright 2024 Esri.
 //
@@ -31,36 +32,37 @@
 #include <QUrl>
 #include <QVariantMap>
 
-namespace Esri::ArcGISRuntime {
-
-class DynamicEntityDataSource;
-class DynamicEntityDataSourceInfo;
-
-class CustomDataSource : public DynamicEntityDataSource
+namespace Esri::ArcGISRuntime
 {
-  Q_OBJECT
 
-public:
-  CustomDataSource(QObject* parent = nullptr);
-  CustomDataSource(const QString& fileName, const QString& entityIdField, const int msDelay, QObject* parent = nullptr);
-  ~CustomDataSource() override;
+  class DynamicEntityDataSource;
+  class DynamicEntityDataSourceInfo;
 
-  QFuture<DynamicEntityDataSourceInfo*> onLoadAsync() override;
-  QFuture<void> onConnectAsync() override;
-  QFuture<void> onDisconnectAsync() override;
+  class CustomDataSource : public DynamicEntityDataSource
+  {
+    Q_OBJECT
 
-private:
-  void observationProcessLoopAsync();
-  QList<Field> getSchema();
+  public:
+    CustomDataSource(QObject* parent = nullptr);
+    CustomDataSource(const QString& fileName, const QString& entityIdField, const int msDelay, QObject* parent = nullptr);
+    ~CustomDataSource() override;
 
-  QString m_fileName;
-  QFile m_file;
-  QTextStream m_textStream;
-  QString m_entityIdField;
-  int m_msDelay;
-  QList<Field> m_fields;
-  QFutureWatcher<void> m_watcher;
-};
+    QFuture<DynamicEntityDataSourceInfo*> onLoadAsync() override;
+    QFuture<void> onConnectAsync() override;
+    QFuture<void> onDisconnectAsync() override;
+
+  private:
+    void observationProcessLoopAsync();
+    QList<Field> getSchema();
+
+    QString m_fileName;
+    QFile m_file;
+    QTextStream m_textStream;
+    QString m_entityIdField;
+    int m_msDelay;
+    QList<Field> m_fields;
+    QFutureWatcher<void> m_watcher;
+  };
 
 } // namespace Esri::ArcGISRuntime
 

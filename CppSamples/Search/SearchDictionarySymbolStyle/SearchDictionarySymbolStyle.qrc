@@ -6,13 +6,10 @@
         <file>SearchDictionarySymbolStyle.h</file>
         <file>README.md</file>
         <file>screenshot.png</file>
-        <file>ic_menu_addencircled_dark.png</file>
-        <file>ic_menu_find_dark.png</file>
-        <file>ic_menu_find_light.png</file>
-        <file>ic_menu_addencircled_light.png</file>
-        <file>ic_menu_closeclear_dark.png</file>
-        <file>ic_menu_closeclear_light.png</file>
-        <file>ic_menu_collapsed_light.png</file>
-        <file>ic_menu_expanded_light.png</file>
+		<file>plus-circle-24.svg</file>
+		<file>x-24.svg</file>
+		<file>search-24.svg</file>
+        <file>chevron-down-24.svg</file>
+        <file>chevron-up-24.svg</file>
     </qresource>
 </RCC>

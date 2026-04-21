@@ -26,13 +26,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class FeatureLayer;
-class GeoElement;
-class IdentifyLayerResult;
-class Map;
-class MapQuickView;
-class Popup;
-}
+  class FeatureLayer;
+  class GeoElement;
+  class IdentifyLayerResult;
+  class Map;
+  class MapQuickView;
+  class Popup;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("Popup.h")

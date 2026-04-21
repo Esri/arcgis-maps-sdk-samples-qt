@@ -1,0 +1,69 @@
+// [WriteFile Name=ShowExploratoryViewshedFromGeoElementInScene, Category=Analysis]
+// [Legal]
+// Copyright 2017 Esri.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#ifndef ShowExploratoryViewshedFromGeoElementInScene_H
+#define ShowExploratoryViewshedFromGeoElementInScene_H
+
+// ArcGIS Maps SDK headers
+#include "GeometryTypes.h"
+#include "Point.h"
+
+// Qt headers
+#include <QQuickItem>
+#include <QTimer>
+
+namespace Esri::ArcGISRuntime
+{
+  class SceneQuickView;
+  class AnalysisOverlay;
+  class ExploratoryGeoElementViewshed;
+  class GraphicsOverlay;
+  class Graphic;
+} // namespace Esri::ArcGISRuntime
+
+class ShowExploratoryViewshedFromGeoElementInScene : public QQuickItem
+{
+  Q_OBJECT
+
+public:
+  explicit ShowExploratoryViewshedFromGeoElementInScene(QQuickItem* parent = nullptr);
+  ~ShowExploratoryViewshedFromGeoElementInScene() override = default;
+
+  void componentComplete() override;
+  static void init();
+
+private slots:
+  void animate();
+
+private:
+  void createGraphicsOverlay();
+  void createGraphic();
+
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
+  Esri::ArcGISRuntime::ExploratoryGeoElementViewshed* m_viewshed = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_tank = nullptr;
+  Esri::ArcGISRuntime::Point m_waypoint;
+  Esri::ArcGISRuntime::LinearUnitId m_linearUnit = Esri::ArcGISRuntime::LinearUnitId::Meters;
+  Esri::ArcGISRuntime::AngularUnitId m_angularUnit = Esri::ArcGISRuntime::AngularUnitId::Degrees;
+  Esri::ArcGISRuntime::GeodeticCurveType m_curveType = Esri::ArcGISRuntime::GeodeticCurveType::Geodesic;
+
+  const QString m_headingAttr = QStringLiteral("HEADING");
+  QTimer* m_timer = nullptr;
+};
+
+#endif // ShowExploratoryViewshedFromGeoElementInScene_H

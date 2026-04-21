@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class Portal;
-}
+  class Map;
+  class MapQuickView;
+  class Portal;
+} // namespace Esri::ArcGISRuntime
 
 class CreateAndSaveMap : public QQuickItem
 {

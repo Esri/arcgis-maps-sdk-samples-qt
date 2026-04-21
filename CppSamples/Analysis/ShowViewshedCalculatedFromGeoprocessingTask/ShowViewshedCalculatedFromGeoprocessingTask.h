@@ -1,0 +1,78 @@
+// [WriteFile Name=ShowViewshedCalculatedFromGeoprocessingTask, Category=Analysis]
+// [Legal]
+// Copyright 2016 Esri.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#ifndef ShowViewshedCalculatedFromGeoprocessingTask_H
+#define ShowViewshedCalculatedFromGeoprocessingTask_H
+
+// Qt headers
+#include <QQuickItem>
+
+namespace Esri::ArcGISRuntime
+{
+  class FeatureCollectionTable;
+  class GraphicsOverlay;
+  class GeoprocessingTask;
+  class GeoprocessingResult;
+  class Graphic;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
+
+class ShowViewshedCalculatedFromGeoprocessingTask : public QQuickItem
+{
+  Q_OBJECT
+
+  Q_PROPERTY(bool viewshedInProgress MEMBER m_viewshedInProgress NOTIFY viewshedInProgressChanged)
+  Q_PROPERTY(QString statusText READ jobStatus NOTIFY statusChanged)
+
+public:
+  explicit ShowViewshedCalculatedFromGeoprocessingTask(QQuickItem* parent = nullptr);
+  ~ShowViewshedCalculatedFromGeoprocessingTask() override;
+
+  void componentComplete() override;
+  static void init();
+
+signals:
+  void viewshedInProgressChanged();
+  void displayErrorDialog(const QString& titleText, const QString& detailedText);
+  void statusChanged();
+
+private:
+  void onAddFeatureCompleted_(Esri::ArcGISRuntime::FeatureCollectionTable* inputFeatures);
+
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_inputOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay = nullptr;
+  Esri::ArcGISRuntime::GeoprocessingTask* m_viewshedTask = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_inputGraphic = nullptr;
+  bool m_viewshedInProgress = false;
+  QString m_jobStatus;
+  QObject* m_graphicParent = nullptr;
+
+private:
+  void connectSignals();
+  void createOverlays();
+  void calculateViewshed();
+  void processResults(Esri::ArcGISRuntime::GeoprocessingResult* results);
+
+  QString jobStatus() const
+  {
+    return m_jobStatus;
+  }
+};
+
+#endif // ShowViewshedCalculatedFromGeoprocessingTask_H

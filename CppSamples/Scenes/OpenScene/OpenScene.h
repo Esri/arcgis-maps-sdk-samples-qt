@@ -22,7 +22,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
+  class SceneQuickView;
 }
 
 class OpenScene : public QQuickItem

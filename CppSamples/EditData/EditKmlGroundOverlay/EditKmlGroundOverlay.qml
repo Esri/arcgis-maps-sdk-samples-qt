@@ -28,33 +28,60 @@ Item {
             // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
         }
+
+        // Slider UI presentation at bottom
+        Rectangle {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
+            }
+            width: childrenRect.width
+            height: childrenRect.height
+            radius: 5
+            color: palette.base
+            border {
+                width: 1
+                color: "darkgrey"
+            }
+
+            Column {
+                padding: 8
+                spacing: 5
+
+                Label {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                    text: "Opacity"
+                }
+
+                // sliderCombo: A slider and text for its value
+                Row {
+                    id: sliderCombo
+
+                    Slider {
+                        id: slider
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                        }
+                        // Slider controls degrees of rotation
+                        from: 0
+                        to: 255
+                        value: 255
+                        stepSize: 25
+                        onValueChanged: {
+                            // modify the overlay's color/alpha value
+                            model.setOpacity(value);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     EditKmlGroundOverlaySample {
         id: model
         sceneView: view
-    }
-
-    Rectangle {
-        anchors.fill: slider
-        radius: 5
-    }
-
-    Slider {
-        id: slider
-        anchors {
-            left: parent.left
-            top: parent.top
-            margins: 10
-        }
-        from: 0
-        to: 255
-        value: 255
-        stepSize: 25
-        onValueChanged: {
-            // modify the overlay's color/alpha value
-            model.setOpacity(value);
-        }
     }
 }

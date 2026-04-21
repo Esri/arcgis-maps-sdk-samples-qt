@@ -1,3 +1,4 @@
+// [WriteFile Name=ListKmlContents, Category=Layers]
 // [Legal]
 // Copyright 2020 Esri.
 //
@@ -30,9 +31,8 @@
 #include <Windows.h>
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
   // in order to instance 3D symbols
@@ -62,12 +62,12 @@ int main(int argc, char *argv[])
 
   if (accessToken.isEmpty())
   {
-      qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                    "you to authenticate with an ArcGIS account or set the API Key property.";
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
 
   // Initialize the sample

@@ -38,6 +38,7 @@ ClosestFacilitySample {
     BusyIndicator {
         anchors.centerIn: parent
         running: busy
+        visible: busy
     }
 
     Dialog {
@@ -45,10 +46,10 @@ ClosestFacilitySample {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Route Error"
+        title: qsTr("Route Error")
         visible: text.length > 0
         property alias text : textLabel.text
-        Text {
+        Label {
             id: textLabel
             text: message
         }

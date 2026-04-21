@@ -41,14 +41,16 @@ Item {
             }
             width: childrenRect.width
             height: childrenRect.height
-            color: "lightgrey"
+            color: palette.base
             opacity: 0.8
             radius: 5
 
             // catch mouse signals from propagating to parent
             MouseArea {
                 anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: mouse => mouse.accepted = true
+                onDoubleClicked: mouse => mouse.accepted = true
                 onWheel: wheel => wheel.accepted = true
             }
 
@@ -99,13 +101,13 @@ Item {
                     }
                 }
 
-                Text {
+                Label {
                     text: qsTr("Current map scale: 1:%1".arg(Math.round(model.mapScale)))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
 
-                Text {
+                Label {
                     text: qsTr("Sublayer min scale: 1:%1".arg(model.sublayerMinScale > 0.0 ? Math.round(model.sublayerMinScale) : "not set"))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft

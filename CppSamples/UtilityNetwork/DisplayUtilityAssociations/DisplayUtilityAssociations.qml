@@ -32,8 +32,17 @@ Item {
 
         Control {
             background: Rectangle {
+                color: palette.base
                 border.color: "black"
                 border.width: 1
+                
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: mouse => mouse.accepted = true
+                    onDoubleClicked: mouse => mouse.accepted = true
+                    onWheel: wheel => wheel.accepted = true
+                }
             }
             padding: 5
             visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
@@ -49,7 +58,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 Layout.fillWidth: true
                 Label {
-                    text: "Utility association types"
+                    text: qsTr("Utility association types")
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                     Layout.columnSpan: 2
@@ -62,7 +71,7 @@ Item {
                 }
                 Label {
                     id: attachmentLabel
-                    text: "Attachment symbol"
+                    text: qsTr("Attachment symbol")
                     visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
                 }
 
@@ -72,7 +81,7 @@ Item {
                 }
                 Label {
                     id: connectivityLabel
-                    text: "Connectivity symbol"
+                    text: qsTr("Connectivity symbol")
                     visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
                 }
             }

@@ -33,14 +33,14 @@ Item {
                 bottom: view.attributionTop
                 bottomMargin: 10
             }
-            text: "Change Basemap"
+            text: qsTr("Change Basemap")
             checkable: true
         }
 
         BasemapGallery {
             id: basemapGallery
             anchors.centerIn: view
-            visible: changeBasemapButton.checked;
+            visible: changeBasemapButton.checked
             onCurrentBasemapChanged: {
                 changeBasemapButton.checked = false;
             }

@@ -58,8 +58,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QFuture>
-#include <QStandardPaths>
 #include <QList>
+#include <QStandardPaths>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -92,8 +92,7 @@ namespace
   }
 } // namespace
 
-
-CreateKmlMultiTrack::CreateKmlMultiTrack(QObject* parent /* = nullptr */):
+CreateKmlMultiTrack::CreateKmlMultiTrack(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreets, this)),
   m_graphicsOverlay(new GraphicsOverlay(this)),
@@ -254,11 +253,14 @@ void CreateKmlMultiTrack::exportKmlMultiTrack()
   }
   // Save KML file to local storage
   // Write the KML document to the chosen path.
-  kmlDocument->saveAsAsync(localKmlFilePath).then(this, [localKmlFilePath, this]()
+  kmlDocument->saveAsAsync(localKmlFilePath)
+    .then(this,
+          [localKmlFilePath, this]()
   {
     qDebug() << "Saved KmlMultiTrack: " + QFileInfo(localKmlFilePath).filePath();
     stopNavigation();
-  }).onFailed([](const ErrorException&)
+  })
+    .onFailed([](const ErrorException&)
   {
     qDebug() << "Error saving KML file";
   });
@@ -289,7 +291,7 @@ void CreateKmlMultiTrack::loadLocalKmlFile()
   {
     if (localKmlDataset->loadStatus() != LoadStatus::Loaded)
     {
-      qDebug() << "Error parsing KML file " +  localKmlDataset->loadError().message();
+      qDebug() << "Error parsing KML file " + localKmlDataset->loadError().message();
       return;
     }
 

@@ -24,7 +24,7 @@ namespace Esri::ArcGISRuntime
 {
   class MapQuickView;
   class RasterLayer;
-}
+} // namespace Esri::ArcGISRuntime
 
 class Hillshade_Renderer : public QQuickItem
 {

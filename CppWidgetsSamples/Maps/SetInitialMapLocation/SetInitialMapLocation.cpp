@@ -38,7 +38,7 @@ SetInitialMapLocation::SetInitialMapLocation(QWidget* parent) :
   m_mapView = new MapGraphicsView(m_map, this);
 
   // Set up the UI
-  QVBoxLayout *vBoxLayout = new QVBoxLayout();
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
   vBoxLayout->addWidget(m_mapView);
   setLayout(vBoxLayout);
 }

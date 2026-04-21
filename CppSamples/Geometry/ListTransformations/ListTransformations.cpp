@@ -58,17 +58,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-ListTransformations::ListTransformations(QQuickItem* parent /* = nullptr */):
+ListTransformations::ListTransformations(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -91,7 +91,9 @@ void ListTransformations::componentComplete()
   connect(TransformationCatalog::instance(), &TransformationCatalog::errorOccurred, this, [this](const Error& e)
   {
     if (e.isEmpty())
+    {
       return;
+    }
 
     emit showStatusBar(QString("Error setting projection engine directory: %1. %2").arg(e.message(), e.additionalMessage()));
   });
@@ -117,7 +119,9 @@ void ListTransformations::componentComplete()
     // Set the TransformationCatalog path
     TransformationCatalog::setProjectionEngineDirectory(dataPath.toString());
     if (TransformationCatalog::projectionEngineDirectory().length() > 0)
+    {
       emit showStatusBar(QString("Projection engine directory set: %1").arg(TransformationCatalog::instance()->projectionEngineDirectory()));
+    }
 
     // get the initial list of transformations
     refreshTransformationList(true);
@@ -157,9 +161,14 @@ void ListTransformations::refreshTransformationList(bool orderBySuitability)
 
   // request the transformations
   if (orderBySuitability)
-    m_transformations = TransformationCatalog::transformationsBySuitability(inSpatialReference, outSpatialReference, m_mapView->visibleArea().extent());
+  {
+    m_transformations =
+      TransformationCatalog::transformationsBySuitability(inSpatialReference, outSpatialReference, m_mapView->visibleArea().extent());
+  }
   else
+  {
     m_transformations = TransformationCatalog::transformationsBySuitability(inSpatialReference, outSpatialReference);
+  }
 
   // update the QML property list
   m_transformationList.clear();

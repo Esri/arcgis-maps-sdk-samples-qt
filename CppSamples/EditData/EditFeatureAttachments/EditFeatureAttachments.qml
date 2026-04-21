@@ -38,10 +38,6 @@ EditFeatureAttachmentsSample {
 
         Callout {
             id: callout
-            background: Rectangle {
-                border.color: "lightgrey"
-                border.width: 1
-            }
             calloutData: mapView.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
@@ -70,7 +66,7 @@ EditFeatureAttachmentsSample {
         width: 250
         visible: false
         radius: 10
-        color: "lightgrey"
+        color: palette.base
         border.color: "darkgrey"
         opacity: 0.90
         clip: true
@@ -78,7 +74,9 @@ EditFeatureAttachmentsSample {
         // accept mouse events so they do not propogate down to the map
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
 
@@ -92,13 +90,13 @@ EditFeatureAttachmentsSample {
             height: 40
             color: "transparent"
 
-            Text {
+            Label {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     left: parent.left
                     margins: 10
                 }
-                text: "Attachments"
+                text: qsTr("Attachments")
                 font {
                     bold: true
                     pixelSize: 20
@@ -112,7 +110,7 @@ EditFeatureAttachmentsSample {
                     margins: 10
                 }
                 spacing: 15
-                Text {
+                Label {
                     text: "+"
                     font {
                         bold: true
@@ -128,7 +126,7 @@ EditFeatureAttachmentsSample {
                         }
                     }
                 }
-                Text {
+                Label {
                     text: "-"
                     font {
                         bold: true
@@ -170,7 +168,7 @@ EditFeatureAttachmentsSample {
                 clip: true
 
                 // show the attachment name
-                Text {
+                Label {
                     id: label
                     anchors {
                         verticalCenter: parent.verticalCenter
@@ -209,7 +207,7 @@ EditFeatureAttachmentsSample {
             highlightFollowsCurrentItem: true
             highlight: Rectangle {
                 height: attachmentsList.currentItem.height
-                color: "lightsteelblue"
+                color: palette.highlight
             }
         }
     }

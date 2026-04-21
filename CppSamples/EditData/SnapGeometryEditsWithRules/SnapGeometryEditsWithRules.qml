@@ -1,3 +1,19 @@
+// [WriteFile Name=SnapGeometryEditsWithRules, Category=EditData]
+// [Legal]
+// Copyright 2025 Esri.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -29,15 +45,13 @@ Item {
         }
         width: textItem.width + 20
         height: textItem.height + 10
-        color: "black"
-        opacity: .5
+        color: palette.base
 
-        Text {
+        Label {
             id: textItem
             anchors.centerIn: parent
-            text: "Tap a point feature to edit."
-            color: "white"
-            font.pixelSize: 16
+            text: qsTr("Tap a point feature to edit.")
+            font.pixelSize: 18
             font.bold: true
         }
     }
@@ -49,8 +63,7 @@ Item {
         padding: 5
 
         background: Rectangle {
-            color: "black"
-            opacity: .5
+            color: palette.base
         }
         contentItem: ColumnLayout {
             id: columns
@@ -64,32 +77,29 @@ Item {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 columns: 2
 
-                Text {
+                Label {
                     id: geometryHeader
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: "Feature selected"
-                    color: "white"
-                    font.pixelSize: 16
+                    text: qsTr("Feature selected")
+                    font.pixelSize: 18
                     font.bold: true
                 }
 
-                Text {
+                Label {
                     id: assetGroupText
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: "AssetGroup: "
-                    color: "white"
-                    font.pixelSize: 12
+                    text: qsTr("AssetGroup: ")
+                    font.pixelSize: 14
                 }
 
-                Text {
+                Label {
                     id: assetTypeText
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: "AssetType: "
-                    color: "white"
-                    font.pixelSize: 12
+                    text: qsTr("AssetType: ")
+                    font.pixelSize: 14
                 }
 
                 Connections {
@@ -120,7 +130,7 @@ Item {
                 GeometryEditorButton {
                     id: snapSettingsButton
                     buttonName: qsTr("Snap Settings")
-                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/settings.png"
+                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/gear-24.svg"
                     Layout.columnSpan: 2
                     enabled: snapGeometryEditsWithRulesModel.isElementSelected
                     onClicked: {
@@ -130,7 +140,7 @@ Item {
                 GeometryEditorButton {
                     id: saveButton
                     buttonName: qsTr("Save")
-                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/save-32.png"
+                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/save-24.svg"
                     enabled: snapGeometryEditsWithRulesModel.geometryEditorStarted
                     onClicked: snapGeometryEditsWithRulesModel.stopEditing();
                 }
@@ -138,7 +148,7 @@ Item {
                 GeometryEditorButton {
                     id: discardButton
                     buttonName: qsTr("Discard")
-                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/trash-32.png"
+                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/trash-24.svg"
                     enabled: snapGeometryEditsWithRulesModel.geometryEditorStarted
                     onClicked: snapGeometryEditsWithRulesModel.discardEdits();
                 }
@@ -155,10 +165,9 @@ Item {
                     color: "green"
                     radius: 2
                 }
-                Text {
-                    text: "None"
-                    color: "white"
-                    font.pixelSize: 12
+                Label {
+                    text: qsTr("None")
+                    font.pixelSize: 14
                 }
 
                 Rectangle {
@@ -167,10 +176,9 @@ Item {
                     color: "orange"
                     radius: 2
                 }
-                Text {
-                    text: "RulesLimitSnapping"
-                    color: "white"
-                    font.pixelSize: 12
+                Label {
+                    text: qsTr("RulesLimitSnapping")
+                    font.pixelSize: 14
                 }
 
                 Rectangle {
@@ -179,10 +187,9 @@ Item {
                     color: "red"
                     radius: 2
                 }
-                Text {
-                    text: "RulesPreventSnapping"
-                    color: "white"
-                    font.pixelSize: 12
+                Label {
+                    text: qsTr("RulesPreventSnapping")
+                    font.pixelSize: 14
                 }
             }
         }
@@ -195,10 +202,9 @@ Item {
             top: parent.top
             bottom: parent.bottom
         }
-        width: 220
+        width: 300
         visible: false
-        color: "black"
-        opacity: .5
+        color: palette.base
 
         Connections {
             target: snapGeometryEditsWithRulesModel
@@ -218,34 +224,20 @@ Item {
 
             header: ColumnLayout {
                 id: snappingColumn
-                Layout.minimumWidth: optionPanel.width
+                width: snapSourceView.width
                 spacing: 0
-                RowLayout {
-                    Layout.minimumWidth: optionPanel.width
-                    Layout.minimumHeight: 35
 
-                    Text {
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.minimumHeight: 35
+                    spacing: 10
+
+                    Label {
                         Layout.alignment: Qt.AlignLeft
                         Layout.fillWidth: true
-                        Layout.minimumWidth: optionPanel.width * 0.75
-                        text: "Snapping"
-                        font.pixelSize: 12
-                        color: "white"
+                        text: qsTr("Snapping")
+                        font.pixelSize: 14
                         font.bold: true
-                    }
-
-                    Text {
-                        Layout.alignment: Qt.AlignRight
-                        Layout.fillWidth: true
-                        Layout.minimumWidth: optionPanel.width * 0.25
-                        text: "Done"
-                        font.pixelSize: 12
-                        color: "white"
-                        font.bold: true
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: optionPanel.visible = false;
-                        }
                     }
                 }
             }
@@ -254,42 +246,54 @@ Item {
 
             delegate: Item {
                 height: 35
-                width: optionPanel.width
-                id:delegate
+                width: snapSourceView.width
+
                 Rectangle {
                     id: wrapper
-                    color: "#E9DFEA"
-                    width: snapSourceView.width - (snapSourceView.anchors.margins / 2)
-                    height: delegate.height
-                    anchors {
-                        margins: 15
-                    }
+                    color: palette.mid
+                    width: parent.width
+                    height: parent.height
 
                     RowLayout {
-                        id : row
-                        Layout.fillWidth: true
-                        Layout.minimumWidth: optionPanel.width
-                        width: wrapper.width
+                        anchors.fill: parent
+                        anchors.leftMargin: 10
+                        anchors.rightMargin: 10
+                        spacing: 10
 
-                        Text {
-                            Layout.alignment: Qt.AlignLeft
+                        Label {
+                            Layout.alignment: Qt.AlignVCenter
                             Layout.fillWidth: true
-                            Layout.minimumWidth: optionPanel.width / 2
                             text: name
-                            font.pixelSize: 12
-                            Layout.leftMargin: 10
+                            font.pixelSize: 14
+                            elide: Text.ElideRight
                         }
 
                         Switch {
-                            Layout.alignment: Qt.AlignRight
-                            Layout.fillWidth: true
+                            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                             checked: isEnabled
                             onCheckedChanged: {
                                 if (isEnabled !== checked) {
-                                    isEnabled = checked; // Update only if there's a difference
+                                    isEnabled = checked;
                                 }
                             }
                         }
+                    }
+                }
+            }
+
+            footer: Item {
+                width: snapSourceView.width
+                height: 50
+
+                Button {
+                    text: qsTr("Done")
+                    anchors.centerIn: parent
+                    anchors.topMargin: 10
+                    font.pixelSize: 14
+                    font.bold: true
+
+                    onClicked: {
+                        optionPanel.visible = false
                     }
                 }
             }

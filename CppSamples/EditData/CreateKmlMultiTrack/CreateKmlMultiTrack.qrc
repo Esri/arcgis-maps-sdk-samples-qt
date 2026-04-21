@@ -7,10 +7,8 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>save.png</file>
-        <file>point.png</file>
-        <file>disabled-save.png</file>
-        <file>disabled-point.png</file>
+        <file>save-24.svg</file>
+        <file>point-24.svg</file>
         <file>coastalTrail.json</file>
     </qresource>
 </RCC>

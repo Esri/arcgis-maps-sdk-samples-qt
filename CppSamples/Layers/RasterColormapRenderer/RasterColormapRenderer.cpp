@@ -43,27 +43,28 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
-RasterColormapRenderer::RasterColormapRenderer(QQuickItem* parent /* = nullptr */):
+RasterColormapRenderer::RasterColormapRenderer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/raster")
 {
 }
 
 RasterColormapRenderer::~RasterColormapRenderer() = default;
+
 void RasterColormapRenderer::init()
 {
   // Register the map view for QML
@@ -109,13 +110,15 @@ void RasterColormapRenderer::componentComplete()
   //! [RasterColormapRenderer cpp add raster basemap]
 }
 
-ColormapRenderer *RasterColormapRenderer::createRenderer()
+ColormapRenderer* RasterColormapRenderer::createRenderer()
 {
   // create a color map where values 0-150 are red and 150-250 are yellow
   QList<QColor> colors;
   colors.reserve(250);
   for (int i = 0; i < 250; ++i)
-    colors.append( i < 150 ? Qt::red : Qt::yellow);
+  {
+    colors.append(i < 150 ? Qt::red : Qt::yellow);
+  }
 
   // create a colormap renderer
   ColormapRenderer* colormapRenderer = new ColormapRenderer(colors, this);

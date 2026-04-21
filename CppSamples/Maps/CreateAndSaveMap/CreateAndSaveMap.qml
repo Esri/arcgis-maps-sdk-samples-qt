@@ -56,18 +56,24 @@ CreateAndSaveMapSample {
             forceActiveFocus();
         }
 
-        Button {
+        Pane {
+            padding: 4
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
                 margins: 5
             }
-            text: "Save map"
+            Button {
+                anchors.centerIn: parent
+                text: qsTr("Save map")
 
-            onClicked: {
-                loadPortal();
+                onClicked: {
+                    loadPortal();
+                }
             }
         }
+
+
     }
 
     Component {
@@ -115,7 +121,7 @@ CreateAndSaveMapSample {
                     bottom: parent.bottom
                     margins: 5
                 }
-                text: "Create New Map"
+                text: qsTr("Create New Map")
                 onClicked: {
                     // We need a local ref to the stackView and layerWindow
                     // object as our object references will have been deleted

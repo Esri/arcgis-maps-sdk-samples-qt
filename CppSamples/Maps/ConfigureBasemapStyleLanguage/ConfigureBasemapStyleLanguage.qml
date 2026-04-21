@@ -37,7 +37,7 @@ Item {
         mapView: view
     }
 
-    Rectangle {
+    Pane {
         id: rectangle
         anchors {
             right: parent.right
@@ -46,11 +46,6 @@ Item {
         }
         width: column.width
         height: column.height
-        color: Qt.rgba(0, 0, 0, 0.5)
-        border {
-            color: "black"
-            width: 1
-        }
         opacity: 0.9
 
         Column {
@@ -58,15 +53,15 @@ Item {
             padding: 10
             spacing: 5
             width: 300
+            anchors.centerIn: parent
 
             Column {
                 id:languageStrategy
                 spacing: 5
 
-                Text {
-                    text: "Set Language Strategy:"
+                Label {
+                    text: qsTr("Set Language Strategy:")
                     font.bold: true
-                    color: "white"
                 }
 
                 Row {
@@ -79,12 +74,11 @@ Item {
                         enabled: comboBox.currentText == "none"
                     }
 
-                    Text {
+                    Label {
                         id: globalText
-                        text: "Global"
+                        text: qsTr("Global")
                         height: globalButton.height
                         verticalAlignment: Text.AlignVCenter
-                        color: "white"
                     }
                 }
 
@@ -98,12 +92,11 @@ Item {
                         }
                         enabled: comboBox.currentText == "none"
                     }
-                    Text {
+                    Label {
                         id: localText
-                        text: "Local"
+                        text: qsTr("Local")
                         height: localButton.height
                         verticalAlignment: Text.AlignVCenter
-                        color: "white"
                     }
                 }
 
@@ -112,15 +105,14 @@ Item {
             Column {
                 id:specificLanguage
 
-                Text {
-                    text: "Set Specific Language:"
+                Label {
+                    text: qsTr("Set Specific Language:")
                     font.bold: true
-                    color: "white"
                 }
 
                 ComboBox {
                     id: comboBox
-                    model: ["none" , "Bulgarian", "Greek", "Turkish"]
+                    model: [qsTr("none") , qsTr("Bulgarian"), qsTr("Greek"), qsTr("Turkish")]
                     // onCurrentTextChanged executes when the text is changed and also initially on loading the sample
                     onCurrentTextChanged: model.setNewBasemapLanguage(globalButton.checked, comboBox.currentText);
                 }

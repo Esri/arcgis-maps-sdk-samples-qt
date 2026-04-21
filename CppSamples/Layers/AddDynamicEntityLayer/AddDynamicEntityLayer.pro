@@ -22,12 +22,12 @@ mac {
 CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl qml quick
+QT += qml quick
 
 TEMPLATE = app
 TARGET = AddDynamicEntityLayer
 
-ARCGIS_RUNTIME_VERSION = 200.8.0
+include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample

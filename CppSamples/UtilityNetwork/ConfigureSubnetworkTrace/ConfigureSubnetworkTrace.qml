@@ -26,16 +26,24 @@ Item {
     Rectangle {
         id: rootRectangle
         anchors.fill: parent
-        color: "lightgrey"
+        color: palette.base
 
         ScrollView {
             id: scrollView
             anchors.fill: parent
+            anchors.margins: 5
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
             ColumnLayout {
                 id: controlItemsLayout
-                anchors.left: parent.left
-                anchors.right: parent.right
+                anchors.centerIn: parent
+                width: scrollView.availableWidth
+
+                // Spacer
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 20
+                }
 
                 CheckBox {
                     text: qsTr("Include barriers")
@@ -45,12 +53,24 @@ Item {
                     onCheckStateChanged: model.changeIncludeBarriersState(checked);
                 }
 
+                // Spacer
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 2
+                }
+
                 CheckBox {
                     text: qsTr("Include containers")
                     Layout.fillWidth: true
                     enabled: !busyIndicator.visible
                     checkState: Qt.Checked
                     onCheckStateChanged: model.changeIncludeContainersState(checked);
+                }
+
+                // Spacer
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 2
                 }
 
                 Shape {
@@ -64,10 +84,10 @@ Item {
                     }
                 }
 
-                Text {
+                Label {
                     text: qsTr("Example barrier condition for this data. 'Transformer Load' Equal '15'")
                     font.pixelSize: 11
-                    Layout.minimumWidth: rootRectangle.width
+                    Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
                     enabled: !model.busy
                 }
@@ -83,7 +103,7 @@ Item {
                     }
                 }
 
-                Text {
+                Label {
                     text: qsTr("New Barrier Condition:")
                     Layout.fillWidth: true
                 }
@@ -122,15 +142,12 @@ Item {
                         Layout.fillWidth: true
                         visible: model.textFieldVisible
                         validator: DoubleValidator {}
-                        color: "black"
                         placeholderText: qsTr("Enter value here")
-                        placeholderTextColor: "black"
                         selectByMouse: true
                         background: Rectangle {
-                            anchors.centerIn: parent
                             height: parent.height
                             width: parent.width
-                            color: "white"
+                            color: palette.mid
                         }
                     }
                 }
@@ -152,13 +169,12 @@ Item {
 
                 ScrollView {
                     Layout.fillWidth: true
-                    Layout.maximumWidth: rootRectangle.width
                     Layout.minimumHeight: 50
                     Layout.maximumHeight: .15 * rootRectangle.height
                     clip: true
                     Row {
                         anchors.fill: parent
-                        Text {
+                        Label {
                             text: model.expressionBuilder
                         }
                     }
@@ -191,7 +207,7 @@ Item {
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
-        Text {
+        Label {
             text: model.dialogText
             anchors.centerIn: parent
         }

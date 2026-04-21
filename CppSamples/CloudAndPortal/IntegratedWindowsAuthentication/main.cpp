@@ -1,3 +1,4 @@
+// [WriteFile Name=IntegratedWindowsAuthentication, Category=CloudAndPortal]
 // [Legal]
 // Copyright 2019 Esri.
 //
@@ -39,9 +40,8 @@
 
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -67,12 +67,12 @@ int main(int argc, char *argv[])
 
   if (accessToken.isEmpty())
   {
-      qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                    "you to authenticate with an ArcGIS account or set the API Key property.";
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
 
   // Initialize the sample

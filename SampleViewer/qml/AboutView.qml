@@ -16,6 +16,7 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Item {
     visible: false
@@ -39,6 +40,7 @@ Item {
         clip: true
         background: Rectangle {
             radius: 3
+            color: palette.base
         }
 
         SwipeView {
@@ -54,6 +56,7 @@ Item {
                 clip: true
                 background: Rectangle {
                     radius: 3
+                    color: palette.base
                 }
 
                 Column {
@@ -66,12 +69,12 @@ Item {
 
                     Image {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        source: "qrc:/esri_logo.png"
+                        source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/esri_logo_light.png" : "qrc:/esri_logo.png"
                         width: 210
                         height: 66
                     }
 
-                    Text {
+                    Label {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("ArcGIS Maps SDK for Qt Samples")
                         font {
@@ -82,7 +85,7 @@ Item {
                         }
                     }
 
-                    Text {
+                    Label {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Built with ArcGIS Maps SDK for Qt")
                         font {
@@ -91,7 +94,7 @@ Item {
                         }
                     }
 
-                    Text {
+                    Label {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: buildNum // obtained from main.cpp (engine.rootContext()->setContextProperty)
                         font {
@@ -106,6 +109,7 @@ Item {
                 clip: true
                 background: Rectangle {
                     radius: 3
+                    color: palette.base
                 }
 
                 Column {
@@ -123,7 +127,7 @@ Item {
                         height: 72
                     }
 
-                    Text {
+                    Label {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("View the samples on GitHub")
                         renderType: Text.NativeRendering
@@ -131,7 +135,7 @@ Item {
                             family: fontFamily
                             pixelSize: 13
                         }
-                        color: "blue"
+                        color: Calcite.textLink
 
                         MouseArea {
                             anchors.fill: parent
@@ -139,7 +143,7 @@ Item {
                         }
                     }
 
-                    Text {
+                    Label {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Learn more about the SDK")
                         renderType: Text.NativeRendering
@@ -147,7 +151,7 @@ Item {
                             family: fontFamily
                             pixelSize: 13
                         }
-                        color: "blue"
+                        color: Calcite.textLink
 
                         MouseArea {
                             anchors.fill: parent
@@ -155,7 +159,7 @@ Item {
                         }
                     }
 
-                    Text {
+                    Label {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: qsTr("Built with Qt %1".arg(qtVersion)) // obtained from main.cpp (engine.rootContext()->setContextProperty)
                         renderType: Text.NativeRendering

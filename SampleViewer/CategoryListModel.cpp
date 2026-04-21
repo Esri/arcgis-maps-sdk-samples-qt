@@ -41,12 +41,18 @@ void CategoryListModel::setupRoles()
   m_roles[BackgroundThumbnailRole] = "backgroundThumbnailUrl";
 }
 
+SampleCategory* CategoryListModel::get(int index) const
+{
+  return m_categories.at(index);
+}
+
 void CategoryListModel::addCategory(SampleCategory* category)
 {
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
   m_categories << category;
   endInsertRows();
 }
+
 int CategoryListModel::rowCount(const QModelIndex& parent) const
 {
   Q_UNUSED(parent);
@@ -56,30 +62,32 @@ int CategoryListModel::rowCount(const QModelIndex& parent) const
 QVariant CategoryListModel::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_categories.count())
+  {
     return QVariant();
+  }
 
   SampleCategory* sampleCategory = m_categories[index.row()];
   QVariant retVal;
 
   switch (role)
   {
-  case NameRole:
-    retVal = sampleCategory->name();
-    break;
-  case DisplayNameRole:
-    retVal = sampleCategory->displayName();
-    break;
-  case PathRole:
-    retVal = sampleCategory->path();
-    break;
-  case ThumbnailRole:
-    retVal = sampleCategory->thumbnailUrl();
-    break;
-  case BackgroundThumbnailRole:
-    retVal = sampleCategory->backgroundThumbnailUrl();
-    break;
-  default:
-    break;
+    case NameRole:
+      retVal = sampleCategory->name();
+      break;
+    case DisplayNameRole:
+      retVal = sampleCategory->displayName();
+      break;
+    case PathRole:
+      retVal = sampleCategory->path();
+      break;
+    case ThumbnailRole:
+      retVal = sampleCategory->thumbnailUrl();
+      break;
+    case BackgroundThumbnailRole:
+      retVal = sampleCategory->backgroundThumbnailUrl();
+      break;
+    default:
+      break;
   }
 
   return retVal;

@@ -62,7 +62,7 @@ QString GenerateOfflineMap_Overrides::webMapId()
   return s_webMapId;
 }
 
-GenerateOfflineMap_Overrides::GenerateOfflineMap_Overrides(QQuickItem* parent /* = nullptr */):
+GenerateOfflineMap_Overrides::GenerateOfflineMap_Overrides(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -93,7 +93,9 @@ void GenerateOfflineMap_Overrides::componentComplete()
   connect(m_map, &Map::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     m_mapLoaded = true;
     emit mapLoadedChanged();
@@ -109,7 +111,9 @@ void GenerateOfflineMap_Overrides::componentComplete()
   connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](const Error& e)
   {
     if (e.isEmpty())
+    {
       return;
+    }
 
     qDebug() << e.message() << e.additionalMessage();
   });
@@ -124,12 +128,11 @@ void GenerateOfflineMap_Overrides::setAreaOfInterest(double xCorner1, double yCo
   const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
   // generate parameters
-  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this,
-  [this](const GenerateOfflineMapParameters& params)
+  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this, [this](const GenerateOfflineMapParameters& params)
   {
     m_parameters = params;
     m_offlineMapTask->createGenerateOfflineMapParameterOverridesAsync(params).then(this,
-    [this](GenerateOfflineMapParameterOverrides* parameterOverrides)
+                                                                                   [this](GenerateOfflineMapParameterOverrides* parameterOverrides)
     {
       m_parameterOverrides = parameterOverrides;
       emit overridesReadyChanged();
@@ -145,28 +148,38 @@ void GenerateOfflineMap_Overrides::setAreaOfInterest(double xCorner1, double yCo
 void GenerateOfflineMap_Overrides::setBasemapLOD(int min, int max)
 {
   if (!overridesReady())
+  {
     return;
+  }
 
   LayerListModel* layers = m_map->basemap()->baseLayers();
   if (!layers || layers->isEmpty())
+  {
     return;
+  }
 
   // Obtain a key for the given basemap-layer.
   OfflineMapParametersKey keyForTiledLayer(layers->at(0));
 
   // Check that the key is valid.
   if (keyForTiledLayer.isEmpty() || keyForTiledLayer.type() != OfflineMapParametersType::ExportTileCache)
+  {
     return;
+  }
 
   // Obtain the dictionary of parameters for taking the basemap offline.
   QMap<OfflineMapParametersKey, ExportTileCacheParameters> dictionary = m_parameterOverrides->exportTileCacheParameters();
   if (!dictionary.contains(keyForTiledLayer))
+  {
     return;
+  }
 
   // Create a new sublist of LODs in the range requested by the user.
   QList<int> newLODs;
-  for (int i = min; i < max; ++i )
+  for (int i = min; i < max; ++i)
+  {
     newLODs.append(i);
+  }
 
   // Apply the sublist as the LOD level in tilecache parameters for the given
   // service.
@@ -179,21 +192,29 @@ void GenerateOfflineMap_Overrides::setBasemapLOD(int min, int max)
 void GenerateOfflineMap_Overrides::setBasemapBuffer(int bufferMeters)
 {
   if (!overridesReady())
+  {
     return;
+  }
 
   LayerListModel* layers = m_map->basemap()->baseLayers();
   if (!layers || layers->isEmpty())
+  {
     return;
+  }
 
   OfflineMapParametersKey keyForTiledLayer(layers->at(0));
 
   if (keyForTiledLayer.isEmpty() || keyForTiledLayer.type() != OfflineMapParametersType::ExportTileCache)
+  {
     return;
+  }
 
   // Obtain the dictionary of parameters for taking the basemap offline.
   QMap<OfflineMapParametersKey, ExportTileCacheParameters> dictionary = m_parameterOverrides->exportTileCacheParameters();
   if (!dictionary.contains(keyForTiledLayer))
+  {
     return;
+  }
 
   // Create a new geometry around the original area of interest.
   auto bufferGeom = GeometryEngine::buffer(m_parameters.areaOfInterest(), bufferMeters);
@@ -221,32 +242,42 @@ void GenerateOfflineMap_Overrides::removeServiceConnection()
 void GenerateOfflineMap_Overrides::setHydrantWhereClause(const QString& whereClause)
 {
   if (!overridesReady())
+  {
     return;
+  }
 
   FeatureLayer* targetLayer = getFeatureLayerByName(QStringLiteral("Hydrant"));
 
   if (!targetLayer)
+  {
     return;
+  }
 
   // Get the parameter key for the layer.
   OfflineMapParametersKey keyForTargetLayer(targetLayer);
 
   if (keyForTargetLayer.isEmpty() || keyForTargetLayer.type() != OfflineMapParametersType::GenerateGeodatabase)
+  {
     return;
+  }
 
   // Get the dictionary of GenerateGeoDatabaseParameters.
   QMap<OfflineMapParametersKey, GenerateGeodatabaseParameters> dictionary = m_parameterOverrides->generateGeodatabaseParameters();
 
   auto keyIt = dictionary.find(keyForTargetLayer);
   if (keyIt == dictionary.end())
+  {
     return;
+  }
 
   // Grab the GenerateGeoDatabaseParameters associated with the given key.
   GenerateGeodatabaseParameters& generateGdbParam = keyIt.value();
 
   ServiceFeatureTable* table = qobject_cast<ServiceFeatureTable*>(targetLayer->featureTable());
   if (!table)
+  {
     return;
+  }
 
   // Get the service layer id for the given layer.
   const qint64 targetLayerId = table->layerInfo().serviceLayerId();
@@ -274,32 +305,42 @@ void GenerateOfflineMap_Overrides::setHydrantWhereClause(const QString& whereCla
 void GenerateOfflineMap_Overrides::setClipWaterPipesAOI(bool clip)
 {
   if (!overridesReady())
+  {
     return;
+  }
 
   FeatureLayer* targetLayer = getFeatureLayerByName(QStringLiteral("Main"));
 
   if (!targetLayer)
+  {
     return;
+  }
 
   // Get the parameter key for the layer.
   OfflineMapParametersKey keyForTargetLayer(targetLayer);
 
   if (keyForTargetLayer.isEmpty() || keyForTargetLayer.type() != OfflineMapParametersType::GenerateGeodatabase)
+  {
     return;
+  }
 
   // Get the dictionary of GenerateGeoDatabaseParameters.
   QMap<OfflineMapParametersKey, GenerateGeodatabaseParameters> dictionary = m_parameterOverrides->generateGeodatabaseParameters();
 
   auto keyIt = dictionary.find(keyForTargetLayer);
   if (keyIt == dictionary.end())
+  {
     return;
+  }
 
   // Grab the GenerateGeoDatabaseParameters associated with the given key.
   GenerateGeodatabaseParameters& generateGdbParam = keyIt.value();
 
   ServiceFeatureTable* table = qobject_cast<ServiceFeatureTable*>(targetLayer->featureTable());
   if (!table)
+  {
     return;
+  }
 
   // Get the service layer id for the given layer.
   const qint64 targetLayerId = table->layerInfo().serviceLayerId();
@@ -327,7 +368,9 @@ void GenerateOfflineMap_Overrides::setClipWaterPipesAOI(bool clip)
 void GenerateOfflineMap_Overrides::takeMapOffline()
 {
   if (!overridesReady())
+  {
     return;
+  }
 
   // create temp data path for offline mmpk
   const QString dataPath = m_tempPath.path() + "/offlinemap_overrides.mmpk";
@@ -337,46 +380,51 @@ void GenerateOfflineMap_Overrides::takeMapOffline()
 
   // check if there is a valid job
   if (!generateJob)
+  {
     return;
+  }
 
   // connect to the job's status changed signal
   connect(generateJob, &GenerateOfflineMapJob::statusChanged, this, [this, generateJob](JobStatus jobStatus)
   {
     // connect to the job's status changed signal to know once it is done
-    switch (jobStatus) {
-    case JobStatus::Failed:
-      emit updateStatus("Generate failed");
-      emit hideWindow(5000, false);
-      break;
-    case JobStatus::NotStarted:
-      emit updateStatus("Job not started");
-      break;
-    case JobStatus::Paused:
-      emit updateStatus("Job paused");
-      break;
-    case JobStatus::Started:
-      emit updateStatus("In progress");
-      break;
-    case JobStatus::Succeeded:
-      // show any layer errors
-      if (generateJob->result()->hasErrors())
-      {
-        QString layerErrors = "";
-        const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
-        for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
+    switch (jobStatus)
+    {
+      case JobStatus::Failed:
+        emit updateStatus("Generate failed");
+        emit hideWindow(5000, false);
+        break;
+      case JobStatus::NotStarted:
+        emit updateStatus("Job not started");
+        break;
+      case JobStatus::Paused:
+        emit updateStatus("Job paused");
+        break;
+      case JobStatus::Started:
+        emit updateStatus("In progress");
+        m_parameterOverrides = nullptr;
+        emit overridesReadyChanged();
+        break;
+      case JobStatus::Succeeded:
+        // show any layer errors
+        if (generateJob->result()->hasErrors())
         {
-          layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
+          QString layerErrors = "";
+          const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
+          for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
+          {
+            layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
+          }
+          emit showLayerErrors(layerErrors);
         }
-        emit showLayerErrors(layerErrors);
-      }
 
-      // show the map
-      emit updateStatus("Complete");
-      emit hideWindow(1500, true);
-      m_mapView->setMap(generateJob->result()->offlineMap(this));
-      break;
-    default: // do nothing
-      break;
+        // show the map
+        emit updateStatus("Complete");
+        emit hideWindow(1500, true);
+        m_mapView->setMap(generateJob->result()->offlineMap(this));
+        break;
+      default: // do nothing
+        break;
     }
   });
 
@@ -390,7 +438,9 @@ void GenerateOfflineMap_Overrides::takeMapOffline()
   connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](const Error& e)
   {
     if (e.isEmpty())
+    {
       return;
+    }
 
     qDebug() << e.message() << e.additionalMessage();
   });
@@ -412,31 +462,41 @@ bool GenerateOfflineMap_Overrides::overridesReady() const
 void GenerateOfflineMap_Overrides::removeFeatureLayer(const QString& layerName)
 {
   if (!overridesReady())
+  {
     return;
+  }
 
   FeatureLayer* targetLayer = getFeatureLayerByName(layerName);
   if (!targetLayer)
+  {
     return;
+  }
 
   // Get the parameter key for the layer.
   OfflineMapParametersKey keyForTargetLayer(targetLayer);
 
   if (keyForTargetLayer.isEmpty() || keyForTargetLayer.type() != OfflineMapParametersType::GenerateGeodatabase)
+  {
     return;
+  }
 
   // Get the dictionary of GenerateGeoDatabaseParameters.
   QMap<OfflineMapParametersKey, GenerateGeodatabaseParameters> dictionary = m_parameterOverrides->generateGeodatabaseParameters();
 
   auto keyIt = dictionary.find(keyForTargetLayer);
   if (keyIt == dictionary.end())
+  {
     return;
+  }
 
   // Grab the GenerateGeoDatabaseParameters associated with the given key.
   GenerateGeodatabaseParameters& generateGdbParam = keyIt.value();
 
   ServiceFeatureTable* table = qobject_cast<ServiceFeatureTable*>(targetLayer->featureTable());
   if (!table)
+  {
     return;
+  }
 
   // Get the service layer id for the given layer.
   const qint64 targetLayerId = table->layerInfo().serviceLayerId();
@@ -467,7 +527,9 @@ FeatureLayer* GenerateOfflineMap_Overrides::getFeatureLayerByName(const QString&
   {
     Layer* candidateLayer = opLayers->at(i);
     if (!candidateLayer)
+    {
       continue;
+    }
 
     if (candidateLayer->layerType() == LayerType::FeatureLayer && candidateLayer->name().contains(layerName, Qt::CaseInsensitive))
     {

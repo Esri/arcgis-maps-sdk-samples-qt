@@ -61,15 +61,17 @@ MapQuickView* ConfigureBasemapStyleLanguage::mapView() const
 void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  const Point point(3144804, 4904598);
+  const Point point(2640000, 4570000);
 
   // Create a Viewpoint object with the created Point and a scale of 10000000
-  const Viewpoint viewpoint(point, 10000000);
+  const Viewpoint viewpoint(point, 288895);
 
   // Set the viewpoint for the mapView
   mapView->setViewpointAsync(viewpoint);
@@ -86,15 +88,15 @@ void ConfigureBasemapStyleLanguage::setNewBasemapLanguage(bool global, const QSt
   if (language == "none")
   {
     m_basemapStyleParameters->setSpecificLanguage("");
-  } 
+  }
   else if (language == "Bulgarian")
   {
     m_basemapStyleParameters->setSpecificLanguage("bg");
-  } 
+  }
   else if (language == "Greek")
   {
     m_basemapStyleParameters->setSpecificLanguage("el");
-  } 
+  }
   else if (language == "Turkish")
   {
     m_basemapStyleParameters->setSpecificLanguage("tr");

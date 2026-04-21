@@ -39,10 +39,9 @@ Item {
 
     // Create a rectangle to display the GUI
     Rectangle {
-        width: childrenRect.width
-        height: childrenRect.height
-        color: "lightgrey"
-        opacity: 0.8
+        width: columnLayout.implicitWidth + 16
+        height: columnLayout.implicitHeight + 16
+        color: palette.base
         radius: 5
         anchors {
             margins: 10
@@ -50,16 +49,24 @@ Item {
             top: parent.top
         }
         border {
-            color: "#4D4D4D"
+            color: "darkgrey"
             width: 1
         }
 
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
         ColumnLayout {
-
-            Text {
+            id: columnLayout
+            anchors.centerIn: parent
+            Label {
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Choose camera controller"
+                text: qsTr("Choose camera controller")
                 clip: true
                 font {
                     pointSize: 14
@@ -70,7 +77,7 @@ Item {
             RadioButton {
                 Layout.fillWidth: true
                 id: orbitAroundAeroplane
-                text: "Orbit camera around plane"
+                text: qsTr("Orbit camera around plane")
                 onCheckedChanged: {
                     if (checked) {
                         chooseCameraControllerSample.setOrbitGeoElementController();
@@ -81,7 +88,7 @@ Item {
             RadioButton {
                 Layout.fillWidth: true
                 id: orbitLocation
-                text: "Orbit camera around crater"
+                text: qsTr("Orbit camera around crater")
                 onCheckedChanged: {
                     if (checked) {
                         chooseCameraControllerSample.setOrbitLocationController();
@@ -93,7 +100,7 @@ Item {
                 Layout.fillWidth: true
                 id: orbitAroundGlobe
                 checked: true
-                text: "Free pan round the globe"
+                text: qsTr("Free pan round the globe")
                 onCheckedChanged: {
                     if (checked) {
                         chooseCameraControllerSample.setGlobeController();

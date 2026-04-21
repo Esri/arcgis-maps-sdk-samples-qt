@@ -56,12 +56,12 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QUrl url("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Facilities/FeatureServer/0");
-const QUrl imageUrl("https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png");
-const QUrl serviceAreaTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea");
-}
+  const QUrl url("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Facilities/FeatureServer/0");
+  const QUrl imageUrl("https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png");
+  const QUrl serviceAreaTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea");
+} // namespace
 
-FindServiceAreasForMultipleFacilities::FindServiceAreasForMultipleFacilities(QObject* parent /* = nullptr */):
+FindServiceAreasForMultipleFacilities::FindServiceAreasForMultipleFacilities(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISLightGray, this)),
   m_serviceAreasOverlay(new GraphicsOverlay(this))
@@ -106,7 +106,9 @@ bool FindServiceAreasForMultipleFacilities::taskRunning() const
 void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
 
@@ -121,7 +123,6 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
     // zoom to the full extent of the feature layer
     int buffer = 100;
     m_mapView->setViewpointGeometryAsync(m_facilitiesFeatureLayer->fullExtent(), buffer);
-
   });
 
   m_mapView->setMap(m_map);
@@ -160,7 +161,9 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
       serviceAreaParameters.setFacilitiesWithFeatureTable(m_facilitiesTable, queryParameters);
 
       m_future = m_serviceAreaTask->solveServiceAreaAsync(serviceAreaParameters);
-      m_future.then(this, [this](const ServiceAreaResult& serviceAreaResult)
+      m_future
+        .then(this,
+              [this](const ServiceAreaResult& serviceAreaResult)
       {
         emit taskRunningChanged();
 
@@ -174,14 +177,16 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
             m_serviceAreasOverlay->graphics()->append(new Graphic(serviceAreaPolygonList[j].geometry(), m_fillSymbols[j], this));
           }
         }
-      }).onFailed([](const ErrorException& e)
+      })
+        .onFailed([](const ErrorException& e)
       {
         qWarning() << e.error().message();
       });
 
       if (!m_future.isValid())
-        qWarning() << "Furure not valid.";
-
+      {
+        qWarning() << "Future not valid.";
+      }
     });
 
     emit taskRunningChanged();
@@ -191,7 +196,9 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
 void FindServiceAreasForMultipleFacilities::findServiceAreas()
 {
   if (m_serviceAreaTask)
+  {
     return;
+  }
 
   m_serviceAreaTask = new ServiceAreaTask(serviceAreaTaskUrl, this);
   connectServiceAreaTaskSignals();

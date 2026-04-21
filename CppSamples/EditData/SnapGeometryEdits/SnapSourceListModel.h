@@ -1,3 +1,4 @@
+// [WriteFile Name=SnapGeometryEdits, Category=EditData]
 // [Legal]
 // Copyright 2024 Esri.
 //
@@ -33,7 +34,8 @@
 #include <QHash>
 #include <QList>
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class SnapSourceSettings;
 }
 
@@ -55,7 +57,12 @@ public:
 public:
   void setSnapSourceSettings(QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceSettings);
   void setupRoles();
-  int size() { return m_snapSourceSettings.size(); }
+
+  int size()
+  {
+    return m_snapSourceSettings.size();
+  }
+
   void enableAllLayersInSection(const QString& section);
 
   // QAbstractItemModel interface

@@ -1,0 +1,113 @@
+// [WriteFile Name=ShowLabelsOnLayerIn3D, Category=Scenes]
+// [Legal]
+// Copyright 2021 Esri.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
+// sample headers
+#include "ShowLabelsOnLayerIn3D.h"
+
+// ArcGIS Maps SDK headers
+#include "ArcadeLabelExpression.h"
+#include "Error.h"
+#include "FeatureLayer.h"
+#include "GroupLayer.h"
+#include "LabelDefinition.h"
+#include "LabelDefinitionListModel.h"
+#include "LayerListModel.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
+#include "LabelingTypes.h"
+#include "TextSymbol.h"
+
+using namespace Esri::ArcGISRuntime;
+
+ShowLabelsOnLayerIn3D::ShowLabelsOnLayerIn3D(QObject* parent /* = nullptr */) :
+  QObject(parent),
+  m_scene(new Scene(QUrl("https://www.arcgis.com/home/item.html?id=850dfee7d30f4d9da0ebca34a533c169"), this))
+{
+  connect(m_scene, &Scene::doneLoading, this, [this]()
+  {
+    for (Layer* layer : *m_scene->operationalLayers())
+    {
+      if (layer->name() == "Gas")
+      {
+        // The gas layer is a GroupLayer type consisting of Layer types.
+        // Labels can only be displayed on FeatureLayer types, so we must first convert it to a FeatureLayer class.
+        GroupLayer* gasGroupLayer = dynamic_cast<GroupLayer*>(layer);
+        if (!gasGroupLayer)
+        {
+          continue;
+        }
+
+        FeatureLayer* gasFeatureLayer = dynamic_cast<FeatureLayer*>(gasGroupLayer->layers()->first());
+        if (gasFeatureLayer)
+        {
+          display3DLabelsOnFeatureLayer(gasFeatureLayer);
+        }
+
+        break;
+      }
+    }
+  });
+}
+
+void ShowLabelsOnLayerIn3D::display3DLabelsOnFeatureLayer(FeatureLayer* featureLayer)
+{
+  TextSymbol* textSymbol = new TextSymbol(this);
+  textSymbol->setColor(QColor("#ffa500"));
+  textSymbol->setHaloColor(QColor(Qt::white));
+  textSymbol->setHaloWidth(2.0);
+  textSymbol->setSize(14.0);
+
+  ArcadeLabelExpression* labelExpression = new ArcadeLabelExpression("Text($feature.INSTALLATIONDATE, 'D MMM Y')", this);
+  LabelDefinition* labelDefinition = new LabelDefinition(labelExpression, textSymbol, this);
+  labelDefinition->setPlacement(LabelingPlacement::LineAboveAlong);
+  labelDefinition->setUseCodedValues(true);
+
+  featureLayer->labelDefinitions()->clear();
+  featureLayer->labelDefinitions()->append(labelDefinition);
+  featureLayer->setLabelsEnabled(true);
+}
+
+ShowLabelsOnLayerIn3D::~ShowLabelsOnLayerIn3D() = default;
+
+void ShowLabelsOnLayerIn3D::init()
+{
+  // Register classes for QML
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<ShowLabelsOnLayerIn3D>("Esri.Samples", 1, 0, "ShowLabelsOnLayerIn3DSample");
+}
+
+SceneQuickView* ShowLabelsOnLayerIn3D::sceneView() const
+{
+  return m_sceneView;
+}
+
+// Set the view (created in QML)
+void ShowLabelsOnLayerIn3D::setSceneView(SceneQuickView* sceneView)
+{
+  if (!sceneView || sceneView == m_sceneView)
+  {
+    return;
+  }
+
+  m_sceneView = sceneView;
+  m_sceneView->setArcGISScene(m_scene);
+
+  emit sceneViewChanged();
+}

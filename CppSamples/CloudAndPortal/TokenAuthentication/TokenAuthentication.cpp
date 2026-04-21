@@ -35,11 +35,11 @@ namespace
 {
   QUrl portalURL = QUrl("https://www.arcgis.com/");
   QString itemID = "e5039444ef3c48b8a8fdc9227f9be7c1";
-}
+} // namespace
 
 using namespace Esri::ArcGISRuntime;
 
-TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
+TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
   // Create local portal and portalItem objects using constants defined for portalURL and itemID.
@@ -65,7 +65,9 @@ void TokenAuthentication::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   if (!m_mapView)
+  {
     return;
+  }
 
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 

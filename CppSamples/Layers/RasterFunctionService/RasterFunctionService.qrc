@@ -6,6 +6,6 @@
         <file>RasterFunctionService.cpp</file>
         <file>README.md</file>
         <file>screenshot.png</file>
-        <file>RasterImageAnalysisHillshade.png</file>
+        <file>hillshade-effect-24.svg</file>
     </qresource>
 </RCC>

@@ -60,21 +60,21 @@ void MapLoaded::componentComplete()
   {
     switch (loadStatus)
     {
-    case LoadStatus::Loaded:
-      m_loadStatus = "Map Load Status: Loaded";
-      break;
-    case LoadStatus::Loading:
-      m_loadStatus = "Map Load Status: Loading...";
-      break;
-    case LoadStatus::FailedToLoad:
-      m_loadStatus = "Map Load Status: Failed to Load";
-      break;
-    case LoadStatus::NotLoaded:
-      m_loadStatus = "Map Load Status: Not Loaded";
-      break;
-    case LoadStatus::Unknown:
-      m_loadStatus = "Map Load Status: Unknown";
-      break;
+      case LoadStatus::Loaded:
+        m_loadStatus = "Map Load Status: Loaded";
+        break;
+      case LoadStatus::Loading:
+        m_loadStatus = "Map Load Status: Loading...";
+        break;
+      case LoadStatus::FailedToLoad:
+        m_loadStatus = "Map Load Status: Failed to Load";
+        break;
+      case LoadStatus::NotLoaded:
+        m_loadStatus = "Map Load Status: Not Loaded";
+        break;
+      case LoadStatus::Unknown:
+        m_loadStatus = "Map Load Status: Unknown";
+        break;
     }
     emit mapLoadStatusChanged();
   });

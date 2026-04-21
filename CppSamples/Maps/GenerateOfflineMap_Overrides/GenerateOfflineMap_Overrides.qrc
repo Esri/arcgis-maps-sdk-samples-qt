@@ -3,8 +3,7 @@
         <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>download.png</file>
-        <file>DownloadButton.qml</file>
+        <file>download-24.svg</file>
         <file>GenerateWindow.qml</file>
         <file>GenerateOfflineMap_Overrides.qml</file>
         <file>GenerateOfflineMap_Overrides.cpp</file>

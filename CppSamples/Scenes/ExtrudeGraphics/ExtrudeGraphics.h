@@ -27,7 +27,7 @@ namespace Esri::ArcGISRuntime
   class SceneQuickView;
   class Point;
   class Polygon;
-}
+} // namespace Esri::ArcGISRuntime
 
 class ExtrudeGraphics : public QQuickItem
 {

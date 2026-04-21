@@ -42,11 +42,14 @@ public:
   explicit DataItemListModel(QObject* parent = nullptr);
   ~DataItemListModel() override = default;
 
-  Q_INVOKABLE DataItem* at(int index) const override { return m_dataItems.at(index); }
+  Q_INVOKABLE DataItem* at(int index) const override;
+
   void addDataItem(DataItem* dataItem);
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-  int size() const override { return m_dataItems.size(); }
+  int size() const override;
+  bool isEmpty() const;
+
   void setupRoles();
 
 signals:

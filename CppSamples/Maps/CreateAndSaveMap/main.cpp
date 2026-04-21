@@ -1,3 +1,4 @@
+// [WriteFile Name=CreateAndSaveMap, Category=Maps]
 // [Legal]
 // Copyright 2018 Esri.
 //
@@ -13,8 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-// Qt headers
+// ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
+
+// Qt headers
 #include <QCommandLineParser>
 #include <QDir>
 #include <QGuiApplication>
@@ -36,9 +39,8 @@
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND

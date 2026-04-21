@@ -32,8 +32,12 @@ Item {
 
         Button {
             id: button
-            text: model.trackingEnabled ? "Stop tracking" : "Start tracking"
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
+                margins: 10
+            }
+            text: model.trackingEnabled ? qsTr("Stop tracking") : qsTr("Start tracking")
             width: 200
             onClicked: model.trackingEnabled =! model.trackingEnabled
         }

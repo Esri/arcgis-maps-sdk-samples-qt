@@ -22,37 +22,37 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
-}
+  class Scene;
+  class SceneQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 
 class RealisticLightingAndShadows : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
 public:
-    explicit RealisticLightingAndShadows(QObject* parent = nullptr);
-    ~RealisticLightingAndShadows();
+  explicit RealisticLightingAndShadows(QObject* parent = nullptr);
+  ~RealisticLightingAndShadows();
 
-    static void init();
+  static void init();
 
-    Q_INVOKABLE void setSunTimeFromValue(const double sunTimeValue);
-    Q_INVOKABLE void setLightingMode(const int lightingModeValue);
+  Q_INVOKABLE void setSunTimeFromValue(const double sunTimeValue);
+  Q_INVOKABLE void setLightingMode(const int lightingModeValue);
 
 signals:
-    void sceneViewChanged();
-    void sunTimeChanged(const QString& sunTimeText);
+  void sceneViewChanged();
+  void sunTimeChanged(const QString& sunTimeText);
 
 private:
-    Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-    void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
 
-    Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
 #endif // REALISTICLIGHTINGANDSHADOWS_H

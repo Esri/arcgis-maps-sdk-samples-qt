@@ -41,7 +41,7 @@ RasterLayerFileSample {
         radius: 8
         height: addButton.height + (16)
         width: addButton.width + (16)
-        color: "lightgrey"
+        color: palette.base
         border.color: "darkgrey"
         border.width: 2
         opacity: 0.75
@@ -55,7 +55,7 @@ RasterLayerFileSample {
             margins: 32
         }
 
-        text: "Add Raster"
+        text: qsTr("Add Raster")
         onClicked: loader.open();
     }
 

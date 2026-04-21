@@ -27,7 +27,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class Portal;
-}
+} // namespace Esri::ArcGISRuntime
 
 class ShowOrgBasemaps : public QQuickItem
 {

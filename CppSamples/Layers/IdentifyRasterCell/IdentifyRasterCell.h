@@ -25,12 +25,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class CalloutData;
-class IdentifyLayerResult;
-class Map;
-class MapQuickView;
-class RasterLayer;
-}
+  class CalloutData;
+  class IdentifyLayerResult;
+  class Map;
+  class MapQuickView;
+  class RasterLayer;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("CalloutData.h")

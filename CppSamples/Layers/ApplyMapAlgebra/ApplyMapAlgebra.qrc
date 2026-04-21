@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/ApplyMapAlgebra">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ApplyMapAlgebra.qml</file>
+        <file>ApplyMapAlgebra.h</file>
+        <file>ApplyMapAlgebra.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

@@ -1,3 +1,5 @@
+// [WriteFile Name=ShowGrid, Category=DisplayInformation]
+// [Legal]
 // Copyright 2024 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,23 +12,27 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+// [Legal]
 
+// sample headers
 #include "ShowGrid.h"
 
+// ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 
+// Qt headers
 #include <QCommandLineParser>
 #include <QDir>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+// Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("ShowGrid"));
 
@@ -48,8 +54,8 @@ int main(int argc, char *argv[])
 
   if (accessToken.isEmpty())
   {
-    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                  "you to authenticate with an ArcGIS account or set the API Key property.";
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
   }
   else
   {

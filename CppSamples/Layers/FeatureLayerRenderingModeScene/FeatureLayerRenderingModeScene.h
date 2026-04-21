@@ -25,9 +25,9 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
-class Scene;
-}
+  class SceneQuickView;
+  class Scene;
+} // namespace Esri::ArcGISRuntime
 
 class QTimer;
 

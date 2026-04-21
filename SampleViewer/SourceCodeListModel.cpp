@@ -39,12 +39,18 @@ void SourceCodeListModel::setupRoles()
   m_roles[SizeRole] = "size";
 }
 
+SourceCode* SourceCodeListModel::get(int index) const
+{
+  return m_codeFiles.at(index);
+}
+
 void SourceCodeListModel::addCodeFile(SourceCode* codeFile)
 {
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
   m_codeFiles << codeFile;
   endInsertRows();
 }
+
 int SourceCodeListModel::rowCount(const QModelIndex& parent) const
 {
   Q_UNUSED(parent)
@@ -54,27 +60,29 @@ int SourceCodeListModel::rowCount(const QModelIndex& parent) const
 QVariant SourceCodeListModel::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_codeFiles.count())
+  {
     return QVariant();
+  }
 
   SourceCode* sourceCode = m_codeFiles[index.row()];
   QVariant retVal;
 
   switch (role)
   {
-  case NameRole:
-    retVal = sourceCode->name();
-    break;
-  case CodeRole:
-    retVal = sourceCode->code();
-    break;
-  case PathRole:
-    retVal = sourceCode->path();
-    break;
-  case SizeRole:
-    retVal = m_codeFiles.length();
-    break;
-  default:
-    break;
+    case NameRole:
+      retVal = sourceCode->name();
+      break;
+    case CodeRole:
+      retVal = sourceCode->code();
+      break;
+    case PathRole:
+      retVal = sourceCode->path();
+      break;
+    case SizeRole:
+      retVal = m_codeFiles.length();
+      break;
+    default:
+      break;
   }
 
   return retVal;

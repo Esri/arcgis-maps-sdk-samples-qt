@@ -45,21 +45,21 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
-RasterFunctionFile::RasterFunctionFile(QQuickItem* parent /* = nullptr */):
+RasterFunctionFile::RasterFunctionFile(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/raster/")
 {
@@ -95,7 +95,9 @@ void RasterFunctionFile::componentComplete()
   m_map->operationalLayers()->append(rasterLayer);
 
   // Set initial Extent
-  Envelope env = geometry_cast<Envelope>(Envelope::fromJson("{\"spatialReference\": {\"latestWkid\": 3857, \"wkid\": 102100 },\"xmax\": -13591503.517810356,\"xmin\": -13606233.44023646,\"ymax\": 4982810.138527592,\"ymin\": 4971762.696708013}"));
+  Envelope env = geometry_cast<Envelope>(
+    Envelope::fromJson("{\"spatialReference\": {\"latestWkid\": 3857, \"wkid\": 102100 },\"xmax\": -13591503.517810356,\"xmin\": "
+                       "-13606233.44023646,\"ymax\": 4982810.138527592,\"ymin\": 4971762.696708013}"));
   m_map->setInitialViewpoint(Viewpoint(env));
 
   // Set map to map view
@@ -109,7 +111,9 @@ void RasterFunctionFile::applyRasterFunction()
 
   // check for valid raster function
   if (!rasterFunction)
+  {
     return;
+  }
 
   // create the raster from the raster function
   Raster* raster = new Raster(rasterFunction, this);
@@ -128,14 +132,18 @@ RasterFunction* RasterFunctionFile::createRasterFunction()
   // Check if the raster function json exists
   QFileInfo colorJson(m_dataPath + "/color.json");
   if (!colorJson.exists())
+  {
     return nullptr;
+  }
 
   // create a RasterFunction
   RasterFunction* rasterFunction = new RasterFunction(m_dataPath + "/color.json", this);
 
   // check for valid raster function
   if (!rasterFunction)
+  {
     return nullptr;
+  }
 
   // set the number of rasters required - 2 in this case
   rasterFunction->arguments()->setRaster("raster", m_raster);

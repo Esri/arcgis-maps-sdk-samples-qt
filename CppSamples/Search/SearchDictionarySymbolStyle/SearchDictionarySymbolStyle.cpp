@@ -40,11 +40,11 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
@@ -81,8 +81,10 @@ QAbstractListModel* SearchDictionarySymbolStyle::searchResultsListModel() const
   return m_searchResults;
 }
 
-void SearchDictionarySymbolStyle::search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
-                                         const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
+void SearchDictionarySymbolStyle::search(const QStringList& namesSearchParam,
+                                         const QStringList& tagsSearchParam,
+                                         const QStringList& classesSearchParam,
+                                         const QStringList& categoriesSearchParam,
                                          const QStringList& keysSearchParam)
 {
   //Create search parameters and search with the parameters
@@ -92,7 +94,8 @@ void SearchDictionarySymbolStyle::search(const QStringList& namesSearchParam, co
   searchParameters.setNames(namesSearchParam);
   searchParameters.setSymbolClasses(classesSearchParam);
   searchParameters.setTags(tagsSearchParam);
-  m_dictionarySymbolStyle->searchSymbolsAsync(searchParameters).then(this, [this](SymbolStyleSearchResultListModel* results)
+  m_dictionarySymbolStyle->searchSymbolsAsync(searchParameters)
+    .then(this, [this](SymbolStyleSearchResultListModel* results)
   {
     m_searchResults = results;
     emit searchResultsListModelChanged();

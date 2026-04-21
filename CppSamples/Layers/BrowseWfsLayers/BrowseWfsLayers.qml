@@ -37,7 +37,8 @@ Item {
         id: loadingIndicator
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        running: browseWfsLayersSampleModel.isLoading;
+        running: browseWfsLayersSampleModel.isLoading
+        visible: browseWfsLayersSampleModel.isLoading
     }
 
     Rectangle {
@@ -48,16 +49,15 @@ Item {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#000000"
-        opacity: .75
+        color: palette.base
+        opacity: .9
         radius: 5
 
         ColumnLayout {
-            Text {
+            Label {
                 text: qsTr("Pick a WFS Layer")
                 Layout.margins: 3
                 Layout.alignment: Qt.AlignHCenter
-                color: "#ffffff"
             }
 
             ComboBox {
@@ -66,16 +66,6 @@ Item {
                 Layout.fillWidth: true
                 Layout.margins: 3
                 Layout.alignment: Qt.AlignHCenter
-
-                // Add a background to the ComboBox
-                Rectangle {
-                    anchors.fill: parent
-                    radius: 10
-                    // Make the rectangle visible if a dropdown indicator exists
-                    // An indicator only exists if a theme is set
-                    visible: parent.indicator
-                    border.width: 1
-                }
             }
 
             Button {

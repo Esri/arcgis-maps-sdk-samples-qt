@@ -1,7 +1,7 @@
 {
     "category": "Maps",
     "description": "Specify a map's spatial reference.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

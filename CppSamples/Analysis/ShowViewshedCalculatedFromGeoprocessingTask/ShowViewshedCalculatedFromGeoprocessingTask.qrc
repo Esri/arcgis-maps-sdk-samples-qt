@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/ShowViewshedCalculatedFromGeoprocessingTask">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>screenshot.png</file>
+        <file>ShowViewshedCalculatedFromGeoprocessingTask.qml</file>
+        <file>ShowViewshedCalculatedFromGeoprocessingTask.h</file>
+        <file>ShowViewshedCalculatedFromGeoprocessingTask.cpp</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

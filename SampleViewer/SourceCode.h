@@ -24,17 +24,27 @@ class SourceCode : public QObject
   Q_OBJECT
 
 public:
-  explicit SourceCode(const QString& name, const QString& code,
-                      const QString& path, QObject* parent = nullptr);
+  explicit SourceCode(const QString& name, const QString& code, const QString& path, QObject* parent = nullptr);
   ~SourceCode() override = default;
 
   Q_PROPERTY(QString name READ name CONSTANT)
   Q_PROPERTY(QString code READ code CONSTANT)
   Q_PROPERTY(QString path READ path CONSTANT)
 
-  QString name() const { return m_name; }
-  QString code() const { return m_code; }
-  QString path() const { return m_path; }
+  QString name() const
+  {
+    return m_name;
+  }
+
+  QString code() const
+  {
+    return m_code;
+  }
+
+  QString path() const
+  {
+    return m_path;
+  }
 
 private:
   QString m_name;

@@ -40,7 +40,7 @@ Item {
             z: 1
             width: buttonRow.width * 1.5
             height: 200
-            color: "#FBFBFB"
+            color: palette.base
             border.color: "black"
 
             RowLayout {
@@ -51,14 +51,14 @@ Item {
                     margins: 5
                 }
                 Button {
-                    text: "Navigate"
+                    text: qsTr("Navigate")
                     enabled: model.navigationEnabled
                     onClicked: {
                         model.startNavigation();
                     }
                 }
                 Button {
-                    text: "Recenter"
+                    text: qsTr("Recenter")
                     enabled: model.recenterEnabled
                     onClicked: {
                         model.recenterMap();
@@ -73,7 +73,7 @@ Item {
                     margins: 5
                 }
                 width: parent.width
-                Text {
+                Label {
                     padding: 5
                     width: parent.width
                     wrapMode: Text.Wrap

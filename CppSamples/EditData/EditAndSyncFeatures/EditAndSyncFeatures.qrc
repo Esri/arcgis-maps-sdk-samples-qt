@@ -6,7 +6,7 @@
         <file>EditAndSyncFeatures.h</file>
         <file>EditAndSyncFeatures.cpp</file>
         <file>README.md</file>
-        <file>download.png</file>
-        <file>sync.png</file>
+        <file>download-24.svg</file>
+        <file>arrow-up-down-24.svg</file>
     </qresource>
 </RCC>

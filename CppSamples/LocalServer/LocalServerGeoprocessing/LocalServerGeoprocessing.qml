@@ -125,6 +125,7 @@ LocalServerGeoprocessingSample {
                 width: 22
                 height: width
                 running: !isReady
+                visible: !isReady
             }
         }
     }

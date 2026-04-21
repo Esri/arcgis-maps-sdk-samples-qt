@@ -33,6 +33,7 @@ Item {
         width: parent.width
         height: parent.height * 0.2
         anchors.top: view.bottom
+        color: palette.base
         Loader {
             anchors.fill: parent
             sourceComponent: multiTrackModel.isShowTracksFromFileEnabled ? trackBrowseOptions : trackSimulationOptions
@@ -51,7 +52,7 @@ Item {
                 height: 10
             }
 
-            Text {
+            Label {
                 visible: multiTrackModel.isRecordingTrack
                 text: multiTrackModel.isRecordingTrack ? qsTr("Recording KML track. Elements added = ") + multiTrackModel.elementsCount : ""
                 font.pixelSize: 18
@@ -60,7 +61,7 @@ Item {
                 Layout.alignment: Qt.AlignCenter
             }
 
-            Text {
+            Label {
                 text: qsTr("Number of tracks in Multitrack: ") + multiTrackModel.multiTrackCount
                 font.pixelSize: 15
                 font.bold: true
@@ -70,17 +71,28 @@ Item {
             RowLayout {
                 spacing: 0
                 Layout.bottomMargin: 30
-                Image {
-                    sourceSize.width: 40
-                    sourceSize.height: 40
+                ToolButton {
                     Layout.leftMargin: 30
-                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/" + (enabled ? "point.png" : "disabled-point.png")
+                    width: 40
+                    height: 40
+                    padding: 0
+                    display: AbstractButton.IconOnly
                     enabled: multiTrackModel.isRecenterButtonEnabled
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            multiTrackModel.recenter()
-                        }
+                    icon {
+                        source: "qrc:/Samples/EditData/CreateKmlMultiTrack/point-24.svg"
+                        width: 40
+                        height: 40
+                        color: (hovered && enabled) ? palette.buttonText : palette.text
+                    }
+                    onClicked: {
+                        multiTrackModel.recenter()
+                    }
+
+                    background: Rectangle {
+                        implicitWidth: 40
+                        implicitHeight: 40
+                        color: (parent.hovered && parent.enabled) ? palette.highlight : palette.base
+                        radius: 20
                     }
                 }
 
@@ -93,14 +105,8 @@ Item {
                     id: startRecordingButton
                     text: multiTrackModel.isRecordingTrack ? qsTr("Stop Recording") : qsTr("Record Track(s)")
                     background: Rectangle {
-                        color: "purple"
+                        color: palette.button
                         radius: 20
-                    }
-                    contentItem: Text {
-                        text: startRecordingButton.text
-                        font.pixelSize: 15
-                        font.bold: true
-                        color: "white"
                     }
                     onClicked: {
                         if (multiTrackModel.isRecordingTrack) {
@@ -116,17 +122,28 @@ Item {
                     Layout.fillWidth: true
                 }
 
-                Image {
-                    sourceSize.width: 30
-                    sourceSize.height: 30
+                ToolButton {
                     Layout.rightMargin: 30
+                    width: 30
+                    height: 30
+                    padding: 0
+                    display: AbstractButton.IconOnly
                     enabled: !multiTrackModel.isRecordingTrack
-                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/" + (enabled ? "save.png" : "disabled-save.png")
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            multiTrackModel.exportKmlMultiTrack();
-                        }
+                    icon {
+                        source: "qrc:/Samples/EditData/CreateKmlMultiTrack/save-24.svg"
+                        width: 30
+                        height: 30
+                        color: (hovered && enabled) ? palette.buttonText : palette.text
+                    }
+                    onClicked: {
+                        multiTrackModel.exportKmlMultiTrack()
+                    }
+
+                    background: Rectangle {
+                        implicitWidth: 30
+                        implicitHeight: 30
+                        color: (parent.hovered && parent.enabled) ? palette.highlight : palette.base
+                        radius: 4
                     }
                 }
             }
@@ -139,12 +156,11 @@ Item {
         ColumnLayout {
             anchors.fill: parent
             Component.onCompleted : multiTrackModel.loadLocalKmlFile()
-            Text {
+            Label {
                 width: parent.width
                 text: qsTr("Browse KML Tracks")
                 font.pixelSize: 18
                 font.bold: true
-                color: "black"
                 Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
             }
 
@@ -162,17 +178,17 @@ Item {
 
                 // Reset Button
                 Button {
-                    onClicked: multiTrackModel.reset()
+                    text: qsTr("Reset")
+                    font {
+                        pixelSize: 15
+                        bold: true
+                    }
                     background: Rectangle {
-                        color: "purple"
                         radius: 10
+                        color: palette.button
                     }
-                    contentItem: Text {
-                        text: qsTr("Reset")
-                        font.pixelSize: 15
-                        font.bold: true
-                        color: "white"
-                    }
+
+                    onClicked: multiTrackModel.reset()
                 }
             }
         }

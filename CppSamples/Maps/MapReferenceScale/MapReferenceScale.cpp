@@ -36,7 +36,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
+MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_portal(new Portal(this)),
   m_portalItem(new PortalItem(m_portal, "3953413f3bd34e53a42bf70f2937a408", this))
@@ -47,7 +47,9 @@ MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
   connect(m_map, &Map::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
+    {
       return;
+    }
 
     m_layerInfoListModel = m_map->operationalLayers();
     emit layerInfoListModelChanged();
@@ -73,36 +75,44 @@ void MapReferenceScale::init()
 double MapReferenceScale::currentMapScale() const
 {
   if (!m_mapView)
+  {
     return 0.0;
+  }
 
   return m_mapView->mapScale();
 }
 
 void MapReferenceScale::setCurrentMapScale(double scale)
 {
-  if(!m_map)
+  if (!m_map)
+  {
     return;
+  }
 
   m_map->setReferenceScale(scale);
 }
 
 void MapReferenceScale::setMapScaleToReferenceScale(double scale)
 {
-  if(m_mapView)
+  if (m_mapView)
+  {
     m_mapView->setViewpointScaleAsync(scale);
+  }
 }
 
 void MapReferenceScale::featureLayerScaleSymbols(const QString& layerName, bool checkedStatus)
 {
-  if(m_layerInfoListModel)
+  if (m_layerInfoListModel)
   {
-    for(Layer* layer : *static_cast<LayerListModel*>(m_layerInfoListModel))
+    for (Layer* layer : *static_cast<LayerListModel*>(m_layerInfoListModel))
     {
-      if(layer->name() == layerName)
+      if (layer->name() == layerName)
       {
         FeatureLayer* featureLayer = static_cast<FeatureLayer*>(layer);
-        if(featureLayer)
+        if (featureLayer)
+        {
           featureLayer->setScaleSymbols(checkedStatus);
+        }
       }
     }
   }
@@ -117,7 +127,9 @@ MapQuickView* MapReferenceScale::mapView() const
 void MapReferenceScale::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);

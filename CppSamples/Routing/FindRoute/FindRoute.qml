@@ -25,7 +25,6 @@ FindRouteSample {
 
     onSolveRouteComplete: solveButton.visible = false
 
-    // Create window for displaying the route directions
     Rectangle {
         id: directionWindow
         anchors {
@@ -34,8 +33,11 @@ FindRouteSample {
             bottom: parent.bottom
         }
         visible: false
-        width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 : 350
-        color: "#FBFBFB"
+        property int targetWidth: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 : 350
+        width: visible ? targetWidth : 0
+        color: palette.base
+        clip: true
+        Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
         //! [FindRoute cpp ListView directionsView]
         ListView {
@@ -45,9 +47,9 @@ FindRouteSample {
                 margins: 5
             }
             header: Component {
-                Text {
+                Label {
                     height: 40
-                    text: "Directions:"
+                    text: qsTr("Directions:")
                     font.pixelSize: 22
                 }
             }
@@ -62,7 +64,13 @@ FindRouteSample {
     // add a mapView component
     MapView {
         id: mapView
-        anchors.fill: parent
+        anchors {
+            left: parent.left
+            top: parent.top
+            bottom: parent.bottom
+            right: directionWindow.left
+        }
+
         objectName: "mapView"
 
         Component.onCompleted: {
@@ -70,56 +78,24 @@ FindRouteSample {
             forceActiveFocus();
         }
 
-        // set the transform to animate showing the direction window
-        transform: Translate {
-            id: translate
-            x: 0
-            Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
-        }
-
         // Create the solve button to solve the route
-        Rectangle {
+        Button {
             id: solveButton
-            property bool pressed: false
+            width: 130
+            height: 30
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
                 bottomMargin: 5
             }
 
-            width: 130
-            height: 30
-            color: pressed ? "#959595" : "#D6D6D6"
-            radius: 5
-            border {
-                color: "#585858"
-                width: 1
-            }
-
-            Text {
-                id: routeButtonText
-                anchors.centerIn: parent
-                text: "Solve route"
-                font.pixelSize: 14
-                color: "#35352E"
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onPressed: solveButton.pressed = true
-                onReleased: solveButton.pressed = false
-                onClicked: {
-                    findRouteSample.solveRoute();
-                }
-            }
+            text: qsTr("Solve Route")
+            onClicked: findRouteSample.solveRoute();
         }
 
-        // Create a button to show the direction window
-        Rectangle {
+        // Button to view directions
+        ToolButton {
             id: directionButton
-
-            property bool pressed: false
-
             visible: !solveButton.visible
             anchors {
                 right: parent.right
@@ -127,31 +103,28 @@ FindRouteSample {
                 rightMargin: 10
                 bottomMargin: 40
             }
-
             width: 45
-            height: width
-            color: pressed ? "#959595" : "#D6D6D6"
-            radius: 100
-            border {
-                color: "#585858"
-                width: 1.5
-            }
-
-            Image {
-                anchors.centerIn: parent
+            height: 45
+            padding: 0
+            display: AbstractButton.IconOnly
+            icon {
+                source: "qrc:/Samples/Routing/FindRoute/tour-24.svg"
                 width: 35
-                height: width
-                source: "qrc:/Samples/Routing/FindRoute/directions.png"
+                height: 35
+                color: hovered ? palette.text : palette.buttonText
+            }
+            onClicked: {
+                directionWindow.visible = !directionWindow.visible
             }
 
-            MouseArea {
-                anchors.fill: parent
-                onPressed: directionButton.pressed = true
-                onReleased: directionButton.pressed = false
-                onClicked: {
-                    // Show the direction window when it is clicked
-                    translate.x = directionWindow.visible ? 0 : (directionWindow.width * -1);
-                    directionWindow.visible = !directionWindow.visible;
+            background: Rectangle {
+                implicitWidth: 45
+                implicitHeight: 45
+                color: parent.hovered ? palette.base : palette.highlight
+                radius: 100
+                border {
+                    color: "#585858"
+                    width: 1.5
                 }
             }
         }
@@ -174,11 +147,11 @@ FindRouteSample {
                     leftMargin: 20
                     rightMargin: 20
                 }
-                color: "darkgrey"
+                color: palette.dark
                 height: 1
             }
 
-            Text {
+            Label {
                 text: directionText
                 anchors {
                     fill: parent

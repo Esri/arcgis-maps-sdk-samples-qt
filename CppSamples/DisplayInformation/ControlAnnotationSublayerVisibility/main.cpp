@@ -1,3 +1,4 @@
+// [WriteFile Name=ControlAnnotationSublayerVisibility, Category=DisplayInformation]
 // [Legal]
 // Copyright 2019 Esri.
 //
@@ -32,9 +33,8 @@
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("ControlAnnotationSublayerVisibility"));
 
@@ -56,35 +56,35 @@ int main(int argc, char *argv[])
 
   if (accessToken.isEmpty())
   {
-      qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                    "you to authenticate with an ArcGIS account or set the API Key property.";
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
 
-    // Initialize the sample
-    ControlAnnotationSublayerVisibility::init();
+  // Initialize the sample
+  ControlAnnotationSublayerVisibility::init();
 
-    QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
 #if defined(LINUX_PLATFORM_REPLACEMENT)
-    // on some linux platforms the string 'linux' is replaced with 1
-    // fix the replacement paths which were created
-    QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-    arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+  // on some linux platforms the string 'linux' is replaced with 1
+  // fix the replacement paths which were created
+  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
+  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
 #endif
 
-    // Initialize application view
-    QQmlApplicationEngine engine;
-    // Add the import Path
-    engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-    // Add the Runtime and Extras path
-    engine.addImportPath(arcGISRuntimeImportPath);
+  // Initialize application view
+  QQmlApplicationEngine engine;
+  // Add the import Path
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the Runtime and Extras path
+  engine.addImportPath(arcGISRuntimeImportPath);
 
-    // Set the source
-    engine.load(QUrl("qrc:/Samples/DisplayInformation/ControlAnnotationSublayerVisibility/main.qml"));
+  // Set the source
+  engine.load(QUrl("qrc:/Samples/DisplayInformation/ControlAnnotationSublayerVisibility/main.qml"));
 
-    return app.exec();
+  return app.exec();
 }

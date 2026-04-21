@@ -46,7 +46,7 @@ FeatureLayerChangeRendererSample {
 
         // button to change renderer
         Button {
-            text: "Change Renderer"
+            text: qsTr("Change Renderer")
             enabled: changeRendererSample.layerInitialized
             onClicked: {
                 // Call C++ invokable function to change the layer's renderer

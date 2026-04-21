@@ -25,7 +25,6 @@
 #include "Authentication/OAuthUserConfiguration.h"
 #include "Error.h"
 #include "ErrorException.h"
-#include "ErrorInformationKeys.h"
 #include "MapTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
@@ -44,7 +43,7 @@ using namespace Esri::ArcGISRuntime;
 using namespace Esri::ArcGISRuntime::Authentication;
 using namespace Esri::ArcGISRuntime::Toolkit;
 
-AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */):
+AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_portal(new Portal(true, this))
 {
@@ -75,7 +74,9 @@ void AddItemsToPortal::componentComplete()
       emit portalLoadedChanged();
 
       if (m_portal->loadStatus() != LoadStatus::Loaded)
+      {
         return;
+      }
 
       m_user = m_portal->portalUser();
       m_busy = false;
@@ -88,16 +89,22 @@ void AddItemsToPortal::componentComplete()
     connect(m_item, &PortalItem::loadStatusChanged, this, [this]()
     {
       if (m_item->loadStatus() != LoadStatus::Loaded)
+      {
         return;
+      }
 
       m_busy = false;
       emit portalItemIdChanged();
       emit portalItemTitleChanged();
       emit portalItemLoadedChanged();
       if (m_alreadyExisted)
+      {
         setStatusText("Item already exists; using existing item instead. " + m_item->itemId());
+      }
       else
+      {
         setStatusText("Succesfully loaded item from portal. " + m_item->itemId());
+      }
     });
   }
 }
@@ -115,7 +122,9 @@ bool AddItemsToPortal::portalItemLoaded() const
 QString AddItemsToPortal::portalItemId() const
 {
   if (m_itemDeleted || !m_item)
+  {
     return QString();
+  }
 
   return m_item->itemId();
 }
@@ -123,7 +132,9 @@ QString AddItemsToPortal::portalItemId() const
 QString AddItemsToPortal::portalItemTitle() const
 {
   if (m_itemDeleted || !m_item)
+  {
     return QString();
+  }
 
   return m_item->title();
 }
@@ -131,7 +142,9 @@ QString AddItemsToPortal::portalItemTitle() const
 QString AddItemsToPortal::portalItemTypeName() const
 {
   if (m_itemDeleted || !m_item)
+  {
     return QString();
+  }
 
   return m_item->typeName();
 }
@@ -154,40 +167,46 @@ bool AddItemsToPortal::busy() const
 void AddItemsToPortal::authenticatePortal()
 {
   if (!m_portal)
+  {
     return;
+  }
   if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
+  {
     m_portal->retryLoad();
+  }
   else
+  {
     m_portal->load();
+  }
 }
 
 void AddItemsToPortal::addItem()
 {
   if (!m_user || !m_item)
+  {
     return;
+  }
 
   m_busy = true;
 
   //! [PortalUser addItemWithUrlAsync]
   QUrl localCSV("qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv");
-  m_user->addPortalItemWithUrlAsync(m_item, localCSV, "add_item_sample.csv" ).then(this,
-  [this]()
+  m_user->addPortalItemWithUrlAsync(m_item, localCSV, "add_item_sample.csv")
+    .then(this,
+          [this]()
   {
     m_busy = false;
 
     setStatusText("Successfully added item. " + m_item->itemId());
     m_item->load();
   })
-  //! [PortalUser addItemWithUrlAsync]
-  .onFailed(
-  [this](const ErrorException& e)
+    //! [PortalUser addItemWithUrlAsync]
+    .onFailed([this](const ErrorException& e)
   {
     m_busy = false;
 
     // Check for service error 409 "Conflict" - item already exists
-    const QVariantMap additionalInfo = e.error().additionalInformation();
-    if (additionalInfo.contains(ErrorInformationKeys::serviceError()) &&
-        additionalInfo.value(ErrorInformationKeys::serviceError()).toInt() == 409)
+    if (e.error().arcGISServerErrorCode().value_or(-1) == 409)
     {
       m_alreadyExisted = true;
       setStatusText("Item already exists; fetching existing item instead. " + m_item->itemId());
@@ -203,12 +222,15 @@ void AddItemsToPortal::addItem()
 void AddItemsToPortal::deleteItem()
 {
   if (!m_user || !m_item)
+  {
     return;
+  }
 
   m_busy = true;
 
-  m_user->deletePortalItemAsync(m_item).then(this,
-  [this]()
+  m_user->deletePortalItemAsync(m_item)
+    .then(this,
+          [this]()
   {
     m_busy = false;
     m_itemDeleted = true;
@@ -219,8 +241,8 @@ void AddItemsToPortal::deleteItem()
     emit portalItemTypeNameChanged();
 
     setStatusText("Successfully deleted item. " + m_item->itemId());
-  }).onFailed(
-  [this](const ErrorException& e)
+  })
+    .onFailed([this](const ErrorException& e)
   {
     m_busy = false;
 
@@ -231,12 +253,13 @@ void AddItemsToPortal::deleteItem()
 void AddItemsToPortal::fetchItem()
 {
   if (!m_user || !m_item)
+  {
     return;
+  }
 
   m_busy = true;
 
-  m_user->fetchContentAsync().then(this,
-  [this]()
+  m_user->fetchContentAsync().then(this, [this]()
   {
     m_busy = false;
 
@@ -255,7 +278,9 @@ void AddItemsToPortal::fetchItem()
 void AddItemsToPortal::connectUserSignals()
 {
   if (!m_user)
+  {
     return;
+  }
 
   connect(m_user, &PortalUser::errorOccurred, this, [this](const Error& error)
   {
@@ -264,7 +289,7 @@ void AddItemsToPortal::connectUserSignals()
   });
 }
 
-void AddItemsToPortal::setStatusText(const QString &statusText)
+void AddItemsToPortal::setStatusText(const QString& statusText)
 {
   m_statusText = statusText;
   emit statusTextChanged();

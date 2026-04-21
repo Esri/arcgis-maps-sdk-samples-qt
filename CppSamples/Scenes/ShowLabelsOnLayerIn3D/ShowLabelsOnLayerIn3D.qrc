@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/ShowLabelsOnLayerIn3D">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ShowLabelsOnLayerIn3D.qml</file>
+        <file>ShowLabelsOnLayerIn3D.h</file>
+        <file>ShowLabelsOnLayerIn3D.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

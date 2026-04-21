@@ -50,12 +50,13 @@ FilterByDefinitionExpressionOrDisplayFilterSample {
         spacing: 5
 
         Label {
-            text: "Current feature count: " + definitionExpressionOrDisplayFilterSample.currentFeatureCount
+            text: qsTr("Current feature count: " + definitionExpressionOrDisplayFilterSample.currentFeatureCount)
+            color: "black"
         }
 
         // button to apply a definition expression
         Button {
-            text: "Apply Expression"
+            text: qsTr("Apply Expression")
             enabled: definitionExpressionOrDisplayFilterSample.layerInitialized
             width: 200
             onClicked: {
@@ -66,7 +67,7 @@ FilterByDefinitionExpressionOrDisplayFilterSample {
 
         // button to apply a display filter
         Button {
-            text: "Apply Display Filter"
+            text: qsTr("Apply Display Filter")
             enabled: definitionExpressionOrDisplayFilterSample.layerInitialized
             width: 200
             onClicked: {
@@ -77,7 +78,7 @@ FilterByDefinitionExpressionOrDisplayFilterSample {
 
         // button to reset the definition expression
         Button {
-            text: "Reset"
+            text: qsTr("Reset")
             enabled: definitionExpressionOrDisplayFilterSample.layerInitialized
             width: 200
             onClicked: {

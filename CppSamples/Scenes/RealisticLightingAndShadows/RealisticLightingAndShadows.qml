@@ -45,13 +45,22 @@ Item {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#ffffff"
+        color: palette.base
         opacity: 0.7
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+        
         Column {
             id: settingsColumn
             spacing: 5
             padding: 15
-            Text {
+            Label {
                 id: timeValue
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 16

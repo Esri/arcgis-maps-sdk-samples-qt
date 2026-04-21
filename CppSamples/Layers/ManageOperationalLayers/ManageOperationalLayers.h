@@ -22,11 +22,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class ArcGISMapImageLayer;
-class Layer;
-}
+  class Map;
+  class MapQuickView;
+  class ArcGISMapImageLayer;
+  class Layer;
+} // namespace Esri::ArcGISRuntime
 
 class DrawOrderLayerListModel;
 class QAbstractItemModel;

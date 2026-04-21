@@ -40,7 +40,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ChangeSublayerRenderer::ChangeSublayerRenderer(QQuickItem* parent /* = nullptr */):
+ChangeSublayerRenderer::ChangeSublayerRenderer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -63,16 +63,21 @@ void ChangeSublayerRenderer::componentComplete()
   m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // Add the map image layer
-  ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
+  ArcGISMapImageLayer* mapImageLayer =
+    new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
 
   // Get the sublayer
   connect(mapImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this, mapImageLayer](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     if (mapImageLayer->mapImageSublayers()->size() < 3)
+    {
       return;
+    }
 
     m_sublayer = dynamic_cast<ArcGISMapImageSublayer*>(mapImageLayer->mapImageSublayers()->at(2));
 
@@ -80,7 +85,9 @@ void ChangeSublayerRenderer::componentComplete()
     connect(m_sublayer, &ArcGISMapImageSublayer::doneLoading, this, [this](const Error& e)
     {
       if (!e.isEmpty())
+      {
         return;
+      }
 
       m_originalRenderer = m_sublayer->renderer()->clone(this);
 
@@ -121,7 +128,7 @@ void ChangeSublayerRenderer::createClassBreaksRenderer()
 }
 
 // helper function to create class breaks for the renderer
-ClassBreak* ChangeSublayerRenderer::createClassBreak(const QColor &color, double min, double max)
+ClassBreak* ChangeSublayerRenderer::createClassBreak(const QColor& color, double min, double max)
 {
   SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(153, 153, 153), 1.0f /*width*/, this);
   SimpleFillSymbol* sfs1 = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, color, outline, this);
@@ -134,7 +141,9 @@ ClassBreak* ChangeSublayerRenderer::createClassBreak(const QColor &color, double
 void ChangeSublayerRenderer::applyRenderer()
 {
   if (!m_sublayer || !m_classBreaksRenderer)
+  {
     return;
+  }
 
   m_sublayer->setRenderer(m_classBreaksRenderer);
 }
@@ -143,7 +152,9 @@ void ChangeSublayerRenderer::applyRenderer()
 void ChangeSublayerRenderer::resetRenderer()
 {
   if (!m_sublayer || !m_originalRenderer)
+  {
     return;
+  }
 
   m_sublayer->setRenderer(m_originalRenderer);
 }

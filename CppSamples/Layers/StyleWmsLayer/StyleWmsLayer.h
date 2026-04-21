@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class WmsSublayer;
-}
+  class Map;
+  class MapQuickView;
+  class WmsSublayer;
+} // namespace Esri::ArcGISRuntime
 
 class StyleWmsLayer : public QQuickItem
 {

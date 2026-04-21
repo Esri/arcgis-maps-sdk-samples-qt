@@ -19,14 +19,14 @@
 
 TEMPLATE = app
 QT += core gui xml network qml quick positioning sensors multimedia
-QT += widgets quickcontrols2 opengl webview websockets texttospeech
+QT += widgets quickcontrols2 webview websockets texttospeech
 android|ios: QT += bluetooth
 TARGET = ArcGISQt_Samples
 DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHCPP = $$PWD/../CppSamples
 COMMONVIEWER = $$PWD
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
-ARCGIS_RUNTIME_VERSION = 200.8.0
+include($$PWD/../ArcGISRuntimeVersion.pri)
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
@@ -38,6 +38,10 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   include ($$PWD/../../../DevBuildCpp.pri)
   # include the toolkitcpp.pri, which contains all the toolkit resources
   include($$PWD/../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
+
+  # Include Calcite
+  RESOURCES += $$PWD/../../toolkit/calcite/Calcite/calcite.qrc
+  QML_IMPORT_PATH += $$PWD/../../toolkit/calcite/
 
   INCLUDEPATH += \
       $$SAMPLEPATHCPP \
@@ -52,10 +56,17 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   CONFIG += c++17
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  !include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri) {
+  exists($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri) {
+    include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri)
+
+    # Include Calcite
+    RESOURCES += $$PWD/../arcgis-maps-sdk-toolkit-qt/calcite/Calcite/calcite.qrc
+    QML_IMPORT_PATH += $$PWD/../arcgis-maps-sdk-toolkit-qt/calcite/
+
+  } else {
     message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri)
     message("Please ensure the Qt Toolkit repository is cloned and the path above is correct.")
-  }
+    }
 
   contains(QMAKE_HOST.os, Windows):{
     iniPath = $$(ALLUSERSPROFILE)\\EsriRuntimeQt\\ArcGIS Runtime SDK for Qt $${ARCGIS_RUNTIME_VERSION}.ini
@@ -120,32 +131,6 @@ exists($$PWD/../../../DevBuildCpp.pri) {
 
   ios {
     PLATFORM = "iOS"
-
-    # workaround for https://bugreports.qt.io/browse/QTBUG-129651
-    # ArcGIS Maps SDK for Qt adds 'QMAKE_RPATHDIR = @executable_path/Frameworks'
-    # and ffmpeg frameworks have embedded '@rpath/Frameworks' path.
-    # so in order for them to be found, we need to add @executable_path to the
-    # search path.
-    FFMPEG_LIB_DIR = $$absolute_path($$replace(QMAKE_QMAKE, "qmake6", "../../ios/lib/ffmpeg"))
-    FFMPEG_LIB_DIR = $$absolute_path($$replace(FFMPEG_LIB_DIR, "qmake", "../../ios/lib/ffmpeg"))
-    QMAKE_LFLAGS += -F$${FFMPEG_LIB_DIR} -Wl,-rpath,@executable_path
-    versionAtLeast(QT_VERSION, 6.8.3) {
-      FRAMEWORK = "xcframework"
-    } else {
-      FRAMEWORK = "framework"
-    }
-    LIBS += -framework libavcodec \
-            -framework libavformat \
-            -framework libavutil \
-            -framework libswresample \
-            -framework libswscale
-    ffmpeg.files = $${FFMPEG_LIB_DIR}/libavcodec.$${FRAMEWORK} \
-                   $${FFMPEG_LIB_DIR}/libavformat.$${FRAMEWORK} \
-                   $${FFMPEG_LIB_DIR}/libavutil.$${FRAMEWORK} \
-                   $${FFMPEG_LIB_DIR}/libswresample.$${FRAMEWORK} \
-                   $${FFMPEG_LIB_DIR}/libswscale.$${FRAMEWORK}
-    ffmpeg.path = Frameworks
-    QMAKE_BUNDLE_DATA += ffmpeg
   }
 
   DEFINES += BUILD_FROM_CONFIGURED_SDK
@@ -181,6 +166,8 @@ HEADERS += \
     $$COMMONVIEWER/CategoryListModel.h \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
+    $$COMMONVIEWER/DownloadsManager.h \
+    $$COMMONVIEWER/OfflineDataProjectsModel.h \
     $$COMMONVIEWER/Sample.h \
     $$COMMONVIEWER/SampleCategory.h \
     $$COMMONVIEWER/SampleListModel.h \
@@ -192,7 +179,8 @@ HEADERS += \
     $$COMMONVIEWER/SourceCode.h \
     $$COMMONVIEWER/SourceCodeListModel.h \
     $$COMMONVIEWER/ZipHelper.h \
-    $$COMMONVIEWER/TaskCanceler.h
+    $$COMMONVIEWER/TaskCanceler.h \
+    SampleDownloadState.h
 
 SOURCES += \
     $$COMMONVIEWER/SyntaxHighlighter/SyntaxHighlighter.cpp \
@@ -200,6 +188,8 @@ SOURCES += \
     $$COMMONVIEWER/CategoryListModel.cpp \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
+    $$COMMONVIEWER/DownloadsManager.cpp \
+    $$COMMONVIEWER/OfflineDataProjectsModel.cpp \
     $$COMMONVIEWER/Sample.cpp \
     $$COMMONVIEWER/SampleCategory.cpp \
     $$COMMONVIEWER/SampleListModel.cpp \

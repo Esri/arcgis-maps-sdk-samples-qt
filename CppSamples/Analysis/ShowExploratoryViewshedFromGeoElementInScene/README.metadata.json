@@ -1,0 +1,47 @@
+{
+    "category": "Analysis",
+    "dataItems": [
+        {
+            "itemId": "07d62a792ab6496d9b772a24efea45d0",
+            "path": "~/ArcGIS/Runtime/Data/3D/bradley_low_3ds/bradle.3ds"
+        }
+    ],
+    "description": "Analyze the exploratory viewshed for an object (GeoElement) in a scene.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "analysis",
+        "buildings",
+        "model",
+        "scene",
+        "exploratory viewshed",
+        "visibility analysis",
+        "AnalysisOverlay",
+        "ExploratoryGeoElementViewshed",
+        "GeodeticDistanceResult",
+        "GeometryEngine::distanceGeodetic (used to animate the vehicle)",
+        "ModelSceneSymbol",
+        "OrbitGeoElementCameraController"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-viewshedgeoelement.htm"
+    ],
+    "relevant_apis": [
+        "AnalysisOverlay",
+        "ExploratoryGeoElementViewshed",
+        "GeodeticDistanceResult",
+        "GeometryEngine::distanceGeodetic (used to animate the vehicle)",
+        "ModelSceneSymbol",
+        "OrbitGeoElementCameraController"
+    ],
+    "snippets": [
+        "ShowExploratoryViewshedFromGeoElementInScene.cpp",
+        "ShowExploratoryViewshedFromGeoElementInScene.h",
+        "ShowExploratoryViewshedFromGeoElementInScene.qml"
+    ],
+    "title": "Show exploratory viewshed (GeoElement)"
+}

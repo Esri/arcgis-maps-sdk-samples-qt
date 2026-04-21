@@ -43,22 +43,23 @@ SetSurfacePlacementModeSample {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#000000"
+        color: palette.base
         opacity: .8
         radius: 5
 
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
 
         ColumnLayout {
-            Text {
+            Label {
                 Layout.margins: 2
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Draped mode")
-                color: "white"
             }
 
             Switch {
@@ -79,21 +80,22 @@ SetSurfacePlacementModeSample {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#000000"
+        color: palette.base
         opacity: .8
         radius: 5
 
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
 
         ColumnLayout {
-            Text {
+            Label {
                 id: zValueSliderLabel
                 text: qsTr("Z-Value")
-                color: "white"
                 Layout.margins: 2
                 Layout.alignment: Qt.AlignHCenter
             }
@@ -128,15 +130,15 @@ SetSurfacePlacementModeSample {
                         radius: 3
                         x: headingHandleNub.x - width
                         y: headingHandleNub.y - height / 2 + headingHandleNub.height / 2
+                        color: palette.base
 
-                        Text {
+                        Label {
                             id: headingValue
                             font.pixelSize: 14
                             padding: 3
                             horizontalAlignment: Qt.AlignHCenter
                             verticalAlignment: Qt.AlignVCenter
-                            text: (zValueSlider.value).toFixed(0)
-                            color: "white"
+                            text: qsTr((zValueSlider.value).toFixed(0))
                         }
                     }
                 }

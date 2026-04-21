@@ -16,7 +16,7 @@ import QtQuick.Controls
 
 Rectangle {
     id: rootOptionsPage
-    color: "#F4F4F4"
+    color: palette.base
 
     property real pageWidth: rootOptionsPage.width - flickable.anchors.margins * 2
     signal statisticButtonClicked()
@@ -35,13 +35,13 @@ Rectangle {
             top: parent.top
             right: parent.right
         }
-        color: "#005e95"
+        color: palette.highlight
         height: 40
         clip: true
 
-        Text {
+        Label {
             anchors.centerIn: parent
-            text: "Statistics: US States"
+            text: qsTr("Statistics: US States")
             color: "white"
             font.pixelSize: 28
         }
@@ -89,9 +89,9 @@ Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
                         spacing: 5
 
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
-                            text: "Field"
+                            text: qsTr("Field")
                             font.pixelSize: labelTextSize
                         }
 
@@ -113,9 +113,9 @@ Rectangle {
                             }
                         }
 
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
-                            text: "Type"
+                            text: qsTr("Type")
                             font.pixelSize: labelTextSize
                         }
 
@@ -138,7 +138,7 @@ Rectangle {
                         }
 
                         Button {
-                            text: "+"
+                            text: qsTr("Add")
                             onClicked: rootRectangle.addStatisticDefinition(fieldComboBox.currentText, statisticComboBox.currentText);
                         }
                     }
@@ -173,11 +173,11 @@ Rectangle {
                                 Row {
                                     anchors.verticalCenter: parent.verticalCenter
                                     spacing: 10
-                                    Text {
+                                    Label {
                                         text: modelData.field
                                         font.pixelSize: labelTextSize
                                     }
-                                    Text {
+                                    Label {
                                         text: "(%1)".arg(modelData.statistic)
                                         font.pixelSize: labelTextSize
                                     }
@@ -193,8 +193,14 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "Remove Statistic"
+                        text: qsTr("Remove Statistic")
                         onClicked: rootRectangle.removeStatisticDefinition(statisticView.currentIndex);
+                    }
+
+                    // Spacer
+                    Item {
+                        width: parent.width
+                        height: 2
                     }
                 }
             }
@@ -210,8 +216,8 @@ Rectangle {
                     height: parent.height
                     spacing: 5
 
-                    Text {
-                        text: "Group Field(s):"
+                    Label {
+                        text: qsTr("Group Field(s):")
                         font.pixelSize: labelTextSize
                     }
 
@@ -288,7 +294,7 @@ Rectangle {
                     height: parent.height
                     spacing: 5
 
-                    Text {
+                    Label {
                         text: "Order by Field:"
                         font.pixelSize: labelTextSize
                     }
@@ -322,11 +328,11 @@ Rectangle {
                                 Row {
                                     anchors.verticalCenter: parent.verticalCenter
                                     spacing: 10
-                                    Text {
+                                    Label {
                                         text: modelData.field
                                         font.pixelSize: labelTextSize
                                     }
-                                    Text {
+                                    Label {
                                         text: "(%1)".arg(modelData.order)
                                         font.pixelSize: labelTextSize
                                     }
@@ -342,7 +348,7 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "Change Sort Order"
+                        text: qsTr("Change Sort Order")
                         onClicked: rootRectangle.updateOrder(groupingView.currentIndex);
                     }
                 }
@@ -352,7 +358,7 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 250
                 height: 50
-                text: "<u><b>Get Statistics</b></u>"
+                text: qsTr("<u><b>Get Statistics</b></u>")
                 onClicked: statisticButtonClicked()
             }
         }
@@ -361,7 +367,7 @@ Rectangle {
     Component {
         id: highlightRectangle
         Rectangle {
-            color: "cyan"
+            color: palette.highlight
             opacity: 0.4
         }
     }

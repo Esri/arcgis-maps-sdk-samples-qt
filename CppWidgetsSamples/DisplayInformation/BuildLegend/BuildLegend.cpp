@@ -38,36 +38,35 @@ using namespace Esri::ArcGISRuntime;
 namespace
 {
 
-/*
+  /*
  * This is nothing more than a helper class that shadows the
  * LegendInfoSymbolUrlRole as a Qt::DecorationRole, since the
  * LegendInfoListModel does not give us this functionality for free.
  */
-class RoleProxyModel: public QIdentityProxyModel
-{
-public:
-  using QIdentityProxyModel::QIdentityProxyModel;
-
-  QVariant data(const QModelIndex& index, int role) const override;
-};
-
-QVariant RoleProxyModel::data(const QModelIndex& index, int role) const
-{
-  if (role == Qt::DecorationRole)
+  class RoleProxyModel : public QIdentityProxyModel
   {
-    const QUrl iconRole =
-        index.data(LegendInfoListModel::LegendInfoSymbolUrlRole).toUrl();
-    return QIcon(iconRole.toLocalFile());
-  }
-  else
+  public:
+    using QIdentityProxyModel::QIdentityProxyModel;
+
+    QVariant data(const QModelIndex& index, int role) const override;
+  };
+
+  QVariant RoleProxyModel::data(const QModelIndex& index, int role) const
   {
-    return QIdentityProxyModel::data(index, role);
+    if (role == Qt::DecorationRole)
+    {
+      const QUrl iconRole = index.data(LegendInfoListModel::LegendInfoSymbolUrlRole).toUrl();
+      return QIcon(iconRole.toLocalFile());
+    }
+    else
+    {
+      return QIdentityProxyModel::data(index, role);
+    }
   }
-}
 
-}
+} // namespace
 
-BuildLegend::BuildLegend(QWidget* parent /* = nullptr */):
+BuildLegend::BuildLegend(QWidget* parent /* = nullptr */) :
   QWidget(parent),
   m_ui(new Ui::BuildLegend)
 {
@@ -77,8 +76,7 @@ BuildLegend::BuildLegend(QWidget* parent /* = nullptr */):
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
   m_map->setAutoFetchLegendInfos(true);
   // set initial viewpoint
-  m_map->setInitialViewpoint(
-        Viewpoint(Point(-11e6, 6e6, SpatialReference(3857)), 9e7));
+  m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(3857)), 9e7));
 
   m_ui->mapView->setMap(m_map);
 
@@ -96,13 +94,16 @@ BuildLegend::~BuildLegend()
 
 void BuildLegend::addLayers()
 {
-  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"), this);
+  ArcGISTiledLayer* tiledLayer =
+    new ArcGISTiledLayer(QUrl("https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"), this);
   m_map->operationalLayers()->append(tiledLayer);
 
-  ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
+  ArcGISMapImageLayer* mapImageLayer =
+    new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
   m_map->operationalLayers()->append(mapImageLayer);
 
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
+  ServiceFeatureTable* featureTable =
+    new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
   m_map->operationalLayers()->append(featureLayer);
 }

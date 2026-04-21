@@ -46,7 +46,7 @@ Item {
         visible: model.terminalDialogVisisble
 
         ColumnLayout {
-            Text {
+            Label {
                 text: qsTr("Select the terminal for this junction.")
                 Layout.alignment: Qt.AlignHCenter
             }
@@ -68,7 +68,7 @@ Item {
         y: (parent.height - height) / 2
         visible: model.dialogVisible
 
-        Text {
+        Label {
             text: model.dialogText
             anchors.centerIn: parent
         }
@@ -83,25 +83,32 @@ Item {
     Rectangle {
         id: backBox
         anchors {
-            left: parent.left
+            right: parent.right
             top: parent.top
             margins: 3
         }
-        width: childrenRect.width
-        height: childrenRect.height
-        color: "lightgrey"
-        opacity: 0.8
+        width: contentColumn.implicitWidth + 16
+        height: contentColumn.implicitHeight + 16
+        color: palette.base
         radius: 5
+
+        border {
+            width: 1
+            color: "darkgrey"
+        }
 
         // catch mouse signals from propagating to parent
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
 
         Column {
-
+            id: contentColumn
+            anchors.centerIn: parent
             GridLayout {
                 columns: 2
                 rows: 3
@@ -121,7 +128,7 @@ Item {
                     onToggled: model.startingLocationsEnabled = !checked;
                 }
 
-                Text {
+                Label {
                     text: qsTr("Trace Type:")
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 }
@@ -149,7 +156,7 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 // Displays fraction along edge or if a junction is selected
                 text: model.junctionSelected ? qsTr("Junction selected") : qsTr("Fraction along edge: %1".arg(model.fractionAlongEdge.toFixed(6)))
                 anchors.horizontalCenter: parent.horizontalCenter

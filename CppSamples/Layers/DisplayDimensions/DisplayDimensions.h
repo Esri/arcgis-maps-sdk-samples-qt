@@ -22,12 +22,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class DimensionLayer;
-class Error;
-class Map;
-class MapQuickView;
-class MobileMapPackage;
-}
+  class DimensionLayer;
+  class Error;
+  class Map;
+  class MapQuickView;
+  class MobileMapPackage;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

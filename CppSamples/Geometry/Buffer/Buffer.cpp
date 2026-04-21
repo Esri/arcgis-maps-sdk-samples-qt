@@ -44,7 +44,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Buffer::Buffer(QObject* parent /* = nullptr */):
+Buffer::Buffer(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -68,7 +68,9 @@ MapQuickView* Buffer::mapView() const
 void Buffer::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -122,7 +124,8 @@ void Buffer::onMouseClicked(QMouseEvent& mouse)
   m_graphicsOverlayPlanar->graphics()->append(resultGraphicPlanar);
 
   // Create a geodesic buffer graphic around the input location at the specified distance.
-  const Geometry bufferGeodesic = GeometryEngine::bufferGeodetic(point, bufferInMeters, LinearUnit(LinearUnitId::Meters), NAN, GeodeticCurveType::Geodesic);
+  const Geometry bufferGeodesic =
+    GeometryEngine::bufferGeodetic(point, bufferInMeters, LinearUnit(LinearUnitId::Meters), NAN, GeodeticCurveType::Geodesic);
 
   // Add the result geodesic buffer as a graphic
   Graphic* resultGraphicGeodesic = new Graphic(bufferGeodesic, this);
@@ -141,7 +144,9 @@ int Buffer::bufferSize() const
 void Buffer::setBufferSize(int size)
 {
   if (size == m_bufferSize)
+  {
     return;
+  }
 
   m_bufferSize = size;
 }

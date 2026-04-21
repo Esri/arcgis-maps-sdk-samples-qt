@@ -51,7 +51,7 @@ Item {
         visible: !featureInfoPane.visible
 
         background: Rectangle {
-            color: "white"
+            color: palette.base
             border.color: "black"
         }
 
@@ -60,12 +60,11 @@ Item {
             width: 200
             spacing: 10
 
-            Text {
+            Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignHCenter
                 padding: 5
-                text: "Current Garden Section"
-                color: "#3B4E1E"
+                text: qsTr("Current Garden Section")
                 font {
                     bold: true
                     pointSize: 20
@@ -74,10 +73,11 @@ Item {
 
             RoundButton {
                 id: sectionButton
+                padding: 5
                 width: parent.width - 10
-                padding: 20
+                height: buttonText.implicitHeight + (padding * 2)
 
-                Text {
+                Label {
                     id: buttonText
                     anchors.centerIn: parent
                     horizontalAlignment: Text.AlignHCenter
@@ -90,7 +90,7 @@ Item {
                         pointSize: 18
                     }
                     wrapMode: Text.WordWrap
-                    color: "white"
+                    color: "#F8F8F8"
                 }
 
                 background: Rectangle {
@@ -113,23 +113,22 @@ Item {
                 width: parent.width - 20
                 height: 2
 
-                color: "black"
+                color: palette.mid
 
                 visible: poiHeader.visible
             }
 
-            Text {
+            Label {
                 id: poiHeader
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignHCenter
                 padding: 5
 
-                text: "Points of Interest"
+                text: qsTr("Points of Interest")
                 font {
                     bold: true
                     pointSize: 16
                 }
-                color: "#AC901E"
 
                 visible: sampleModel.poisInRange.length > 0
             }
@@ -138,10 +137,11 @@ Item {
                 model: sampleModel.poisInRange
                 delegate: RoundButton {
                     id: poiButton
+                    padding: 5
                     width: parent.width - 10
-                    padding: 20
+                    height: buttonText.implicitHeight + (padding * 2)
 
-                    Text {
+                    Label {
                         id: poiButtonText
                         anchors.centerIn: parent
                         horizontalAlignment: Text.AlignHCenter
@@ -150,7 +150,7 @@ Item {
                         text: modelData
                         wrapMode: Text.WordWrap
                         font.bold: true
-                        color: "white"
+                        color: "#F8F8F8"
                     }
 
                     background: Rectangle {

@@ -1,4 +1,4 @@
-# Browse OGC API Feature Service
+# Browse OGC API feature service
 
 Browse an OGC API feature service for layers and add them to the map.
 

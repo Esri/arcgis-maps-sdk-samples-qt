@@ -26,11 +26,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
-class ImageFrame;
-class ImageOverlay;
-}
+  class Scene;
+  class SceneQuickView;
+  class ImageFrame;
+  class ImageOverlay;
+} // namespace Esri::ArcGISRuntime
 
 class QTimer;
 

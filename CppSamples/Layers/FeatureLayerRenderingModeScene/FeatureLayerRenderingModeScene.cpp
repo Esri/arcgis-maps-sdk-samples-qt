@@ -41,7 +41,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FeatureLayerRenderingModeScene::FeatureLayerRenderingModeScene(QQuickItem* parent /* = nullptr */):
+FeatureLayerRenderingModeScene::FeatureLayerRenderingModeScene(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -103,7 +103,7 @@ void FeatureLayerRenderingModeScene::componentComplete()
 
 void FeatureLayerRenderingModeScene::addFeatureLayers(Scene* scene)
 {
-  const QStringList layerIds = {"0", "8", "9"};
+  const QStringList layerIds = {"9", "8", "0"};
   for (const QString& layerId : layerIds)
   {
     QString featureServiceUrl = QString("%1/%2").arg(m_featureServiceUrl, layerId);
@@ -118,9 +118,13 @@ void FeatureLayerRenderingModeScene::animate()
 {
   Camera camera;
   if (m_isZoomedOut)
+  {
     camera = Camera(m_zoomInCamera);
+  }
   else
+  {
     camera = Camera(m_zoomOutCamera);
+  }
 
   m_bottomSceneView->setViewpointCameraAsync(camera, 5.0f);
   m_topSceneView->setViewpointCameraAsync(camera, 5.0f);
@@ -130,7 +134,9 @@ void FeatureLayerRenderingModeScene::animate()
 void FeatureLayerRenderingModeScene::startAnimation()
 {
   if (!m_timer)
+  {
     return;
+  }
 
   animate();
   m_timer->start(7000);
@@ -139,7 +145,9 @@ void FeatureLayerRenderingModeScene::startAnimation()
 void FeatureLayerRenderingModeScene::stopAnimation()
 {
   if (!m_timer)
+  {
     return;
+  }
 
   m_timer->stop();
 }

@@ -53,7 +53,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ExportVectorTiles::ExportVectorTiles(QObject* parent /* = nullptr */):
+ExportVectorTiles::ExportVectorTiles(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this))
 {
@@ -77,7 +77,9 @@ MapQuickView* ExportVectorTiles::mapView() const
 void ExportVectorTiles::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -97,8 +99,11 @@ void ExportVectorTiles::setMapView(MapQuickView* mapView)
 
 void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double yNE)
 {
-  if (!m_map->basemap() || m_map->basemap()->baseLayers()->isEmpty() || m_map->basemap()->baseLayers()->first()->layerType() != LayerType::ArcGISVectorTiledLayer)
+  if (!m_map->basemap() || m_map->basemap()->baseLayers()->isEmpty() ||
+      m_map->basemap()->baseLayers()->first()->layerType() != LayerType::ArcGISVectorTiledLayer)
+  {
     return;
+  }
 
   // Get the first layer of the basemap baselayers as a vector tiled layer for export
   ArcGISVectorTiledLayer* vectorTiledLayer = static_cast<ArcGISVectorTiledLayer*>(m_map->basemap()->baseLayers()->first());
@@ -115,7 +120,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
 
   // Instantiate export parameters to create the export job with
   exportTask->createDefaultExportVectorTilesParametersAsync(exportArea, m_mapView->mapScale() * 0.1)
-      .then(this, [this, exportTask](ExportVectorTilesParameters exportParameters)
+    .then(this, [this, exportTask](ExportVectorTilesParameters exportParameters)
   {
     // Using the reduced fonts service will reduce the download size of a vtpk by around 80 Mb
     // It is useful for taking the basemap offline but not recommended if you plan to later upload the vtpk
@@ -163,7 +168,8 @@ void ExportVectorTiles::cancel()
 {
   m_exportJob->cancelJobAsync().then(this, [this](bool succeeded)
   {
-    emit jobCancelDone(succeeded);;
+    emit jobCancelDone(succeeded);
+    ;
   });
   reset();
 }

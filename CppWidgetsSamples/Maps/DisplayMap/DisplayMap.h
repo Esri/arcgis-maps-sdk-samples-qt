@@ -17,10 +17,11 @@
 #ifndef DISPLAY_MAP_H
 #define DISPLAY_MAP_H
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Map;
   class MapGraphicsView;
-}
+} // namespace Esri::ArcGISRuntime
 
 #include <QWidget>
 
@@ -30,7 +31,7 @@ class DisplayMap : public QWidget
 
 public:
   explicit DisplayMap(QWidget* parent = nullptr);
-   ~DisplayMap() override;
+  ~DisplayMap() override;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

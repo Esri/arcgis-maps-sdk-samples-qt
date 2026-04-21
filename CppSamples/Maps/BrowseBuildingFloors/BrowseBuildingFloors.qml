@@ -33,10 +33,8 @@ Item {
     }
 
     // Add a background to the column
-    Rectangle {
+    Pane {
         anchors.fill: col
-        radius: 10
-        border.width: 1
     }
 
     Column {
@@ -47,17 +45,9 @@ Item {
         ComboBox {
             id: floor_level
             width: 200
-            model: ["Level 1", "Level 2", "Level 3"]
-        }
-
-        Button {
-            id: select_floor
-            width: 200
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "Select Floor"
-            onClicked: {
-                model.selectFloor(floor_level.currentText);
-            }
+            model: [qsTr("Level 1"), qsTr("Level 2"), qsTr("Level 3")]
+            onCurrentTextChanged: model.selectFloor(currentText);
         }
     }
+
 }

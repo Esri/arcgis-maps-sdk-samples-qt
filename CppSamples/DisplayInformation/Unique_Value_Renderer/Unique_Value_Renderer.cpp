@@ -82,10 +82,14 @@ void Unique_Value_Renderer::componentComplete()
   m_uniqueValueRenderer->setFieldNames(QStringList("STATE_ABBR"));
 
   // create symbols to be used in the renderer
-  m_defaultSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Null, QColor("black"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("gray"), 2, this), this);
-  m_californiaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 2, this), this);
-  m_arizonaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("green"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("green"), 2, this), this);
-  m_nevadaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("blue"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 2, this), this);
+  m_defaultSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Null, QColor("black"),
+                                         new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("gray"), 2, this), this);
+  m_californiaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"),
+                                            new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 2, this), this);
+  m_arizonaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("green"),
+                                         new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("green"), 2, this), this);
+  m_nevadaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("blue"),
+                                        new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 2, this), this);
 
   // create unique values and add to the UniqueValueRenderer
   createUniqueValue("CA", m_californiaSymbol);

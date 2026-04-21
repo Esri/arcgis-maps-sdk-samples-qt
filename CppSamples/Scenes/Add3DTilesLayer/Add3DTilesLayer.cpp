@@ -36,13 +36,13 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */):
+Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISDarkGray, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -68,7 +68,9 @@ SceneQuickView* Add3DTilesLayer::sceneView() const
 void Add3DTilesLayer::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);

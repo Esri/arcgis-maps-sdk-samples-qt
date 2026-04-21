@@ -4,8 +4,8 @@
     "supportedProjectTypes": [ "Qt4ProjectManager.Qt4Project" ],
     "id": "A.Sample_ArcGISQt_CPP_200_7_0",
     "category": "B.CustomProjects",
-    "trDescription": "Creates a Sample ArcGIS Maps 200.8.0 Qt Quick C++ application.",
-    "trDisplayName": "Sample ArcGIS Maps 200.8.0 C++ Qt Quick App",
+    "trDescription": "Creates a Sample ArcGIS Maps 300.0.0 Qt Quick C++ application.",
+    "trDisplayName": "Sample ArcGIS Maps 300.0.0 C++ Qt Quick App",
     "trDisplayCategory": "ArcGIS",
     "icon": "wizard.png",
     "featuresRequired": [ "QtSupport.Wizards.FeatureQt" ],
@@ -22,9 +22,7 @@
         { "key": "SampleName", "value": "%{JS: '%{Class}'.charAt(0).toUpperCase() + '%{Class}'.substring(1)}" },
         { "key": "SampleDescription", "value": "%{SampleDesc}" },
         { "key": "SampleCategory", "value": "%{SampleCat}" },
-        { "key": "IncludeGuard", "value": "%{JS: Cpp.classToHeaderGuard('%{Class}', '%{JS: Util.preferredSuffix('text/x-c++hdr')}')}" },
-        { "key": "ThreeDSample", "value": "%{threeD}" },
-        { "key": "UseFeatureLayer", "value": "%{JS: ( '%{FeatureLayerURL}'.length === 0 ) ? 'false' : 'true'}" },
+        { "key": "IncludeGuard", "value": "%{JS: Cpp.headerGuard('%{Class}' + '_H')}" },
         { "key": "UseAPIKey", "value": "%{apiKey}" },
         { "key": "CurrentYear", "value": "%{JS: new Date().getFullYear()}" }
     ],
@@ -131,20 +129,38 @@
                     }
                 },
                 {
-                    "name": "threeD",
-                    "trDisplayName": "3-D sample",
-                    "type": "CheckBox",
-                    "data":{"checked": false}
-                },
-                {
-                    "name": "FeatureLayerURL",
-                    "trDisplayName": "Feature Layer URL:",
-                    "mandatory": false,
-                    "type": "LineEdit",
+                    "name": "GeoViewType",
+                    "trDisplayName": "GeoView type:",
+                    "type": "ComboBox",
+                    "trToolTip": "%{JS: ( '%{GeoViewType}' === 'map' ) ? 'A two-dimensional map' : ( '%{GeoViewType}' === 'globalScene') ? 'A three-dimensional scene on a globe' : 'A three-dimensional scene on a projected plane' }",
                     "data":
                     {
-                        "trPlaceholder" : "Optionally add the URL for a FeatureLayer",
-                        "trText": ""
+                        "index": 0,
+                        "items":
+                        [
+                            {
+                                "trKey": "2D Map",
+                                "value": "map"
+                            },
+                            {
+                                "trKey": "Global 3D Scene",
+                                "value": "globalScene"
+                            },
+                            {
+                                "trKey": "Local 3D Scene",
+                                "value": "localScene"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "ThreeDSample",
+                    "trDisplayName": "3D project",
+                    "type": "CheckBox",
+                    "visible": false,
+                    "data":
+                    {
+                        "checked": "%{JS: ( '%{GeoViewType}' !== 'map' ) ? 'yes' : ''}"
                     }
                 },
                 {

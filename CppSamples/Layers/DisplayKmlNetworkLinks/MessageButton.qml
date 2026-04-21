@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 
 Item {
     id: messageButton
@@ -24,6 +25,7 @@ Item {
     Rectangle {
         anchors.fill: messageContents
         radius: 4
+        color: palette.base
 
         border {
             color: "darkgray"
@@ -51,27 +53,30 @@ Item {
             id: messageImage
             width: 32
             height: 32
-            source: "qrc:/Samples/Layers/DisplayKmlNetworkLinks/iOS8_TabBar_Email90.png"
+            source: "qrc:/Samples/Layers/DisplayKmlNetworkLinks/envelope-24.svg"
             anchors.margins: 5
-
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                colorization: 1.0
+                colorizationColor: palette.text
+                brightness: 1.0
+            }
             SequentialAnimation on opacity {
                 running: messageContents.visible
                 loops: Animation.Infinite
-
                 PropertyAnimation { to: 1; duration: 1000; easing.type: Easing.InOutQuad }
                 PropertyAnimation { to: 0; duration: 1000; easing.type: Easing.InOutQuad }
             }
         }
 
-        Text{
+        Label {
             id: messageText
             anchors {
                 verticalCenter: messageImage.verticalCenter
                 margins: 5
             }
 
-            text: "Message Received"
-            color: "#2f2f2f"
+            text: qsTr("Message Received")
             font.pixelSize: 13
         }
     }

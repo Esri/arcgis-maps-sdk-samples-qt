@@ -80,29 +80,37 @@ using namespace Esri::ArcGISRuntime::Authentication;
 
 namespace
 {
-const QString domainNetworkName = QStringLiteral("Pipeline");
-const QString tierName = QStringLiteral("Pipe Distribution System");
-const QString networkSourceName = QStringLiteral("Gas Device");
-const QString assetGroupName = QStringLiteral("Meter");
-const QString assetTypeName = QStringLiteral("Customer");
-const QString globalId = QStringLiteral("{98A06E95-70BE-43E7-91B7-E34C9D3CB9FF}");
-const QString sampleServer7Username = QStringLiteral("viewer01");
-const QString sampleServer7Password = QStringLiteral("I68VGU^nMurF");
-}
+  const QString domainNetworkName = QStringLiteral("Pipeline");
+  const QString tierName = QStringLiteral("Pipe Distribution System");
+  const QString networkSourceName = QStringLiteral("Gas Device");
+  const QString assetGroupName = QStringLiteral("Meter");
+  const QString assetTypeName = QStringLiteral("Customer");
+  const QString globalId = QStringLiteral("{98A06E95-70BE-43E7-91B7-E34C9D3CB9FF}");
+  const QString sampleServer7Username = QStringLiteral("viewer01");
+  const QString sampleServer7Password = QStringLiteral("I68VGU^nMurF");
+} // namespace
 
 namespace
 {
-// Convenient RAII template struct that deletes all pointers in a given container.
-template <typename T>
-struct ScopedCleanup
-{
-  ScopedCleanup(const QList<T*>& list) : results(list) { }
-  ~ScopedCleanup() { qDeleteAll(results); }
-  const QList<T*>& results;
-};
-}
+  // Convenient RAII template struct that deletes all pointers in a given container.
+  template<typename T>
+  struct ScopedCleanup
+  {
+    ScopedCleanup(const QList<T*>& list) :
+      results(list)
+    {
+    }
 
-PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
+    ~ScopedCleanup()
+    {
+      qDeleteAll(results);
+    }
+
+    const QList<T*>& results;
+  };
+} // namespace
+
+PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */) :
   ArcGISAuthenticationChallengeHandler(parent),
   m_map(new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=f439b4724bb54ac088a2c21eaf70da7b"), this)),
   m_startingLocationOverlay(new GraphicsOverlay(this)),
@@ -147,7 +155,9 @@ MapQuickView* PerformValveIsolationTrace::mapView() const
 void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -155,12 +165,15 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_map->loadStatus() != LoadStatus::Loaded)
+    {
       return;
+    }
 
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    m_taskCanceler->addTask(m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
+    m_taskCanceler->addTask(m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups)
+                              .then(this, [this](const QList<IdentifyLayerResult*>& results)
     {
       // handle the identify results
       onIdentifyLayersCompleted_(results);
@@ -183,10 +196,14 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
 QStringList PerformValveIsolationTrace::categoriesList() const
 {
   if (!m_utilityNetwork)
-    return { };
+  {
+    return {};
+  }
 
   if (m_utilityNetwork->loadStatus() != LoadStatus::Loaded)
-    return { };
+  {
+    return {};
+  }
 
   const QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
   QStringList strList;
@@ -200,7 +217,9 @@ QStringList PerformValveIsolationTrace::categoriesList() const
 void PerformValveIsolationTrace::performTrace()
 {
   if (m_selectedIndex < 0)
+  {
     return;
+  }
 
   // disable UI while trace is run
   m_tasksRunning = true;
@@ -210,8 +229,10 @@ void PerformValveIsolationTrace::performTrace()
   {
     // clear previous selection from the feature layers
     FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
-   if (featureLayer)
-     featureLayer->clearSelection();
+    if (featureLayer)
+    {
+      featureLayer->clearSelection();
+    }
   }
 
   const QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
@@ -222,7 +243,8 @@ void PerformValveIsolationTrace::performTrace()
     // set whether to include isolated features
     m_traceConfiguration->setIncludeIsolatedFeatures(m_isolateFeatures);
 
-    UtilityTraceParameters* traceParameters = new UtilityTraceParameters(UtilityTraceType::Isolation, QList<UtilityElement*> {m_startingLocation}, this);
+    UtilityTraceParameters* traceParameters =
+      new UtilityTraceParameters(UtilityTraceType::Isolation, QList<UtilityElement*>{m_startingLocation}, this);
     traceParameters->setTraceConfiguration(m_traceConfiguration);
 
     // reset trace configuration filter barriers
@@ -231,15 +253,19 @@ void PerformValveIsolationTrace::performTrace()
     // set the user selected filter barriers otherwise
     // set the category comparison to the barriers of the configuration's trace filter
     if (!m_filterBarriers.empty())
+    {
       traceParameters->setFilterBarriers(m_filterBarriers);
+    }
     else
     {
       UtilityCategory* selectedCategory = categories[m_selectedIndex];
-      UtilityCategoryComparison* categoryComparison = new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
+      UtilityCategoryComparison* categoryComparison =
+        new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
       traceParameters->traceConfiguration()->filter()->setBarriers(categoryComparison);
     }
 
-    m_taskCanceler->addTask(m_utilityNetwork->traceAsync(traceParameters).then(this, [this](QList<UtilityTraceResult*>)
+    m_taskCanceler->addTask(m_utilityNetwork->traceAsync(traceParameters)
+                              .then(this, [this](QList<UtilityTraceResult*>)
     {
       onTraceCompleted_();
     }));
@@ -296,7 +322,9 @@ void PerformValveIsolationTrace::onTraceCompleted_()
           const QString networkSourceName = utilityElement->networkSource()->name();
           const QString featureTableName = featureLayer->featureTable()->tableName();
           if (networkSourceName == featureTableName)
+          {
             objectIds.append(utilityElement->objectId());
+          }
         }
         queryParameters.setObjectIds(objectIds);
         m_taskCanceler->addTask(featureLayer->selectFeaturesAsync(queryParameters, SelectionMode::New));
@@ -316,8 +344,10 @@ void PerformValveIsolationTrace::performReset()
   {
     // clear previous selection from the feature layers
     FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
-   if (featureLayer)
-     featureLayer->clearSelection();
+    if (featureLayer)
+    {
+      featureLayer->clearSelection();
+    }
   }
 }
 
@@ -335,7 +365,9 @@ void PerformValveIsolationTrace::connectSignals()
     }
 
     if (m_utilityNetwork->loadStatus() != LoadStatus::Loaded)
+    {
       return;
+    }
 
     // get a trace configuration from a tier
     UtilityNetworkDefinition* networkDefinition = m_utilityNetwork->definition();
@@ -344,11 +376,15 @@ void PerformValveIsolationTrace::connectSignals()
     {
       UtilityTier* tier = domainNetwork->tier(tierName);
       if (tier)
+      {
         m_traceConfiguration = tier->defaultTraceConfiguration();
+      }
     }
 
     if (!m_traceConfiguration)
+    {
       return;
+    }
 
     // create a trace filter
     m_traceConfiguration->setFilter(new UtilityTraceFilter(this));
@@ -362,15 +398,20 @@ void PerformValveIsolationTrace::connectSignals()
       {
         UtilityAssetType* assetType = assetGroup->assetType(assetTypeName);
         if (assetType)
+        {
           m_startingLocation = m_utilityNetwork->createElementWithAssetType(assetType, QUuid(globalId), nullptr, this);
+        }
       }
     }
 
     if (!m_startingLocation)
+    {
       return;
+    }
 
     // display starting location
-    m_taskCanceler->addTask(m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*> {m_startingLocation}).then(this, [this](QList<ArcGISFeature*>)
+    m_taskCanceler->addTask(m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*>{m_startingLocation})
+                              .then(this, [this](QList<ArcGISFeature*>)
     {
       // display starting location
       ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
@@ -407,7 +448,9 @@ void PerformValveIsolationTrace::onIdentifyLayersCompleted_(const QList<Identify
 
   // could not identify location
   if (results.isEmpty())
+  {
     return;
+  }
 
   const IdentifyLayerResult* result = results[0];
   ArcGISFeature* feature = static_cast<ArcGISFeature*>(std::as_const(result)->geoElements()[0]);
@@ -456,10 +499,13 @@ void PerformValveIsolationTrace::selectedTerminal(int index)
 
 void PerformValveIsolationTrace::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
 {
-  TokenCredential::createWithChallengeAsync(challenge, sampleServer7Username, sampleServer7Password, {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  TokenCredential::createWithChallengeAsync(challenge, sampleServer7Username, sampleServer7Password, {}, this)
+    .then(this,
+          [challenge](TokenCredential* tokenCredential)
   {
     challenge->continueWithCredential(tokenCredential);
-  }).onFailed(this, [challenge](const ErrorException& e)
+  })
+    .onFailed(this, [challenge](const ErrorException& e)
   {
     challenge->continueWithError(e.error());
   });

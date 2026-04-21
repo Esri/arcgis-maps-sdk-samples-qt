@@ -49,13 +49,15 @@ Item {
 
         width: 250
         height: buttonColumn.height + 20
-        color: "#ffffff"
+        color: palette.base
 
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse => mouse.accepted = true;
-            onWheel: wheel => wheel.accepted = true;
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Column {
@@ -138,7 +140,7 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 id: fileNameText
                 anchors {
                     left: parent.left
@@ -146,13 +148,13 @@ Item {
                     leftMargin: 0
                     rightMargin: 0
                 }
-                text: model.gdbFilePath ? "Created new geodatabase:\n" + model.gdbFilePath.split("/").pop() : "Geodatabase path not found"
+                text: model.gdbFilePath ? qsTr("Created new geodatabase:\n" + model.gdbFilePath.split("/").pop()) : qsTr("Geodatabase path not found")
                 font.pixelSize: 12
                 wrapMode: Text.WrapAnywhere
                 visible: model.gdbOpen
             }
 
-            Text {
+            Label {
                 id: featureCountText
                 anchors {
                     left: parent.left
@@ -160,7 +162,7 @@ Item {
                     leftMargin: 0
                     rightMargin: 0
                 }
-                text: "Number of features: " + model.featureCount + (model.featureCount === 0 ? "\n(Click or tap on the map to add new features)" : "")
+                text: qsTr("Number of features: ") + model.featureCount + (model.featureCount === 0 ? qsTr("\n(Click or tap on the map to add new features)") : "")
                 font.pixelSize: 12
                 wrapMode: Text.WordWrap
                 visible: model.gdbOpen
@@ -173,7 +175,7 @@ Item {
         anchors.centerIn: parent
         width: parent.width * 0.75
         height: gdbInfoColumn.height + 20
-        color: "white"
+        color: palette.base
         border.color: "black"
         clip: true
         visible: false
@@ -181,8 +183,10 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse => mouse.accepted = true;
-            onWheel: wheel => wheel.accepted = true;
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Column {
@@ -195,10 +199,10 @@ Item {
             width: parent.width - 20
             height: children.height
 
-            Text {
+            Label {
                 id: gdbNameText
                 width: parent.width
-                text: "Closed and saved geodatabase to the temporary path:"
+                text: qsTr("Closed and saved geodatabase to the temporary path:")
                 wrapMode: Text.WordWrap
             }
             TextEdit {
@@ -209,11 +213,12 @@ Item {
                 selectByMouse: true
                 text: model.gdbFilePath
                 wrapMode: Text.WrapAnywhere
+                color: palette.text
             }
             Button {
                 id: gdbInfoClose
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Ok"
+                text: qsTr("Ok")
                 onClicked: {
                     gdbClosedNoticeRectangle.visible = false;
                     buttonListRectangle.visible = true;
@@ -236,8 +241,10 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse => mouse.accepted = true;
-            onWheel: wheel => wheel.accepted = true;
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         ListView {
@@ -255,27 +262,25 @@ Item {
                 height: 40
                 width: tableView.width
                 Rectangle {
-                    color: "grey"
+                    color: palette.mid
                     border.color: "black"
                     width: parent.width * 0.2
                     height: parent.height
-                    Text {
+                    Label {
                         anchors.centerIn: parent
-                        text: "Object ID"
-                        color: "white"
+                        text: qsTr("Object ID")
                         font.bold: true
 
                     }
                 }
                 Rectangle {
-                    color: "grey"
+                    color: palette.mid
                     border.color: "black"
                     width: parent.width * 0.8
                     height: parent.height
-                    Text {
+                    Label {
                         anchors.centerIn: parent
-                        text: "Timestamp"
-                        color: "white"
+                        text: qsTr("Timestamp")
                         font.bold: true
                     }
                 }
@@ -286,22 +291,22 @@ Item {
                 height: 40
                 width: tableView.width
                 Rectangle {
-                    color: "white"
+                    color: palette.mid
                     border.color: "black"
                     width: parent.width * 0.2
                     height: parent.height
-                    Text {
+                    Label {
                         anchors.centerIn: parent
                         text: featureOidRole
 
                     }
                 }
                 Rectangle {
-                    color: "white"
+                    color: palette.mid
                     border.color: "black"
                     width: parent.width * 0.8
                     height: parent.height
-                    Text {
+                    Label {
                         anchors.centerIn: parent
                         text: featureTimestampRole
                     }
@@ -320,21 +325,23 @@ Item {
         }
         width: closeTableButton.width + 10
         height: closeTableButton.height + 10
-        color: "#ffffff"
+        color: palette.base
         visible: featureTableDisplay.visible
 
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse => mouse.accepted = true;
-            onWheel: wheel => wheel.accepted = true;
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Button {
             id: closeTableButton
             anchors.centerIn: parent
 
-            text: "Close table view"
+            text: qsTr("Close table view")
 
             onClicked: {
                 featureTableDisplay.visible = false;

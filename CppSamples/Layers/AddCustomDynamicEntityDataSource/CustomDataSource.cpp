@@ -1,3 +1,4 @@
+// [WriteFile Name=AddCustomDynamicEntityDataSource, Category=Layers]
 // [Legal]
 // Copyright 2024 Esri.
 //
@@ -33,12 +34,16 @@
 
 using namespace Esri::ArcGISRuntime;
 
-CustomDataSource::CustomDataSource(QObject* parent) : DynamicEntityDataSource(parent)
+CustomDataSource::CustomDataSource(QObject* parent) :
+  DynamicEntityDataSource(parent)
 {
 }
 
 CustomDataSource::CustomDataSource(const QString& fileName, const QString& entityIdField, const int msDelay, QObject* parent) :
-  DynamicEntityDataSource(parent), m_fileName(fileName), m_entityIdField(entityIdField), m_msDelay(msDelay)
+  DynamicEntityDataSource(parent),
+  m_fileName(fileName),
+  m_entityIdField(entityIdField),
+  m_msDelay(msDelay)
 {
 }
 
@@ -57,7 +62,9 @@ QFuture<DynamicEntityDataSourceInfo*> CustomDataSource::onLoadAsync()
   m_file.setFileName(m_fileName);
 
   if (m_file.open(QIODevice::ReadOnly | QIODevice::Text))
+  {
     m_textStream.setDevice(&m_file);
+  }
 
   // Create a DynamicEntityDataSourceInfo object to return
   DynamicEntityDataSourceInfo* dynamicEntityDataSourceInfo = new DynamicEntityDataSourceInfo(m_entityIdField, m_fields, this);
@@ -72,7 +79,10 @@ QFuture<DynamicEntityDataSourceInfo*> CustomDataSource::onLoadAsync()
 // Override the virtual onConnectAsync method to define what the DynamicEntityDataSource will do when the data source is connected
 QFuture<void> CustomDataSource::onConnectAsync()
 {
-  m_watcher.setFuture(QtConcurrent::run([this](){observationProcessLoopAsync();}));
+  m_watcher.setFuture(QtConcurrent::run([this]()
+  {
+    observationProcessLoopAsync();
+  }));
   return QtFuture::makeReadyVoidFuture();
 }
 
@@ -94,9 +104,7 @@ void CustomDataSource::observationProcessLoopAsync()
 
     // Get the observation geometry from the line
     const QJsonObject geometryObject = jsonObject.value("geometry").toObject();
-    const Point point(geometryObject.value("x").toDouble(),
-                      geometryObject.value("y").toDouble(),
-                      SpatialReference::wgs84());
+    const Point point(geometryObject.value("x").toDouble(), geometryObject.value("y").toDouble(), SpatialReference::wgs84());
 
     // Get the observation attributes from the line
     const QVariantMap attributes = jsonObject.value("attributes").toObject().toVariantMap();
@@ -106,30 +114,22 @@ void CustomDataSource::observationProcessLoopAsync()
     QThread::msleep(m_msDelay);
 
     if (m_textStream.atEnd())
+    {
       m_textStream.seek(0);
+    }
   }
 }
 
 // Schema fields that are hardcoded to match the accompanying .json data
 QList<Field> CustomDataSource::getSchema()
 {
-  return QList<Field>
-  {
-    Field(FieldType::Text, "MMSI", "", 256, Domain(), false, false),
-    Field(FieldType::Float64, "BaseDateTime", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "LAT", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "LONG", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "SOG", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "COG", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "Heading", "", 8, Domain(), false, false),
-    Field(FieldType::Text, "VesselName", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "IMO", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "CallSign", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "VesselType", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "Status", "", 256, Domain(), false, false),
-    Field(FieldType::Float64, "Length", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "Width", "", 8, Domain(), false, false),
-    Field(FieldType::Text, "Cargo", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "globalid", "", 256, Domain(), false, false)
-  };
+  return QList<Field>{
+    Field(FieldType::Text, "MMSI", "", 256, Domain(), false, false),       Field(FieldType::Float64, "BaseDateTime", "", 8, Domain(), false, false),
+    Field(FieldType::Float64, "LAT", "", 8, Domain(), false, false),       Field(FieldType::Float64, "LONG", "", 8, Domain(), false, false),
+    Field(FieldType::Float64, "SOG", "", 8, Domain(), false, false),       Field(FieldType::Float64, "COG", "", 8, Domain(), false, false),
+    Field(FieldType::Float64, "Heading", "", 8, Domain(), false, false),   Field(FieldType::Text, "VesselName", "", 256, Domain(), false, false),
+    Field(FieldType::Text, "IMO", "", 256, Domain(), false, false),        Field(FieldType::Text, "CallSign", "", 256, Domain(), false, false),
+    Field(FieldType::Text, "VesselType", "", 256, Domain(), false, false), Field(FieldType::Text, "Status", "", 256, Domain(), false, false),
+    Field(FieldType::Float64, "Length", "", 8, Domain(), false, false),    Field(FieldType::Float64, "Width", "", 8, Domain(), false, false),
+    Field(FieldType::Text, "Cargo", "", 256, Domain(), false, false),      Field(FieldType::Text, "globalid", "", 256, Domain(), false, false)};
 }

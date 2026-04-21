@@ -1,3 +1,4 @@
+// [WriteFile Name=StatisticalQueryGroupSort, Category=Analysis]
 // [Legal]
 // Copyright 2016 Esri.
 //
@@ -56,7 +57,9 @@ int StatisticResultListModel::rowCount(const QModelIndex& parent) const
 QVariant StatisticResultListModel::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_results.count())
+  {
     return QVariant();
+  }
 
   StatisticResult result = m_results[index.row()];
 
@@ -64,14 +67,14 @@ QVariant StatisticResultListModel::data(const QModelIndex& index, int role) cons
 
   switch (role)
   {
-  case SectionRole:
-    retVal = result.section;
-    break;
-  case StatisticRole:
-    retVal = result.statistic;
-    break;
-  default:
-    break;
+    case SectionRole:
+      retVal = result.section;
+      break;
+    case StatisticRole:
+      retVal = result.statistic;
+      break;
+    default:
+      break;
   }
 
   return retVal;
@@ -90,7 +93,7 @@ void StatisticResultListModel::clear()
 }
 
 // c'tor for StatisticResult struct
-StatisticResultListModel::StatisticResult::StatisticResult(const QString& section, const QString& statistic):
+StatisticResultListModel::StatisticResult::StatisticResult(const QString& section, const QString& statistic) :
   section(section),
   statistic(statistic)
 {

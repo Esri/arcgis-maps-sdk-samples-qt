@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class ArcGISMapImageLayer;
-}
+} // namespace Esri::ArcGISRuntime
 
 class ChangeSublayerVisibility : public QQuickItem
 {

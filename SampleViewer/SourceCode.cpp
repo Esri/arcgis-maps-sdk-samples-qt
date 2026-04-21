@@ -20,8 +20,7 @@
 
 #include "SourceCode.h"
 
-SourceCode::SourceCode(const QString& name, const QString& code,
-                       const QString& path, QObject* parent /*= nullptr*/) :
+SourceCode::SourceCode(const QString& name, const QString& code, const QString& path, QObject* parent /*= nullptr*/) :
   QObject(parent),
   m_name(name),
   m_code(code),

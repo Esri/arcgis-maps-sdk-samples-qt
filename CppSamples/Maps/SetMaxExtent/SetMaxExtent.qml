@@ -30,33 +30,30 @@ Item {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
-    }
 
-    Rectangle {
-        anchors {
-            margins: 5
-            left: parent.left
-            bottom: parent.bottom
-        }
-        width: childrenRect.width
-        height: childrenRect.height
-        color: "#D3D3D3"
-        opacity: .75
-        radius: 3
-
-        ColumnLayout {
-            Text {
-                color: "#000000"
-                text: "Max extent enabled"
-                Layout.fillWidth: true
-                Layout.margins: 3
-                font {
-                    weight: Font.DemiBold
-                    pointSize: 10
-                }
+        Rectangle {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
             }
+            width: maxExtentSwitch.width + 20
+            height: maxExtentSwitch.height + 20
+            color: palette.base
+            radius: 5
+
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: mouse => mouse.accepted = true
+                onDoubleClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
+
+
             Switch {
                 id: maxExtentSwitch
+                anchors.centerIn: parent
+                text: qsTr("Max Extent")
                 checked: true
                 onClicked: model.toggleMaxExtent();
             }

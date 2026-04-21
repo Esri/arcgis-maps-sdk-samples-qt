@@ -27,13 +27,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-class PictureMarkerSymbol;
-class RouteTask;
-class SimpleFillSymbol;
-}
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+  class PictureMarkerSymbol;
+  class RouteTask;
+  class SimpleFillSymbol;
+} // namespace Esri::ArcGISRuntime
 
 class QAbstractListModel;
 

@@ -24,13 +24,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class WfsService;
-class WfsFeatureTable;
-class WfsLayerInfo;
-class LayerListModel;
-}
+  class Map;
+  class MapQuickView;
+  class WfsService;
+  class WfsFeatureTable;
+  class WfsLayerInfo;
+  class LayerListModel;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
@@ -69,7 +69,6 @@ private:
   QStringList m_layerInfoTitleList;
   bool m_loadingIndicator = false;
   bool m_swapAxis = false;
-
 };
 
 #endif // BROWSEWFSLAYERS_H

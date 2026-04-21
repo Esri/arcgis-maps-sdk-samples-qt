@@ -6,8 +6,7 @@
         <file>GenerateOfflineMapLocalBasemap.cpp</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>download.png</file>
-        <file>DownloadButton.qml</file>
+        <file>download-24.svg</file>
         <file>GenerateWindow.qml</file>
     </qresource>
 </RCC>

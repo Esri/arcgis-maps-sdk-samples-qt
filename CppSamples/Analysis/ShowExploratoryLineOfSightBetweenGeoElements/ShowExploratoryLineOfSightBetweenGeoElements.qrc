@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ShowExploratoryLineOfSightBetweenGeoElements.qml</file>
+        <file>ShowExploratoryLineOfSightBetweenGeoElements.h</file>
+        <file>ShowExploratoryLineOfSightBetweenGeoElements.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

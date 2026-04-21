@@ -25,13 +25,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class Graphic;
-class GraphicsOverlay;
-class SimpleLineSymbol;
-class SimpleFillSymbol;
-}
+  class Map;
+  class MapQuickView;
+  class Graphic;
+  class GraphicsOverlay;
+  class SimpleLineSymbol;
+  class SimpleFillSymbol;
+} // namespace Esri::ArcGISRuntime
 
 class ClipGeometry : public QQuickItem
 {

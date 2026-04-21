@@ -7,7 +7,7 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>menu.png</file>
+        <file>handle-vertical-24.svg</file>
         <file>DrawOrderLayerListModel.cpp</file>
         <file>DrawOrderLayerListModel.h</file>
     </qresource>

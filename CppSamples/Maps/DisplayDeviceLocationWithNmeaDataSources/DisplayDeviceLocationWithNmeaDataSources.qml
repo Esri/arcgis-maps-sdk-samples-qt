@@ -45,7 +45,7 @@ Item {
             margins: 25
         }
         width: 200
-        text: model.nmeaSimulationActive ? "RESET" : "START"
+        text: model.nmeaSimulationActive ? qsTr("RESET") : qsTr("START")
         onClicked: {
             model.nmeaSimulationActive = !model.nmeaSimulationActive;
             if (model.nmeaSimulationActive)

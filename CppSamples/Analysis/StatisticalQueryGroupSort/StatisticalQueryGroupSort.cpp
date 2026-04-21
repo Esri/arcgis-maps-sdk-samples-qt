@@ -46,7 +46,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-StatisticalQueryGroupSort::StatisticalQueryGroupSort(QQuickItem* parent /* = nullptr */):
+StatisticalQueryGroupSort::StatisticalQueryGroupSort(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_resultsModel(new StatisticResultListModel(this))
 {
@@ -62,7 +62,8 @@ void StatisticalQueryGroupSort::componentComplete()
   QQuickItem::componentComplete();
 
   // Create the Service Feature Table
-  m_featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/Counties_Obesity_Inactivity_Diabetes_2013/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(
+    QUrl("https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/Counties_Obesity_Inactivity_Diabetes_2013/FeatureServer/0"), this);
   connectSignals();
   m_featureTable->load();
 
@@ -81,7 +82,9 @@ void StatisticalQueryGroupSort::connectSignals()
   connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
+    {
       return;
+    }
 
     const auto fields = m_featureTable->fields();
     for (const Field& field : fields)
@@ -94,7 +97,9 @@ void StatisticalQueryGroupSort::connectSignals()
   connect(m_featureTable, &ServiceFeatureTable::errorOccurred, this, [this](const Error& error)
   {
     if (error.isEmpty())
+    {
       return;
+    }
 
     m_resultsModel->clear();
     addResultToModel("", QString("Error. %1").arg(error.message()));
@@ -107,7 +112,9 @@ void StatisticalQueryGroupSort::onQueryStatisticsCompleted_(StatisticsQueryResul
   auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);
 
   if (!result)
+  {
     return;
+  }
 
   // clear previous results
   m_resultsModel->clear();
@@ -189,7 +196,9 @@ void StatisticalQueryGroupSort::addStatisticDefinition(const QString& field, con
     if (field == definitionMap["field"].toString())
     {
       if (statistic == definitionMap["statistic"].toString())
+      {
         return;
+      }
     }
   }
 
@@ -262,7 +271,9 @@ void StatisticalQueryGroupSort::removeOrderBy(int index)
 void StatisticalQueryGroupSort::updateOrder(int index)
 {
   if (m_orderBys.empty())
+  {
     return;
+  }
 
   // get the existing values
   QVariantMap orderByMap;
@@ -271,9 +282,13 @@ void StatisticalQueryGroupSort::updateOrder(int index)
 
   // update the order text
   if (currentOrder == "Ascending")
+  {
     orderByMap["order"] = "Descending";
+  }
   else
+  {
     orderByMap["order"] = "Ascending";
+  }
 
   // update the variant list with the new value
   m_orderBys.removeAt(index);
@@ -310,28 +325,46 @@ void StatisticalQueryGroupSort::removeGroupingField(const QString& field)
 StatisticType StatisticalQueryGroupSort::statisticStringToEnum(const QString& statistic) const
 {
   if (statistic == "Average")
+  {
     return StatisticType::Average;
+  }
   else if (statistic == "Count")
+  {
     return StatisticType::Count;
+  }
   else if (statistic == "Maximum")
+  {
     return StatisticType::Maximum;
+  }
   else if (statistic == "Minimum")
+  {
     return StatisticType::Minimum;
+  }
   else if (statistic == "Standard Deviation")
+  {
     return StatisticType::StandardDeviation;
+  }
   else if (statistic == "Sum")
+  {
     return StatisticType::Sum;
+  }
   else
+  {
     return StatisticType::Variance;
+  }
 }
 
 // helper to convert from sort order string to enum
 SortOrder StatisticalQueryGroupSort::orderStringToEnum(const QString& order) const
 {
   if (order == "Ascending")
+  {
     return SortOrder::Ascending;
+  }
   else
+  {
     return SortOrder::Descending;
+  }
 }
 
 void StatisticalQueryGroupSort::addResultToModel(const QString& section, const QString& resultString)

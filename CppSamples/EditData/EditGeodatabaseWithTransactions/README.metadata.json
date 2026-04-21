@@ -1,0 +1,38 @@
+{
+    "category": "Edit data",
+    "dataItems": [
+        {
+            "itemId": "43809fd639f242fd8045ecbafd61a579",
+            "path": "~/ArcGIS/Runtime/Data/geodatabase/SaveTheBay.geodatabase"
+        }
+    ],
+    "description": "Use transactions to manage how changes are committed to a geodatabase.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "comit",
+        "database",
+        "geodatabase",
+        "geometry editor",
+        "transact",
+        "transactions"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Geodatabase",
+        "Geodatabase::beginTransaction",
+        "Geodatabase::commitTransaction",
+        "Geodatabase::isInTransaction",
+        "Geodatabase::rollbackTransaction",
+        "GeometryEditor"
+    ],
+    "snippets": [
+        "EditGeodatabaseWithTransactions.cpp",
+        "EditGeodatabaseWithTransactions.h",
+        "EditGeodatabaseWithTransactions.qml"
+    ],
+    "title": "Edit geodatabase with transactions"
+}

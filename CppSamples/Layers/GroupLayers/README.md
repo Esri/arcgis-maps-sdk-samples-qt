@@ -31,6 +31,8 @@ The layers in the map will be displayed in a table of contents. Toggle the check
 ## Relevant API
 
 * GroupLayer
+* GroupLayer::visibilityMode
+* LayerContent
 
 ## Additional information
 
@@ -38,4 +40,4 @@ The full extent of a group layer may change when child layers are added/removed.
 
 ## Tags
 
-group layer
+3D, group layer, layers

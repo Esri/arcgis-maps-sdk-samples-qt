@@ -18,7 +18,7 @@
 #define LISTKMLCONTENTS_H
 
 // ArcGIS Maps SDK headers
-#include "Viewpoint.h"
+#include "KmlViewpoint.h"
 
 // Qt headers
 #include <QList>
@@ -27,12 +27,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class KmlDataset;
-class KmlNode;
-class KmlNodeListModel;
-class Scene;
-class SceneQuickView;
-}
+  class KmlContainer;
+  class KmlDataset;
+  class KmlNode;
+  class KmlNodeListModel;
+  class Scene;
+  class SceneQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 
@@ -66,13 +67,11 @@ private:
   QString labelText() const;
   bool isTopLevel() const;
 
-  void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
+  void buildTree(const QList<Esri::ArcGISRuntime::KmlNode*>& rootNodes);
   QStringList buildPathLabel(Esri::ArcGISRuntime::KmlNode* node) const;
   QString getKmlNodeType(Esri::ArcGISRuntime::KmlNode* node);
-  bool noGrandchildren(Esri::ArcGISRuntime::KmlNode* node) const;
-  void getViewpointFromKmlViewpoint(Esri::ArcGISRuntime::KmlNode* node);
-  void getAltitudeAdjustedViewpoint(Esri::ArcGISRuntime::KmlNode* node);
-  void onLocationToElevationCompleted_(double elevation);
+  bool hasGrandchildren(Esri::ArcGISRuntime::KmlContainer* container) const;
+  void setSceneViewCameraFromKmlViewpoint(const Esri::ArcGISRuntime::KmlViewpoint& viewpoint);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
@@ -80,8 +79,6 @@ private:
   QStringList m_levelNodeNames = {};
   QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
   Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
-  bool m_needsAltitudeFixed;
-  Esri::ArcGISRuntime::Viewpoint m_viewpoint;
 };
 
 #endif // LISTKMLCONTENTS_H

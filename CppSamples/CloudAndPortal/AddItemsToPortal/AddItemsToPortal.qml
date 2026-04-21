@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
@@ -47,8 +48,8 @@ AddItemsToPortalSample {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 64
                 width: Math.min(256, parent.width)
-                color: enabled ? "darkblue" : "darkgrey"
-                border{
+                color: enabled ? palette.highlight : "darkgrey"
+                border {
                     color: "lightgrey"
                     width: 2
                 }
@@ -56,22 +57,32 @@ AddItemsToPortalSample {
                 enabled: !portalLoaded
 
                 Row {
-                    anchors.fill: parent
+                    anchors {
+                        fill: parent
+                        leftMargin: 16
+                    }
                     spacing: 16
 
                     Image {
+                        id: statusIcon
                         anchors.verticalCenter: parent.verticalCenter
                         source: !portalLoaded ?
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/user-24.svg" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/check-circle-24.svg"
                         fillMode: Image.PreserveAspectFit
-                        height: 64
+                        height: 32
                         width: height
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.buttonText
+                            brightness: 1.0
+                        }
                     }
 
-                    Text {
+                    Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: "Authenticate Portal"
+                        text: qsTr("Authenticate Portal")
                         font.bold: true
                         color: "white"
                     }
@@ -91,7 +102,7 @@ AddItemsToPortalSample {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: authenticationButton.height
                 width: authenticationButton.width
-                color: enabled ? "darkblue" : "darkgrey"
+                color: enabled ? palette.highlight : "darkgrey"
                 border{
                     color: authenticationButton.border.color
                     width: 2
@@ -100,23 +111,31 @@ AddItemsToPortalSample {
                 enabled: !portalItemLoaded && portalLoaded
 
                 Row {
-                    anchors.fill: parent
+                    anchors {
+                        fill: parent
+                        leftMargin: 16
+                    }
                     spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
                         source: portalItemLoaded ?
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png" :
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
-
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/check-circle-24.svg" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/plus-circle-24.svg"
                         fillMode: Image.PreserveAspectFit
-                        height: 64
+                        height: 32
                         width: height
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.buttonText
+                            brightness: 1.0
+                        }
                     }
 
-                    Text {
+                    Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: "Add Item"
+                        text: qsTr("Add Item")
                         font.bold: true
                         color: "white"
                     }
@@ -136,7 +155,7 @@ AddItemsToPortalSample {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: authenticationButton.height
                 width: authenticationButton.width
-                color: enabled ? "darkblue" : "darkgrey"
+                color: enabled ? palette.highlight : "darkgrey"
                 border {
                     color: authenticationButton.border.color
                     width: 2
@@ -145,23 +164,31 @@ AddItemsToPortalSample {
                 enabled: portalItemLoaded && !itemDeleted
 
                 Row {
-                    anchors.fill: parent
+                    anchors {
+                        fill: parent
+                        leftMargin: 16
+                    }
                     spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
                         source: !itemDeleted ?
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_trash_dark.png" :
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
-
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/trash-24.svg" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/check-circle-24.svg"
                         fillMode: Image.PreserveAspectFit
-                        height: 64
+                        height: 32
                         width: height
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.buttonText
+                            brightness: 1.0
+                        }
                     }
 
-                    Text {
+                    Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: "Delete Item"
+                        text: qsTr("Delete Item")
                         font.bold: true
                         color: "white"
                     }
@@ -182,7 +209,7 @@ AddItemsToPortalSample {
                     right: parent.right
                 }
                 height: 4
-                color: "lightgrey"
+                color: palette.mid
             }
 
             Rectangle {
@@ -192,7 +219,7 @@ AddItemsToPortalSample {
                     right: parent.right
                 }
                 height: 128
-                color: "lightsteelblue"
+                color: palette.base
                 border {
                     color: "darkgrey"
                     width: 4
@@ -200,16 +227,15 @@ AddItemsToPortalSample {
                 radius: 32
                 clip: true
 
-                Text {
+                Label {
                     id: portalItemLabel
                     anchors{
                         top: parent.top
                         horizontalCenter: parent.horizontalCenter
                         margins: 4
                     }
-                    color: "white"
                     font.bold: true
-                    text: "PortalItem"
+                    text: qsTr("PortalItem")
                     font.underline: true
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -234,8 +260,7 @@ AddItemsToPortalSample {
                     }
                     clip: true
                     model: portalItemModel
-                    delegate: Text {
-                        color: "white"
+                    delegate: Label {
                         text: label + ":\t" + value
                         wrapMode: Text.Wrap
                         elide: Text.ElideRight
@@ -243,7 +268,7 @@ AddItemsToPortalSample {
                 }
             }
 
-            Text {
+            Label {
                 id: statusBar
                 anchors{
                     left: parent.left
@@ -264,5 +289,6 @@ AddItemsToPortalSample {
     BusyIndicator {
         anchors.centerIn: parent
         running: busy
+        visible: busy
     }
 }

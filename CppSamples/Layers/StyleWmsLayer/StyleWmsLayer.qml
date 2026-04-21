@@ -25,8 +25,6 @@ StyleWmsLayerSample {
     width: 800
     height: 600
 
-
-
     // add a mapView component
     MapView {
         anchors.fill: parent
@@ -43,9 +41,13 @@ StyleWmsLayerSample {
             fill: controlColumn
             margins: -5
         }
-        color: "lightgray"
+        color: palette.base
         radius: 5
-        opacity: 0.75
+
+        border {
+            width: 1
+            color: "darkgrey"
+        }
     }
 
     ButtonGroup {
@@ -62,7 +64,7 @@ StyleWmsLayerSample {
         spacing: 5
 
         RadioButton {
-            text: "Default"
+            text: qsTr("Default")
             checked: true
             onCheckedChanged: {
                 if (checked) {
@@ -73,7 +75,7 @@ StyleWmsLayerSample {
         }
 
         RadioButton {
-            text: "Contrast Stretch"
+            text: qsTr("Contrast Stretch")
             onCheckedChanged: {
                 if (checked) {
                     // set the style string on the sublayer

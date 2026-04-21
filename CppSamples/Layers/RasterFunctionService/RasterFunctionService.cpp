@@ -53,17 +53,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-RasterFunctionService::RasterFunctionService(QQuickItem* parent /* = nullptr */):
+RasterFunctionService::RasterFunctionService(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -90,7 +90,8 @@ void RasterFunctionService::componentComplete()
   m_mapView->setMap(m_map);
 
   // create an image service raster
-  m_imageServiceRaster = new ImageServiceRaster(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"), this);
+  m_imageServiceRaster =
+    new ImageServiceRaster(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"), this);
   // zoom to the raster's extent once it's loaded
   connect(m_imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this]()
   {

@@ -36,7 +36,7 @@ Item {
         id: exportProgressWindow
         anchors.centerIn: parent
 
-        color: "white"
+        color: palette.base
         visible: model.jobStatus !== 0 && model.jobStatus !== 3 && model.jobStatus !== 4
 
         border {
@@ -55,25 +55,25 @@ Item {
                 running: visible
             }
 
-            Text {
+            Label {
                 id: statusText
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Export job status: " + ["Not started", "Started", "Paused", "Succeeded", "Failed", "Cancelling"][model.jobStatus]
+                text: qsTr("Export job status: " + ["Not started", "Started", "Paused", "Succeeded", "Failed", "Cancelling"][model.jobStatus])
                 font.pixelSize: 16
             }
 
-            Text {
+            Label {
                 id: statusTextCanceled
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Job cancelled"
+                text: qsTr("Job cancelled")
                 visible: !statusText.visible
                 font.pixelSize: 16
             }
 
-            Text {
+            Label {
                 id: progressText
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: model.exportProgress + "% Completed"
+                text: qsTr(model.exportProgress + "% Completed")
                 font.pixelSize: 16
             }
 
@@ -111,7 +111,7 @@ Item {
         }
         width: 150
 
-        text: "Export area"
+        text: qsTr("Export area")
 
         onClicked: {
             switch(model.jobStatus) {
@@ -131,6 +131,7 @@ Item {
                 break;
             case ExportVectorTilesSample.ExportStatusFailed:
                 model.startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
+                extentRectangle.visible = false;
                 break;
             case ExportVectorTilesSample.ExportStatusCancelling:
                 break;

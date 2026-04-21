@@ -46,7 +46,7 @@ Item {
         }
         width: radioColumn.width
         height: radioColumn.height
-        color: "white"
+        color: palette.base
         border {
             color: "black"
             width: 1
@@ -58,17 +58,17 @@ Item {
             padding: 5
             spacing: 5
 
-            Text {
-                text: "Custom Dictionary Symbol Style Source"
+            Label {
+                text: qsTr("Custom Dictionary Symbol Style Source")
             }
 
             RadioButton {
-                text: "Local .stylx file"
+                text: qsTr("Local .stylx file")
                 checked: true
             }
 
             RadioButton {
-                text: "Web style"
+                text: qsTr("Web style")
                 onCheckedChanged: {
                     model.changeDictionarySymbolStyleSource();
                 }

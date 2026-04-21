@@ -45,13 +45,14 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayWfsLayer::DisplayWfsLayer(QObject* parent /* = nullptr */):
+DisplayWfsLayer::DisplayWfsLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   // create WFS Feature Table
-  m_wfsFeatureTable = new WfsFeatureTable(QUrl("https://dservices2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/services/Seattle_Downtown_Features/WFSServer?service=wfs&request=getcapabilities"),
-                                          "Seattle_Downtown_Features:Buildings", this);
+  m_wfsFeatureTable = new WfsFeatureTable(
+    QUrl("https://dservices2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/services/Seattle_Downtown_Features/WFSServer?service=wfs&request=getcapabilities"),
+    "Seattle_Downtown_Features:Buildings", this);
 
   // Set feature request mode to manual - only manual is supported at v100.5.
   // In this mode, you must manually populate the table - panning and zooming
@@ -62,7 +63,9 @@ DisplayWfsLayer::DisplayWfsLayer(QObject* parent /* = nullptr */):
   connect(m_wfsFeatureTable, &WfsFeatureTable::doneLoading, this, [this](const Error& e)
   {
     if (e.isEmpty())
+    {
       populateWfsFeatureTable();
+    }
   });
 
   // create feature layer from the feature table
@@ -109,7 +112,9 @@ void DisplayWfsLayer::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
   {
     if (m_mapView->isNavigating())
+    {
       return;
+    }
 
     populateWfsFeatureTable();
   });
@@ -120,7 +125,9 @@ void DisplayWfsLayer::setMapView(MapQuickView* mapView)
 void DisplayWfsLayer::populateWfsFeatureTable()
 {
   if (!m_mapView || !m_wfsFeatureTable)
+  {
     return;
+  }
 
   // create query parameters
   QueryParameters params;

@@ -40,7 +40,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ClipGeometry::ClipGeometry(QQuickItem* parent /* = nullptr */):
+ClipGeometry::ClipGeometry(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

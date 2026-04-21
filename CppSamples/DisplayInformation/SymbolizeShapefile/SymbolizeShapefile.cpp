@@ -50,17 +50,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-SymbolizeShapefile::SymbolizeShapefile(QQuickItem* parent /* = nullptr */):
+SymbolizeShapefile::SymbolizeShapefile(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

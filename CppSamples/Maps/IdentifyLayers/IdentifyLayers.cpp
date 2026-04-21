@@ -45,7 +45,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-IdentifyLayers::IdentifyLayers(QQuickItem* parent /* = nullptr */):
+IdentifyLayers::IdentifyLayers(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -115,8 +115,8 @@ void IdentifyLayers::connectSignals()
     const bool returnPopups = false;
     const int maxResults = 10;
 
-    m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups, maxResults).then(this,
-    [this](const QList<IdentifyLayerResult*>& results)
+    m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups, maxResults)
+      .then(this, [this](const QList<IdentifyLayerResult*>& results)
     {
       // reset the message text
       m_message = QString();
@@ -124,7 +124,7 @@ void IdentifyLayers::connectSignals()
       for (IdentifyLayerResult* result : results)
       {
         // lambda for calculating result count
-        auto geoElementsCountFromResult = [] (IdentifyLayerResult* result) -> int
+        auto geoElementsCountFromResult = [](IdentifyLayerResult* result) -> int
         {
           // create temp list
           QList<IdentifyLayerResult*> tempResults{result};
@@ -162,12 +162,13 @@ void IdentifyLayers::connectSignals()
       }
       //remove last newline character
       if (!m_message.isEmpty())
+      {
         m_message.chop(1);
+      }
 
       emit messageChanged();
       emit showMessage();
       qDeleteAll(results);
     });
-
   });
 }

@@ -58,11 +58,14 @@ Item {
         width: (300 < parent.width - 20) ? 300 : parent.width - 20
         height: column.height + 20
         border.width: 1
+        color: palette.base
 
         // Catch mouse signals so they don't propagate to the map
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
 
@@ -74,11 +77,12 @@ Item {
                 right: parent.right
                 margins: 10
             }
+            spacing: 8
 
-            Text {
+            Label {
                 id: statusText
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Status: " + model.connectionStatus
+                text: qsTr("Status: " + model.connectionStatus)
                 font.pixelSize: 18
                 horizontalAlignment: Text.AlignHCenter
                 font.bold: true
@@ -98,7 +102,7 @@ Item {
 
             CheckBox {
                 id: trackLinesBox
-                text: "Track lines"
+                text: qsTr("Track lines")
                 checked: true
                 onCheckedChanged: {
                     model.showTrackLines(checked);
@@ -106,10 +110,9 @@ Item {
                 }
             }
 
-
             CheckBox {
                 id: previousObservationsBox
-                text: "Previous observations"
+                text: qsTr("Previous observations")
                 checked: true
                 onCheckedChanged: {
                     model.showPreviousObservations(checked);
@@ -117,10 +120,10 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 id: observationsSliderText
                 topPadding: 10
-                text: "Observations per track (" + observationsSlider.value + ")"
+                text: qsTr("Observations per track (" + observationsSlider.value + ")")
             }
 
             Slider {
@@ -142,7 +145,7 @@ Item {
             Button {
                 id: purgeButton
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Purge all observations"
+                text: qsTr("Purge all observations")
                 onClicked: {
                     callout.visible = false;
                     model.purgeAllObservations();

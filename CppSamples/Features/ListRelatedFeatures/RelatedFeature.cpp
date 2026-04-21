@@ -24,8 +24,7 @@
 // Qt headers
 #include <QString>
 
-RelatedFeature::RelatedFeature(const QString& displayFieldName, const QString& displayFieldValue,
-                               const QString& serviceLayerName) :
+RelatedFeature::RelatedFeature(const QString& displayFieldName, const QString& displayFieldValue, const QString& serviceLayerName) :
   m_displayFieldName(displayFieldName),
   m_displayFieldValue(displayFieldValue),
   m_serviceLayerName(serviceLayerName)

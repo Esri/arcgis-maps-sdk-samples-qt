@@ -39,7 +39,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-SetMaxExtent::SetMaxExtent(QObject* parent /* = nullptr */):
+SetMaxExtent::SetMaxExtent(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreets, this))
 {
@@ -63,7 +63,9 @@ MapQuickView* SetMaxExtent::mapView() const
 void SetMaxExtent::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_coloradoOverlay = new GraphicsOverlay(this);
   // Create an envelope to be used as the Colorado geometry
@@ -89,10 +91,12 @@ void SetMaxExtent::toggleMaxExtent()
 {
   m_maxExtentEnabled ? m_maxExtentEnabled = false : m_maxExtentEnabled = true;
 
-  if (!m_maxExtentEnabled) {
+  if (!m_maxExtentEnabled)
+  {
     m_map->setMaxExtent(Envelope{});
   }
-  else {
+  else
+  {
     m_map->setMaxExtent(m_coloradoEnvelope);
     m_mapView->setViewpointGeometryAsync(m_coloradoEnvelope, 50);
   }

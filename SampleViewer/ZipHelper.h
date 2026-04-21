@@ -37,18 +37,18 @@ class ZipHelper : public QObject
 public:
   enum class Result
   {
-    EndOfListOfFile     = UNZ_END_OF_LIST_OF_FILE,
-    ErrNo               = UNZ_ERRNO,
-    EndOfFile           = UNZ_EOF,
-    ParameterError      = UNZ_PARAMERROR,
-    BadZipFile          = UNZ_BADZIPFILE,
-    InternalError       = UNZ_INTERNALERROR,
-    CrcError            = UNZ_CRCERROR
+    EndOfListOfFile = UNZ_END_OF_LIST_OF_FILE,
+    ErrNo = UNZ_ERRNO,
+    EndOfFile = UNZ_EOF,
+    ParameterError = UNZ_PARAMERROR,
+    BadZipFile = UNZ_BADZIPFILE,
+    InternalError = UNZ_INTERNALERROR,
+    CrcError = UNZ_CRCERROR
   };
   Q_ENUM(Result)
 
 public:
-  Q_INVOKABLE bool extractAll(const QString &outputPath);
+  Q_INVOKABLE bool extractAll(const QString& outputPath, bool trackTotalProgress = false);
   void setPath(const QString& path);
 
   explicit ZipHelper(QObject* parent = nullptr);
@@ -60,14 +60,22 @@ signals:
 
   void extractError(const QString& fileName, const QString& outputFileName, ZipHelper::Result result);
   void extractProgress(const QString& fileName, const QString& outputFileName, qreal percent);
+  void extractProgressTotal(qsizetype percentTotal);
   void extractCompleted();
 
 private:
   bool zrOpen(const QString& filePath);
   void zrClose();
 
-  unzFile zrHandle() const { return m_unzFile; }
-  bool zrIsOpen() const { return m_unzFile != nullptr; }
+  unzFile zrHandle() const
+  {
+    return m_unzFile;
+  }
+
+  bool zrIsOpen() const
+  {
+    return m_unzFile != nullptr;
+  }
 
   bool extractAll(QDir& outputDir);
   bool extractCurrentFile(const QString& outputFilePath);
@@ -84,11 +92,12 @@ private:
 public:
   enum class PathVariableType
   {
-    NotFound            = 0,
+    NotFound = 0,
     ApplicationProperty = 1,
-    Settings            = 2,
-    Environment         = 3
+    Settings = 2,
+    Environment = 3
   };
+
 private:
   static bool setDateTime(const QString& filePath, const QDateTime& accessed, const QDateTime& modified);
   static QString resolvedPath(const QString& path, bool useFallbacks = true);
@@ -106,12 +115,21 @@ private:
   void zwClose(const QString& globalComment = QString());
   bool exists() const;
   bool zrOpen();
-  const QString& path() const { return m_Path; }
+  qreal percentTotal() const;
+
+  const QString& path() const
+  {
+    return m_Path;
+  }
+
+  bool m_trackTotalProgress = false;
 
 private:
-  QString                     m_Path;
-  unzFile                     m_unzFile;
-  zipFile                     m_zipFile;
+  QString m_Path;
+  unzFile m_unzFile;
+  zipFile m_zipFile;
+  quint64 m_bytesExtracted = 0;
+  quint64 m_bytesTotalUncompressed = 0;
 };
 
 //--------------------------------------------------------------------

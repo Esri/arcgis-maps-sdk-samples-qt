@@ -18,7 +18,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Esri.Samples
-import QtQuick.Controls.Material
 
 Item {
     // add a mapView component
@@ -45,9 +44,9 @@ Item {
             top: parent.top
             margins: 20
         }
-        width: layout.width
-        height: layout.height
-        color: "white"
+        width: Math.min(layout.width, parent.width * 0.9)
+        height: layout.implicitHeight
+        color: palette.base
         opacity: 1
         border.color: "black"
         border.width: 1
@@ -64,53 +63,49 @@ Item {
                 rightPadding: 20
                 bottomPadding: 10
                 width: grid.width
+
                 spacing: 10
                 GridLayout {
                     id: grid
                     flow: GridLayout.LeftToRight
-
+                    width: Math.min(layout.width, backBox.width * 0.9)
+                    columns: 2
                     Button {
                         id: stateBtn
-                        text: "Get State"
-                        Layout.row: 0
-                        Layout.column: 0
+                        text: qsTr("Get State")
                         onClicked: model.onGetState()
-                        Layout.preferredWidth: clearBtn.width
                         enabled: model.stateButtonAvailability
+                        Layout.preferredWidth: (grid.width - grid.columnSpacing) / 2
                     }
                     Button {
                         id: validateBtn
-                        text: "Validate"
-                        Layout.row: 0
-                        Layout.column: 1
+                        text: qsTr("Validate")
                         enabled: model.validateButtonAvailability
                         onClicked: model.onValidate()
-                        Layout.preferredWidth: clearBtn.width
+                        Layout.preferredWidth: (grid.width - grid.columnSpacing) / 2
                     }
                     Button {
                         id: traceBtn
-                        text: "Trace"
-                        Layout.row: 1
-                        Layout.column: 0
+                        text: qsTr("Trace")
                         enabled: model.traceButtonAvailability
                         onClicked: model.onTrace()
-                        Layout.preferredWidth: clearBtn.width
+                        Layout.preferredWidth: (grid.width - grid.columnSpacing) / 2
                     }
                     Button {
                         id: clearBtn
-                        text: "Clear Selected"
-                        Layout.row: 1
-                        Layout.column: 1
-                        Layout.fillWidth: true
+                        text: qsTr("Clear Selected")
                         onClicked: model.onClear()
                         enabled: model.clearButtonAvailability
+                        Layout.preferredWidth: (grid.width - grid.columnSpacing) / 2
                     }
-                    Text {
+                    Label {
                         id: status
                         Layout.row: 2
                         Layout.columnSpan: 2
                         bottomPadding: 10
                         text: model.message
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
                     }
                     ProgressBar {
                         id: isBusy
@@ -131,7 +126,7 @@ Item {
         enabled: visible
         width: childrenRect.width
         height: childrenRect.height
-        color: "white"
+        color: palette.base
         opacity: 1
         border.color: "black"
         border.width: 1
@@ -144,7 +139,7 @@ Item {
             GridLayout {
                 columns: 2
                 rows: 2
-                Text {
+                Label {
                     text: model.fieldName
                     Layout.alignment: Qt.AlignRight
                     rightPadding: 20
@@ -156,12 +151,12 @@ Item {
                 }
 
                 Button {
-                    text: "Update and Apply Edit"
+                    text: qsTr("Update and Apply Edit")
                     onClicked: model.onApplyEdits(comboBox.currentText)
                 }
 
                 Button {
-                    text: "Cancel"
+                    text: qsTr("Cancel")
                     onClicked: {
                         model.onClear();
                         comboBox.currentIndex = 0;

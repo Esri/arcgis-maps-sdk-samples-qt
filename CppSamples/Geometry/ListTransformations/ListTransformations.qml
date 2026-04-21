@@ -51,7 +51,7 @@ ListTransformationsSample {
         }
 
         height: parent.height / 2
-        color: "#f7f7f7"
+        color: palette.base
 
         CheckBox {
             id: orderCheckbox
@@ -83,7 +83,7 @@ ListTransformationsSample {
                 clip: true
 
                 // show the DatumTransformation name
-                Text {
+                Label {
                     id: label
                     anchors {
                         verticalCenter: parent.verticalCenter
@@ -111,7 +111,7 @@ ListTransformationsSample {
             highlightMoveDuration: 1
             highlightFollowsCurrentItem: true
             highlight: Rectangle {
-                color: "#d6d6d6"
+                color: palette.highlight
                 radius: 4
             }
         }
@@ -127,10 +127,10 @@ ListTransformationsSample {
             right: parent.right
         }
         height: 45
-        color: "black"
+        color: palette.mid
         y: hidden
 
-        Text {
+        Label {
             id: statusText
             anchors {
                 left: parent.left
@@ -138,7 +138,6 @@ ListTransformationsSample {
                 verticalCenter: parent.verticalCenter
                 margins: 10
             }
-            color: "white"
             wrapMode: Text.WrapAnywhere
         }
 

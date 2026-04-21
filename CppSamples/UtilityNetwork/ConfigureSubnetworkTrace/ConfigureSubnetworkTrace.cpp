@@ -61,7 +61,7 @@
 using namespace Esri::ArcGISRuntime;
 using namespace Esri::ArcGISRuntime::Authentication;
 
-ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
+ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */) :
   ArcGISAuthenticationChallengeHandler(parent)
 {
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
@@ -108,13 +108,16 @@ QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpr
     {
       const UtilityCategoryComparison* comparisonExpression = static_cast<UtilityCategoryComparison*>(expression);
 
-      return QString("`%1` %2").arg(comparisonExpression->category()->name(), (comparisonExpression->comparisonOperator() == UtilityCategoryComparisonOperator::Exists) ? "Exists" : "DoesNotExist");
+      return QString("`%1` %2").arg(comparisonExpression->category()->name(),
+                                    (comparisonExpression->comparisonOperator() == UtilityCategoryComparisonOperator::Exists) ? "Exists" :
+                                                                                                                                "DoesNotExist");
     }
     case UtilityTraceConditionType::UtilityTraceAndCondition:
     {
       const UtilityTraceAndCondition* andExpression = static_cast<UtilityTraceAndCondition*>(expression);
 
-      return QString("(%1) AND\n (%2)").arg(expressionToString(andExpression->leftExpression()), expressionToString(andExpression->rightExpression()));
+      return QString("(%1) AND\n (%2)")
+        .arg(expressionToString(andExpression->leftExpression()), expressionToString(andExpression->rightExpression()));
     }
     case UtilityTraceConditionType::UtilityTraceOrCondition:
     {
@@ -195,8 +198,10 @@ void ConfigureSubnetworkTrace::codedValueOrInputText(const QString& currentText)
       const CodedValueDomain codedValueDomain = static_cast<CodedValueDomain>(domain);
 
       const auto values = codedValueDomain.codedValues();
-      for (const CodedValue& codedValue: values)
+      for (const CodedValue& codedValue : values)
+      {
         m_valueSelectionListModel.append(codedValue.name());
+      }
 
       m_textFieldVisible = false;
     }
@@ -227,9 +232,11 @@ void ConfigureSubnetworkTrace::addCondition(const QString& selectedAttribute, in
   const UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
 
   // NOTE: You may also create a UtilityNetworkAttributeComparison with another NetworkAttribute.
-  UtilityTraceConditionalExpression* expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, convertedSelectedValue, this);
+  UtilityTraceConditionalExpression* expression =
+    new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, convertedSelectedValue, this);
 
-  UtilityTraceConditionalExpression* otherExpression = static_cast<UtilityTraceConditionalExpression*>(m_traceConfiguration->traversability()->barriers());
+  UtilityTraceConditionalExpression* otherExpression =
+    static_cast<UtilityTraceConditionalExpression*>(m_traceConfiguration->traversability()->barriers());
 
   // NOTE: You may also combine expressions with UtilityTraceAndCondition
   UtilityTraceConditionalExpression* combineExpressions = new UtilityTraceOrCondition(otherExpression, expression, this);
@@ -238,19 +245,25 @@ void ConfigureSubnetworkTrace::addCondition(const QString& selectedAttribute, in
   emit expressionBuilderChanged();
 
   if (m_traceConfiguration)
+  {
     m_traceConfiguration->traversability()->setBarriers(combineExpressions);
+  }
 }
 
 void ConfigureSubnetworkTrace::changeIncludeBarriersState(bool includeBarriers)
 {
   if (m_traceConfiguration)
+  {
     m_traceConfiguration->setIncludeBarriers(includeBarriers);
+  }
 }
 
 void ConfigureSubnetworkTrace::changeIncludeContainersState(bool includeContainers)
 {
   if (m_traceConfiguration)
+  {
     m_traceConfiguration->setIncludeContainers(includeContainers);
+  }
 }
 
 void ConfigureSubnetworkTrace::reset()
@@ -271,13 +284,14 @@ void ConfigureSubnetworkTrace::trace()
 
   m_busy = true;
   emit busyChanged();
-  const QList<UtilityElement*> startingLocations {m_utilityElementStartingLocation};
+  const QList<UtilityElement*> startingLocations{m_utilityElementStartingLocation};
   // Create utility trace parameters for the starting location.
   m_traceParams = new UtilityTraceParameters(UtilityTraceType::Subnetwork, startingLocations, this);
   m_traceParams->setTraceConfiguration(m_traceConfiguration);
 
   // trace the network
-  m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
+  m_utilityNetwork->traceAsync(m_traceParams)
+    .then(this, [this](QList<UtilityTraceResult*>)
   {
     onTraceCompleted_();
   });
@@ -326,7 +340,9 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   for (UtilityNetworkAttribute* networkAttribute : attributes)
   {
     if (!networkAttribute->isSystemDefined())
+    {
       m_attributeListModel.append(networkAttribute->name());
+    }
   }
   emit attributeListModelChanged();
 
@@ -341,7 +357,7 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   // Set the terminal for this location. (For our case, we use the 'Load' terminal.)
   auto terminal = std::find_if(terminals.begin(), terminals.end(), [](UtilityTerminal* terminal)
   {
-      return terminal->name() == "Load";
+    return terminal->name() == "Load";
   });
 
   m_utilityElementStartingLocation->setTerminal(static_cast<UtilityTerminal*>(*terminal));
@@ -374,10 +390,13 @@ void ConfigureSubnetworkTrace::init()
 
 void ConfigureSubnetworkTrace::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
 {
-  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this)
+    .then(this,
+          [challenge](TokenCredential* tokenCredential)
   {
     challenge->continueWithCredential(tokenCredential);
-  }).onFailed(this, [challenge](const ErrorException& e)
+  })
+    .onFailed(this, [challenge](const ErrorException& e)
   {
     challenge->continueWithError(e.error());
   });

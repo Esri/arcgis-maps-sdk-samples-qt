@@ -40,7 +40,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FeatureLayerRenderingModeMap::FeatureLayerRenderingModeMap(QQuickItem* parent /* = nullptr */):
+FeatureLayerRenderingModeMap::FeatureLayerRenderingModeMap(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -97,7 +97,7 @@ void FeatureLayerRenderingModeMap::componentComplete()
 
 void FeatureLayerRenderingModeMap::addFeatureLayers(Map* map)
 {
-  const QStringList layerIds = {"0", "8", "9"};
+  const QStringList layerIds = {"9", "8", "0"};
   for (const QString& layerId : layerIds)
   {
     QString featureServiceUrl = QString("%1/%2").arg(m_featureServiceUrl, layerId);
@@ -112,9 +112,13 @@ void FeatureLayerRenderingModeMap::animate()
 {
   Viewpoint viewpoint;
   if (m_isZoomedOut)
+  {
     viewpoint = Viewpoint(m_zoomInViewpoint);
+  }
   else
+  {
     viewpoint = Viewpoint(m_zoomOutViewpoint);
+  }
 
   m_bottomMapView->setViewpointAsync(viewpoint, 5.0f);
   m_topMapView->setViewpointAsync(viewpoint, 5.0f);
@@ -124,7 +128,9 @@ void FeatureLayerRenderingModeMap::animate()
 void FeatureLayerRenderingModeMap::startAnimation()
 {
   if (!m_timer)
+  {
     return;
+  }
 
   animate();
   m_timer->start(7000);
@@ -133,7 +139,9 @@ void FeatureLayerRenderingModeMap::startAnimation()
 void FeatureLayerRenderingModeMap::stopAnimation()
 {
   if (!m_timer)
+  {
     return;
+  }
 
   m_timer->stop();
 }

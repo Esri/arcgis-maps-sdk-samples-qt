@@ -6,6 +6,6 @@
         <file>SearchForWebmap.h</file>
         <file>SearchForWebmap.cpp</file>
         <file>README.md</file>
-        <file>searchIcon.png</file>
+        <file>search-24.svg</file>
     </qresource>
 </RCC>

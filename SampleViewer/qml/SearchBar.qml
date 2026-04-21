@@ -15,6 +15,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import Calcite
 
 TextField {
     id: searchBar
@@ -22,16 +23,20 @@ TextField {
     inputMethodHints: Qt.ImhNoPredictiveText
     selectByMouse: true
 
-    Image {
+    ToolButton {
         id: clearButton
         anchors {
             top: parent.top
             right: parent.right
+            verticalCenter: parent.verticalCenter
         }
-        visible : opacity !== 0
-        source: "qrc:/ic_menu_closeclear_light.png"
-        fillMode: Image.PreserveAspectFit
-        height: parent.height - 10
+        visible: opacity !== 0
+        icon.source: "qrc:/x.svg"
+        icon.width: parent.height - 10
+        icon.height: parent.height - 10
+        icon.color: Calcite.text1
+        flat: true
+        background: Item {}
 
         states: [
             State {
@@ -57,13 +62,6 @@ TextField {
             }
         }
 
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.AllButtons
-            preventStealing: true
-            onPressed: {
-                searchBar.text = "";
-            }
-        }
+        onClicked: searchBar.text = ""
     }
 }

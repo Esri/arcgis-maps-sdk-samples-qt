@@ -1,3 +1,4 @@
+// [WriteFile Name=CreateKmlMultiTrack, Category=EditData]
 // [Legal]
 // Copyright 2025 Esri.
 //
@@ -32,9 +33,8 @@
 
 void setAPIKey(const QGuiApplication& app, QString apiKey);
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("CreateKmlMultiTrack"));
 

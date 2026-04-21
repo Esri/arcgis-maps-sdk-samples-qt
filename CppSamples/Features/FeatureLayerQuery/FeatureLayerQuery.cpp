@@ -83,7 +83,8 @@ void FeatureLayerQuery::componentComplete()
   m_mapView->setMap(m_map);
 
   // create the feature table
-  m_featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/USA_Daytime_Population_2016/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(
+    QUrl("https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/USA_Daytime_Population_2016/FeatureServer/0"), this);
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(m_featureTable, this);
 
@@ -117,7 +118,8 @@ void FeatureLayerQuery::runQuery(const QString& stateName)
   // create a query parameter object and set the where clause
   QueryParameters queryParams;
   queryParams.setWhereClause(QString("STATE_NAME LIKE '" + formatStateNameForQuery(stateName) + "%'"));
-  m_featureTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* rawQueryResult)
+  m_featureTable->queryFeaturesAsync(queryParams)
+    .then(this, [this](FeatureQueryResult* rawQueryResult)
   {
     auto queryResult = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
 
@@ -154,7 +156,9 @@ QString FeatureLayerQuery::formatStateNameForQuery(const QString& stateName) con
 {
   // format state names as expected by the service, for instance "Rhode Island"
   if (stateName.isEmpty())
+  {
     return QString();
+  }
 
   const QStringList words = stateName.split(" ", Qt::SkipEmptyParts);
   QStringList formattedWords;

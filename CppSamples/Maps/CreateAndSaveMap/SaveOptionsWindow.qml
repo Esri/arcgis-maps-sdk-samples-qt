@@ -15,35 +15,39 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-Rectangle {
-    Rectangle {
-        anchors.fill: parent
-        color: "#60000000"
-    }
+Pane {
 
     signal saveMapClicked(var title, var tags, var description)
     signal cancelClicked()
 
-    Rectangle {
-        color: "#edeeef"
-        radius: 5
+    background: Rectangle{
+        anchors.fill: parent
+        color: palette.base
+    }
+
+    Pane {
         anchors.centerIn: parent
-        width: childrenRect.width
-        height: childrenRect.height
-        border {
-            color: "#77787a"
-            width: 1
+        background: Rectangle {
+            color: palette.mid
+            border.color: palette.shadow
+            border.width: 1
+            radius: 5
         }
 
         GridLayout {
             id: layerColumn
             columns: 2
+            anchors {
+                centerIn: parent
+                margins: 16
+            }
 
-            Text {
+            Label {
                 id: title
                 Layout.columnSpan: 2
                 Layout.margins: 5
-                text: "Title*:"
+                Layout.bottomMargin: 2
+                text: qsTr("Title*:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -56,15 +60,16 @@ Rectangle {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true
-
-                placeholderText: "ex: Sample Map"
+                Layout.topMargin: 0
+                placeholderText: qsTr("ex: Sample Map")
             }
 
-            Text {
+            Label {
                 id: tags
                 Layout.columnSpan: 2
                 Layout.margins: 5
-                text: "Tags:"
+                Layout.bottomMargin: 2
+                text: qsTr("Tags:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -77,14 +82,16 @@ Rectangle {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true
-                placeholderText: "ex: map, sample, elevation"
+                Layout.topMargin: 0
+                placeholderText: qsTr("ex: map, sample, elevation")
             }
 
-            Text {
+            Label {
                 id: description
                 Layout.columnSpan: 2
                 Layout.margins: 5
-                text: "Description:"
+                Layout.bottomMargin: 2
+                text: qsTr("Description:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -97,13 +104,15 @@ Rectangle {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true
-                placeholderText: "ex: This map displays..."
+                Layout.topMargin: 0
+                placeholderText: qsTr("ex: This map displays...")
             }
 
-            Text {
+            Label {
                 Layout.columnSpan: 2
                 Layout.margins: 5
-                text: "*Field is Required"
+                text: qsTr("*Field is Required")
+                color: "red"
                 font {
                     pixelSize: 10
                     family: "helvetica"
@@ -112,7 +121,7 @@ Rectangle {
 
             Button {
                 Layout.margins: 5
-                text: "Save"
+                text: qsTr("Save")
                 onClicked: {
                     // Make sure a Title is supplied
                     if (titleText.text === "") {
@@ -126,7 +135,7 @@ Rectangle {
 
             Button {
                 Layout.margins: 5
-                text: "Cancel"
+                text: qsTr("Cancel")
                 onClicked: cancelClicked()
             }
         }

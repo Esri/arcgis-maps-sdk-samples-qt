@@ -102,11 +102,10 @@ void GOSymbols::componentComplete()
 void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 {
   // create a list of points
-  const QList<Point> pointsList { Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84())
-                                , Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84())
-                                , Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84())
-                                , Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84())
-                          };
+  const QList<Point> pointsList{Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84()),
+                                Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84()),
+                                Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84()),
+                                Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84())};
 
   // create the symbology for the points
   constexpr float size = 10.0f;
@@ -120,6 +119,7 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
     graphicsOverlay->graphics()->append(graphic);
   }
 }
+
 //! [GOSymbols addBuoyPoints]
 
 //! [GOSymbols addBoatTrip]
@@ -198,6 +198,7 @@ void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
   // add the graphic to the graphics overlay
   graphicsOverlay->graphics()->append(graphic);
 }
+
 //! [GOSymbols addBoatTrip]
 
 //! [GOSymbols addNestingGround]
@@ -216,6 +217,7 @@ void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
   // add the graphic to the overlay
   graphicsOverlay->graphics()->append(graphic);
 }
+
 //! [GOSymbols addNestingGround]
 
 //! [GOSymbols addText]
@@ -223,8 +225,10 @@ void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 {
   // text symbol
   const float size = 10.0f;
-  TextSymbol* textSymbolBassRock = new TextSymbol(QString("Bass Rock"), QColor("blue"), size, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
-  TextSymbol* textSymbolCraigleith = new TextSymbol(QString("Craigleith"), QColor("blue"), size, HorizontalAlignment::Right, VerticalAlignment::Top, this);
+  TextSymbol* textSymbolBassRock =
+    new TextSymbol(QString("Bass Rock"), QColor("blue"), size, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
+  TextSymbol* textSymbolCraigleith =
+    new TextSymbol(QString("Craigleith"), QColor("blue"), size, HorizontalAlignment::Right, VerticalAlignment::Top, this);
 
   // geometry for the graphics
   Point bassRock(-2.640631, 56.078083, SpatialReference::wgs84());
@@ -241,6 +245,7 @@ void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
   graphicsOverlay->graphics()->append(graphicBass);
   graphicsOverlay->graphics()->append(graphicCraig);
 }
+
 //! [GOSymbols addText]
 
 //! [GOSymbols createNestingGround]
@@ -278,4 +283,5 @@ Geometry GOSymbols::createNestingGround()
 
   return nestingGroundPolygonBuilder.toGeometry();
 }
+
 //! [GOSymbols createNestingGround]

@@ -55,52 +55,90 @@ void SampleListModel::setupRoles()
   }
 }
 
+Sample* SampleListModel::at(int index) const
+{
+  return m_samples.at(index);
+}
+
 void SampleListModel::addSample(Sample* sample)
 {
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
   m_samples << sample;
   endInsertRows();
 }
-int SampleListModel::rowCount(const QModelIndex &parent) const
+
+void SampleListModel::removeSample(Sample* sample)
+{
+  const int index = m_samples.indexOf(sample);
+  if (index != -1)
+  {
+    beginRemoveRows(QModelIndex(), index, index);
+    m_samples.removeAt(index);
+    endRemoveRows();
+    emit sizeChanged();
+  }
+}
+
+bool SampleListModel::containsSample(Sample* sample) const
+{
+  return m_samples.contains(sample);
+}
+
+void SampleListModel::sortSamples()
+{
+  std::sort(m_samples.begin(), m_samples.end(), [](Sample* a, Sample* b)
+  {
+    return a->name().toString() < b->name().toString();
+  });
+}
+
+int SampleListModel::rowCount(const QModelIndex& parent) const
 {
   Q_UNUSED(parent);
   return m_samples.count();
 }
 
-QVariant SampleListModel::data(const QModelIndex & index, int role) const
+QVariant SampleListModel::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_samples.count())
+  {
     return QVariant();
+  }
 
   Sample* sample = m_samples[index.row()];
   QVariant retVal;
 
   switch (role)
   {
-  case NameRole:
-  case Qt::DisplayRole:
-    retVal = sample->name();
-    break;
-  case PathRole:
-    retVal = sample->path();
-    break;
-  case SourceRole:
-    retVal = sample->source();
-    break;
-  case DescriptionRole:
-    retVal = sample->description();
-    break;
-  case ThumbnailUrlRole:
-    retVal = sample->thumbnailUrl();
-    break;
-  case SampleRole:
-    retVal = QVariant::fromValue(sample);
-    break;
-  default:
-    break;
+    case NameRole:
+    case Qt::DisplayRole:
+      retVal = sample->name();
+      break;
+    case PathRole:
+      retVal = sample->path();
+      break;
+    case SourceRole:
+      retVal = sample->source();
+      break;
+    case DescriptionRole:
+      retVal = sample->description();
+      break;
+    case ThumbnailUrlRole:
+      retVal = sample->thumbnailUrl();
+      break;
+    case SampleRole:
+      retVal = QVariant::fromValue(sample);
+      break;
+    default:
+      break;
   }
 
   return retVal;
+}
+
+int SampleListModel::size() const
+{
+  return m_samples.size();
 }
 
 QHash<int, QByteArray> SampleListModel::roleNames() const

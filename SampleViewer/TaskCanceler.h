@@ -32,12 +32,13 @@ class TaskCanceler
 {
 public:
   TaskCanceler() = default;
+
   ~TaskCanceler()
   {
     cancelAllTasks_();
   }
 
-  template <typename T>
+  template<typename T>
   void addTask(const QFuture<T>& future)
   {
     auto watcher = std::make_shared<QFutureWatcher<T>>();

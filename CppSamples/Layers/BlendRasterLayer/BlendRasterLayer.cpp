@@ -45,17 +45,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-BlendRasterLayer::BlendRasterLayer(QQuickItem* parent /* = nullptr */):
+BlendRasterLayer::BlendRasterLayer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/raster")
 {
@@ -97,7 +97,9 @@ void BlendRasterLayer::applyRenderSettings(double altitude, double azimuth, int 
   PresetColorRampType colorRampType = static_cast<PresetColorRampType>(colorRampTypeVal);
   RasterLayer* rasterLyr = rasterLayer(colorRampType != PresetColorRampType::None);
   if (!rasterLyr)
+  {
     return;
+  }
 
   QList<double> outputMinValues{9};
   QList<double> outputMaxValues{255};
@@ -112,22 +114,9 @@ void BlendRasterLayer::applyRenderSettings(double altitude, double azimuth, int 
   ColorRamp* colorRamp = ColorRamp::create(colorRampType, 800, this);
   SlopeType slopeType = static_cast<SlopeType>(slopeTypeVal);
 
-  BlendRenderer* renderer = new BlendRenderer(m_elevationRaster,
-                                              outputMinValues,
-                                              outputMaxValues,
-                                              sourceMinValues,
-                                              sourceMaxValues,
-                                              noDataValues,
-                                              gammas,
-                                              colorRamp,
-                                              altitude,
-                                              azimuth,
-                                              zFactor,
-                                              slopeType,
-                                              pixelSizeFactor,
-                                              pixelSizePower,
-                                              outputBitDepth,
-                                              this);
+  BlendRenderer* renderer =
+    new BlendRenderer(m_elevationRaster, outputMinValues, outputMaxValues, sourceMinValues, sourceMaxValues, noDataValues, gammas, colorRamp,
+                      altitude, azimuth, zFactor, slopeType, pixelSizeFactor, pixelSizePower, outputBitDepth, this);
 
   rasterLyr->setRenderer(renderer);
 }

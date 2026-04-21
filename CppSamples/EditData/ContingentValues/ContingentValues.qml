@@ -55,7 +55,7 @@ Item {
         }
 
         background: Rectangle {
-            color: "#fdfdfd"
+            color: palette.base
         }
 
         visible: contingentValuesSample.featureAttributesPaneVisibe
@@ -65,8 +65,8 @@ Item {
             spacing: 5
             padding: 10
 
-            Text {
-                text: "Status"
+            Label {
+                text: qsTr("Status")
                 font {
                     bold: true
                     pointSize: 11
@@ -92,8 +92,8 @@ Item {
                 }
             }
 
-            Text {
-                text: "Protection"
+            Label {
+                text: qsTr("Protection")
                 font {
                     bold: true
                     pointSize: 11
@@ -130,15 +130,15 @@ Item {
                 }
             }
 
-            Text {
-                text: "Buffer Size"
+            Label {
+                text: qsTr("Buffer Size")
                 font {
                     bold: true
                     pointSize: 11
                 }
             }
 
-            Text {
+            Label {
                 text: rangeValuesSpinBox.from + " to " + rangeValuesSpinBox.to;
             }
 
@@ -165,13 +165,7 @@ Item {
 
             Button {
                 id: saveButton
-                Text {
-                    anchors.fill: parent
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    text: "Save"
-                }
-
+                text: qsTr("Save")
                 enabled: false
 
                 onClicked: {
@@ -185,12 +179,8 @@ Item {
 
             Button {
                 id: discardButton
-                Text {
-                    anchors.fill: parent
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    text: "Discard"
-                }
+                text: qsTr("Discard")
+
                 onClicked: {
                     contingentValuesSample.featureAttributesPaneVisibe = false;
                     contingentValuesSample.discardFeature();

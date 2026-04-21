@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
@@ -27,10 +28,9 @@ MobileMap_SearchAndRouteSample {
 
     property bool isMapOpen: false
 
-    // make background a light gray
     Rectangle {
         anchors.fill: parent
-        color: "#E0E0E0"
+        color: palette.base
 
         // add a mapView component
         MapView {
@@ -58,7 +58,7 @@ MobileMap_SearchAndRouteSample {
                 opacity: 0.50
                 height: parent.height
                 width: 25
-                color: "#E0E0E0"
+                color: palette.base
 
                 Rectangle {
                     anchors {
@@ -67,14 +67,20 @@ MobileMap_SearchAndRouteSample {
                     }
                     width: parent.width
                     height: 100
-                    color: "#283593"
+                    color: palette.base
 
                     Image {
                         anchors.centerIn: parent
                         mirror: true
-                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/chevron-right-24.svg"
                         height: 33
                         width: height
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
                     }
                 }
 
@@ -87,69 +93,48 @@ MobileMap_SearchAndRouteSample {
             }
 
             // Map controls
-            Column {
+            Row {
                 anchors {
-                    top: parent.top
-                    right: parent.right
+                    horizontalCenter: parent.horizontalCenter
+                    bottom: mapView.attributionTop
                     margins: 10
                 }
                 spacing: 10
 
-                // solve route button
-                Rectangle {
+                Button {
                     id: routeButton
-                    color: "#E0E0E0"
-                    height: 50
-                    width: height
-                    border.color: "black"
-                    radius: 2
-                    opacity: 0.90
-                    visible: mobileMapSearchRoute.canRoute
-
-                    Image {
-                        anchors {
-                            centerIn: parent
-                            margins: 5
-                        }
-                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
-                        height: 44
-                        width: height
+                    text: qsTr("Route")
+                    leftPadding: 15
+                    rightPadding: 15
+                    width: 125
+                    icon {
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/road-sign-24.svg"
+                        width: 24
+                        height: 24
+                        color: palette.buttonText
                     }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            mobileMapSearchRoute.solveRoute();
-                        }
+                    visible: mobileMapSearchRoute.canRoute
+                    onClicked: {
+                        mobileMapSearchRoute.solveRoute();
                     }
                 }
 
                 // clear graphics button
-                Rectangle {
+                Button {
                     id: clearButton
-                    color: "#E0E0E0"
-                    height: 50
-                    width: height
-                    border.color: "black"
-                    radius: 2
-                    opacity: 0.90
-                    visible: mobileMapSearchRoute.canClear
-
-                    Image {
-                        anchors {
-                            centerIn: parent
-                            margins: 5
-                        }
-                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
-                        height: 44
-                        width: height
+                    text: qsTr("Clear")
+                    leftPadding: 15
+                    rightPadding: 15
+                    width: 125
+                    icon {
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/trash-24.svg"
+                        width: 24
+                        height: 24
+                        color: palette.buttonText
                     }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            mobileMapSearchRoute.resetMapView();
-                        }
+                    visible: mobileMapSearchRoute.canClear
+                    onClicked: {
+                        mobileMapSearchRoute.resetMapView();
                     }
                 }
             }
@@ -175,7 +160,8 @@ MobileMap_SearchAndRouteSample {
                     Rectangle {
                         width: parent.width
                         height: 100
-                        color: "#283593"
+                        color: palette.button
+                        border.color: "darkgray"
 
                         // forward navigation button. Visible after first map is selected
                         Image {
@@ -184,10 +170,16 @@ MobileMap_SearchAndRouteSample {
                                 right: parent.right
                                 margins: 10
                             }
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/chevron-right-24.svg"
                             height: 44
                             width: height
                             visible: isMapOpen
+                            layer.enabled: true
+                            layer.effect: MultiEffect {
+                                colorization: 1.0
+                                colorizationColor: palette.buttonText
+                                brightness: 1.0
+                            }
 
                             MouseArea {
                                 anchors.fill: parent
@@ -197,12 +189,12 @@ MobileMap_SearchAndRouteSample {
                             }
                         }
 
-                        Text {
+                        Label {
                             anchors.centerIn: parent
-                            color: "white"
                             height: 40
                             font.pixelSize: 25
                             text: "Choose a Mobile Map Package"
+                            color: "#F8F8F8"
                         }
                     }
 
@@ -219,16 +211,16 @@ MobileMap_SearchAndRouteSample {
 
                                 width: 200
                                 height: 50
-                                color: "#283593"
+                                color: palette.button
                                 radius: 2
                                 border.color: "darkgray"
 
-                                Text {
+                                Label {
                                     anchors.centerIn: parent
                                     horizontalAlignment: Text.AlignHCenter
-                                    color: "white"
                                     width: 150
                                     text: modelData
+                                    color: "#F8F8F8"
                                     elide: Text.ElideMiddle
                                 }
 
@@ -264,7 +256,8 @@ MobileMap_SearchAndRouteSample {
                     Rectangle {
                         width: parent.width
                         height: 100
-                        color: "#283593"
+                        color: palette.button
+                        border.color: "darkgray"
 
                         // back button
                         Image {
@@ -274,9 +267,15 @@ MobileMap_SearchAndRouteSample {
                                 margins: 10
                             }
                             mirror: true
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/chevron-right-24.svg"
                             height: 44
                             width: height
+                            layer.enabled: true
+                            layer.effect: MultiEffect {
+                                colorization: 1.0
+                                colorizationColor: palette.buttonText
+                                brightness: 1.0
+                            }
 
                             MouseArea {
                                 anchors.fill: parent
@@ -293,10 +292,16 @@ MobileMap_SearchAndRouteSample {
                                 right: parent.right
                                 margins: 10
                             }
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/chevron-right-24.svg"
                             height: 44
                             width: height
                             visible: isMapOpen
+                            layer.enabled: true
+                            layer.effect: MultiEffect {
+                                colorization: 1.0
+                                colorizationColor: palette.buttonText
+                                brightness: 1.0
+                            }
 
                             MouseArea {
                                 anchors.fill: parent
@@ -306,12 +311,12 @@ MobileMap_SearchAndRouteSample {
                             }
                         }
 
-                        Text {
+                        Label {
                             anchors.centerIn: parent
-                            color: "white"
                             height: 40
                             font.pixelSize: 25
                             text: "Choose a Map"
+                            color: "#F8F8F8"
                         }
                     }
 
@@ -327,17 +332,17 @@ MobileMap_SearchAndRouteSample {
                             Rectangle {
                                 width: 200
                                 height: 50
-                                color: "#283593"
+                                color: palette.button
                                 radius: 2
                                 border.color: "darkgray"
 
-                                Text {
+                                Label {
                                     anchors.centerIn: parent
                                     horizontalAlignment: Text.AlignHCenter
-                                    color: "white"
                                     width: 150
                                     text: modelData.name
                                     elide: Text.ElideMiddle
+                                    color: "#F8F8F8"
                                 }
 
                                 // geocoding available icon
@@ -347,10 +352,15 @@ MobileMap_SearchAndRouteSample {
                                         top: parent.top
                                         margins: 5
                                     }
-                                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
+                                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pin-24.svg"
                                     height: 20
                                     width: height
                                     visible: modelData.geocoding
+                                    layer.effect: MultiEffect {
+                                        colorization: 1.0
+                                        colorizationColor: palette.buttonText
+                                        brightness: 1.0
+                                    }
                                 }
 
                                 // routing available icon
@@ -360,10 +370,16 @@ MobileMap_SearchAndRouteSample {
                                         top: parent.top
                                         margins: 5
                                     }
-                                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
+                                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/road-sign-24.svg"
                                     height: 20
                                     width: height
                                     visible: modelData.routing
+                                    layer.enabled: true
+                                    layer.effect: MultiEffect {
+                                        colorization: 1.0
+                                        colorizationColor: palette.buttonText
+                                        brightness: 1.0
+                                    }
                                 }
 
                                 MouseArea {

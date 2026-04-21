@@ -17,6 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Effects
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
@@ -38,10 +39,6 @@ FindAddressSample {
 
         Callout {
             id: callout
-            background: Rectangle {
-                border.color: "lightgrey"
-                border.width: 1
-            }
             calloutData: mapView.calloutData
             maxWidth: findAddressSample.width * 0.75
             leaderPosition: Callout.LeaderPosition.Automatic
@@ -65,7 +62,7 @@ FindAddressSample {
             margins: 10
         }
         Rectangle {
-            color: "#f7f8fa"
+            color: palette.base
             border {
                 color: "#7B7C7D"
             }
@@ -81,7 +78,7 @@ FindAddressSample {
                     Layout.fillWidth: true
                     id: textField
                     font.pixelSize: 14
-                    placeholderText: "Type in an address"
+                    placeholderText: qsTr("Type in an address")
                     selectByMouse: true
 
                     Keys.onEnterPressed: geocodeAddress();
@@ -98,12 +95,18 @@ FindAddressSample {
                     Layout.margins: 5
                     width: height
                     height: textField.height
-                    color: "#f7f8fa"
+                    color: palette.base
                     visible: textField.length === 0
                     enabled: visible
                     Image {
                         anchors.fill: parent
-                        source: "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
+                        source: suggestView.visible ? "qrc:/Samples/Search/FindAddress/chevron-down-24.svg" : "qrc:/Samples/Search/FindAddress/chevron-left-24.svg"
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -123,7 +126,13 @@ FindAddressSample {
                     enabled: visible
                     Image {
                         anchors.fill: parent
-                        source: "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
+                        source: "qrc:/Samples/Search/FindAddress/x-24.svg"
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
 
                         MouseArea {
                             anchors.fill: parent
@@ -152,7 +161,7 @@ FindAddressSample {
                     id: rect
                     width: parent.width
                     height: 25
-                    color: "#f7f8fa"
+                    color: palette.base
 
                     Rectangle {
                         anchors {
@@ -163,11 +172,11 @@ FindAddressSample {
                             leftMargin: 20
                             rightMargin: 20
                         }
-                        color: "darkgrey"
+                        color: palette.mid
                         height: 1
                     }
 
-                    Text {
+                    Label {
                         text: name
                         anchors {
                             fill: parent

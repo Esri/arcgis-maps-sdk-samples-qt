@@ -26,15 +26,15 @@
 
 namespace Esri::ArcGISRuntime
 {
-class FeatureLayer;
-class GenerateOfflineMapParameterOverrides;
-class Map;
-class MapQuickView;
-class OfflineMapTask;
-class PortalItem;
-}
+  class FeatureLayer;
+  class GenerateOfflineMapParameterOverrides;
+  class Map;
+  class MapQuickView;
+  class OfflineMapTask;
+  class PortalItem;
+} // namespace Esri::ArcGISRuntime
 
-class GenerateOfflineMap_Overrides: public QQuickItem
+class GenerateOfflineMap_Overrides : public QQuickItem
 {
   Q_OBJECT
 

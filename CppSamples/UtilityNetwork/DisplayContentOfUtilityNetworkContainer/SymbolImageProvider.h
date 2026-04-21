@@ -34,7 +34,6 @@
 
 class SymbolImageProvider : public QQuickImageProvider
 {
-
 public:
   SymbolImageProvider();
   ~SymbolImageProvider() override = default;

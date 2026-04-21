@@ -1,0 +1,55 @@
+{
+    "category": "Search",
+    "dataItems": [
+        {
+            "itemId": "c78e297e99ad4572a48cdcd0b54bed30",
+            "path": "~/ArcGIS/Runtime/Data/dynamicEntity/phx_air_traffic.json"
+        }
+    ],
+    "description": "Find dynamic entities from a data source that match a query.",
+    "featured": true,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "data",
+        "dynamic",
+        "entity",
+        "live",
+        "query",
+        "real-time",
+        "search",
+        "stream",
+        "track",
+        "DynamicEntity",
+        "DynamicEntityChangedInfo",
+        "DynamicEntityDataSource",
+        "DynamicEntityLayer",
+        "DynamicEntityObservation",
+        "DynamicEntityObservationInfo",
+        "DynamicEntityQueryParameters",
+        "DynamicEntityQueryResult"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "DynamicEntity",
+        "DynamicEntityChangedInfo",
+        "DynamicEntityDataSource",
+        "DynamicEntityLayer",
+        "DynamicEntityObservation",
+        "DynamicEntityObservationInfo",
+        "DynamicEntityQueryParameters",
+        "DynamicEntityQueryResult"
+    ],
+    "snippets": [
+        "CustomDynamicEntityDataSource.cpp",
+        "QueryDynamicEntities.cpp",
+        "FlightInfoListModel.cpp",
+        "CustomDynamicEntityDataSource.h",
+        "FlightInfoListModel.h",
+        "QueryDynamicEntities.h",
+        "QueryDynamicEntities.qml"
+    ],
+    "title": "Query dynamic entities"
+}
