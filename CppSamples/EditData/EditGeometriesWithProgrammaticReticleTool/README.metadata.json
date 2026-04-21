@@ -30,7 +30,7 @@
     "snippets": [
         "EditGeometriesWithProgrammaticReticleTool.cpp",
         "EditGeometriesWithProgrammaticReticleTool.h",
-        "GeometryEditorButton.qml",
+        "GeometryEditorPopup.qml",
         "EditGeometriesWithProgrammaticReticleTool.qml"
     ],
     "title": "Edit geometries with programmatic reticle tool"
