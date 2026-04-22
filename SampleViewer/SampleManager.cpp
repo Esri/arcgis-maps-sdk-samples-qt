@@ -35,7 +35,6 @@
 #include <QJsonObject>
 #include <QNetworkProxy>
 #include <QQmlEngine>
-#include <QRegularExpression>
 #include <QSet>
 #include <QStandardPaths>
 #include <QStringList>
@@ -519,12 +518,6 @@ bool SampleManager::hideApiKeyOption() const
 #else
   return false;
 #endif
-}
-
-bool SampleManager::isApiKeyValid(const QString& key) const
-{
-  static const QRegularExpression apiKeyPattern("^[0-9A-Za-z._-]+$");
-  return key.length() >= 20 && apiKeyPattern.match(key).hasMatch();
 }
 
 void SampleManager::setUserApiKey(const QString& key)

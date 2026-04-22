@@ -185,6 +185,18 @@ ApplicationWindow {
                 MenuItem {
                     width: parent.width
                     height: visible ? 48 : 0
+                    text: qsTr("Enter API Key")
+                    visible: !SampleManager.hideApiKeyOption
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = false;
+                        apiKeyTextField.text = "";
+                        apiKeyPopup.open();
+                    }
+                }
+                MenuItem {
+                    width: parent.width
+                    height: visible ? 48 : 0
                     text: qsTr("Live Sample")
                     visible: SampleManager.currentSample
                     onTriggered: {
@@ -227,19 +239,6 @@ ApplicationWindow {
                         aboutView.visible = false;
                         proxySetupView.visible = false;
                         Qt.openUrlExternally(SampleManager.apiReferenceUrl)
-                    }
-                }
-
-                MenuItem {
-                    width: parent.width
-                    height: visible ? 48 : 0
-                    text: qsTr("Enter API Key")
-                    visible: !SampleManager.hideApiKeyOption
-                    onTriggered: {
-                        aboutView.visible = false;
-                        proxySetupView.visible = false;
-                        apiKeyTextField.text = "";
-                        apiKeyPopup.open();
                     }
                 }
 
@@ -545,11 +544,6 @@ ApplicationWindow {
                     text: qsTr("Save")
                     enabled: apiKeyTextField.text !== ""
                     onClicked: {
-                        if (!SampleManager.isApiKeyValid(apiKeyTextField.text)) {
-                            showToast(qsTr("Invalid API key format"));
-                            return;
-                        }
-
                         SampleManager.setUserApiKey(apiKeyTextField.text);
                         showToast(qsTr("API key saved"));
                         apiKeyPopup.close();
