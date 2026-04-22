@@ -522,7 +522,7 @@ bool SampleManager::hideApiKeyOption() const
 
 void SampleManager::setUserApiKey(const QString& key)
 {
-  const QString enteredApiKey = key;
+  const QString& enteredApiKey = key;
   if (userApiKey == enteredApiKey)
   {
     return;
