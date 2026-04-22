@@ -71,6 +71,7 @@ class SampleManager : public QObject
   Q_PROPERTY(QUrl qtSdkUrl READ qtSdkUrl NOTIFY sampleInitComplete)
   Q_PROPERTY(QUrl qtSamplesUrl READ qtSamplesUrl NOTIFY sampleInitComplete)
   Q_PROPERTY(QString api READ api CONSTANT)
+  Q_PROPERTY(bool hideApiKeyOption READ hideApiKeyOption CONSTANT)
   Q_PROPERTY(Reachability reachability READ reachability NOTIFY reachabilityChanged)
   Q_PROPERTY(DownloadsManager* downloadsManager READ downloadsManager CONSTANT)
   Q_PROPERTY(SampleListModel* favoriteSamples READ favoriteSamples NOTIFY favoriteSamplesChanged)
@@ -104,6 +105,9 @@ public:
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
   Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
+  Q_INVOKABLE bool hideApiKeyOption() const;
+  Q_INVOKABLE bool isApiKeyValid(const QString& key) const;
+  Q_INVOKABLE void setUserApiKey(const QString& key);
   Q_INVOKABLE void resetAuthenticationState();
 
   // Favorites
@@ -161,6 +165,7 @@ private:
   void setCurrentMode(const CurrentMode& mode);
 
   Sample* currentSample() const;
+  bool currentSampleSupportsApiKey() const;
   void cacheToolkitChallengeHandler();
   void setCurrentSample(Sample* sample);
   void setCurrentSample(const QVariant& sample);

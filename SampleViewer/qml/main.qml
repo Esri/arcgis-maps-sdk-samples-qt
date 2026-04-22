@@ -232,6 +232,19 @@ ApplicationWindow {
 
                 MenuItem {
                     width: parent.width
+                    height: visible ? 48 : 0
+                    text: qsTr("Enter API Key")
+                    visible: !SampleManager.hideApiKeyOption
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = false;
+                        apiKeyTextField.text = "";
+                        apiKeyPopup.open();
+                    }
+                }
+
+                MenuItem {
+                    width: parent.width
                     height: 48
                     text: qsTr("Manage offline data")
                     onTriggered: {
@@ -477,6 +490,78 @@ ApplicationWindow {
     Loader {
         id: qmlLoaderAuthView
         anchors.fill: parent
+    }
+
+    Popup {
+        id: apiKeyPopup
+        anchors.centerIn: parent
+        width: Math.min(parent.width - 40, 520)
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        padding: 16
+
+        background: Rectangle {
+            radius: 8
+            color: Calcite.background
+            border.color: Calcite.border1
+            border.width: 1
+        }
+
+        contentItem: Column {
+            spacing: 12
+            width: parent.width
+
+            Label {
+                width: parent.width
+                text: qsTr("API Key")
+                font.pixelSize: 18
+                font.family: fontFamily
+                color: Calcite.text1
+            }
+
+            Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                text: qsTr("Enter an API key to use in the sample viewer.")
+                color: Calcite.text2
+                font.pixelSize: 14
+            }
+
+            TextField {
+                id: apiKeyTextField
+                width: parent.width
+                selectByMouse: true
+                echoMode: TextInput.Password
+                placeholderText: qsTr("Enter API key")
+            }
+
+            Row {
+                width: parent.width
+                spacing: 8
+                layoutDirection: Qt.RightToLeft
+
+                Button {
+                    text: qsTr("Save")
+                    enabled: apiKeyTextField.text !== ""
+                    onClicked: {
+                        if (!SampleManager.isApiKeyValid(apiKeyTextField.text)) {
+                            showToast(qsTr("Invalid API key format"));
+                            return;
+                        }
+
+                        SampleManager.setUserApiKey(apiKeyTextField.text);
+                        showToast(qsTr("API key saved"));
+                        apiKeyPopup.close();
+                    }
+                }
+
+                Button {
+                    text: qsTr("Cancel")
+                    onClicked: apiKeyPopup.close()
+                }
+            }
+        }
     }
 
     // Toast notification (using Popup to appear above Drawer)

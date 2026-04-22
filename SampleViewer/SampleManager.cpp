@@ -35,6 +35,7 @@
 #include <QJsonObject>
 #include <QNetworkProxy>
 #include <QQmlEngine>
+#include <QRegularExpression>
 #include <QSet>
 #include <QStandardPaths>
 #include <QStringList>
@@ -89,7 +90,8 @@ static QString homePath();
 namespace
 {
   QString apiKey = ""; // Provide your API key here
-}
+  QString userApiKey = "";
+} // namespace
 
 SampleManager::SampleManager(QObject* parent) :
   QObject(parent),
@@ -434,20 +436,29 @@ void SampleManager::setCurrentSample(Sample* sample)
   cacheToolkitChallengeHandler();
   m_currentSample = sample;
 
-  // NOTE - currently we know we cannot set an API Key for the
-  // following samples since they use named user login instead.
-
-  const QString sampleName = m_currentSample->name().toString();
-  if (sampleName == "Create and save map" || sampleName == "Add items to portal" || sampleName == "Search for web map by keyword")
-  {
-    setApiKey(false);
-  }
-  else
+  if (currentSampleSupportsApiKey())
   {
     setApiKey(true);
   }
+  else
+  {
+    setApiKey(false);
+  }
 
   emit currentSampleChanged();
+}
+
+bool SampleManager::currentSampleSupportsApiKey() const
+{
+  // NOTE - currently we know we cannot set an API Key for the
+  // following samples since they use named user login instead.
+  if (!m_currentSample)
+  {
+    return true;
+  }
+
+  const QString sampleName = m_currentSample->name().toString();
+  return sampleName != "Create and save map" && sampleName != "Add items to portal" && sampleName != "Search for web map by keyword";
 }
 
 void SampleManager::setCurrentSample(const QVariant& sample)
@@ -472,19 +483,68 @@ void SampleManager::setCurrentCategory(SampleCategory* category)
 
 void SampleManager::setApiKey(bool isSupportsApiKey)
 {
-#ifdef SAMPLE_VIEWER_API_KEY
-  // If the API key identifier is defined in the respective .pro file it will be used here
-  // Otherwise use the API key provided by the user at the top of this file
-  apiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
-#endif
+  QString sampleApiKey;
 
-  if (isSupportsApiKey && apiKey == "")
+  if (!userApiKey.isEmpty())
+  {
+    sampleApiKey = userApiKey;
+  }
+  else
+  {
+#ifdef SAMPLE_VIEWER_API_KEY
+    // If the API key identifier is defined in the respective .pro file it will be used here
+    // Otherwise use the API key provided by the user at the top of this file
+    sampleApiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
+#endif
+    if (sampleApiKey.isEmpty())
+    {
+      sampleApiKey = apiKey;
+    }
+  }
+
+  if (isSupportsApiKey && sampleApiKey.isEmpty())
   {
     qWarning() << "This sample expects an API key to be set, but none was provided. Please provide an API key in SampleViewer/SampleManager.cpp";
   }
-  const QString sampleApiKey = isSupportsApiKey ? apiKey : ""; // empty string will "unset" the key
+  const QString keyToApply = isSupportsApiKey ? sampleApiKey : ""; // empty string will "unset" the key
+
   // set apikey for the sample viewer
-  ArcGISRuntimeEnvironment::setApiKey(sampleApiKey);
+  ArcGISRuntimeEnvironment::setApiKey(keyToApply);
+}
+
+bool SampleManager::hideApiKeyOption() const
+{
+#ifdef HIDE_APIKEY_OPTION
+  return QString(QUOTE(HIDE_APIKEY_OPTION)) == "true";
+#else
+  return false;
+#endif
+}
+
+bool SampleManager::isApiKeyValid(const QString& key) const
+{
+  static const QRegularExpression apiKeyPattern("^[0-9A-Za-z._-]+$");
+  return key.length() >= 20 && apiKeyPattern.match(key).hasMatch();
+}
+
+void SampleManager::setUserApiKey(const QString& key)
+{
+  const QString enteredApiKey = key;
+  if (userApiKey == enteredApiKey)
+  {
+    return;
+  }
+
+  userApiKey = enteredApiKey;
+
+  if (currentSampleSupportsApiKey())
+  {
+    setApiKey(true);
+  }
+  else
+  {
+    setApiKey(false);
+  }
 }
 
 void SampleManager::resetAuthenticationState()
