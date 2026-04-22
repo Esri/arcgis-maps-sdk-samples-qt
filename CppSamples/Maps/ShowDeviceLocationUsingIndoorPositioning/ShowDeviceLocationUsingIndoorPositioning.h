@@ -26,9 +26,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-  class ArcGISFeatureTable;
   class Error;
-  class FeatureTable;
   class Map;
   class MapQuickView;
   class IndoorsLocationDataSource;
