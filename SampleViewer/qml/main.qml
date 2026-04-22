@@ -186,7 +186,7 @@ ApplicationWindow {
                     width: parent.width
                     height: visible ? 48 : 0
                     text: qsTr("Enter API Key")
-                    visible: !SampleManager.hideApiKeyOption
+                    visible: SampleManager.showApiKeyOption
                     onTriggered: {
                         aboutView.visible = false;
                         proxySetupView.visible = false;

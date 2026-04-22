@@ -89,7 +89,6 @@ static QString homePath();
 namespace
 {
   QString apiKey = ""; // Provide your API key here
-  QString userApiKey = "";
 } // namespace
 
 SampleManager::SampleManager(QObject* parent) :
@@ -482,23 +481,15 @@ void SampleManager::setCurrentCategory(SampleCategory* category)
 
 void SampleManager::setApiKey(bool isSupportsApiKey)
 {
-  QString sampleApiKey;
+  QString sampleApiKey = apiKey;
 
-  if (!userApiKey.isEmpty())
-  {
-    sampleApiKey = userApiKey;
-  }
-  else
+  if (sampleApiKey.isEmpty())
   {
 #ifdef SAMPLE_VIEWER_API_KEY
     // If the API key identifier is defined in the respective .pro file it will be used here
     // Otherwise use the API key provided by the user at the top of this file
     sampleApiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
 #endif
-    if (sampleApiKey.isEmpty())
-    {
-      sampleApiKey = apiKey;
-    }
   }
 
   if (isSupportsApiKey && sampleApiKey.isEmpty())
@@ -511,10 +502,10 @@ void SampleManager::setApiKey(bool isSupportsApiKey)
   ArcGISRuntimeEnvironment::setApiKey(keyToApply);
 }
 
-bool SampleManager::hideApiKeyOption() const
+bool SampleManager::showApiKeyOption() const
 {
-#ifdef HIDE_APIKEY_OPTION
-  return QString(QUOTE(HIDE_APIKEY_OPTION)) == "true";
+#ifdef SHOW_APIKEY_OPTION
+  return QString(QUOTE(SHOW_APIKEY_OPTION)) == "true";
 #else
   return false;
 #endif
@@ -523,12 +514,12 @@ bool SampleManager::hideApiKeyOption() const
 void SampleManager::setUserApiKey(const QString& key)
 {
   const QString& enteredApiKey = key;
-  if (userApiKey == enteredApiKey)
+  if (apiKey == enteredApiKey)
   {
     return;
   }
 
-  userApiKey = enteredApiKey;
+  apiKey = enteredApiKey;
 
   if (currentSampleSupportsApiKey())
   {
