@@ -544,7 +544,7 @@ ApplicationWindow {
                     text: qsTr("Save")
                     enabled: apiKeyTextField.text !== ""
                     onClicked: {
-                        SampleManager.setUserApiKey(apiKeyTextField.text);
+                        SampleManager.setApiKey(apiKeyTextField.text);
                         showToast(qsTr("API key saved"));
                         apiKeyPopup.close();
                     }

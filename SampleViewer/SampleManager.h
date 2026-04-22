@@ -104,9 +104,10 @@ public:
   // Utility methods
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
-  Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
+  Q_INVOKABLE void setCurrentApiKeyToMapsSDK();
+  Q_INVOKABLE void unsetApiKeyFromMapsSDK();
+  Q_INVOKABLE void setApiKey(const QString& key);
   Q_INVOKABLE bool showApiKeyOption() const;
-  Q_INVOKABLE void setUserApiKey(const QString& key);
   Q_INVOKABLE void resetAuthenticationState();
 
   // Favorites

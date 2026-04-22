@@ -436,11 +436,11 @@ void SampleManager::setCurrentSample(Sample* sample)
 
   if (currentSampleSupportsApiKey())
   {
-    setApiKey(true);
+    setCurrentApiKeyToMapsSDK();
   }
   else
   {
-    setApiKey(false);
+    unsetApiKeyFromMapsSDK();
   }
 
   emit currentSampleChanged();
@@ -479,7 +479,7 @@ void SampleManager::setCurrentCategory(SampleCategory* category)
   emit currentCategoryChanged();
 }
 
-void SampleManager::setApiKey(bool isSupportsApiKey)
+void SampleManager::setCurrentApiKeyToMapsSDK()
 {
   QString sampleApiKey = apiKey;
 
@@ -492,14 +492,18 @@ void SampleManager::setApiKey(bool isSupportsApiKey)
 #endif
   }
 
-  if (isSupportsApiKey && sampleApiKey.isEmpty())
+  if (sampleApiKey.isEmpty())
   {
     qWarning() << "This sample expects an API key to be set, but none was provided. Please provide an API key in SampleViewer/SampleManager.cpp";
   }
-  const QString keyToApply = isSupportsApiKey ? sampleApiKey : ""; // empty string will "unset" the key
-
   // set apikey for the sample viewer
-  ArcGISRuntimeEnvironment::setApiKey(keyToApply);
+  ArcGISRuntimeEnvironment::setApiKey(sampleApiKey);
+}
+
+void SampleManager::unsetApiKeyFromMapsSDK()
+{
+  // empty string will "unset" the key
+  ArcGISRuntimeEnvironment::setApiKey("");
 }
 
 bool SampleManager::showApiKeyOption() const
@@ -511,9 +515,9 @@ bool SampleManager::showApiKeyOption() const
 #endif
 }
 
-void SampleManager::setUserApiKey(const QString& key)
+void SampleManager::setApiKey(const QString& key)
 {
-  const QString& enteredApiKey = key;
+  const QString enteredApiKey = key;
   if (apiKey == enteredApiKey)
   {
     return;
@@ -523,11 +527,11 @@ void SampleManager::setUserApiKey(const QString& key)
 
   if (currentSampleSupportsApiKey())
   {
-    setApiKey(true);
+    setCurrentApiKeyToMapsSDK();
   }
   else
   {
-    setApiKey(false);
+    unsetApiKeyFromMapsSDK();
   }
 }
 
