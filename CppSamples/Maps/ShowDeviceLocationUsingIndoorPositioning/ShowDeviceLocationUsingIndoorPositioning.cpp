@@ -368,6 +368,11 @@ void ShowDeviceLocationUsingIndoorPositioning::failSetup(const QString& errorMes
   emit errorOccurred(errorMessage.isEmpty() ? tr("Cannot initialize indoors location data source.") : errorMessage);
 }
 
+QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
+{
+  return m_locationProperties;
+}
+
 // Change currently displayed location information and change floor display if necessary
 void ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler(const Location& loc)
 {

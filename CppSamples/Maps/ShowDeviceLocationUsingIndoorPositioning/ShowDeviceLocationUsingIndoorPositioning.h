@@ -41,7 +41,7 @@ class ShowDeviceLocationUsingIndoorPositioning : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QVariantMap locationProperties MEMBER m_locationProperties NOTIFY locationPropertiesChanged)
+  Q_PROPERTY(QVariantMap locationProperties READ locationProperties NOTIFY locationPropertiesChanged)
   Q_PROPERTY(bool isLoading READ isLoading NOTIFY isLoadingChanged)
 
 public:
@@ -76,6 +76,7 @@ private:
   void completeIndoorsLocationSetup();
   void showGroundFloor();
   void failSetup(const QString& errorMessage);
+  QVariantMap locationProperties() const;
 
   bool m_allPermissionsGranted = false;
   bool m_hasReceivedFirstLocation = false;
