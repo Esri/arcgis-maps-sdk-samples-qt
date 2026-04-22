@@ -1,0 +1,51 @@
+{
+    "category": "Analysis",
+    "dataItems": [
+        {
+            "itemId": "aa97788593e34a32bcaae33947fdc271",
+            "path": "~/ArcGIS/Runtime/Data/raster/arran.tif"
+        }
+    ],
+    "description": "Perform an interactive viewshed analysis to determine visible and non-visible areas from a given observer position.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "analysis overlay",
+        "elevation",
+        "field analysis",
+        "interactive",
+        "raster",
+        "spatial analysis",
+        "terrain",
+        "viewshed",
+        "visibility",
+        "AnalysisOverlay",
+        "Colormap",
+        "ColormapRenderer",
+        "ContinuousField",
+        "ContinuousFieldFunction",
+        "FieldAnalysis",
+        "ViewshedFunction",
+        "ViewshedParameters"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "AnalysisOverlay",
+        "Colormap",
+        "ColormapRenderer",
+        "ContinuousField",
+        "ContinuousFieldFunction",
+        "FieldAnalysis",
+        "ViewshedFunction",
+        "ViewshedParameters"
+    ],
+    "snippets": [
+        "ShowInteractiveViewshedWithAnalysisOverlay.cpp",
+        "ShowInteractiveViewshedWithAnalysisOverlay.h",
+        "ShowInteractiveViewshedWithAnalysisOverlay.qml"
+    ],
+    "title": "Show interactive viewshed with analysis overlay"
+}

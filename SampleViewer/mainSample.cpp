@@ -66,6 +66,7 @@
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h"
+#include "../CppSamples/Analysis/ShowInteractiveViewshedWithAnalysisOverlay/ShowInteractiveViewshedWithAnalysisOverlay.h"
 #include "../CppSamples/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
 #include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
@@ -563,6 +564,7 @@ void registerCppSampleClasses()
   ShowExploratoryViewshedFromCameraInScene::init();
   ShowExploratoryViewshedFromGeoElementInScene::init();
   ShowExploratoryViewshedFromPointInScene::init();
+  ShowInteractiveViewshedWithAnalysisOverlay::init();
   ShowViewshedCalculatedFromGeoprocessingTask::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();
