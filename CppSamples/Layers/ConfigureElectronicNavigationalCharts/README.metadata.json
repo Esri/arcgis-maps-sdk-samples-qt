@@ -11,7 +11,7 @@
         }
     ],
     "description": "Display and configure electronic navigational charts per ENC specification.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

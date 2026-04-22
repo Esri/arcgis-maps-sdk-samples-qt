@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/ShowLineOfSightAnalysisInMap">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ShowLineOfSightAnalysisInMap.qml</file>
+        <file>ShowLineOfSightAnalysisInMap.h</file>
+        <file>ShowLineOfSightAnalysisInMap.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>iconAssets/beacon.png</file>
+    </qresource>
+</RCC>
