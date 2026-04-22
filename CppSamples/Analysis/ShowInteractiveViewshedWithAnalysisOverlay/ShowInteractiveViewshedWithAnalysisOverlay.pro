@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += qml quick
 
 TEMPLATE = app
-TARGET = QueryDynamicEntities
+TARGET = ShowInteractiveViewshedWithAnalysisOverlay
 
 include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
@@ -33,17 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    CustomDynamicEntityDataSource.h \
-    QueryDynamicEntities.h \
-    FlightInfoListModel.h
+    ShowInteractiveViewshedWithAnalysisOverlay.h
 
 SOURCES += \
-    CustomDynamicEntityDataSource.cpp \
     main.cpp \
-    QueryDynamicEntities.cpp \
-    FlightInfoListModel.cpp
+    ShowInteractiveViewshedWithAnalysisOverlay.cpp
 
-RESOURCES += QueryDynamicEntities.qrc
+RESOURCES += ShowInteractiveViewshedWithAnalysisOverlay.qrc
 
 #-------------------------------------------------------------------------------
 

@@ -67,6 +67,7 @@
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h"
 #include "../CppSamples/Analysis/ShowLineOfSightAnalysisInMap/ShowLineOfSightAnalysisInMap.h"
+#include "../CppSamples/Analysis/ShowInteractiveViewshedWithAnalysisOverlay/ShowInteractiveViewshedWithAnalysisOverlay.h"
 #include "../CppSamples/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
 #include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
@@ -565,6 +566,7 @@ void registerCppSampleClasses()
   ShowExploratoryViewshedFromGeoElementInScene::init();
   ShowExploratoryViewshedFromPointInScene::init();
   ShowLineOfSightAnalysisInMap::init();
+  ShowInteractiveViewshedWithAnalysisOverlay::init();
   ShowViewshedCalculatedFromGeoprocessingTask::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();

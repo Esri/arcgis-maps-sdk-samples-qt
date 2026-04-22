@@ -27,6 +27,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowLineOfSightAnalysisInMap/ShowLineOfSightAnalysisInMap.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowInteractiveViewshedWithAnalysisOverlay/ShowInteractiveViewshedWithAnalysisOverlay.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h" \
@@ -262,6 +263,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowLineOfSightAnalysisInMap/ShowLineOfSightAnalysisInMap.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowInteractiveViewshedWithAnalysisOverlay/ShowInteractiveViewshedWithAnalysisOverlay.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.cpp" \
@@ -497,6 +499,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowLineOfSightAnalysisInMap/ShowLineOfSightAnalysisInMap.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowInteractiveViewshedWithAnalysisOverlay/ShowInteractiveViewshedWithAnalysisOverlay.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.qrc" \
