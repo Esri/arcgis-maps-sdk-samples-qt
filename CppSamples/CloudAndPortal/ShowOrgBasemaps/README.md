@@ -26,8 +26,8 @@ You'll be prompted to load a portal anonymously or with a log-in. After you sign
 
 ## Relevant API
 
-* Authenticator
 * Authentication::OAuthUserConfiguration
+* Authenticator
 * OAuthUserConfigurationManager
 * Portal
 * Portal::fetchBasemapsAsync
