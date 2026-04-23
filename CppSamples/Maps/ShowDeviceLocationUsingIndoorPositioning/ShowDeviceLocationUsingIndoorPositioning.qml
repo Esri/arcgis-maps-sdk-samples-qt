@@ -61,24 +61,24 @@ Item {
 
             Label {
                 text: model.locationProperties.floor !== undefined
-                    ? qsTr("Current floor: ") + displayFloor(model.locationProperties.floor)
+                    ? qsTr("Current floor: %1").arg(displayFloor(model.locationProperties.floor))
                     : ""
                 visible: !model.isLoading && model.locationProperties.floor !== undefined
             }
             Label {
                 text: model.locationProperties.horizontalAccuracy !== undefined
-                    ? qsTr("Accuracy: ") + model.locationProperties.horizontalAccuracy.toFixed(2) + qsTr(" m")
+                    ? qsTr("Accuracy: %1 m").arg(model.locationProperties.horizontalAccuracy.toFixed(2))
                     : ""
                 visible: !model.isLoading && model.locationProperties.horizontalAccuracy !== undefined
             }
             Label {
-                text: qsTr("Data source: ") + (model.locationProperties.positionSource !== undefined
+                text: qsTr("Data source: %1").arg(model.locationProperties.positionSource !== undefined
                     ? model.locationProperties.positionSource
                     : qsTr("None"))
                 visible: !model.isLoading
             }
             Label {
-                text: qsTr("Number of Transmitters: ") + model.locationProperties.transmitterCount
+                text: qsTr("Number of Transmitters: %1").arg(model.locationProperties.transmitterCount)
                 visible: !model.isLoading && model.locationProperties.transmitterCount !== undefined
             }
         }
