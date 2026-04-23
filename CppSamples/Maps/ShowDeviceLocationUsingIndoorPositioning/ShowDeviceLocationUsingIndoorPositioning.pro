@@ -66,4 +66,7 @@ macx {
 android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
+
+    DISTFILES += android/AndroidManifest.xml
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 }

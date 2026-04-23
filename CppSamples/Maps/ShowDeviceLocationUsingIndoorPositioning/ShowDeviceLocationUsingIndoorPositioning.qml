@@ -21,6 +21,9 @@ import Esri.Samples
 import QtQuick.Dialogs
 
 Item {
+    function displayFloor(floor) {
+        return floor >= 0 ? floor + 1 : floor;
+    }
 
     // add a mapView component
     MapView {
@@ -52,28 +55,39 @@ Item {
             }
 
             Label {
-                text: qsTr("Initializing location data source\nand retrieving user location...")
-                // Display if there are no location properties to display
-                visible: Object.keys(model.locationProperties).length === 0;
+                text: qsTr("Loading indoor data...")
+                visible: model.isLoading
             }
 
             Label {
-                text: qsTr("Floor: ") + model.locationProperties.floor
-                visible: model.locationProperties.floor !== undefined
+                text: model.locationProperties.floor !== undefined
+                    ? qsTr("Current floor: %1").arg(displayFloor(model.locationProperties.floor))
+                    : ""
+                visible: !model.isLoading && model.locationProperties.floor !== undefined
             }
             Label {
-                text: qsTr("Position source: ") + model.locationProperties.positionSource
-                visible: model.locationProperties.positionSource !== undefined
+                text: model.locationProperties.horizontalAccuracy !== undefined
+                    ? qsTr("Accuracy: %1 m").arg(model.locationProperties.horizontalAccuracy.toFixed(2))
+                    : ""
+                visible: !model.isLoading && model.locationProperties.horizontalAccuracy !== undefined
             }
             Label {
-                text: qsTr("Transmitter count: ") + model.locationProperties.satelliteCount
-                visible: model.locationProperties.satelliteCount !== undefined
+                text: qsTr("Data source: %1").arg(model.locationProperties.positionSource !== undefined
+                    ? model.locationProperties.positionSource
+                    : qsTr("None"))
+                visible: !model.isLoading
             }
             Label {
-                text: qsTr("Horizontal accuracy: ") + (model.locationProperties.horizontalAccuracy ? model.locationProperties.horizontalAccuracy.toFixed(2) + " m" : "undefined")
-                visible: model.locationProperties.horizontalAccuracy !== undefined
+                text: qsTr("Number of Transmitters: %1").arg(model.locationProperties.transmitterCount)
+                visible: !model.isLoading && model.locationProperties.transmitterCount !== undefined
             }
         }
+    }
+
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: model.isLoading
+        visible: model.isLoading
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
@@ -109,6 +123,14 @@ Item {
         }
     }
 
+    Connections {
+        target: model
+        function onErrorOccurred(errorMessage) {
+            setupErrorLabel.text = errorMessage
+            setupErrorDialog.open()
+        }
+    }
+
     Dialog {
         id: bluetoothPermissionDeniedDialog
         title: qsTr("Bluetooth Permission Denied")
@@ -119,6 +141,20 @@ Item {
 
         Label {
             text: qsTr("This application requires bluetooth permission.")
+        }
+    }
+
+    Dialog {
+        id: setupErrorDialog
+        title: qsTr("Indoor Positioning Error")
+        modal: true
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+
+        Label {
+            id: setupErrorLabel
+            text: ""
         }
     }
 }
