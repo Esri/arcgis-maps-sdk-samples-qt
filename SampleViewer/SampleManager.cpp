@@ -515,9 +515,8 @@ bool SampleManager::showApiKeyOption() const
 #endif
 }
 
-void SampleManager::setApiKey(const QString& key)
+void SampleManager::setApiKey(const QString& enteredApiKey)
 {
-  const QString enteredApiKey = key;
   if (apiKey == enteredApiKey)
   {
     return;
