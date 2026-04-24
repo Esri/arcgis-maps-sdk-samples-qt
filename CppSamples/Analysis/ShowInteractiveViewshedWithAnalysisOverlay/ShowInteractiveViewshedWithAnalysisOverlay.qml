@@ -43,7 +43,7 @@ Item {
         id: settingsPanel
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.topMargin: compactUi ? 10 : 16
+        anchors.topMargin: compactUi ? 26 : 32
         anchors.rightMargin: compactUi ? 10 : 16
         radius: 12
         color: palette.base
@@ -263,12 +263,12 @@ Item {
     Label {
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.leftMargin: 16
-        anchors.topMargin: 10
+        anchors.leftMargin: 8
+        anchors.topMargin: 8
         text: qsTr("Raster data Copyright Scottish Government and SEPA (2014)")
         font.italic: true
-        font.pointSize: 15
-        color: palette.text
+        font.pointSize: 12
+        color: "white"
         font.bold: true
     }
 }
