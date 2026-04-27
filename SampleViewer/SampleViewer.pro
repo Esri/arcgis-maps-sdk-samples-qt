@@ -28,6 +28,7 @@ COMMONVIEWER = $$PWD
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
 include($$PWD/../ArcGISRuntimeVersion.pri)
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
+DEFINES += SHOW_APIKEY_OPTION=$$(SHOW_APIKEY_OPTION)
 
 # This block determines whether to build against the installed SDK or the local dev build area
 exists($$PWD/../../../DevBuildCpp.pri) {
