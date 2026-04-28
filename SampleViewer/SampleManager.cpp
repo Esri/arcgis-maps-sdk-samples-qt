@@ -51,6 +51,12 @@
 // Other headers
 #include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 
+// Platform specific headers
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#include <QCoreApplication>
+#endif
+
 // toolkit authentication support
 #include "AuthenticatorController.h"
 #include "OAuthUserConfigurationManager.h"
@@ -536,6 +542,14 @@ void SampleManager::resetAuthenticationState()
   {
     authController->cancelOutstandingChallenges();
   }
+}
+
+void SampleManager::moveToBackgroundAndroid()
+{
+#ifdef Q_OS_ANDROID
+  QJniObject activity = QJniObject::callStaticObjectMethod("org/qtproject/qt/android/QtNative", "activity", "()Landroid/app/Activity;");
+  activity.callMethod<jboolean>("moveTaskToBack", true);
+#endif
 }
 
 bool SampleManager::dataItemsExists()

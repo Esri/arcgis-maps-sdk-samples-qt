@@ -105,6 +105,7 @@ public:
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
   Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
   Q_INVOKABLE void resetAuthenticationState();
+  Q_INVOKABLE void moveToBackgroundAndroid();
 
   // Favorites
   Q_INVOKABLE void addSampleToFavorites(Sample* sample);
