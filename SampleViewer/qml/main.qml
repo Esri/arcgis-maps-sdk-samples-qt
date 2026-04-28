@@ -39,6 +39,26 @@ ApplicationWindow {
     readonly property string os: Qt.platform.os
     readonly property string fontFamily: "Helvetica"
 
+
+    // Back navigation stack
+    property var backStack: []
+
+    function pushBack(tag, action) {
+        backStack.push({ tag: tag, action: action });
+    }
+
+    function removeBack(tag) {
+        backStack = backStack.filter(entry => entry.tag !== tag);
+    }
+
+    function popBack() {
+        if (backStack.length > 0) {
+            backStack.pop().action();
+        } else {
+            //Qt.quit();
+        }
+    }
+
     header: ToolBar {
         height: 42
 
@@ -167,6 +187,8 @@ ApplicationWindow {
                 x: parent.width - width
                 transformOrigin: Item.TopRight
                 width: 200
+                onOpened: pushBack("optionsMenu", () => optionsMenu.close())
+                onClosed: removeBack("optionsMenu")
 
                 readonly property real menuFontSize: 16
 
@@ -314,6 +336,9 @@ ApplicationWindow {
         id: drawer
         width: 252
         height: parent.height
+        onOpened: pushBack("drawer", () => drawer.close())
+        onClosed: removeBack("drawer")
+
     }
 
     SourceCodeView {
@@ -354,17 +379,29 @@ ApplicationWindow {
     ProxySetupView {
         id: proxySetupView
         anchors.fill: parent
+        onVisibleChanged: {
+            if (visible) pushBack("proxy", () => { proxySetupView.visible = false })
+            else removeBack("proxy")
+        }
     }
 
     AboutView {
         id: aboutView
         anchors.fill: parent
+        onVisibleChanged: {
+            if (visible) pushBack("about", () => { aboutView.visible = false })
+            else removeBack("about")
+        }
     }
 
     Connections {
         target: SampleManager
 
         property var pendingSampleChangeConnection: null
+
+        function onBackPressed() {
+            popBack();
+        }
 
         function onCurrentSampleChanged() {
             // If we're in ManageOfflineData view and a download is in progress,
@@ -431,7 +468,22 @@ ApplicationWindow {
             SampleManager.currentMode = SampleManager.HomepageView;
         }
 
+        property int previousMode: -1
+        property int modeStackId: 0
+        property bool isNavigatingBack: false
+
         function onCurrentModeChanged() {
+            if (!isNavigatingBack && previousMode !== -1 && previousMode !== SampleManager.currentMode) {
+                var restoreMode = previousMode;
+                var tag = "mode_" + modeStackId++;
+                pushBack(tag, () => {
+                    isNavigatingBack = true;
+                    SampleManager.currentMode = restoreMode;
+                    isNavigatingBack = false;
+                });
+            }
+            previousMode = SampleManager.currentMode;
+
             if (SampleManager.currentMode === SampleManager.LiveSampleView)
                 showSample();
         }

@@ -142,11 +142,14 @@ signals:
   void currentSourceCodeChanged();
   void reachabilityChanged();
   void favoriteSamplesChanged();
+  void backPressed();
 
 protected:
   void buildCategoriesList();
   SampleCategory* createCategory(const QString& name, const QString& displayName, const QDir& dir);
   bool appendCategoryToManager(SampleCategory* category);
+
+  bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
   SampleListModel* buildSamplesList(const QDir& dir, const QString& prefix);
