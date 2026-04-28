@@ -47,7 +47,7 @@ ApplicationWindow {
         backStack.push({ tag: tag, action: action });
     }
 
-    function removeBack(tag) {
+    function removeEntry(tag) {
         backStack = backStack.filter(entry => entry.tag !== tag);
     }
 
@@ -55,7 +55,9 @@ ApplicationWindow {
         if (backStack.length > 0) {
             backStack.pop().action();
         } else {
-            //Qt.quit();
+            if (Qt.platform.os === "android") {
+                SampleManager.moveToBackgroundAndroid();
+            }
         }
     }
 
@@ -188,7 +190,7 @@ ApplicationWindow {
                 transformOrigin: Item.TopRight
                 width: 200
                 onOpened: pushBack("optionsMenu", () => optionsMenu.close())
-                onClosed: removeBack("optionsMenu")
+                onClosed: removeEntry("optionsMenu")
 
                 readonly property real menuFontSize: 16
 
@@ -337,7 +339,7 @@ ApplicationWindow {
         width: 252
         height: parent.height
         onOpened: pushBack("drawer", () => drawer.close())
-        onClosed: removeBack("drawer")
+        onClosed: removeEntry("drawer")
 
     }
 
@@ -381,7 +383,7 @@ ApplicationWindow {
         anchors.fill: parent
         onVisibleChanged: {
             if (visible) pushBack("proxy", () => { proxySetupView.visible = false })
-            else removeBack("proxy")
+            else removeEntry("proxy")
         }
     }
 
@@ -390,7 +392,7 @@ ApplicationWindow {
         anchors.fill: parent
         onVisibleChanged: {
             if (visible) pushBack("about", () => { aboutView.visible = false })
-            else removeBack("about")
+            else removeEntry("about")
         }
     }
 
@@ -477,10 +479,10 @@ ApplicationWindow {
                 var restoreMode = previousMode;
                 var tag = "mode_" + modeStackId++;
                 pushBack(tag, () => {
-                    isNavigatingBack = true;
-                    SampleManager.currentMode = restoreMode;
-                    isNavigatingBack = false;
-                });
+                             isNavigatingBack = true;
+                             SampleManager.currentMode = restoreMode;
+                             isNavigatingBack = false;
+                         });
             }
             previousMode = SampleManager.currentMode;
 
