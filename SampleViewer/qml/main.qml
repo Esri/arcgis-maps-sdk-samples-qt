@@ -471,12 +471,19 @@ ApplicationWindow {
         }
 
         property int previousMode: -1
+        property int lastStableMode: -1
         property int modeStackId: 0
         property bool isNavigatingBack: false
 
+        function isTransientMode(mode) {
+            return mode === SampleManager.DownloadDataView;
+        }
+
         function onCurrentModeChanged() {
-            if (!isNavigatingBack && previousMode !== -1 && previousMode !== SampleManager.currentMode) {
-                var restoreMode = previousMode;
+            var current = SampleManager.currentMode;
+
+            if (!isNavigatingBack && !isTransientMode(current) && lastStableMode !== -1 && lastStableMode !== current) {
+                var restoreMode = lastStableMode;
                 var tag = "mode_" + modeStackId++;
                 pushBack(tag, () => {
                              isNavigatingBack = true;
@@ -484,9 +491,13 @@ ApplicationWindow {
                              isNavigatingBack = false;
                          });
             }
-            previousMode = SampleManager.currentMode;
 
-            if (SampleManager.currentMode === SampleManager.LiveSampleView)
+            if (!isTransientMode(current))
+                lastStableMode = current;
+
+            previousMode = current;
+
+            if (current === SampleManager.LiveSampleView)
                 showSample();
         }
     }
