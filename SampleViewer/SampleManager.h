@@ -109,6 +109,7 @@ public:
   Q_INVOKABLE void setApiKey(const QString& enteredApiKey);
   Q_INVOKABLE bool showApiKeyOption() const;
   Q_INVOKABLE void resetAuthenticationState();
+  Q_INVOKABLE void moveToBackgroundAndroid();
 
   // Favorites
   Q_INVOKABLE void addSampleToFavorites(Sample* sample);
@@ -146,11 +147,14 @@ signals:
   void currentSourceCodeChanged();
   void reachabilityChanged();
   void favoriteSamplesChanged();
+  void backPressed();
 
 protected:
   void buildCategoriesList();
   SampleCategory* createCategory(const QString& name, const QString& displayName, const QDir& dir);
   bool appendCategoryToManager(SampleCategory* category);
+
+  bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
   SampleListModel* buildSamplesList(const QDir& dir, const QString& prefix);

@@ -39,6 +39,28 @@ ApplicationWindow {
     readonly property string os: Qt.platform.os
     readonly property string fontFamily: "Helvetica"
 
+
+    // Back navigation stack
+    property var backStack: []
+
+    function pushBack(tag, action) {
+        backStack.push({ tag: tag, action: action });
+    }
+
+    function removeEntry(tag) {
+        backStack = backStack.filter(entry => entry.tag !== tag);
+    }
+
+    function popBack() {
+        if (backStack.length > 0) {
+            backStack.pop().action();
+        } else {
+            if (Qt.platform.os === "android") {
+                SampleManager.moveToBackgroundAndroid();
+            }
+        }
+    }
+
     header: ToolBar {
         height: 42
 
@@ -167,6 +189,8 @@ ApplicationWindow {
                 x: parent.width - width
                 transformOrigin: Item.TopRight
                 width: 200
+                onOpened: pushBack("optionsMenu", () => optionsMenu.close())
+                onClosed: removeEntry("optionsMenu")
 
                 readonly property real menuFontSize: 16
 
@@ -326,6 +350,9 @@ ApplicationWindow {
         id: drawer
         width: 252
         height: parent.height
+        onOpened: pushBack("drawer", () => drawer.close())
+        onClosed: removeEntry("drawer")
+
     }
 
     SourceCodeView {
@@ -366,11 +393,19 @@ ApplicationWindow {
     ProxySetupView {
         id: proxySetupView
         anchors.fill: parent
+        onVisibleChanged: {
+            if (visible) pushBack("proxy", () => { proxySetupView.visible = false })
+            else removeEntry("proxy")
+        }
     }
 
     AboutView {
         id: aboutView
         anchors.fill: parent
+        onVisibleChanged: {
+            if (visible) pushBack("about", () => { aboutView.visible = false })
+            else removeEntry("about")
+        }
     }
 
     Connections {
@@ -378,7 +413,13 @@ ApplicationWindow {
 
         property var pendingSampleChangeConnection: null
 
+        function onBackPressed() {
+            popBack();
+        }
+
         function onCurrentSampleChanged() {
+            // Clear stale mode history from previous sample
+            backStack = backStack.filter(entry => !entry.tag.startsWith("mode_"));
             // If we're in ManageOfflineData view and a download is in progress,
             // cancel all downloads and wait for completion before changing samples
             if (SampleManager.currentMode === SampleManager.ManageOfflineDataView &&
@@ -443,8 +484,34 @@ ApplicationWindow {
             SampleManager.currentMode = SampleManager.HomepageView;
         }
 
+        property int previousMode: -1
+        property int lastStableMode: -1
+        property int modeStackId: 0
+        property bool isNavigatingBack: false
+
+        function isTransientMode(mode) {
+            return mode === SampleManager.DownloadDataView;
+        }
+
         function onCurrentModeChanged() {
-            if (SampleManager.currentMode === SampleManager.LiveSampleView)
+            var current = SampleManager.currentMode;
+
+            if (!isNavigatingBack && !isTransientMode(current) && lastStableMode !== -1 && lastStableMode !== current) {
+                var restoreMode = lastStableMode;
+                var tag = "mode_" + modeStackId++;
+                pushBack(tag, () => {
+                             isNavigatingBack = true;
+                             SampleManager.currentMode = restoreMode;
+                             isNavigatingBack = false;
+                         });
+            }
+
+            if (!isTransientMode(current))
+                lastStableMode = current;
+
+            previousMode = current;
+
+            if (current === SampleManager.LiveSampleView)
                 showSample();
         }
     }

@@ -33,6 +33,7 @@
 #include <QFileInfo>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QKeyEvent>
 #include <QNetworkProxy>
 #include <QQmlEngine>
 #include <QSet>
@@ -49,6 +50,12 @@
 
 // Other headers
 #include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
+
+// Platform specific headers
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#include <QCoreApplication>
+#endif
 
 // toolkit authentication support
 #include "AuthenticatorController.h"
@@ -176,6 +183,21 @@ DownloadsManager* SampleManager::downloadsManager() const
 
 void SampleManager::init()
 {
+  // Install event filter so SampleManager::eventFilter() runs
+  connect(qApp, &QGuiApplication::focusWindowChanged, this, [this](QWindow* window)
+  {
+    if (window)
+    {
+      window->installEventFilter(this);
+    }
+  });
+
+  // If window is already focused
+  if (QWindow* window = qApp->focusWindow())
+  {
+    window->installEventFilter(this);
+  }
+
   m_featuredSamples = new SampleListModel(this);
   m_offlineDataSamples = new SampleListModel(this);
 
@@ -298,6 +320,19 @@ bool SampleManager::appendCategoryToManager(SampleCategory* category)
   }
 
   return false;
+}
+
+bool SampleManager::eventFilter(QObject* obj, QEvent* event)
+{
+  if (event->type() == QEvent::KeyRelease)
+  {
+    if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Back)
+    {
+      emit backPressed();
+      return true;
+    }
+  }
+  return QObject::eventFilter(obj, event);
 }
 
 // Build the Samples List
@@ -554,6 +589,14 @@ void SampleManager::resetAuthenticationState()
   {
     authController->cancelOutstandingChallenges();
   }
+}
+
+void SampleManager::moveToBackgroundAndroid()
+{
+#ifdef Q_OS_ANDROID
+  QJniObject activity = QJniObject::callStaticObjectMethod("org/qtproject/qt/android/QtNative", "activity", "()Landroid/app/Activity;");
+  activity.callMethod<jboolean>("moveTaskToBack", true);
+#endif
 }
 
 bool SampleManager::dataItemsExists()
