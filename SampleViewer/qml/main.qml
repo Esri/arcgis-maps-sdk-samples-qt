@@ -406,6 +406,8 @@ ApplicationWindow {
         }
 
         function onCurrentSampleChanged() {
+            // Clear stale mode history from previous sample
+            backStack = backStack.filter(entry => !entry.tag.startsWith("mode_"));
             // If we're in ManageOfflineData view and a download is in progress,
             // cancel all downloads and wait for completion before changing samples
             if (SampleManager.currentMode === SampleManager.ManageOfflineDataView &&
