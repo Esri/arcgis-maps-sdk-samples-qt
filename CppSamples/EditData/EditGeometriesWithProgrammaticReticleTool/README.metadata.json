@@ -1,5 +1,5 @@
 {
-    "category": "EditData",
+    "category": "Edit data",
     "description": "Use the Programmatic Reticle Tool to edit and create geometries with programmatic operations to facilitate customized workflows such as those using buttons rather than tap interactions.",
     "featured": true,
     "ignore": false,
@@ -30,7 +30,7 @@
     "snippets": [
         "EditGeometriesWithProgrammaticReticleTool.cpp",
         "EditGeometriesWithProgrammaticReticleTool.h",
-        "GeometryEditorButton.qml",
+        "GeometryEditorPopup.qml",
         "EditGeometriesWithProgrammaticReticleTool.qml"
     ],
     "title": "Edit geometries with programmatic reticle tool"

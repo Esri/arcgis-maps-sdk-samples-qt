@@ -31,17 +31,17 @@ free high ground in brown and areas covered by ice in teal). After processing co
 
 ## Relevant API
 
-- BooleanFieldFunction
-- Colormap
-- ColormapRenderer
-- ColorRamp
-- ContinuousField
-- ContinuousFieldFunction
-- DiscreteField
-- DiscreteFieldFunction
-- Raster
-- RasterLayer
-- StretchRenderer
+* BooleanFieldFunction
+* Colormap
+* ColormapRenderer
+* ColorRamp
+* ContinuousField
+* ContinuousFieldFunction
+* DiscreteField
+* DiscreteFieldFunction
+* Raster
+* RasterLayer
+* StretchRenderer
 
 ## About the data
 
