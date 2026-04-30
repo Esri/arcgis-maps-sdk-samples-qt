@@ -44,6 +44,7 @@
 #include <QVariant>
 #include <QVariantList>
 #include <QVariantMap>
+#include <QWindow>
 
 // STL headers
 #include <NetworkRequestProgress.h>
