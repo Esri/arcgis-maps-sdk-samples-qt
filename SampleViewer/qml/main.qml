@@ -43,6 +43,7 @@ ApplicationWindow {
     // Back navigation stack
     property var backStack: []
     property bool backHandledByAutoClose: false
+    property bool backPressInProgress: false
 
     function pushBack(tag, action) {
         backStack.push({ tag: tag, action: action });
@@ -51,7 +52,7 @@ ApplicationWindow {
     function removeEntry(tag) {
         var hadEntry = backStack.some(entry => entry.tag === tag);
         backStack = backStack.filter(entry => entry.tag !== tag);
-        if (hadEntry)
+        if (hadEntry && backPressInProgress)
             backHandledByAutoClose = true;
     }
 
@@ -422,7 +423,9 @@ ApplicationWindow {
         property var pendingSampleChangeConnection: null
 
         function onBackPressed() {
+            backPressInProgress = true;
             popBack();
+            backPressInProgress = false;
         }
 
         function onCurrentSampleChanged() {
