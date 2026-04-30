@@ -42,18 +42,26 @@ ApplicationWindow {
 
     // Back navigation stack
     property var backStack: []
+    property bool backHandledByAutoClose: false
 
     function pushBack(tag, action) {
         backStack.push({ tag: tag, action: action });
     }
 
     function removeEntry(tag) {
+        var hadEntry = backStack.some(entry => entry.tag === tag);
         backStack = backStack.filter(entry => entry.tag !== tag);
+        if (hadEntry)
+            backHandledByAutoClose = true;
     }
 
     function popBack() {
         if (backStack.length > 0) {
-            backStack.pop().action();
+            backHandledByAutoClose = false;
+            var entry = backStack.pop();
+            entry.action();
+        } else if (backHandledByAutoClose) {
+            backHandledByAutoClose = false;
         } else {
             if (Qt.platform.os === "android") {
                 SampleManager.moveToBackgroundAndroid();
@@ -418,8 +426,20 @@ ApplicationWindow {
         }
 
         function onCurrentSampleChanged() {
-            // Clear stale mode history from previous sample
-            backStack = backStack.filter(entry => !entry.tag.startsWith("mode_"));
+            const overlayTags = ["drawer", "optionsMenu", "proxy", "about"];
+            backStack = backStack.filter(entry => overlayTags.includes(entry.tag));
+
+            // Back to home when new sample is opened
+            pushBack("homepage", () => {
+                         isNavigatingBack = true;
+                         SampleManager.currentMode = SampleManager.HomepageView;
+                         isNavigatingBack = false;
+                     });
+
+            // Reset state for new sample
+            lastStableMode = -1;
+            modeStackId = 0;
+
             // If we're in ManageOfflineData view and a download is in progress,
             // cancel all downloads and wait for completion before changing samples
             if (SampleManager.currentMode === SampleManager.ManageOfflineDataView &&
@@ -496,7 +516,8 @@ ApplicationWindow {
         function onCurrentModeChanged() {
             var current = SampleManager.currentMode;
 
-            if (!isNavigatingBack && !isTransientMode(current) && lastStableMode !== -1 && lastStableMode !== current) {
+            if (!isNavigatingBack && !isTransientMode(current)
+                    && lastStableMode !== -1 && lastStableMode !== current) {
                 var restoreMode = lastStableMode;
                 var tag = "mode_" + modeStackId++;
                 pushBack(tag, () => {
