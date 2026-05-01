@@ -42,8 +42,9 @@ ApplicationWindow {
 
     // Back navigation stack
     property var backStack: []
-    property bool backHandledByAutoClose: false
+    property bool controlConsumedBack: false
     property bool backPressInProgress: false
+    readonly property var overlayTags: ["drawer", "optionsMenu", "proxy", "about"]
 
     function pushBack(tag, action) {
         backStack.push({ tag: tag, action: action });
@@ -53,16 +54,16 @@ ApplicationWindow {
         var hadEntry = backStack.some(entry => entry.tag === tag);
         backStack = backStack.filter(entry => entry.tag !== tag);
         if (hadEntry && backPressInProgress)
-            backHandledByAutoClose = true;
+            controlConsumedBack = true;
     }
 
     function popBack() {
         if (backStack.length > 0) {
-            backHandledByAutoClose = false;
+            controlConsumedBack = false;
             var entry = backStack.pop();
             entry.action();
-        } else if (backHandledByAutoClose) {
-            backHandledByAutoClose = false;
+        } else if (controlConsumedBack) {
+            controlConsumedBack = false;
         } else {
             if (Qt.platform.os === "android") {
                 SampleManager.moveToBackgroundAndroid();
@@ -429,7 +430,6 @@ ApplicationWindow {
         }
 
         function onCurrentSampleChanged() {
-            const overlayTags = ["drawer", "optionsMenu", "proxy", "about"];
             backStack = backStack.filter(entry => overlayTags.includes(entry.tag));
 
             // Back to home when new sample is opened
