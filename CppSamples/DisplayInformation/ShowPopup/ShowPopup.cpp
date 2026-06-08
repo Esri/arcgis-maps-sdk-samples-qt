@@ -126,11 +126,6 @@ void ShowPopup::onMouseClicked(QMouseEvent& mouseEvent)
     onIdentifyLayerCompleted(QUuid(), result);
   });
 
-  if (!m_future.isValid())
-  {
-    qWarning() << "Future not valid.";
-  }
-
   emit taskRunningChanged();
 }
 
