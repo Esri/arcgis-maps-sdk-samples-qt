@@ -27,6 +27,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class Portal;
   class PortalItem;
+  class Portal;
   class PortalQueryResultSetForItems;
   class PortalItemListModel;
   class PortalQueryParametersForItems;
