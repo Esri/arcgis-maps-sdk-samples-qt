@@ -35,6 +35,8 @@ The sample uses the ['Esri2DPointSymbolsStyle'](https://developers.arcgis.com/ja
 
 The map shows features from the [LA County Points of Interest](https://www.arcgis.com/home/item.html?id=b9f7c339f9d747558329f44059064ccc) service hosted on ArcGIS Online.
 
+This sentence is for nothing in particular.
+
 ## Additional information
 
 2D web styles, dictionary web styles, and 3D web styles can all be hosted on an ArcGIS Online or Enterprise portal.
