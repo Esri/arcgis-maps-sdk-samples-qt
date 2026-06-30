@@ -32,7 +32,6 @@ FindAddressSample {
         }
 
     Component.onCompleted: attachPerfMonitorWindow()
-        onWindowChanged: attachPerfMonitorWindow()
 
     // add a mapView component
     SceneView {
