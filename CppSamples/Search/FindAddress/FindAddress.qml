@@ -18,6 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Effects
+import PerformanceMonitor
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
@@ -26,24 +27,59 @@ FindAddressSample {
     width: 800
     height: 600
 
+    function attachPerfMonitorWindow() {
+            perfMonitor.attachWindow(findAddressSample.Window.window);
+        }
+
+    Component.onCompleted: attachPerfMonitorWindow()
+        onWindowChanged: attachPerfMonitorWindow()
+
     // add a mapView component
-    MapView {
-        id: mapView
+    SceneView {
+        id: sceneView
         anchors.fill: parent
-        objectName: "mapView"
+        objectName: "sceneView"
 
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
 
+        Button {
+            id: startCameraController
+            text: qsTr("Start Camera Controller")
+            onClicked: {
+                findAddressSample.startCameraController();
+            }
+
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+        }
+
+        PerformanceMonitor {
+                id: perfMonitor
+            }
+
+        PerformancePanel {
+            id: performancePanel
+            monitor: perfMonitor
+
+            anchors {
+                        left: parent.left
+                        bottom: parent.bottom
+                        leftMargin: 12
+                        bottomMargin: 24
+                    }
+        }
+
         Callout {
             id: callout
-            calloutData: mapView.calloutData
+            calloutData: sceneView.calloutData
             maxWidth: findAddressSample.width * 0.75
             leaderPosition: Callout.LeaderPosition.Automatic
             accessoryButtonVisible: false
         }
+
     }
 
     onShowCallout: {

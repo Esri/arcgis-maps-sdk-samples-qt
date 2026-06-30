@@ -19,14 +19,15 @@
 
 // ArcGIS Maps SDK headers
 #include "GeocodeParameters.h"
+#include "Camera.h"
 
 // Qt headers
 #include <QQuickItem>
 
 namespace Esri::ArcGISRuntime
 {
-  class Map;
-  class MapQuickView;
+  class Scene;
+  class SceneQuickView;
   class GraphicsOverlay;
   class Graphic;
   class LocatorTask;
@@ -44,6 +45,7 @@ public:
   static void init();
   Q_INVOKABLE void geocodeAddress(const QString& address);
   Q_INVOKABLE void clearGraphics();
+  Q_INVOKABLE void startCameraController();
 
 signals:
   void hideCallout();
@@ -53,12 +55,14 @@ private:
   void connectSignals();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
   Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
   Esri::ArcGISRuntime::Graphic* m_graphic = nullptr;
+
+  QList<Esri::ArcGISRuntime::Camera> m_cameras;
 };
 
 #endif // FIND_ADDRESS_H

@@ -6,9 +6,11 @@
         <file>FindAddress.h</file>
         <file>FindAddress.cpp</file>
         <file>README.md</file>
-		<file>x-24.svg</file>
+        <file>x-24.svg</file>
         <file>chevron-down-24.svg</file>
-		<file>chevron-left-24.svg</file>
+        <file>chevron-left-24.svg</file>
         <file>pin_circle_red.png</file>
+        <file>Theme.qml</file>
+        <file>PerformancePanel.qml</file>
     </qresource>
 </RCC>

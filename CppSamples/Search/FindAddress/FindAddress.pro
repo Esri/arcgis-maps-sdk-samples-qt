@@ -42,9 +42,11 @@ TARGET = FindAddress
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    FindAddress.h
+    FindAddress.h \
+    PerformanceMonitor.h
 
 SOURCES += \
+    PerformanceMonitor.cpp \
     main.cpp \
     FindAddress.cpp
 
@@ -57,14 +59,20 @@ win32 {
         Ole32.lib
 }
 
+macx {
+    QMAKE_INFO_PLIST = $$PWD/mac/Info.plist
+    QMAKE_CXXFLAGS_WARN_ON += -Wno-implicit-function-declaration
+}
+
 ios {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
+CONFIG += add_ios_ffmpeg_libraries
+INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD
 
-    OTHER_FILES += \
-        $$PWD/Info.plist
+OTHER_FILES += $$PWD/Info.plist
 
-    QMAKE_INFO_PLIST = $$PWD/Info.plist
+QMAKE_INFO_PLIST = $$PWD/Info.plist
+QMAKE_CXXFLAGS_WARN_ON += -Wno-implicit-function-declaration
 }
 
 android {
@@ -72,3 +80,4 @@ android {
     DEPENDPATH += $$PWD
 }
 
+android: include(/Users/kous3106/Library/Android/sdk/android_openssl/openssl.pri)

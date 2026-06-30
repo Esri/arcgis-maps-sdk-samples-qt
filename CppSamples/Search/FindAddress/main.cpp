@@ -18,6 +18,7 @@
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
+#include "PerformanceMonitor.h"
 
 // Qt headers
 #include <QCommandLineParser>
@@ -76,9 +77,6 @@ int main(int argc, char* argv[])
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-  // Add the import Path
-  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
 #if defined(LINUX_PLATFORM_REPLACEMENT)
@@ -89,7 +87,12 @@ int main(int argc, char* argv[])
 #endif
 
   // Add the Runtime and Extras path
+  qmlRegisterType<PerformanceMonitor>("PerformanceMonitor", 1, 0, "PerformanceMonitor");
   view.engine()->addImportPath(arcGISRuntimeImportPath);
+
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  qDebug() << QDir(QCoreApplication::applicationDirPath()).filesystemPath();
 
   Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
