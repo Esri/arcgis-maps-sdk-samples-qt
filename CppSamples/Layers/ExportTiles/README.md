@@ -1,4 +1,4 @@
-# Download raster tiles to local cache
+# Export tiles
 
 Download tiles to a local tile cache file stored on the device.
 

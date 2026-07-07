@@ -456,7 +456,6 @@ void registerCppSampleClasses()
   DistanceCompositeSymbol::init();
   DistanceMeasurementAnalysis::init();
   DownloadPreplannedMap::init();
-  ExportTiles::init();
   EditAndSyncFeatures::init();
   EditFeatureAttachments::init();
   EditFeaturesWithFeatureLinkedAnnotation::init();
@@ -464,6 +463,7 @@ void registerCppSampleClasses()
   EditGeometriesWithProgrammaticReticleTool::init();
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
+  ExportTiles::init();
   ExportVectorTiles::init();
   ExtrudeGraphics::init();
   FeatureCollectionLayerFromPortal::init();

@@ -31,5 +31,5 @@
         "ExportTiles.h",
         "ExportTiles.qml"
     ],
-    "title": "Download raster tiles to local cache"
+    "title": "Export tiles"
 }
