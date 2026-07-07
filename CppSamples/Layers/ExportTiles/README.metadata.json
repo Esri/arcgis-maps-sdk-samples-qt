@@ -27,9 +27,9 @@
         "TileCache"
     ],
     "snippets": [
-        "DownloadRasterTilesToLocalCache.cpp",
-        "DownloadRasterTilesToLocalCache.h",
-        "DownloadRasterTilesToLocalCache.qml"
+        "ExportTiles.cpp",
+        "ExportTiles.h",
+        "ExportTiles.qml"
     ],
     "title": "Download raster tiles to local cache"
 }

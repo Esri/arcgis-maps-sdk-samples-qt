@@ -28,18 +28,18 @@ include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
-TARGET = DownloadRasterTilesToLocalCache
+TARGET = ExportTiles
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    DownloadRasterTilesToLocalCache.h
+    ExportTiles.h
 
 SOURCES += \
     main.cpp \
-    DownloadRasterTilesToLocalCache.cpp
+    ExportTiles.cpp
 
-RESOURCES += DownloadRasterTilesToLocalCache.qrc
+RESOURCES += ExportTiles.qrc
 
 #-------------------------------------------------------------------------------
 

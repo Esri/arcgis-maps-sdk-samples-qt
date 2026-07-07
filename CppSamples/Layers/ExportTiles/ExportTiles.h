@@ -1,4 +1,4 @@
-// [WriteFile Name=DownloadRasterTilesToLocalCache, Category=Layers]
+// [WriteFile Name=ExportTiles, Category=Layers]
 // [Legal]
 // Copyright 2016 Esri.
 //
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DOWNLOAD_RASTER_TILES_TO_LOCAL_CACHE
-#define DOWNLOAD_RASTER_TILES_TO_LOCAL_CACHE
+#ifndef EXPORT_TILES
+#define EXPORT_TILES
 
 // Qt headers
 #include <QQuickItem>
@@ -30,31 +30,31 @@ namespace Esri::ArcGISRuntime
   class TileCache;
 } // namespace Esri::ArcGISRuntime
 
-class DownloadRasterTilesToLocalCache : public QQuickItem
+class ExportTiles : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit DownloadRasterTilesToLocalCache(QQuickItem* parent = nullptr);
-  ~DownloadRasterTilesToLocalCache() override;
+  explicit ExportTiles(QQuickItem* parent = nullptr);
+  ~ExportTiles() override;
 
   void componentComplete() override;
   static void init();
   Q_INVOKABLE void exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
-  Q_PROPERTY(int exportProgress READ exportProgress NOTIFY exportProgressChanged)
+  Q_PROPERTY(int exportTilesProgress READ exportTilesProgress NOTIFY exportTilesProgressChanged)
 
 signals:
   void updateStatus(QString status);
   void hideWindow(int time, bool success);
-  void exportProgressChanged();
+  void exportTilesProgressChanged();
 
 private:
   void createExportTileCacheTask();
   void displayOutputTileCache(Esri::ArcGISRuntime::TileCache* tileCache);
 
-  inline int exportProgress()
+  inline int exportTilesProgress()
   {
-    return m_exportProgress;
+    return m_exportTilesProgress;
   }
 
   void onDefaultExportTileCacheParametersCompleted_(const Esri::ArcGISRuntime::ExportTileCacheParameters& parameters);
@@ -63,7 +63,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   QTemporaryDir m_tempPath;
-  int m_exportProgress = 0;
+  int m_exportTilesProgress = 0;
 };
 
-#endif // DOWNLOAD_RASTER_TILES_TO_LOCAL_CACHE
+#endif // EXPORT_TILES

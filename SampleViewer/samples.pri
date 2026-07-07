@@ -124,7 +124,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.h" \
-    "$$SAMPLEPATHCPP/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.h" \
+    "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.h" \
     "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.h" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h" \
@@ -360,7 +360,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.cpp" \
-    "$$SAMPLEPATHCPP/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.cpp" \
     "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.cpp" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.cpp" \
@@ -588,7 +588,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.qrc" \
-    "$$SAMPLEPATHCPP/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.qrc" \
     "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.qrc" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.qrc" \

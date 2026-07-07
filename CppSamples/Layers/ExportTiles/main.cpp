@@ -1,4 +1,4 @@
-// [WriteFile Name=DownloadRasterTilesToLocalCache, Category=Layers]
+// [WriteFile Name=ExportTiles, Category=Layers]
 // [Legal]
 // Copyright 2015 Esri.
 //
@@ -15,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "DownloadRasterTilesToLocalCache.h"
+#include "ExportTiles.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -39,7 +39,7 @@
 int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("DownloadRasterTilesToLocalCache"));
+  app.setApplicationName(QString("ExportTiles"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
   }
 
   // Initialize the sample
-  DownloadRasterTilesToLocalCache::init();
+  ExportTiles::init();
 
   // Initialize application view
   QQuickView view;
@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.qml"));
+  view.setSource(QUrl("qrc:/Samples/Layers/ExportTiles/ExportTiles.qml"));
 
   view.show();
 
