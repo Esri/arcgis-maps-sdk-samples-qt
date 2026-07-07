@@ -1,4 +1,4 @@
-// [WriteFile Name=ExportTiles, Category=Layers]
+// [WriteFile Name=DownloadRasterTilesToLocalCache, Category=Layers]
 // [Legal]
 // Copyright 2016 Esri.
 //
@@ -18,8 +18,8 @@ import QtQuick
 import QtQuick.Controls
 import Esri.Samples
 
-ExportTilesSample {
-    id: exportTilesSample
+DownloadRasterTilesToLocalCacheSample {
+    id: downloadRasterTilesToLocalCacheSample
     width: 800
     height: 600
 
@@ -50,7 +50,7 @@ ExportTilesSample {
             rightPadding: 20
             hoverEnabled: !exportWindow.visible
             icon {
-                source: "qrc:/Samples/Layers/ExportTiles/download-24.svg"
+                source: "qrc:/Samples/Layers/DownloadRasterTilesToLocalCache/download-24.svg"
                 width: 24
                 height: 24
                 color: palette.buttonText
@@ -58,7 +58,7 @@ ExportTilesSample {
 
             onClicked: {
                 // call the C++ invokable function to export tile cache from the input screen coordinates
-                exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+                downloadRasterTilesToLocalCacheSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
                 exportWindow.visible = true;
             }
         }
@@ -139,7 +139,7 @@ ExportTilesSample {
 
                 Label {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr(exportTilesSample.exportTilesProgress + "% Completed")
+                    text: qsTr(downloadRasterTilesToLocalCacheSample.exportProgress + "% Completed")
                     font.pixelSize: 16
                 }
             }

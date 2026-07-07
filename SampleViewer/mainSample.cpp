@@ -156,7 +156,7 @@
 #include "../CppSamples/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h"
 #include "../CppSamples/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h"
 #include "../CppSamples/Layers/DisplayWfsLayer/DisplayWfsLayer.h"
-#include "../CppSamples/Layers/ExportTiles/ExportTiles.h"
+#include "../CppSamples/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.h"
 #include "../CppSamples/Layers/ExportVectorTiles/ExportVectorTiles.h"
 #include "../CppSamples/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h"
 #include "../CppSamples/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h"
@@ -456,6 +456,7 @@ void registerCppSampleClasses()
   DistanceCompositeSymbol::init();
   DistanceMeasurementAnalysis::init();
   DownloadPreplannedMap::init();
+  DownloadRasterTilesToLocalCache::init();
   EditAndSyncFeatures::init();
   EditFeatureAttachments::init();
   EditFeaturesWithFeatureLinkedAnnotation::init();
@@ -463,7 +464,6 @@ void registerCppSampleClasses()
   EditGeometriesWithProgrammaticReticleTool::init();
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
-  ExportTiles::init();
   ExportVectorTiles::init();
   ExtrudeGraphics::init();
   FeatureCollectionLayerFromPortal::init();
