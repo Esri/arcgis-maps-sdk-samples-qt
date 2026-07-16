@@ -45,9 +45,9 @@ class DisplayGeometryEditorInformationDuringInteraction : public QObject
   Q_PROPERTY(bool geometryEditorStarted READ geometryEditorStarted NOTIFY geometryEditorStartedChanged)
   Q_PROPERTY(bool canUndo READ canUndo NOTIFY canUndoChanged)
   Q_PROPERTY(bool canRedo READ canRedo NOTIFY canRedoChanged)
-  Q_PROPERTY(bool interactionInfoVisible READ interactionInfoVisible NOTIFY interactionInfoChanged)
-  Q_PROPERTY(QString interactionDescription READ interactionDescription NOTIFY interactionInfoChanged)
-  Q_PROPERTY(QString interactionValue READ interactionValue NOTIFY interactionInfoChanged)
+  Q_PROPERTY(bool interactionInfoVisible MEMBER m_interactionInfoVisible NOTIFY interactionInfoChanged)
+  Q_PROPERTY(QString interactionDescription MEMBER m_interactionDescription NOTIFY interactionInfoChanged)
+  Q_PROPERTY(QString interactionValue MEMBER m_interactionValue NOTIFY interactionInfoChanged)
 
 public:
   explicit DisplayGeometryEditorInformationDuringInteraction(QObject* parent = nullptr);
@@ -74,13 +74,10 @@ private:
   bool geometryEditorStarted() const;
   bool canUndo() const;
   bool canRedo() const;
-  bool interactionInfoVisible() const;
-  QString interactionDescription() const;
-  QString interactionValue() const;
 
   void createInitialGraphics();
-  void handleMapTap(const QMouseEvent& mouseEvent);
-  void handleInteractionPreviewChanged(Esri::ArcGISRuntime::GeometryEditorInteractionPreview* interactionPreview);
+  void onMapClicked(const QMouseEvent& mouseEvent);
+  void onInteractionPreviewChanged(Esri::ArcGISRuntime::GeometryEditorInteractionPreview* interactionPreview);
   void setScaleInformation(const Esri::ArcGISRuntime::Geometry& previewGeometry);
   void setRotationInformation(const Esri::ArcGISRuntime::Geometry& previewGeometry);
   void setMoveInformation(const Esri::ArcGISRuntime::Geometry& previewGeometry);

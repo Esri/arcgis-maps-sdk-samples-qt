@@ -84,7 +84,7 @@ DisplayGeometryEditorInformationDuringInteraction::DisplayGeometryEditorInformat
   connect(m_geometryEditor, &GeometryEditor::canUndoChanged, this, &DisplayGeometryEditorInformationDuringInteraction::canUndoChanged);
   connect(m_geometryEditor, &GeometryEditor::canRedoChanged, this, &DisplayGeometryEditorInformationDuringInteraction::canRedoChanged);
   connect(m_geometryEditor, &GeometryEditor::interactionPreviewChanged, this,
-          &DisplayGeometryEditorInformationDuringInteraction::handleInteractionPreviewChanged);
+          &DisplayGeometryEditorInformationDuringInteraction::onInteractionPreviewChanged);
 }
 
 DisplayGeometryEditorInformationDuringInteraction::~DisplayGeometryEditorInformationDuringInteraction() = default;
@@ -107,7 +107,7 @@ void DisplayGeometryEditorInformationDuringInteraction::setMapView(MapQuickView*
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
   m_mapView->setGeometryEditor(m_geometryEditor);
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, &DisplayGeometryEditorInformationDuringInteraction::handleMapTap);
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &DisplayGeometryEditorInformationDuringInteraction::onMapClicked);
   emit mapViewChanged();
 }
 
@@ -136,7 +136,7 @@ void DisplayGeometryEditorInformationDuringInteraction::createInitialGraphics()
   });
 }
 
-void DisplayGeometryEditorInformationDuringInteraction::handleMapTap(const QMouseEvent& mouseEvent)
+void DisplayGeometryEditorInformationDuringInteraction::onMapClicked(const QMouseEvent& mouseEvent)
 {
   if (m_geometryEditor->isStarted())
   {
@@ -164,7 +164,7 @@ void DisplayGeometryEditorInformationDuringInteraction::handleMapTap(const QMous
   });
 }
 
-void DisplayGeometryEditorInformationDuringInteraction::handleInteractionPreviewChanged(GeometryEditorInteractionPreview* interactionPreview)
+void DisplayGeometryEditorInformationDuringInteraction::onInteractionPreviewChanged(GeometryEditorInteractionPreview* interactionPreview)
 {
   if (!interactionPreview)
   {
@@ -336,19 +336,4 @@ bool DisplayGeometryEditorInformationDuringInteraction::canUndo() const
 bool DisplayGeometryEditorInformationDuringInteraction::canRedo() const
 {
   return m_geometryEditor->canRedo();
-}
-
-bool DisplayGeometryEditorInformationDuringInteraction::interactionInfoVisible() const
-{
-  return m_interactionInfoVisible;
-}
-
-QString DisplayGeometryEditorInformationDuringInteraction::interactionDescription() const
-{
-  return m_interactionDescription;
-}
-
-QString DisplayGeometryEditorInformationDuringInteraction::interactionValue() const
-{
-  return m_interactionValue;
 }
