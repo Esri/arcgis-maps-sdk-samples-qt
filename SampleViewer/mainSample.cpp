@@ -101,6 +101,7 @@
 #include "../CppSamples/EditData/EditFeatureAttachments/EditFeatureAttachments.h"
 #include "../CppSamples/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h"
 #include "../CppSamples/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.h"
+#include "../CppSamples/EditData/DisplayGeometryEditorInformationDuringInteraction/DisplayGeometryEditorInformationDuringInteraction.h"
 #include "../CppSamples/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h"
 #include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
 #include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
@@ -460,6 +461,7 @@ void registerCppSampleClasses()
   EditFeatureAttachments::init();
   EditFeaturesWithFeatureLinkedAnnotation::init();
   EditGeodatabaseWithTransactions::init();
+  DisplayGeometryEditorInformationDuringInteraction::init();
   EditGeometriesWithProgrammaticReticleTool::init();
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();

@@ -63,6 +63,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h" \
     "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.h" \
+    "$$SAMPLEPATHCPP/EditData/DisplayGeometryEditorInformationDuringInteraction/DisplayGeometryEditorInformationDuringInteraction.h" \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
@@ -299,6 +300,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.cpp" \
+    "$$SAMPLEPATHCPP/EditData/DisplayGeometryEditorInformationDuringInteraction/DisplayGeometryEditorInformationDuringInteraction.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
@@ -533,6 +535,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.qrc" \
+    "$$SAMPLEPATHCPP/EditData/DisplayGeometryEditorInformationDuringInteraction/DisplayGeometryEditorInformationDuringInteraction.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.qrc" \

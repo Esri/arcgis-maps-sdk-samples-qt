@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/EditData/DisplayGeometryEditorInformationDuringInteraction">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>DisplayGeometryEditorInformationDuringInteraction.qml</file>
+        <file>DisplayGeometryEditorInformationDuringInteraction.h</file>
+        <file>DisplayGeometryEditorInformationDuringInteraction.cpp</file>
+        <file>main.qml</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
