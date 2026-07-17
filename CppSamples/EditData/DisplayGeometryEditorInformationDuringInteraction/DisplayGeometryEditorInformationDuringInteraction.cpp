@@ -58,6 +58,7 @@
 
 // STL headers
 #include <cmath>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
