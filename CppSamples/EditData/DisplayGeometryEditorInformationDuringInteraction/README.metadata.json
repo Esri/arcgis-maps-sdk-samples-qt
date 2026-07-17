@@ -3,7 +3,9 @@
     "description": "Use the geometry editor to see information about the previewed geometry during an editing interaction.",
     "featured": false,
     "ignore": false,
-    "images": [],
+    "images": [
+        "screenshot.png"
+    ],
     "keywords": [
         "draw",
         "edit",

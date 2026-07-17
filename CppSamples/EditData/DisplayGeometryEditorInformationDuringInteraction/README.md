@@ -2,6 +2,8 @@
 
 Use the geometry editor to see information about the geometry editor's previewed geometry during an editing interaction.
 
+![](screenshot.png)
+
 ## Use case
 
 The geometry editor can provide information about the geometry being created or edited during an interaction. This information can be used to give feedback to the user to show the effect of the interaction on the geometry.
