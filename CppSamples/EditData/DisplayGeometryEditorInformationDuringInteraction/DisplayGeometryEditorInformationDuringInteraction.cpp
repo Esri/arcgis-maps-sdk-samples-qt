@@ -209,7 +209,7 @@ void DisplayGeometryEditorInformationDuringInteraction::setScaleInformation(cons
   const double scaleX = previewExtent.width() / originalExtent.width();
   const double scaleY = previewExtent.height() / originalExtent.height();
   m_interactionDescription = tr("Scale factor (X, Y):");
-  m_interactionValue = QString("(%1, %2)").arg(scaleX, 0, 'f', 2).arg(scaleY, 0, 'f', 2);
+  m_interactionValue = QString("(%1, %2)").arg(QString::number(scaleX, 'f', 2), QString::number(scaleY, 'f', 2));
 }
 
 void DisplayGeometryEditorInformationDuringInteraction::setRotationInformation(const Geometry& previewGeometry)
@@ -240,7 +240,7 @@ void DisplayGeometryEditorInformationDuringInteraction::setMoveInformation(const
 {
   const Point center = previewGeometry.extent().center();
   m_interactionDescription = tr("Center (X, Y):");
-  m_interactionValue = QString("(%1, %2)").arg(center.x(), 0, 'f', 2).arg(center.y(), 0, 'f', 2);
+  m_interactionValue = QString("(%1, %2)").arg(QString::number(center.x(), 'f', 2), QString::number(center.y(), 'f', 2));
 }
 
 Point DisplayGeometryEditorInformationDuringInteraction::firstPoint(const Geometry& geometry)
