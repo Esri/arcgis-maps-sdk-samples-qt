@@ -41,6 +41,7 @@
 // Qt headers
 #include <QColor>
 #include <QFileInfo>
+#include <QFuture>
 #include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
@@ -65,37 +66,6 @@ namespace
 AnalyzeTerrainSuitabilityWithSlopeAndAspect::AnalyzeTerrainSuitabilityWithSlopeAndAspect(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
-  connect(&m_createContinuousFieldWatcher, &QFutureWatcher<ContinuousField*>::finished, this, [this]()
-  {
-    ContinuousField* continuousField = m_createContinuousFieldWatcher.result();
-    if (!continuousField)
-    {
-      return;
-    }
-
-    // Create the analysis overlay once the raster field is available.
-    if (!m_analysisOverlay && m_mapView)
-    {
-      m_analysisOverlay = new AnalysisOverlay(this);
-      m_mapView->analysisOverlays()->append(m_analysisOverlay);
-    }
-
-    // Derive slope and aspect from the elevation field
-    m_elevationFieldFunction = ContinuousFieldFunction::create(continuousField, this);
-    m_slopeFunction = m_elevationFieldFunction->slope();
-    m_aspectFunction = m_elevationFieldFunction->aspect();
-    m_aboveSeaLevelSelection = m_elevationFieldFunction->isGreaterThanOrEqualTo(0.0F);
-
-    // Build both scenarios up front and toggle visibility when the user changes selection.
-    buildAnalysisForScenario(GentleSouthFacingSlopes);
-    buildAnalysisForScenario(SteepWestAndNorthFacingSlopes);
-    applyFieldAnalysisVisibility();
-
-    if (m_mapView)
-    {
-      m_mapView->setViewpointCenterAsync(continuousField->extent().center(), 200000);
-    }
-  });
 }
 
 AnalyzeTerrainSuitabilityWithSlopeAndAspect::~AnalyzeTerrainSuitabilityWithSlopeAndAspect() = default;
@@ -138,7 +108,42 @@ void AnalyzeTerrainSuitabilityWithSlopeAndAspect::loadElevationField()
 
   // Load the raster into a continuous field that can be queried for slope and aspect.
   const SpatialReference spatialReference(32630);
-  m_createContinuousFieldWatcher.setFuture(ContinuousField::createFromFilesAsync({rasterPath}, 0, spatialReference, this));
+  ContinuousField::createFromFilesAsync({rasterPath}, 0, spatialReference, this)
+    .then(this, [this](ContinuousField* continuousField)
+  {
+    onContinuousFieldCreated(continuousField);
+  });
+}
+
+void AnalyzeTerrainSuitabilityWithSlopeAndAspect::onContinuousFieldCreated(ContinuousField* continuousField)
+{
+  if (!continuousField)
+  {
+    return;
+  }
+
+  // Create the analysis overlay once the raster field is available.
+  if (!m_analysisOverlay && m_mapView)
+  {
+    m_analysisOverlay = new AnalysisOverlay(this);
+    m_mapView->analysisOverlays()->append(m_analysisOverlay);
+  }
+
+  // Derive slope and aspect from the elevation field
+  m_elevationFieldFunction = ContinuousFieldFunction::create(continuousField, this);
+  m_slopeFunction = m_elevationFieldFunction->slope();
+  m_aspectFunction = m_elevationFieldFunction->aspect();
+  m_aboveSeaLevelSelection = m_elevationFieldFunction->isGreaterThanOrEqualTo(0.0F);
+
+  // Build both scenarios up front and toggle visibility when the user changes selection.
+  buildAnalysisForScenario(GentleSouthFacingSlopes);
+  buildAnalysisForScenario(SteepWestAndNorthFacingSlopes);
+  applyFieldAnalysisVisibility();
+
+  if (m_mapView)
+  {
+    m_mapView->setViewpointCenterAsync(continuousField->extent().center(), 200000);
+  }
 }
 
 void AnalyzeTerrainSuitabilityWithSlopeAndAspect::buildAnalysisForScenario(SiteScenario scenario)
@@ -153,7 +158,10 @@ void AnalyzeTerrainSuitabilityWithSlopeAndAspect::buildAnalysisForScenario(SiteS
 
       // Green highlights sheltered, lowland south-facing areas.
       m_gentleSouthFacingSlopesAnalysis = createScenarioAnalysis(0.0F, 20.0F, 112.5F, 247.5F, 0.0F, 300.0F, QColor(Qt::green));
-      m_analysisOverlay->analyses()->append(m_gentleSouthFacingSlopesAnalysis);
+      if (m_gentleSouthFacingSlopesAnalysis)
+      {
+        m_analysisOverlay->analyses()->append(m_gentleSouthFacingSlopesAnalysis);
+      }
       break;
 
     case SteepWestAndNorthFacingSlopes:
@@ -164,7 +172,10 @@ void AnalyzeTerrainSuitabilityWithSlopeAndAspect::buildAnalysisForScenario(SiteS
 
       // Purple highlights steeper upland terrain facing west through north.
       m_steepWestAndNorthFacingSlopesAnalysis = createScenarioAnalysis(20.0F, 80.0F, 202.5F, 67.5F, 300.0F, 850.0F, QColor("purple"));
-      m_analysisOverlay->analyses()->append(m_steepWestAndNorthFacingSlopesAnalysis);
+      if (m_steepWestAndNorthFacingSlopesAnalysis)
+      {
+        m_analysisOverlay->analyses()->append(m_steepWestAndNorthFacingSlopesAnalysis);
+      }
       break;
   }
 }
@@ -200,6 +211,11 @@ FieldAnalysis* AnalyzeTerrainSuitabilityWithSlopeAndAspect::createScenarioAnalys
   ColormapRenderer* renderer = new ColormapRenderer(Colormap::create(colors, this), this);
 
   FieldAnalysis* analysis = FieldAnalysis::create(scenarioFieldFunction->toDiscreteFieldFunction(), renderer, this);
+  if (!analysis)
+  {
+    return nullptr;
+  }
+
   analysis->setVisible(false);
   return analysis;
 }
@@ -218,12 +234,12 @@ BooleanFieldFunction* AnalyzeTerrainSuitabilityWithSlopeAndAspect::createScenari
   BooleanFieldFunction* aspectRangeMask = nullptr;
   if (aspectStart <= aspectEnd)
   {
-    // Normal aspect range, such as west through north.
+    // Normal (non-wrapping) aspect range, such as south-facing terrain.
     aspectRangeMask = m_aspectFunction->isGreaterThanOrEqualTo(aspectStart)->logicalAnd(m_aspectFunction->isLessThanOrEqualTo(aspectEnd));
   }
   else
   {
-    // Wrapped aspect range, such as south-facing terrain spanning 0 degrees.
+    // Wrapped aspect range, such as west through north spanning 0 degrees.
     BooleanFieldFunction* aspectFromStartToNorth =
       m_aspectFunction->isGreaterThanOrEqualTo(aspectStart)->logicalAnd(m_aspectFunction->isLessThan(360.0F));
     BooleanFieldFunction* aspectFromZeroToEnd =

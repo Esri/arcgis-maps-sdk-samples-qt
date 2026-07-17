@@ -19,7 +19,6 @@
 
 // Qt headers
 #include <QColor>
-#include <QFutureWatcher>
 #include <QObject>
 
 namespace Esri::ArcGISRuntime
@@ -63,6 +62,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void loadElevationField();
+  void onContinuousFieldCreated(Esri::ArcGISRuntime::ContinuousField* continuousField);
   void buildAnalysisForScenario(SiteScenario scenario);
   void applyFieldAnalysisVisibility();
   Esri::ArcGISRuntime::FieldAnalysis* createScenarioAnalysis(float slopeMin,
@@ -90,7 +90,6 @@ private:
   Esri::ArcGISRuntime::BooleanFieldFunction* m_aboveSeaLevelSelection = nullptr;
   Esri::ArcGISRuntime::FieldAnalysis* m_gentleSouthFacingSlopesAnalysis = nullptr;
   Esri::ArcGISRuntime::FieldAnalysis* m_steepWestAndNorthFacingSlopesAnalysis = nullptr;
-  QFutureWatcher<Esri::ArcGISRuntime::ContinuousField*> m_createContinuousFieldWatcher;
 
   SiteScenario m_selectedScenario = GentleSouthFacingSlopes;
 };
