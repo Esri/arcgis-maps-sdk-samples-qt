@@ -47,7 +47,7 @@ Item {
         anchors.rightMargin: compactUi ? 10 : 16
         radius: 12
         color: palette.base
-        border.color: "black"
+        border.color: palette.mid
         border.width: 2
         opacity: 0.85
         z: 5
