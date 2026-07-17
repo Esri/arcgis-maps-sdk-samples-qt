@@ -53,7 +53,10 @@ Item {
     }
 
     Control {
-        width: Math.max(0, Math.min(380, root.width - 20))
+        readonly property real maximumWidth: Math.max(0, Math.min(380, root.width - 20))
+
+        width: sampleModel.geometryEditorStarted ? maximumWidth :
+                                                   Math.min(maximumWidth, promptLabel.implicitWidth + leftPadding + rightPadding)
         padding: 10
 
         anchors {
@@ -79,6 +82,8 @@ Item {
             spacing: 8
 
             Label {
+                id: promptLabel
+
                 visible: !sampleModel.geometryEditorStarted
                 text: qsTr("Tap a graphic to start the geometry editor.")
                 wrapMode: Text.WordWrap
