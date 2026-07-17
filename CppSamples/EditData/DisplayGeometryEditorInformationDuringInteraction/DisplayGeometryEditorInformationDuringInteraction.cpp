@@ -56,6 +56,9 @@
 #include <QFuture>
 #include <QtMath>
 
+// STL headers
+#include <cmath>
+
 using namespace Esri::ArcGISRuntime;
 
 DisplayGeometryEditorInformationDuringInteraction::DisplayGeometryEditorInformationDuringInteraction(QObject* parent /* = nullptr */) :
