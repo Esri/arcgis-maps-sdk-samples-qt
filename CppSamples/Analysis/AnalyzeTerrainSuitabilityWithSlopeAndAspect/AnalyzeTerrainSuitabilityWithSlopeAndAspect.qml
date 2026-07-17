@@ -114,7 +114,7 @@ Item {
         text: qsTr("Raster data Copyright Scottish Government and SEPA (2014)")
         font.italic: true
         font.pointSize: 12
-        color: "black"
+        color: palette.text
         font.bold: true
     }
 }
