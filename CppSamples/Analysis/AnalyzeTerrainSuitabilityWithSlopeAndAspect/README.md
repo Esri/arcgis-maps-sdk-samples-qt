@@ -25,17 +25,17 @@ When the sample opens, the map shows a preconfigured terrain suitability analysi
 
 ## Relevant API
 
-- AnalysisOverlay
-- BooleanFieldFunction
-- Colormap
-- ColormapRenderer
-- ContinuousField
-- ContinuousFieldFunction
-- DiscreteFieldFunction
-- FieldAnalysis
-- Map
-- MapQuickView
-- SpatialReference
+* AnalysisOverlay
+* BooleanFieldFunction
+* Colormap
+* ColormapRenderer
+* ContinuousField
+* ContinuousFieldFunction
+* DiscreteFieldFunction
+* FieldAnalysis
+* Map
+* MapQuickView
+* SpatialReference
 
 ## About the data
 
