@@ -70,7 +70,7 @@ Item {
       right: parent.right
       margins: root.spacing
     }
-    width: Math.max(0, Math.min(360, root.width - root.spacing * 2))
+    width: Math.max(0, Math.min(400, root.width - root.spacing * 2))
     padding: root.spacing
     background: Rectangle {
       color: palette.base
