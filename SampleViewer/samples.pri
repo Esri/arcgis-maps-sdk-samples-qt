@@ -19,6 +19,7 @@
 
 HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h" \
@@ -255,6 +256,7 @@ HEADERS += \
 
 SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
+  "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.cpp" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.cpp" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.cpp" \
@@ -491,6 +493,7 @@ SOURCES += \
 
 RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
+  "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.qrc" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qrc" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.qrc" \

@@ -59,6 +59,7 @@
 
 // All Samples
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
+#include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
@@ -386,6 +387,7 @@ void registerCppSampleClasses()
   AddIntegratedMeshLayer::init();
   AddVectorTiledLayerFromCustomStyle::init();
   AnalyzeHotspots::init();
+  AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
   Animate3DSymbols::init();
   AnimateImagesWithImageOverlay::init();
   ApplyMapAlgebra::init();

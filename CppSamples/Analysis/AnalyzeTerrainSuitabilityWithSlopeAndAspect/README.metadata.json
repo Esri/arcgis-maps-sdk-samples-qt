@@ -1,0 +1,50 @@
+{
+    "category": "Analysis",
+    "dataItems": [
+        {
+            "itemId": "aa97788593e34a32bcaae33947fdc271",
+            "path": "~/ArcGIS/Runtime/Data/raster/arran.tif"
+        }
+    ],
+    "description": "Analyze terrain suitability from an elevation raster by deriving slope and aspect.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "aspect",
+        "elevation",
+        "field analysis",
+        "map algebra",
+        "raster",
+        "slope",
+        "spatial reference",
+        "terrain",
+        "AnalysisOverlay",
+        "BooleanFieldFunction",
+        "Colormap",
+        "ColormapRenderer",
+        "ContinuousField",
+        "ContinuousFieldFunction",
+        "DiscreteFieldFunction",
+        "FieldAnalysis"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "AnalysisOverlay",
+        "BooleanFieldFunction",
+        "Colormap",
+        "ColormapRenderer",
+        "ContinuousField",
+        "ContinuousFieldFunction",
+        "DiscreteFieldFunction",
+        "FieldAnalysis"
+    ],
+    "snippets": [
+        "AnalyzeTerrainSuitabilityWithSlopeAndAspect.cpp",
+        "AnalyzeTerrainSuitabilityWithSlopeAndAspect.h",
+        "AnalyzeTerrainSuitabilityWithSlopeAndAspect.qml"
+    ],
+    "title": "Analyze terrain suitability from slope and aspect"
+}
