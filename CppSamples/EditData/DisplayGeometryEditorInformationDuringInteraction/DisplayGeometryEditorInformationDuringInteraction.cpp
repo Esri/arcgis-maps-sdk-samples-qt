@@ -265,8 +265,6 @@ Point DisplayGeometryEditorInformationDuringInteraction::firstPoint(const Geomet
     default:
       return {};
   }
-
-  return {};
 }
 
 void DisplayGeometryEditorInformationDuringInteraction::undo()
