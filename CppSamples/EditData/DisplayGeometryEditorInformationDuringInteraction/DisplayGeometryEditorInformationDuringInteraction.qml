@@ -39,9 +39,9 @@ Item {
         id: accentButton
 
         display: AbstractButton.IconOnly
-        icon.width: 24
-        icon.height: 24
-        icon.color: palette.highlightedText
+        icon.width: 32
+        icon.height: 32
+        icon.color: "#ffffff"
         opacity: enabled ? 1 : 0.3
 
         background: Rectangle {
