@@ -297,7 +297,7 @@ void DisplayGeometryEditorInformationDuringInteraction::finishEditing(bool save)
   }
 
   const Geometry result = m_geometryEditor->stop();
-  if (save && m_editingGraphic)
+  if (save && m_editingGraphic && !result.isEmpty())
   {
     m_editingGraphic->setGeometry(result);
   }
