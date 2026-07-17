@@ -72,14 +72,6 @@ Item {
     }
     width: Math.max(0, Math.min(400, root.width - root.spacing * 2))
     padding: root.spacing
-    background: Rectangle {
-      color: palette.base
-      border {
-        color: palette.dark
-        width: 1
-      }
-      radius: 4
-    }
 
     Column {
       width: parent.width
