@@ -88,7 +88,7 @@ Item {
       Label {
         width: parent.width
         wrapMode: Text.Wrap
-        text: qsTr("Pan and zoom to bring restaurants into the area of interest. Press 1-9 for details. Press Escape to dismiss callout.")
+        text: qsTr("Pan and zoom to bring restaurants into the area of interest. Press 1-9 for details. Press Escape to dismiss.")
       }
 
       Label {

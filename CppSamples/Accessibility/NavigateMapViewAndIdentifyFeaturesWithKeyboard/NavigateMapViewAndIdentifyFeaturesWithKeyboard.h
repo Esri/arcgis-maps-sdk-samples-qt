@@ -81,7 +81,6 @@ private:
   Esri::ArcGISRuntime::FeatureLayer* m_restaurantsLayer = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_labelsOverlay = nullptr;
   QVector<QPointer<Esri::ArcGISRuntime::Feature>> m_identifiedFeatures;
-  QVector<QPointer<Esri::ArcGISRuntime::Feature>> m_selectableFeatures;
   double m_areaOfInterestSize = 200.0;
   bool m_queryInProgress = false;
   bool m_refreshPending = false;

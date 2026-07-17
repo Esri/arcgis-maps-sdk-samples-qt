@@ -297,7 +297,6 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::processQueryResult(FeatureQ
     }
 
     orderedFeatures.append({feature, m_mapView->locationToScreen(point)});
-    m_identifiedFeatures.append(feature);
   }
 
   std::sort(orderedFeatures.begin(), orderedFeatures.end(), [](const OrderedFeature& first, const OrderedFeature& second)
@@ -310,6 +309,7 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::processQueryResult(FeatureQ
   for (qsizetype index = 0; index < orderedFeatures.size(); ++index)
   {
     Feature* feature = orderedFeatures.at(index).feature;
+    m_identifiedFeatures.append(feature);
     m_restaurantsLayer->selectFeature(feature);
     if (index >= 9)
     {
@@ -325,7 +325,6 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::processQueryResult(FeatureQ
     Graphic* labelGraphic = new Graphic(feature->geometry(), textSymbol, this);
     textSymbol->setParent(labelGraphic);
     m_labelsOverlay->graphics()->append(labelGraphic);
-    m_selectableFeatures.append(feature);
   }
 
   if (m_overflowVisible != overflowVisible)
@@ -351,7 +350,6 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::clearSelection()
   {
     labelGraphic->deleteLater();
   }
-  m_selectableFeatures.clear();
 
   if (m_overflowVisible)
   {
@@ -401,12 +399,12 @@ QString NavigateMapViewAndIdentifyFeaturesWithKeyboard::featureName(Feature* fea
 bool NavigateMapViewAndIdentifyFeaturesWithKeyboard::showCallout(int featureNumber)
 {
   const int featureIndex = featureNumber - 1;
-  if (!m_mapView || featureIndex < 0 || featureIndex >= m_selectableFeatures.size() || !m_selectableFeatures.at(featureIndex))
+  if (!m_mapView || featureIndex < 0 || featureIndex >= 9 || featureIndex >= m_identifiedFeatures.size() || !m_identifiedFeatures.at(featureIndex))
   {
     return false;
   }
 
-  Feature* feature = m_selectableFeatures.at(featureIndex);
+  Feature* feature = m_identifiedFeatures.at(featureIndex);
   CalloutData* calloutData = m_mapView->calloutData();
   const QString name = featureName(feature);
   const Point featureLocation(feature->geometry());
