@@ -115,6 +115,7 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::setMapView(MapQuickView* ma
   m_mapView->setSelectionProperties(SelectionProperties(selectionHalo));
   m_mapView->graphicsOverlays()->append(m_labelsOverlay);
 
+  // Wait until navigation stops before finding features in the updated view.
   connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
   {
     if (m_mapView->isNavigating())
@@ -138,6 +139,7 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::setMapView(MapQuickView* ma
 
     identifyFeatures();
   });
+  // Run the first query after the map has finished drawing.
   connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
   {
     if (drawStatus == DrawStatus::Completed && !m_initialDrawCompleted)
@@ -183,18 +185,21 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::identifyFeatures()
     return;
   }
 
+  // Keep the current callout stable and refresh after it is dismissed.
   if (calloutIsVisible())
   {
     m_refreshPending = true;
     return;
   }
 
+  // Queue one refresh instead of starting overlapping queries.
   if (m_queryInProgress)
   {
     m_refreshPending = true;
     return;
   }
 
+  // Convert the on-screen square into a map envelope for the feature query.
   const double halfSize = m_areaOfInterestSize / 2.0;
   const double centerX = m_mapView->width() / 2.0;
   const double centerY = m_mapView->height() / 2.0;
@@ -235,6 +240,7 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::identifyFeatures()
     }
     if (m_refreshPending)
     {
+      // Discard results for an old view and query the latest view instead.
       m_queryInProgress = false;
       m_refreshPending = false;
       if (queryResult)
@@ -299,6 +305,7 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::processQueryResult(FeatureQ
     orderedFeatures.append({feature, m_mapView->locationToScreen(point)});
   }
 
+  // Number features from top to bottom, then from left to right.
   std::sort(orderedFeatures.begin(), orderedFeatures.end(), [](const OrderedFeature& first, const OrderedFeature& second)
   {
     return first.screenPoint.y() == second.screenPoint.y() ? first.screenPoint.x() < second.screenPoint.x() :
@@ -311,6 +318,7 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::processQueryResult(FeatureQ
     Feature* feature = orderedFeatures.at(index).feature;
     m_identifiedFeatures.append(feature);
     m_restaurantsLayer->selectFeature(feature);
+    // Only the first nine features can be reached with the number keys.
     if (index >= 9)
     {
       continue;
@@ -339,6 +347,7 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::processQueryResult(FeatureQ
 void NavigateMapViewAndIdentifyFeaturesWithKeyboard::clearSelection()
 {
   m_restaurantsLayer->clearSelection();
+  // Remove the old number labels before creating labels for the next query.
   QList<Graphic*> labelGraphics;
   labelGraphics.reserve(m_labelsOverlay->graphics()->size());
   for (int index = 0; index < m_labelsOverlay->graphics()->size(); ++index)
@@ -357,6 +366,7 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::clearSelection()
     emit overflowVisibleChanged();
   }
 
+  // Delete every feature created from the previous query result.
   for (const QPointer<Feature>& feature : std::as_const(m_identifiedFeatures))
   {
     if (feature)
@@ -398,6 +408,7 @@ QString NavigateMapViewAndIdentifyFeaturesWithKeyboard::featureName(Feature* fea
 
 bool NavigateMapViewAndIdentifyFeaturesWithKeyboard::showCallout(int featureNumber)
 {
+  // Convert keys 1-9 into indexes 0-8 in the sorted feature list.
   const int featureIndex = featureNumber - 1;
   if (!m_mapView || featureIndex < 0 || featureIndex >= 9 || featureIndex >= m_identifiedFeatures.size() || !m_identifiedFeatures.at(featureIndex))
   {
@@ -414,6 +425,7 @@ bool NavigateMapViewAndIdentifyFeaturesWithKeyboard::showCallout(int featureNumb
     return false;
   }
 
+  // Move the leader slightly above the marker so the callout does not cover it.
   const QPointF screenPoint = m_mapView->locationToScreen(featureLocation);
   const Point leaderLocation = m_mapView->screenToLocation(screenPoint.x(), screenPoint.y() - 4.0);
   calloutData->setLocation(leaderLocation.isValid() ? leaderLocation : featureLocation);
