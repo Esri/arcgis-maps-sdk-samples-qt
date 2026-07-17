@@ -176,8 +176,8 @@ void DisplayGeometryEditorInformationDuringInteraction::onInteractionPreviewChan
     return;
   }
 
-  // Clean these up, we don't need them after we've processed the update.
-  // They won't leak, but they're owned by the GeometryEditor itself.
+  // The preview is parented to GeometryEditor, so it would be cleaned up automatically.
+  // We can delete it earlier after this callback because we do not retain it beyond this update.
   interactionPreview->deleteLater();
 
   switch (interactionPreview->interactionType())
