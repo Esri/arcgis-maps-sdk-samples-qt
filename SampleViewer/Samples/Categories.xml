@@ -47,4 +47,8 @@
      <categoryName>UtilityNetwork</categoryName>
      <categoryDisplayName>Utility Network</categoryDisplayName>
   </category>
-</sampleList>
+  <category>
+    <categoryName>Accessibility</categoryName>
+    <categoryDisplayName>Accessibility</categoryDisplayName>
+  </category>
+</samplelist>

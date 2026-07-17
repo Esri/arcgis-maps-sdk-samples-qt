@@ -58,6 +58,7 @@
 #endif
 
 // All Samples
+#include "../CppSamples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h"
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
@@ -516,6 +517,7 @@ void registerCppSampleClasses()
   MinMaxScale::init();
   MobileMap_SearchAndRoute::init();
   NavigateARouteWithRerouting::init();
+  NavigateMapViewAndIdentifyFeaturesWithKeyboard::init();
   NavigateRoute::init();
   NearestVertex::init();
   OSM_Layer::init();
