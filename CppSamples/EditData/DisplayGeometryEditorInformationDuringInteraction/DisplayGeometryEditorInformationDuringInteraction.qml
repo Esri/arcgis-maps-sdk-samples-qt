@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Controls.Basic as Basic
 import QtQuick.Layouts
 import Esri.Samples
 
@@ -32,6 +33,23 @@ Item {
     DisplayGeometryEditorInformationDuringInteractionSample {
         id: sampleModel
         mapView: mapView
+    }
+
+    component AccentButton: Basic.Button {
+        id: accentButton
+
+        display: AbstractButton.IconOnly
+        icon.width: 24
+        icon.height: 24
+        icon.color: palette.highlightedText
+        opacity: enabled ? 1 : 0.3
+
+        background: Rectangle {
+            implicitHeight: 48
+            color: accentButton.down ? Qt.darker(accentButton.palette.highlight, 1.2) :
+                                       accentButton.hovered ? Qt.lighter(accentButton.palette.highlight, 1.1) :
+                                                              accentButton.palette.highlight
+        }
     }
 
     Control {
@@ -72,36 +90,52 @@ Item {
                 columns: 2
                 visible: sampleModel.geometryEditorStarted
 
-                Button {
-                    text: qsTr("Done")
+                AccentButton {
+                    text: qsTr("Save edits")
+                    icon.source: "qrc:/Samples/EditData/DisplayGeometryEditorInformationDuringInteraction/check-circle-24.svg"
 
                     Layout.fillWidth: true
+
+                    ToolTip.visible: hovered
+                    ToolTip.text: text
 
                     onClicked: sampleModel.saveEdits()
                 }
 
-                Button {
-                    text: qsTr("Cancel")
+                AccentButton {
+                    text: qsTr("Discard edits")
+                    icon.source: "qrc:/Samples/EditData/DisplayGeometryEditorInformationDuringInteraction/circle-disallowed-24.svg"
 
                     Layout.fillWidth: true
+
+                    ToolTip.visible: hovered
+                    ToolTip.text: text
 
                     onClicked: sampleModel.cancelEdits()
                 }
 
-                Button {
+                AccentButton {
                     text: qsTr("Undo")
                     enabled: sampleModel.canUndo
+                    icon.source: "qrc:/Samples/EditData/DisplayGeometryEditorInformationDuringInteraction/undo-24.svg"
 
                     Layout.fillWidth: true
+
+                    ToolTip.visible: hovered
+                    ToolTip.text: text
 
                     onClicked: sampleModel.undo()
                 }
 
-                Button {
+                AccentButton {
                     text: qsTr("Redo")
                     enabled: sampleModel.canRedo
+                    icon.source: "qrc:/Samples/EditData/DisplayGeometryEditorInformationDuringInteraction/redo-24.svg"
 
                     Layout.fillWidth: true
+
+                    ToolTip.visible: hovered
+                    ToolTip.text: text
 
                     onClicked: sampleModel.redo()
                 }

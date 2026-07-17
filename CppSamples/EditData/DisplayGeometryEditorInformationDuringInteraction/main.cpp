@@ -31,7 +31,7 @@ void setAPIKey(const QGuiApplication& app, QString apiKey);
 int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("DisplayGeometryEditorInformationDuringInteraction"));
+  QGuiApplication::setApplicationName(QString("DisplayGeometryEditorInformationDuringInteraction"));
 
   const QString accessToken = QString("");
   setAPIKey(app, accessToken);
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 
   engine.load(QUrl("qrc:/Samples/EditData/DisplayGeometryEditorInformationDuringInteraction/main.qml"));
 
-  return app.exec();
+  return QGuiApplication::exec();
 }
 
 void setAPIKey(const QGuiApplication& app, QString apiKey)

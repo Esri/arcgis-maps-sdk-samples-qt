@@ -6,5 +6,9 @@
         <file>DisplayGeometryEditorInformationDuringInteraction.cpp</file>
         <file>main.qml</file>
         <file>README.md</file>
+        <file>check-circle-24.svg</file>
+        <file>circle-disallowed-24.svg</file>
+        <file>undo-24.svg</file>
+        <file>redo-24.svg</file>
     </qresource>
 </RCC>
