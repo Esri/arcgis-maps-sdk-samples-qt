@@ -1,0 +1,30 @@
+{
+    "category": "Edit data",
+    "description": "Use the geometry editor to see information about the previewed geometry during an editing interaction.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "draw",
+        "edit",
+        "geometry editor",
+        "interaction preview"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Geometry",
+        "GeometryEditor",
+        "GeometryEditorInteractionPreview",
+        "GeometryEditorInteractionType",
+        "Graphic",
+        "GraphicsOverlay"
+    ],
+    "snippets": [
+        "DisplayGeometryEditorInformationDuringInteraction.cpp",
+        "DisplayGeometryEditorInformationDuringInteraction.h",
+        "DisplayGeometryEditorInformationDuringInteraction.qml"
+    ],
+    "title": "Display geometry editor information during interaction"
+}
