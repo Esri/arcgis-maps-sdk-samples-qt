@@ -10,5 +10,6 @@
         <file>circle-disallowed-24.svg</file>
         <file>undo-24.svg</file>
         <file>redo-24.svg</file>
+        <file>screenshot.png</file>
     </qresource>
 </RCC>
