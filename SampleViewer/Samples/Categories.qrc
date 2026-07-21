@@ -13,7 +13,8 @@
         <file>Scenes.svg</file>
         <file>Search.svg</file>
         <file>UtilityNetwork.svg</file>
-		<file>Categories.xml</file>
+        <file>Accessibility.svg</file>
+        <file>Categories.xml</file>
         <file>BG_Analysis@2x.png</file>
         <file>BG_Analysis@3x.png</file>
         <file>BG_CloudAndPortal@2x.png</file>
@@ -53,5 +54,8 @@
         <file>BG_UtilityNetwork.png</file>
         <file>BG_UtilityNetwork@2x.png</file>
         <file>BG_UtilityNetwork@3x.png</file>
+        <file>BG_Accessibility.png</file>
+        <file>BG_Accessibility@2x.png</file>
+        <file>BG_Accessibility@3x.png</file>
     </qresource>
 </RCC>

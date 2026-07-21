@@ -1,0 +1,42 @@
+{
+  "category": "Accessibility",
+  "description": "Perform all map navigation operations using only the keyboard.",
+  "featured": true,
+  "ignore": false,
+  "images": [
+    "screenshot.png"
+  ],
+  "keywords": [
+    "WCAG",
+    "accessibility",
+    "accessible",
+    "identify",
+    "inclusive",
+    "input",
+    "interaction",
+    "keyboard",
+    "navigation",
+    "selection",
+    "Envelope",
+    "FeatureLayer",
+    "Graphic",
+    "GraphicsOverlay",
+    "Map",
+    "MapView"
+  ],
+  "redirect_from": "",
+  "relevant_apis": [
+    "Envelope",
+    "FeatureLayer",
+    "Graphic",
+    "GraphicsOverlay",
+    "Map",
+    "MapView"
+  ],
+  "snippets": [
+    "NavigateMapViewAndIdentifyFeaturesWithKeyboard.cpp",
+    "NavigateMapViewAndIdentifyFeaturesWithKeyboard.h",
+    "NavigateMapViewAndIdentifyFeaturesWithKeyboard.qml"
+  ],
+  "title": "Navigate map view and identify features with keyboard"
+}
