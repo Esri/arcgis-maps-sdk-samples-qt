@@ -366,14 +366,7 @@ void NavigateMapViewAndIdentifyFeaturesWithKeyboard::clearSelection()
     emit overflowVisibleChanged();
   }
 
-  // Delete every feature created from the previous query result.
-  for (const QPointer<Feature>& feature : std::as_const(m_identifiedFeatures))
-  {
-    if (feature)
-    {
-      feature->deleteLater();
-    }
-  }
+  qDeleteAll(m_identifiedFeatures);
   m_identifiedFeatures.clear();
 }
 

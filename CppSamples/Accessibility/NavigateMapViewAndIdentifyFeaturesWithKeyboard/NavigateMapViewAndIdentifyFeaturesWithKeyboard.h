@@ -19,7 +19,6 @@
 
 // Qt headers
 #include <QObject>
-#include <QPointer>
 #include <QVector>
 
 namespace Esri::ArcGISRuntime
@@ -80,7 +79,7 @@ private:
   Esri::ArcGISRuntime::ServiceFeatureTable* m_restaurantsTable = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_restaurantsLayer = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_labelsOverlay = nullptr;
-  QVector<QPointer<Esri::ArcGISRuntime::Feature>> m_identifiedFeatures;
+  QVector<Esri::ArcGISRuntime::Feature*> m_identifiedFeatures;
   double m_areaOfInterestSize = 200.0;
   bool m_queryInProgress = false;
   bool m_refreshPending = false;
