@@ -177,7 +177,6 @@ bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
 
 void TraceUtilityNetwork::onTaskFailed_(const Esri::ArcGISRuntime::ErrorException& exception)
 {
-  // Clear the busy indicator so the Reset and Trace buttons are re-enabled after a failure.
   setBusyIndicator(false);
 
   m_dialogText = QString(exception.error().message() + " - " + exception.error().additionalMessage());
