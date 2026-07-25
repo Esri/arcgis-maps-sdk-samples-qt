@@ -31,96 +31,80 @@ Item {
         }
     }
 
-    ColumnLayout {
+    Rectangle {
+        id: backgroundRect
         anchors {
             right: parent.right
             top: parent.top
+            margins: 10
+        }
+        color: palette.base
+        border {
+            width: 1
+            color: "darkgrey"
+        }
+        width: Math.min(controlsColumn.implicitWidth + 20, view.width - 20)
+        height: controlsColumn.implicitHeight + 20
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
-        Rectangle {
-            id: backgroundRect
-            color: palette.base
-            height: row.height * 3
-            width: row.width * 1.05
-
-            border {
-                width: 1
-                color: "darkgrey"
-            }
-            
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.LeftButton | Qt.RightButton
-                onClicked: mouse => mouse.accepted = true
-                onDoubleClicked: mouse => mouse.accepted = true
-                onWheel: wheel => wheel.accepted = true
+        ColumnLayout {
+            id: controlsColumn
+            anchors {
+                fill: parent
+                margins: 10
             }
 
-            RowLayout {
-                id: titleRow
-                anchors {
-                    left: row.left
-                    top: parent.top
-                    topMargin: 10
-                }
-                Rectangle {
-                    color: backgroundRect.color
-                    width: childrenRect.width
-                    height: childrenRect.height
-                    Label {
-                        text: qsTr("Choose category for filter barrier:")
-                        font.pixelSize: 14
-                    }
+            Label {
+                text: qsTr("Choose category for filter barrier:")
+                font.pixelSize: 14
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
+
+            ComboBox {
+                id: comboBox
+                enabled: !sampleModel.tasksRunning
+                Layout.fillWidth: true
+                model: sampleModel.categoriesList
+                onCurrentIndexChanged: {
+                    sampleModel.selectedIndex = currentIndex;
                 }
             }
 
             RowLayout {
-                id: row
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    top: titleRow.bottom
-                    topMargin: 10
-                }
-                ComboBox {
-                    id: comboBox
-                    enabled: !sampleModel.tasksRunning
-                    Layout.minimumWidth: 200
-                    model: sampleModel.categoriesList
-                    onCurrentIndexChanged: {
-                        sampleModel.selectedIndex = currentIndex;
-                    }
-                }
+                Layout.fillWidth: true
                 Button {
                     text: qsTr("Trace")
+                    Layout.fillWidth: true
+                    enabled: !sampleModel.tasksRunning
                     onClicked: {
                         sampleModel.performTrace();
                     }
-                    enabled: !sampleModel.tasksRunning
                 }
                 Button {
                     text: qsTr("Reset")
+                    Layout.fillWidth: true
+                    enabled: !sampleModel.tasksRunning
                     onClicked: {
                         sampleModel.performReset();
                     }
-                    enabled: !sampleModel.tasksRunning
                 }
             }
 
-            RowLayout {
-                id: checkBoxRow
-                anchors {
-                    top: row.bottom
-                    left: row.left
-                    topMargin: 10
-                }
-
-                CheckBox {
-                    text: qsTr("Include isolated features")
-                    enabled: !sampleModel.tasksRunning
-                    leftPadding: 0
-                    onCheckedChanged: {
-                        sampleModel.isolateFeatures = checked;
-                    }
+            CheckBox {
+                text: qsTr("Include isolated features")
+                enabled: !sampleModel.tasksRunning
+                leftPadding: 0
+                Layout.fillWidth: true
+                onCheckedChanged: {
+                    sampleModel.isolateFeatures = checked;
                 }
             }
         }

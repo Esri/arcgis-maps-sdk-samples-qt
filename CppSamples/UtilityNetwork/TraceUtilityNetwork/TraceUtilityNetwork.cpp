@@ -177,7 +177,12 @@ bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
 
 void TraceUtilityNetwork::onTaskFailed_(const Esri::ArcGISRuntime::ErrorException& exception)
 {
+  // Clear the busy indicator so the Reset and Trace buttons are re-enabled after a failure.
+  setBusyIndicator(false);
+
   m_dialogText = QString(exception.error().message() + " - " + exception.error().additionalMessage());
+  emit dialogTextChanged();
+  m_dialogVisible = true;
   emit dialogVisibleChanged();
 }
 
@@ -278,6 +283,16 @@ void TraceUtilityNetwork::updateTraceParams(UtilityElement* element)
 
 void TraceUtilityNetwork::trace(int index)
 {
+  // A trace requires at least one starting location.
+  if (m_startingLocations.isEmpty())
+  {
+    m_dialogText = QString("Add at least one starting location before running a trace.");
+    emit dialogTextChanged();
+    m_dialogVisible = true;
+    emit dialogVisibleChanged();
+    return;
+  }
+
   setBusyIndicator(true);
 
   delete m_traceParams;

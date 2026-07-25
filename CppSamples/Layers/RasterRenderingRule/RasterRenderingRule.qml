@@ -60,7 +60,8 @@ RasterRenderingRuleSample {
                 ComboBox {
                     id: renderingRulesCombo
                     property int modelWidth: 0
-                    Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+                    Layout.minimumWidth: Math.min(modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10),
+                                                  rootRectangle.width * 0.5)
                     Layout.margins: 10
                     model: renderingRuleNames
 

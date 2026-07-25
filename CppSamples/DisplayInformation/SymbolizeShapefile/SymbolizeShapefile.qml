@@ -26,6 +26,7 @@ SymbolizeShapefileSample {
 
     // add a mapView component
     MapView {
+        id: view
         anchors.fill: parent
         objectName: "mapView"
 
@@ -33,19 +34,19 @@ SymbolizeShapefileSample {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-    }
 
-    // Update the renderer on click
-    Button {
-        anchors {
-            left: parent.left
-            top: parent.top
-            margins: 10
-        }
-        text: qsTr("Change Renderer")
-        onClicked: {
-            updateRenderer();
-            visible = false;
+        // Update the renderer on click
+        Button {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.attributionTop
+                bottomMargin: 10
+            }
+            text: qsTr("Change Renderer")
+            onClicked: {
+                updateRenderer();
+                visible = false;
+            }
         }
     }
 }
