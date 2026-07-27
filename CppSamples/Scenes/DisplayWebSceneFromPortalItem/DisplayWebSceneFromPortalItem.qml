@@ -1,4 +1,4 @@
-// [WriteFile Name=OpenScene, Category=Scenes]
+// [WriteFile Name=DisplayWebSceneFromPortalItem, Category=Scenes]
 // [Legal]
 // Copyright 2018 Esri.
 //
@@ -14,30 +14,23 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef OPENSCENE_H
-#define OPENSCENE_H
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
-// Qt headers
-#include <QQuickItem>
+DisplayWebSceneFromPortalItemSample {
+    id: rootRectangle
+    clip: true
+    width: 800
+    height: 600
 
-namespace Esri::ArcGISRuntime
-{
-  class SceneQuickView;
+    SceneView {
+        objectName: "sceneView"
+        anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+    }
 }
-
-class OpenScene : public QQuickItem
-{
-  Q_OBJECT
-
-public:
-  explicit OpenScene(QQuickItem* parent = nullptr);
-  ~OpenScene() override = default;
-
-  void componentComplete() override;
-  static void init();
-
-private:
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-};
-
-#endif // OPENSCENE_H

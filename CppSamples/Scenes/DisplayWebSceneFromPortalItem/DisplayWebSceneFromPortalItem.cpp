@@ -1,4 +1,4 @@
-// [WriteFile Name=OpenScene, Category=Scenes]
+// [WriteFile Name=DisplayWebSceneFromPortalItem, Category=Scenes]
 // [Legal]
 // Copyright 2018 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "OpenScene.h"
+#include "DisplayWebSceneFromPortalItem.h"
 
 // ArcGIS Maps SDK headers
 #include "PortalItem.h"
@@ -28,26 +28,26 @@
 
 using namespace Esri::ArcGISRuntime;
 
-OpenScene::OpenScene(QQuickItem* parent /* = nullptr */) :
+DisplayWebSceneFromPortalItem::DisplayWebSceneFromPortalItem(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
 
-void OpenScene::init()
+void DisplayWebSceneFromPortalItem::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<OpenScene>("Esri.Samples", 1, 0, "OpenSceneSample");
+  qmlRegisterType<DisplayWebSceneFromPortalItem>("Esri.Samples", 1, 0, "DisplayWebSceneFromPortalItemSample");
 }
 
-void OpenScene::componentComplete()
+void DisplayWebSceneFromPortalItem::componentComplete()
 {
   QQuickItem::componentComplete();
 
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
   // Create a PortalItem with an Item ID
-  PortalItem* item = new PortalItem(QStringLiteral("31874da8a16d45bfbc1273422f772270"), this);
+  PortalItem* item = new PortalItem(QStringLiteral("c6f90b19164c4283884361005faea852"), this);
 
   // Create a scene with the Item
   Scene* scene = new Scene(item, this);

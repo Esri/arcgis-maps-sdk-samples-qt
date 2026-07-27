@@ -1,4 +1,4 @@
-// [WriteFile Name=BasicSceneView, Category=Scenes]
+// [WriteFile Name=DisplayScene, Category=Scenes]
 // [Legal]
 // Copyright 2022 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "BasicSceneView.h"
+#include "DisplayScene.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
@@ -32,7 +32,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-BasicSceneView::BasicSceneView(QObject* parent /* = nullptr */) :
+DisplayScene::DisplayScene(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
 {
@@ -46,22 +46,22 @@ BasicSceneView::BasicSceneView(QObject* parent /* = nullptr */) :
   //! [create a new elevation source]
 }
 
-BasicSceneView::~BasicSceneView() = default;
+DisplayScene::~DisplayScene() = default;
 
-void BasicSceneView::init()
+void DisplayScene::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<BasicSceneView>("Esri.Samples", 1, 0, "BasicSceneViewSample");
+  qmlRegisterType<DisplayScene>("Esri.Samples", 1, 0, "DisplaySceneSample");
 }
 
-SceneQuickView* BasicSceneView::sceneView() const
+SceneQuickView* DisplayScene::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void BasicSceneView::setSceneView(SceneQuickView* sceneView)
+void DisplayScene::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {

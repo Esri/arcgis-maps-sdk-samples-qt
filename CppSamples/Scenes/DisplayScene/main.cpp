@@ -1,5 +1,6 @@
+// [WriteFile Name=DisplayScene, Category=Scenes]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2022 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "OpenScene.h"
+#include "DisplayScene.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -23,17 +24,13 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QGuiApplication>
-#include <QQmlEngine>
-#include <QQuickView>
+#include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 
 // Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
-
-#define STRINGIZE(x) #x
-#define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char* argv[])
 {
@@ -46,7 +43,7 @@ int main(int argc, char* argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("OpenScene"));
+  app.setApplicationName(QString("DisplayScene"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -75,30 +72,19 @@ int main(int argc, char* argv[])
   }
 
   // Initialize the sample
-  OpenScene::init();
+  DisplayScene::init();
 
   // Initialize application view
-  QQuickView view;
-  view.setResizeMode(QQuickView::SizeRootObjectToView);
+  QQmlApplicationEngine engine;
+  // Add the import Path
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-
-#if defined(LINUX_PLATFORM_REPLACEMENT)
-  // on some linux platforms the string 'linux' is replaced with 1
-  // fix the replacement paths which were created
-  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-  // Add the import Path
-  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-  // Add the Runtime and Extras path
-  view.engine()->addImportPath(arcGISRuntimeImportPath);
-
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Scenes/OpenScene/OpenScene.qml"));
-
-  view.show();
+  engine.load(QUrl("qrc:/Samples/Scenes/DisplayScene/main.qml"));
 
   return app.exec();
 }
