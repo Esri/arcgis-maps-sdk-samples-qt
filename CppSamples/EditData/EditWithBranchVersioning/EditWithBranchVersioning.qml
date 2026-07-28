@@ -54,9 +54,9 @@ Item {
             id: createVersionBtn
             text: qsTr("Create Version")
             anchors {
-                left: parent.left
-                top: parent.top
-                margins: 3
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.attributionTop
+                bottomMargin: 10
             }
             enabled: !busyIndicator.visible
 
@@ -81,17 +81,19 @@ Item {
 
         Rectangle {
             id: currentVersionRect
-            anchors{
-                top: parent.top
+            anchors {
+                bottom: createVersionBtn.top
                 horizontalCenter: parent.horizontalCenter
-                margins: 3
+                bottomMargin: 10
             }
-            width: childrenRect.width;
-            height: childrenRect.height;
+            width: versionColumn.implicitWidth + 4
+            height: versionColumn.implicitHeight + 4
             color: palette.base
-            visible: currentVersionText.text !== "" ? true : false
+            visible: currentVersionText.text !== ""
 
             ColumnLayout {
+                id: versionColumn
+                anchors.centerIn: parent
                 spacing: 3
                 Label {
                     text: qsTr("Current version:")
@@ -101,6 +103,7 @@ Item {
                 Label {
                     id: currentVersionText
                     Layout.alignment: Qt.AlignHCenter
+                    horizontalAlignment: Text.AlignHCenter
                     text: model.sgdbCurrentVersion
                 }
             }
@@ -315,7 +318,7 @@ Item {
     Dialog {
         id: applyEditsDialog
         x: Math.round(parent.width - width) / 2
-        y: Math.round(parent.height - height) - view.attributionRect.height;
+        y: Math.round(parent.height - height) - 30;
 
         Label {
             id: applyEditsText

@@ -42,7 +42,6 @@ Item {
             width: childrenRect.width
             height: childrenRect.height
             color: palette.base
-            opacity: 0.8
             radius: 5
 
             // catch mouse signals from propagating to parent

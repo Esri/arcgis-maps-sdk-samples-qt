@@ -26,6 +26,7 @@ CutGeometrySample {
 
     // add a mapView component
     MapView {
+        id: view
         anchors.fill: parent
         objectName: "mapView"
 
@@ -33,27 +34,27 @@ CutGeometrySample {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-    }
 
-    Button {
-        id: cutOrResetButton
-        anchors {
-            left: parent.left
-            top: parent.top
-            margins: 10
-        }
-
-        text: qsTr("Cut")
-        onClicked: {
-            if (cutOrResetButton.text === "Cut")
-            {
-                cutPolygon();
-                cutOrResetButton.text = "Reset";
+        Button {
+            id: cutOrResetButton
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.attributionTop
+                bottomMargin: 10
             }
-            else
-            {
-                cutOrResetButton.text = "Cut";
-                resetPolygon();
+
+            text: qsTr("Cut")
+            onClicked: {
+                if (cutOrResetButton.text === "Cut")
+                {
+                    cutPolygon();
+                    cutOrResetButton.text = "Reset";
+                }
+                else
+                {
+                    cutOrResetButton.text = "Cut";
+                    resetPolygon();
+                }
             }
         }
     }

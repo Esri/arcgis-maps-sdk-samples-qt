@@ -82,6 +82,7 @@ private:
   int m_exportProgress = 0;
   int m_jobStatus = 0;
   bool m_isUsingOfflineBasemap = false;
+  bool m_exportInProgress = false;
 
   QTemporaryDir m_tempDir;
 };

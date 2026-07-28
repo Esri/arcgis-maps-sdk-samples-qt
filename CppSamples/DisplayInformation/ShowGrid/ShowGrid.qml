@@ -173,8 +173,8 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
         y: parent.height // initially display below the page
-        height: childrenRect.height + 16
-        width: childrenRect.width + 16
+        height: grid.implicitHeight + 16
+        width: grid.implicitWidth + 16
 
         color: palette.base
         radius: 4

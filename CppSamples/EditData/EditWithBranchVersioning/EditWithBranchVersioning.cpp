@@ -127,8 +127,6 @@ void EditWithBranchVersioning::onMapDoneLoading_(const Error& error)
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    m_busy = true;
-    emit busyChanged();
     // first clear the selection
     m_featureLayer->clearSelection();
 
@@ -140,11 +138,12 @@ void EditWithBranchVersioning::onMapDoneLoading_(const Error& error)
       if (m_serviceGeodatabase->versionName() == m_serviceGeodatabase->defaultVersionName())
       {
         clearSelectedFeature();
-        m_busy = false;
-        emit busyChanged();
         return;
       }
       const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+
+      m_busy = true;
+      emit busyChanged();
       moveFeature(clickedPoint);
     }
     else

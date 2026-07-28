@@ -41,14 +41,18 @@ Item {
     Dialog {
         modal: true
         standardButtons: Dialog.Ok | Dialog.Cancel
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
+        anchors.centerIn: parent
+        width: Math.min(parent.width - 40, 400)
         visible: model.terminalDialogVisisble
 
         ColumnLayout {
+            width: parent.width
+
             Label {
                 text: qsTr("Select the terminal for this junction.")
-                Layout.alignment: Qt.AlignHCenter
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
             }
 
             ComboBox {
@@ -64,13 +68,15 @@ Item {
     Dialog {
         modal: true
         standardButtons: Dialog.Ok
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
+        anchors.centerIn: parent
+        width: Math.min(parent.width - 40, 400)
         visible: model.dialogVisible
 
         Label {
+            width: parent.width
             text: model.dialogText
-            anchors.centerIn: parent
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 
