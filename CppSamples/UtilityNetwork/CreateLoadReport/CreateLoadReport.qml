@@ -20,6 +20,8 @@ import QtQuick.Layouts
 import Esri.Samples
 
 Item {
+    id: root
+
     property var phases: ["A", "AB", "ABC", "AC", "B", "BC", "C", "DeEnergized", "Unknown"]
     property var selectedPhases: ({})
     property bool reportHasRun: false
@@ -84,10 +86,12 @@ Item {
             }
 
             Row {
-                Button {
-                    text: checkBoxes.checkState !== 0 || !reportHasRun ? qsTr("Run Report") : qsTr("Reset")
+                spacing: 10
 
-                    enabled: ((reportHasRun || checkBoxes.checkState !== 0) && sampleModel.sampleStatus === 2) ? true : false
+                Button {
+                    text: qsTr("Run Report")
+
+                    enabled: checkBoxes.checkState !== 0 && sampleModel.sampleStatus === CreateLoadReportSample.SampleReady
 
                     onClicked: {
                         let phasesToRun = [];
@@ -98,6 +102,20 @@ Item {
                         sampleModel.runReport(phasesToRun);
 
                         reportHasRun = phasesToRun.length !== 0;
+                    }
+                }
+
+                Button {
+                    text: qsTr("Reset")
+                    enabled: root.reportHasRun && sampleModel.sampleStatus === CreateLoadReportSample.SampleReady
+
+                    onClicked: {
+                        for (let index = 0; index < phaseCheckBoxes.count; ++index)
+                            phaseCheckBoxes.itemAt(index).checked = false;
+
+                        root.selectedPhases = {};
+                        sampleModel.runReport([]);
+                        root.reportHasRun = false;
                     }
                 }
             }
