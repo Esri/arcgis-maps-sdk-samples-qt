@@ -1,6 +1,6 @@
-// [WriteFile Name=BasicSceneView, Category=Scenes]
+// [WriteFile Name=DisplayWebSceneFromPortalItem, Category=Scenes]
 // [Legal]
-// Copyright 2022 Esri.
+// Copyright 2018 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,41 +14,30 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef BASICSCENEVIEW_H
-#define BASICSCENEVIEW_H
+#ifndef DISPLAYWEBSCENEFROMPORTALITEM_H
+#define DISPLAYWEBSCENEFROMPORTALITEM_H
 
 // Qt headers
-#include <QObject>
+#include <QQuickItem>
 
 namespace Esri::ArcGISRuntime
 {
-  class Scene;
   class SceneQuickView;
-} // namespace Esri::ArcGISRuntime
+}
 
-Q_MOC_INCLUDE("SceneQuickView.h");
-
-class BasicSceneView : public QObject
+class DisplayWebSceneFromPortalItem : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
-
 public:
-  explicit BasicSceneView(QObject* parent = nullptr);
-  ~BasicSceneView();
+  explicit DisplayWebSceneFromPortalItem(QQuickItem* parent = nullptr);
+  ~DisplayWebSceneFromPortalItem() override = default;
 
+  void componentComplete() override;
   static void init();
 
-signals:
-  void sceneViewChanged();
-
 private:
-  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
-
-  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
-#endif // BASICSCENEVIEW_H
+#endif // DISPLAYWEBSCENEFROMPORTALITEM_H

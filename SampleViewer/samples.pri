@@ -213,7 +213,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.h" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/MissionData.h" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.h" \
-    "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.h" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.h" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h" \
@@ -221,14 +220,15 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h" \
     "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.h" \
     "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayScene/DisplayScene.h" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.h" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayWebSceneFromPortalItem/DisplayWebSceneFromPortalItem.h" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.h" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.h" \
     "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.h" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.h" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.h" \
-    "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.h" \
     "$$SAMPLEPATHCPP/Scenes/OrbitCameraAroundObject/OrbitCameraAroundObject.h" \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.h" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.h" \
@@ -451,7 +451,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.cpp" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/MissionData.cpp" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.cpp" \
-    "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.cpp" \
@@ -459,14 +458,15 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayScene/DisplayScene.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayWebSceneFromPortalItem/DisplayWebSceneFromPortalItem.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.cpp" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.cpp" \
     "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.cpp" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.cpp" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.cpp" \
-    "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.cpp" \
     "$$SAMPLEPATHCPP/Scenes/OrbitCameraAroundObject/OrbitCameraAroundObject.cpp" \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.cpp" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.cpp" \
@@ -677,7 +677,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.qrc" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.qrc" \
-    "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.qrc" \
@@ -685,14 +684,15 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayScene/DisplayScene.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayWebSceneFromPortalItem/DisplayWebSceneFromPortalItem.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.qrc" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.qrc" \
     "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.qrc" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.qrc" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.qrc" \
-    "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.qrc" \
     "$$SAMPLEPATHCPP/Scenes/OrbitCameraAroundObject/OrbitCameraAroundObject.qrc" \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.qrc" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.qrc" \

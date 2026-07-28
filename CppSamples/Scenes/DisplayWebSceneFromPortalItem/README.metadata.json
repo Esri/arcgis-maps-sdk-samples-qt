@@ -23,9 +23,9 @@
         "SceneView"
     ],
     "snippets": [
-        "OpenScene.cpp",
-        "OpenScene.h",
-        "OpenScene.qml"
+        "DisplayWebSceneFromPortalItem.cpp",
+        "DisplayWebSceneFromPortalItem.h",
+        "DisplayWebSceneFromPortalItem.qml"
     ],
-    "title": "Open a scene (portal item)"
+    "title": "Display web scene from portal item"
 }

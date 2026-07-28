@@ -242,7 +242,6 @@
 #include "../CppSamples/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.h"
 #include "../CppSamples/Scenes/Animate3DSymbols/Animate3DSymbols.h"
 #include "../CppSamples/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.h"
-#include "../CppSamples/Scenes/BasicSceneView/BasicSceneView.h"
 #include "../CppSamples/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h"
 #include "../CppSamples/Scenes/ChooseCameraController/ChooseCameraController.h"
 #include "../CppSamples/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h"
@@ -250,14 +249,15 @@
 #include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h"
 #include "../CppSamples/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.h"
 #include "../CppSamples/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h"
+#include "../CppSamples/Scenes/DisplayScene/DisplayScene.h"
 #include "../CppSamples/Scenes/DisplaySceneLayer/DisplaySceneLayer.h"
+#include "../CppSamples/Scenes/DisplayWebSceneFromPortalItem/DisplayWebSceneFromPortalItem.h"
 #include "../CppSamples/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h"
 #include "../CppSamples/Scenes/ExtrudeGraphics/ExtrudeGraphics.h"
 #include "../CppSamples/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.h"
 #include "../CppSamples/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.h"
 #include "../CppSamples/Scenes/GetElevationAtPoint/GetElevationAtPoint.h"
 #include "../CppSamples/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.h"
-#include "../CppSamples/Scenes/OpenScene/OpenScene.h"
 #include "../CppSamples/Scenes/OrbitCameraAroundObject/OrbitCameraAroundObject.h"
 #include "../CppSamples/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.h"
 #include "../CppSamples/Scenes/SceneLayerSelection/SceneLayerSelection.h"
@@ -400,7 +400,6 @@ void registerCppSampleClasses()
   ApplyUniqueValuesWithAlternateSymbols::init();
   ArcGISMapImageLayerUrl::init();
   ArcGISTiledLayerUrl::init();
-  BasicSceneView::init();
   BlendRasterLayer::init();
   BrowseBuildingFloors::init();
   BrowseOGCAPIFeatureService::init();
@@ -455,9 +454,11 @@ void registerCppSampleClasses()
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
   DisplayRouteLayer::init();
+  DisplayScene::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
   DisplayUtilityAssociations::init();
+  DisplayWebSceneFromPortalItem::init();
   DisplayWfsLayer::init();
   DistanceCompositeSymbol::init();
   DistanceMeasurementAnalysis::init();
@@ -532,7 +533,6 @@ void registerCppSampleClasses()
   OpenMapUrl::init();
   OpenMobileMap_MapPackage::init();
   OpenMobileScenePackage::init();
-  OpenScene::init();
   OrbitCameraAroundObject::init();
   PerformValveIsolationTrace::init();
   Picture_Marker_Symbol::init();

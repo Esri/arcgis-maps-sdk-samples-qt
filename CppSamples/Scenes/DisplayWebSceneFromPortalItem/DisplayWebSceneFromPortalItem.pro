@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2022 Esri.
+# Copyright 2018 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += qml quick
 
 TEMPLATE = app
-TARGET = BasicSceneView
+TARGET = DisplayWebSceneFromPortalItem
 
 include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    BasicSceneView.h
+    DisplayWebSceneFromPortalItem.h
 
 SOURCES += \
     main.cpp \
-    BasicSceneView.cpp
+    DisplayWebSceneFromPortalItem.cpp
 
-RESOURCES += BasicSceneView.qrc
+RESOURCES += DisplayWebSceneFromPortalItem.qrc
 
 #-------------------------------------------------------------------------------
 

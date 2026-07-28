@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2018 Esri.
+# Copyright 2022 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += qml quick
 
 TEMPLATE = app
-TARGET = OpenScene
+TARGET = DisplayScene
 
 include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    OpenScene.h
+    DisplayScene.h
 
 SOURCES += \
     main.cpp \
-    OpenScene.cpp
+    DisplayScene.cpp
 
-RESOURCES += OpenScene.qrc
+RESOURCES += DisplayScene.qrc
 
 #-------------------------------------------------------------------------------
 
