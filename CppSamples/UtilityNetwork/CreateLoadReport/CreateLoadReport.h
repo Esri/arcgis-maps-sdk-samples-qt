@@ -38,6 +38,7 @@ namespace Esri::ArcGISRuntime
   class UtilityTraceConditionalExpression;
   class UtilityTraceConfiguration;
   class UtilityTraceParameters;
+  class UtilityTraceResult;
 } // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
@@ -83,7 +84,8 @@ private:
   Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
   Esri::ArcGISRuntime::UtilityTraceConfiguration* createDefaultTraceConfiguration();
   QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
-  void onTraceCompleted_(const QString& codeValueName);
+  void runNextTrace_();
+  void onTraceCompleted_(const QString& codeValueName, const QList<Esri::ArcGISRuntime::UtilityTraceResult*>& results);
   void setUtilityTraceOrconditionWithCodedValue(Esri::ArcGISRuntime::CodedValue);
 
   void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
@@ -97,6 +99,7 @@ private:
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParameters = nullptr;
   QList<Esri::ArcGISRuntime::CodedValue> m_phaseList;
+  QList<Esri::ArcGISRuntime::CodedValue> m_pendingPhaseValues;
   QStringList m_activePhases;
   QVariantMap m_phaseCust;
   QVariantMap m_phaseLoad;
@@ -113,7 +116,6 @@ private:
   QString m_terminalName;
   QString m_tierName;
   const QUrl m_featureLayerUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
-  int m_traceRequestCount;
 };
 
 #endif // CREATELOADREPORT_H

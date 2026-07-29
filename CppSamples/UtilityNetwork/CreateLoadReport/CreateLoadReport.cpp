@@ -23,8 +23,8 @@
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
-#include "Authentication/AuthenticationManager.h"
 #include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/AuthenticationManager.h"
 #include "Authentication/TokenCredential.h"
 #include "CodedValueDomain.h"
 #include "ErrorException.h"
@@ -36,6 +36,7 @@
 #include "UtilityCategory.h"
 #include "UtilityCategoryComparison.h"
 #include "UtilityDomainNetwork.h"
+#include "UtilityElement.h"
 #include "UtilityElementTraceResult.h"
 #include "UtilityFunctionTraceResult.h"
 #include "UtilityNetwork.h"
@@ -53,11 +54,11 @@
 #include "UtilityTraceFunctionOutput.h"
 #include "UtilityTraceOrCondition.h"
 #include "UtilityTraceParameters.h"
-#include "UtilityTraceResultListModel.h"
 #include "UtilityTraversability.h"
 
 // Qt headers
 #include <QFuture>
+#include <QSet>
 
 using namespace Esri::ArcGISRuntime;
 using namespace Esri::ArcGISRuntime::Authentication;
@@ -219,12 +220,12 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
   m_sampleStatus = CreateLoadReport::SampleBusy;
   emit sampleStatusChanged();
 
-  QVector<CodedValue> activeValues;
+  m_pendingPhaseValues.clear();
   for (const CodedValue& codedValue : std::as_const(m_phaseList))
   {
     if (selectedPhaseNames.contains(codedValue.name()))
     {
-      activeValues.append(codedValue);
+      m_pendingPhaseValues.append(codedValue);
     }
 
     // Reset the report values
@@ -233,23 +234,43 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
 
     emit loadReportUpdated();
   }
-  m_traceRequestCount = activeValues.size();
-  for (const CodedValue& codedValue : activeValues)
-  {
-    setUtilityTraceOrconditionWithCodedValue(codedValue);
-    m_utilityNetwork->traceAsync(m_traceParameters)
-      .then(this, [this, codedValue](QList<UtilityTraceResult*>)
-    {
-      onTraceCompleted_(codedValue.name());
-    });
-  }
 
   // If no phases were selected then the sample was reset and can be marked ready
-  if (selectedPhaseNames.size() == 0)
+  if (m_pendingPhaseValues.isEmpty())
   {
     m_sampleStatus = CreateLoadReport::SampleReady;
     emit sampleStatusChanged();
+    return;
   }
+
+  runNextTrace_();
+}
+
+void CreateLoadReport::runNextTrace_()
+{
+  const CodedValue codedValue = m_pendingPhaseValues.takeFirst();
+  setUtilityTraceOrconditionWithCodedValue(codedValue);
+  m_utilityNetwork->traceAsync(m_traceParameters)
+    .then(this,
+          [this, codedValue](const QList<UtilityTraceResult*>& results)
+  {
+    onTraceCompleted_(codedValue.name(), results);
+
+    if (m_pendingPhaseValues.isEmpty())
+    {
+      m_sampleStatus = CreateLoadReport::SampleReady;
+      emit sampleStatusChanged();
+      return;
+    }
+
+    runNextTrace_();
+  })
+    .onFailed(this, [this](const ErrorException&)
+  {
+    m_pendingPhaseValues.clear();
+    m_sampleStatus = CreateLoadReport::SampleError;
+    emit sampleStatusChanged();
+  });
 }
 
 void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue codedValue)
@@ -268,16 +289,20 @@ void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue coded
   m_traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
 }
 
-void CreateLoadReport::onTraceCompleted_(const QString& codedValueName)
+void CreateLoadReport::onTraceCompleted_(const QString& codedValueName, const QList<UtilityTraceResult*>& results)
 {
-  UtilityTraceResultListModel* results = m_utilityNetwork->traceResult();
-
-  for (UtilityTraceResult* result : *results)
+  for (UtilityTraceResult* result : results)
   {
     // Get the total customers from the UtilityElementTraceResult
     if (UtilityElementTraceResult* elementResult = dynamic_cast<UtilityElementTraceResult*>(result))
     {
-      m_phaseCust[codedValueName] = elementResult->elements(this).size();
+      QSet<qint64> customerObjectIds;
+      const QList<UtilityElement*> elements = elementResult->elements(this);
+      for (const UtilityElement* element : elements)
+      {
+        customerObjectIds.insert(element->objectId());
+      }
+      m_phaseCust[codedValueName] = customerObjectIds.size();
     }
 
     // Get the total load from the UtilityFunctionTraceResult
@@ -288,12 +313,6 @@ void CreateLoadReport::onTraceCompleted_(const QString& codedValueName)
   }
 
   emit loadReportUpdated();
-  // If the trace request count is zero, all trace tasks have completed
-  if ((--m_traceRequestCount) == 0)
-  {
-    m_sampleStatus = CreateLoadReport::SampleReady;
-    emit sampleStatusChanged();
-  }
 }
 
 CreateLoadReport::~CreateLoadReport() = default;
