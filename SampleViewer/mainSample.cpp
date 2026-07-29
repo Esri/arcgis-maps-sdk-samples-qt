@@ -51,6 +51,7 @@
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
 #include "SyntaxHighlighter/SyntaxHighlighter.h"
+#include "TextDocumentUtils.h"
 #include "../CppSamples/Layers/ManageOperationalLayers/DrawOrderLayerListModel.h"
 
 #ifdef ESRI_BUILD
@@ -309,6 +310,7 @@
 
 QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+QObject* textDocumentUtilsProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 void registerClasses();
 void registerCppSampleClasses();
 
@@ -634,6 +636,7 @@ void registerClasses()
   qmlRegisterSingletonType<SampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager", &esriSampleManagerProvider);
 
   qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter", &syntaxHighlighterProvider);
+  qmlRegisterSingletonType<TextDocumentUtils>("Esri.ArcGISRuntimeSamples", 1, 0, "TextDocumentUtils", &textDocumentUtilsProvider);
   qmlRegisterUncreatableType<DataItem>("Esri.ArcGISRuntimeSamples", 1, 0, "DataItem", "DataItem is an uncreatable type");
   qmlRegisterUncreatableType<DataItemListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "DataItemListModel", "DataItemListModel is an uncreatable type");
   qmlRegisterUncreatableType<CategoryListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "CategoryListModel", "CategoryListModel is an uncreatable type");
@@ -661,4 +664,10 @@ QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine*)
 {
   static SyntaxHighlighter* syntaxHighlighter = new SyntaxHighlighter(engine);
   return syntaxHighlighter;
+}
+
+QObject* textDocumentUtilsProvider(QQmlEngine* engine, QJSEngine*)
+{
+  static TextDocumentUtils* textDocumentUtils = new TextDocumentUtils(engine);
+  return textDocumentUtils;
 }

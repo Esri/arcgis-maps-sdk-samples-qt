@@ -23,7 +23,15 @@ Rectangle {
     color: Calcite.background
     property string descriptionText: "text"
 
+    function constrainDescriptionImages() {
+        TextDocumentUtils.constrainImageWidths(textEdit.textDocument);
+    }
+
+    // Format changes also emit TextEdit.textChanged, so respond to the source property instead.
+    onDescriptionTextChanged: Qt.callLater(constrainDescriptionImages)
+
     Flickable {
+        id: descriptionFlickable
         anchors {
             margins: 15
             fill: parent
@@ -34,8 +42,8 @@ Rectangle {
 
         TextEdit {
             id: textEdit
-            anchors.margins: 15
-            width: descriptionView.width - (40)
+            width: descriptionFlickable.width
+            // Percentage image widths require wrapping to give the document a finite text width.
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             readOnly: true
             activeFocusOnPress: false
