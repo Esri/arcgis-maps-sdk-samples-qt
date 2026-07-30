@@ -179,6 +179,7 @@ HEADERS += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
     $$COMMONVIEWER/SourceCodeListModel.h \
+    $$COMMONVIEWER/TextDocumentUtils.h \
     $$COMMONVIEWER/ZipHelper.h \
     $$COMMONVIEWER/TaskCanceler.h \
     SampleDownloadState.h
@@ -200,6 +201,7 @@ SOURCES += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.cpp \
     $$COMMONVIEWER/SourceCode.cpp \
     $$COMMONVIEWER/SourceCodeListModel.cpp \
+    $$COMMONVIEWER/TextDocumentUtils.cpp \
     $$COMMONVIEWER/mainSample.cpp \
     $$COMMONVIEWER/ZipHelper.cpp
 
