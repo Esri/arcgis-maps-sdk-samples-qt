@@ -4,10 +4,10 @@
     "supportedProjectTypes": [
         "Qt4ProjectManager.Qt4Project"
     ],
-    "id": "A.Sample_ArcGISQt_CPP_300_1_0",
+    "id": "A.Sample_ArcGISQt_CPP_300_2_0",
     "category": "B.CustomProjects",
-    "trDescription": "Creates a Sample ArcGIS Maps 300.1.0 Qt Quick C++ application.",
-    "trDisplayName": "Sample ArcGIS Maps 300.1.0 C++ Qt Quick App",
+    "trDescription": "Creates a Sample ArcGIS Maps 300.2.0 Qt Quick C++ application.",
+    "trDisplayName": "Sample ArcGIS Maps 300.2.0 C++ Qt Quick App",
     "trDisplayCategory": "ArcGIS",
     "icon": "wizard.png",
     "featuresRequired": [
