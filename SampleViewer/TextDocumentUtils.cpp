@@ -26,37 +26,36 @@
 // Other headers
 #include "TextDocumentUtils.h"
 
-namespace
+struct ImageRange
 {
-  struct ImageRange
-  {
-    int position;
-    int length;
-    QTextImageFormat format;
-  };
+  int position;
+  int length;
+  QTextImageFormat format;
+};
 
-  void collectImageRanges(QTextFrame* frame, QVector<ImageRange>& imageRanges)
+static void collectImageRanges(QTextFrame* frame, QVector<ImageRange>& imageRanges)
+{
+  for (auto frameIterator = frame->begin(); !frameIterator.atEnd(); ++frameIterator)
   {
-    for (auto frameIterator = frame->begin(); !frameIterator.atEnd(); ++frameIterator)
+    if (QTextFrame* childFrame = frameIterator.currentFrame())
     {
-      if (QTextFrame* childFrame = frameIterator.currentFrame())
+      collectImageRanges(childFrame, imageRanges);
+      continue;
+    }
+
+    const QTextBlock block = frameIterator.currentBlock();
+    for (auto blockIterator = block.begin(); !blockIterator.atEnd(); ++blockIterator)
+    {
+      const QTextFragment fragment = blockIterator.fragment();
+      if (!fragment.isValid() || !fragment.charFormat().isImageFormat())
       {
-        collectImageRanges(childFrame, imageRanges);
         continue;
       }
 
-      const QTextBlock block = frameIterator.currentBlock();
-      for (auto blockIterator = block.begin(); !blockIterator.atEnd(); ++blockIterator)
-      {
-        const QTextFragment fragment = blockIterator.fragment();
-        if (fragment.isValid() && fragment.charFormat().isImageFormat())
-        {
-          imageRanges.append({fragment.position(), fragment.length(), fragment.charFormat().toImageFormat()});
-        }
-      }
+      imageRanges.append({fragment.position(), fragment.length(), fragment.charFormat().toImageFormat()});
     }
   }
-} // namespace
+}
 
 TextDocumentUtils::TextDocumentUtils(QObject* parent) :
   QObject(parent)
