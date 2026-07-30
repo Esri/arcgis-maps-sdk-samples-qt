@@ -219,7 +219,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTapGeStarted(const QMou
     .then(this,
           [this](IdentifyGraphicsOverlayResult* rawResult)
   {
-    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
+    const std::unique_ptr<IdentifyGraphicsOverlayResult> identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
     if (!identifyResult || identifyResult->graphics().isEmpty())
     {
       m_editingGraphic = nullptr;
@@ -289,7 +289,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTapGeStarted(const QMou
         default:
           break;
       }
-      m_mapView->setViewpointAsync(!targetPoint.isEmpty() ? targetPoint : geometry.extent().center(), m_mapView->mapScale());
+      m_mapView->setViewpointAsync(Viewpoint(!targetPoint.isEmpty() ? targetPoint : geometry.extent().center(), m_mapView->mapScale()));
 
       // Hide the selected graphic while editing.
       m_editingGraphic->setVisible(false);
