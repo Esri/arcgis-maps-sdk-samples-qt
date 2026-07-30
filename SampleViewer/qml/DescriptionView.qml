@@ -43,7 +43,6 @@ Rectangle {
         TextEdit {
             id: textEdit
             width: descriptionFlickable.width
-            // Percentage image widths require wrapping to give the document a finite text width.
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             readOnly: true
             activeFocusOnPress: false
