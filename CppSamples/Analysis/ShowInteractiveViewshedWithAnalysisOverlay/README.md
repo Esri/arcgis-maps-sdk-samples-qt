@@ -4,7 +4,7 @@ Perform an interactive viewshed analysis to determine visible and non-visible ar
 
 ![](screenshot.png)
 
-# Use case
+## Use case
 
 A viewshed analysis calculates the visible and non-visible areas from an observer's location, based on factors such as elevation and topographic features. For example, an interactive viewshed analysis can be used to identify which areas can be seen from a helicopter moving along a given flight path for monitoring wildfires while taking parameters such as height, field of view, and heading into account to give immediate visual feedback. A user could further extend their viewshed analysis calculations by using map algebra to e.g. only return viewshed results in geographical areas not covered in forest if they have an additional land cover raster dataset.
 
