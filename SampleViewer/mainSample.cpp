@@ -58,6 +58,7 @@
 #endif
 
 // All Samples
+#include "../CppSamples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h"
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
@@ -66,6 +67,8 @@
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h"
+#include "../CppSamples/Analysis/ShowLineOfSightAnalysisInMap/ShowLineOfSightAnalysisInMap.h"
+#include "../CppSamples/Analysis/ShowInteractiveViewshedWithAnalysisOverlay/ShowInteractiveViewshedWithAnalysisOverlay.h"
 #include "../CppSamples/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
 #include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
@@ -99,6 +102,7 @@
 #include "../CppSamples/EditData/EditFeatureAttachments/EditFeatureAttachments.h"
 #include "../CppSamples/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h"
 #include "../CppSamples/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.h"
+#include "../CppSamples/EditData/DisplayGeometryEditorInformationDuringInteraction/DisplayGeometryEditorInformationDuringInteraction.h"
 #include "../CppSamples/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h"
 #include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
 #include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
@@ -238,7 +242,6 @@
 #include "../CppSamples/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.h"
 #include "../CppSamples/Scenes/Animate3DSymbols/Animate3DSymbols.h"
 #include "../CppSamples/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.h"
-#include "../CppSamples/Scenes/BasicSceneView/BasicSceneView.h"
 #include "../CppSamples/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h"
 #include "../CppSamples/Scenes/ChooseCameraController/ChooseCameraController.h"
 #include "../CppSamples/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h"
@@ -246,14 +249,15 @@
 #include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h"
 #include "../CppSamples/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.h"
 #include "../CppSamples/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h"
+#include "../CppSamples/Scenes/DisplayScene/DisplayScene.h"
 #include "../CppSamples/Scenes/DisplaySceneLayer/DisplaySceneLayer.h"
+#include "../CppSamples/Scenes/DisplayWebSceneFromPortalItem/DisplayWebSceneFromPortalItem.h"
 #include "../CppSamples/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h"
 #include "../CppSamples/Scenes/ExtrudeGraphics/ExtrudeGraphics.h"
 #include "../CppSamples/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.h"
 #include "../CppSamples/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.h"
 #include "../CppSamples/Scenes/GetElevationAtPoint/GetElevationAtPoint.h"
 #include "../CppSamples/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.h"
-#include "../CppSamples/Scenes/OpenScene/OpenScene.h"
 #include "../CppSamples/Scenes/OrbitCameraAroundObject/OrbitCameraAroundObject.h"
 #include "../CppSamples/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.h"
 #include "../CppSamples/Scenes/SceneLayerSelection/SceneLayerSelection.h"
@@ -295,6 +299,10 @@
 #ifdef SHOW_RASTER_FUNCTION_SAMPLE
 #include "../CppSamples/Layers/RasterFunctionFile/RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
+
+#ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
+#include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
+#endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -392,7 +400,6 @@ void registerCppSampleClasses()
   ApplyUniqueValuesWithAlternateSymbols::init();
   ArcGISMapImageLayerUrl::init();
   ArcGISTiledLayerUrl::init();
-  BasicSceneView::init();
   BlendRasterLayer::init();
   BrowseBuildingFloors::init();
   BrowseOGCAPIFeatureService::init();
@@ -447,9 +454,11 @@ void registerCppSampleClasses()
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
   DisplayRouteLayer::init();
+  DisplayScene::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
   DisplayUtilityAssociations::init();
+  DisplayWebSceneFromPortalItem::init();
   DisplayWfsLayer::init();
   DistanceCompositeSymbol::init();
   DistanceMeasurementAnalysis::init();
@@ -458,6 +467,7 @@ void registerCppSampleClasses()
   EditFeatureAttachments::init();
   EditFeaturesWithFeatureLinkedAnnotation::init();
   EditGeodatabaseWithTransactions::init();
+  DisplayGeometryEditorInformationDuringInteraction::init();
   EditGeometriesWithProgrammaticReticleTool::init();
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
@@ -514,6 +524,7 @@ void registerCppSampleClasses()
   MinMaxScale::init();
   MobileMap_SearchAndRoute::init();
   NavigateARouteWithRerouting::init();
+  NavigateMapViewAndIdentifyFeaturesWithKeyboard::init();
   NavigateRoute::init();
   NearestVertex::init();
   OSM_Layer::init();
@@ -522,7 +533,6 @@ void registerCppSampleClasses()
   OpenMapUrl::init();
   OpenMobileMap_MapPackage::init();
   OpenMobileScenePackage::init();
-  OpenScene::init();
   OrbitCameraAroundObject::init();
   PerformValveIsolationTrace::init();
   Picture_Marker_Symbol::init();
@@ -563,6 +573,8 @@ void registerCppSampleClasses()
   ShowExploratoryViewshedFromCameraInScene::init();
   ShowExploratoryViewshedFromGeoElementInScene::init();
   ShowExploratoryViewshedFromPointInScene::init();
+  ShowLineOfSightAnalysisInMap::init();
+  ShowInteractiveViewshedWithAnalysisOverlay::init();
   ShowViewshedCalculatedFromGeoprocessingTask::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();
@@ -604,6 +616,10 @@ void registerCppSampleClasses()
 #ifdef SHOW_RASTER_FUNCTION_SAMPLE
   RasterFunctionFile::init();
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
+
+#ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
+  AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
+#endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
 
 #ifdef LOCALSERVER_SUPPORTED
   LocalServerServices::init();

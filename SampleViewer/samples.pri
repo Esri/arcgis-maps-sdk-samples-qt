@@ -18,6 +18,7 @@
 #-------------------------------------------------
 
 HEADERS += \
+    "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.h" \
@@ -26,6 +27,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowLineOfSightAnalysisInMap/ShowLineOfSightAnalysisInMap.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowInteractiveViewshedWithAnalysisOverlay/ShowInteractiveViewshedWithAnalysisOverlay.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h" \
@@ -61,6 +64,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h" \
     "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.h" \
+    "$$SAMPLEPATHCPP/EditData/DisplayGeometryEditorInformationDuringInteraction/DisplayGeometryEditorInformationDuringInteraction.h" \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
@@ -209,7 +213,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.h" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/MissionData.h" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.h" \
-    "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.h" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.h" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h" \
@@ -217,14 +220,15 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h" \
     "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.h" \
     "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayScene/DisplayScene.h" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.h" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayWebSceneFromPortalItem/DisplayWebSceneFromPortalItem.h" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.h" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.h" \
     "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.h" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.h" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.h" \
-    "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.h" \
     "$$SAMPLEPATHCPP/Scenes/OrbitCameraAroundObject/OrbitCameraAroundObject.h" \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.h" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.h" \
@@ -252,6 +256,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.h"
 
 SOURCES += \
+    "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.cpp" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.cpp" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.cpp" \
@@ -260,6 +265,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowLineOfSightAnalysisInMap/ShowLineOfSightAnalysisInMap.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowInteractiveViewshedWithAnalysisOverlay/ShowInteractiveViewshedWithAnalysisOverlay.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.cpp" \
@@ -295,6 +302,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.cpp" \
+    "$$SAMPLEPATHCPP/EditData/DisplayGeometryEditorInformationDuringInteraction/DisplayGeometryEditorInformationDuringInteraction.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
@@ -443,7 +451,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.cpp" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/MissionData.cpp" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.cpp" \
-    "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.cpp" \
@@ -451,14 +458,15 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayScene/DisplayScene.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayWebSceneFromPortalItem/DisplayWebSceneFromPortalItem.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.cpp" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.cpp" \
     "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.cpp" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.cpp" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.cpp" \
-    "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.cpp" \
     "$$SAMPLEPATHCPP/Scenes/OrbitCameraAroundObject/OrbitCameraAroundObject.cpp" \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.cpp" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.cpp" \
@@ -486,6 +494,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.cpp"
 
 RESOURCES += \
+    "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.qrc" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qrc" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.qrc" \
@@ -494,6 +503,8 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowLineOfSightAnalysisInMap/ShowLineOfSightAnalysisInMap.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowInteractiveViewshedWithAnalysisOverlay/ShowInteractiveViewshedWithAnalysisOverlay.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.qrc" \
@@ -527,6 +538,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.qrc" \
+    "$$SAMPLEPATHCPP/EditData/DisplayGeometryEditorInformationDuringInteraction/DisplayGeometryEditorInformationDuringInteraction.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.qrc" \
@@ -665,7 +677,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.qrc" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.qrc" \
-    "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.qrc" \
@@ -673,14 +684,15 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayScene/DisplayScene.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayWebSceneFromPortalItem/DisplayWebSceneFromPortalItem.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.qrc" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.qrc" \
     "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.qrc" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.qrc" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.qrc" \
-    "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.qrc" \
     "$$SAMPLEPATHCPP/Scenes/OrbitCameraAroundObject/OrbitCameraAroundObject.qrc" \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.qrc" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.qrc" \
@@ -776,4 +788,21 @@ win32|android|ios {
 
   RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/RasterFunctionFile/RasterFunctionFile.qrc"
+}
+
+# Exclude AnalyzeTerrainSuitabilityWithSlopeAndAspect from Windows.
+!win32 {
+  DEFINES += SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
+
+  INCLUDEPATH += \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect"
+
+  HEADERS += \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
+
+  SOURCES += \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.cpp"
+
+  RESOURCES += \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.qrc"
 }

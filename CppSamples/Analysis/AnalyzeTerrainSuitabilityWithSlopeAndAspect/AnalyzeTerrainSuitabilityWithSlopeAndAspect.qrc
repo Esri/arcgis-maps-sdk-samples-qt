@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>AnalyzeTerrainSuitabilityWithSlopeAndAspect.qml</file>
+        <file>AnalyzeTerrainSuitabilityWithSlopeAndAspect.h</file>
+        <file>AnalyzeTerrainSuitabilityWithSlopeAndAspect.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

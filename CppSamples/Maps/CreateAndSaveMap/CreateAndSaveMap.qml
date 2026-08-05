@@ -50,6 +50,7 @@ CreateAndSaveMapSample {
     MapView {
         id: mapView
         objectName: "mapView"
+        visible: StackView.status === StackView.Active
 
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation

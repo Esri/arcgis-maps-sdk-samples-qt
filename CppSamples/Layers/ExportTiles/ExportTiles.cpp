@@ -47,6 +47,9 @@
 
 using namespace Esri::ArcGISRuntime;
 
+static constexpr double s_minScale = 10000000;
+static const QUrl s_worldOceanBaseForExportUrl("https://tiledbasemaps.arcgis.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer");
+
 ExportTiles::ExportTiles(QQuickItem* parent) :
   QQuickItem(parent)
 {
@@ -67,11 +70,12 @@ void ExportTiles::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
 
-  // create a tiled basemap
-  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImagery, this);
+  // create a tiled basemap from a map service that supports tile export
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(s_worldOceanBaseForExportUrl, this);
+  Basemap* basemap = new Basemap(tiledLayer, this);
 
-  // create an export tile cache task when basemap has finished loading
-  connect(basemap, &Basemap::doneLoading, this, [this]()
+  // create an export tile cache task when the tiled layer has finished loading
+  connect(tiledLayer, &ArcGISTiledLayer::doneLoading, this, [this]()
   {
     if (!m_map->basemap()->baseLayers()->isEmpty())
     {
@@ -81,9 +85,10 @@ void ExportTiles::componentComplete()
 
   // create a new map instance
   m_map = new Map(basemap, this);
+  m_map->setMinScale(s_minScale);
 
   // set an initial viewpoint
-  m_map->setInitialViewpoint(Viewpoint(35, -117, 1e7));
+  m_map->setInitialViewpoint(Viewpoint(35, -117, s_minScale));
 
   // set map on the map view
   m_mapView->setMap(m_map);

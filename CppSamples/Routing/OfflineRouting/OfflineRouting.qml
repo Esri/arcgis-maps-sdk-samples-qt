@@ -29,30 +29,62 @@ Item {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
+
     }
 
-    RowLayout {
+    Rectangle {
+        id: backgroundRect
         anchors {
-            left: parent.left
+            right: parent.right
             top: parent.top
+            margins: 10
+        }
+        color: palette.base
+        border {
+            width: 1
+            color: "darkgrey"
+        }
+        width: Math.min(controlsColumn.implicitWidth + 20, view.width - 20)
+        height: controlsColumn.implicitHeight + 20
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
-        ComboBox {
-            id: comboBox
-            Layout.fillWidth: true
-            model: routingModel.travelModeNames
-            onCurrentIndexChanged: {
-                routingModel.travelModeIndex = currentIndex;
-                routingModel.findRoute();
+        ColumnLayout {
+            id: controlsColumn
+            anchors {
+                fill: parent
+                margins: 10
             }
-        }
 
-        Button {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            text: qsTr("Reset")
-            onClicked: {
-                routingModel.resetMap();
+            Label {
+                text: qsTr("Travel mode:")
+                font.pixelSize: 14
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
+
+            ComboBox {
+                id: comboBox
+                Layout.fillWidth: true
+                model: routingModel.travelModeNames
+                onCurrentIndexChanged: {
+                    routingModel.travelModeIndex = currentIndex;
+                    routingModel.findRoute();
+                }
+            }
+
+            Button {
+                text: qsTr("Reset")
+                Layout.fillWidth: true
+                onClicked: {
+                    routingModel.resetMap();
+                }
             }
         }
     }

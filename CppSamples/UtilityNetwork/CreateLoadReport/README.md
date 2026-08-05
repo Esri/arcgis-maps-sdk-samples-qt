@@ -10,7 +10,7 @@ You can use a load report to display the customers per phase as well as the load
 
 ## How to use the sample
 
-Select phases to be included in the report. Press the "Run Report" button to initiate a downstream trace on the network and create a load report. Pressing "Run Report" again will generate a new load report. Deselect all phases and press the "Reset" button to clear the report.
+Choose phases to be included in the report. Click "Run Report" to initiate a downstream trace on the network and create a load report. Click "Reset" to clear the phases and start over.
 
 ## How it works
 
@@ -22,7 +22,7 @@ Select phases to be included in the report. Press the "Run Report" button to ini
 6. Reset the `functions` property of the trace configuration with a new `UtilityTraceFunction` adding a "Service Load" network attribute where this category comparison applies. This will limit the function results.
 7. Set `outputCondition` with the category comparison to limit the element results.
 8. Get a base condition from the utility tier's default trace configuration.
-9. Create `UtilityTraceParameters` passing in `downstream` utility trace type and the default starting location. Set its `traceConfiguration` property with the trace configuration above.
+9. Create `UtilityTraceParameters` passing in `downstream` utility trace type and the default starting location. Set its `traceConfiguration` property with the trace configuration above and set `includeBarriers` to `false`.
 10. Populate a list of phases using the network attribute's `codedValues` property.
 11. When the "Run Report" button is tapped, run a trace for every checked `CodedValue` in the phases list. Do this by creating a `UtilityTraceOrCondition` with the base condition and a `UtilityNetworkAttributeComparison` where the "Phases Current" network attribute does not include the coded value.
 12. Display the count of "Total Customers" using the `elements` property of the result, and the result of "Total Load" using the first and only output in `functionOutputs` property.

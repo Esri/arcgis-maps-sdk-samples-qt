@@ -1,0 +1,49 @@
+{
+    "category": "Analysis",
+    "dataItems": [
+        {
+            "itemId": "aa97788593e34a32bcaae33947fdc271",
+            "path": "~/ArcGIS/Runtime/Data/raster/arran.tif"
+        }
+    ],
+    "description": "Evaluate line of sight from multiple observers to a single target in a map using local elevation data.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "analysis",
+        "elevation",
+        "line of sight",
+        "map view",
+        "spatial analysis",
+        "terrain",
+        "visibility",
+        "ContinuousField",
+        "GeometryEngine",
+        "GraphicsOverlay",
+        "LineOfSight",
+        "LineOfSightFunction",
+        "LineOfSightParameters",
+        "LineOfSightPosition",
+        "ObserverTargetPairs"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ContinuousField",
+        "GeometryEngine",
+        "GraphicsOverlay",
+        "LineOfSight",
+        "LineOfSightFunction",
+        "LineOfSightParameters",
+        "LineOfSightPosition",
+        "ObserverTargetPairs"
+    ],
+    "snippets": [
+        "ShowLineOfSightAnalysisInMap.cpp",
+        "ShowLineOfSightAnalysisInMap.h",
+        "ShowLineOfSightAnalysisInMap.qml"
+    ],
+    "title": "Show line of sight analysis in map"
+}

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>NavigateMapViewAndIdentifyFeaturesWithKeyboard.qml</file>
+        <file>NavigateMapViewAndIdentifyFeaturesWithKeyboard.h</file>
+        <file>NavigateMapViewAndIdentifyFeaturesWithKeyboard.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

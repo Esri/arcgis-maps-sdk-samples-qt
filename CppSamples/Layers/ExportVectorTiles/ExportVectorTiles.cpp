@@ -105,6 +105,12 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
     return;
   }
 
+  if (m_exportInProgress)
+  {
+    return;
+  }
+  m_exportInProgress = true;
+
   // Get the first layer of the basemap baselayers as a vector tiled layer for export
   ArcGISVectorTiledLayer* vectorTiledLayer = static_cast<ArcGISVectorTiledLayer*>(m_map->basemap()->baseLayers()->first());
   ExportVectorTilesTask* exportTask = new ExportVectorTilesTask(vectorTiledLayer->url(), this);
@@ -136,6 +142,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
 
     connect(m_exportJob, &ExportVectorTilesJob::jobDone, this, [this]()
     {
+      m_exportInProgress = false;
       if (m_exportJob->error().isEmpty())
       {
         VectorTileCache* vectorTileCache = m_exportJob->result()->vectorTileCache();
@@ -176,6 +183,7 @@ void ExportVectorTiles::cancel()
 
 void ExportVectorTiles::reset()
 {
+  m_exportInProgress = false;
   if (m_isUsingOfflineBasemap)
   {
     m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreetsNight, this));

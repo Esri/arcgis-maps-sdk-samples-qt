@@ -267,10 +267,13 @@ Item {
                     width: parent.width * 0.2
                     height: parent.height
                     Label {
-                        anchors.centerIn: parent
+                        anchors.fill: parent
+                        anchors.margins: 4
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
                         text: qsTr("Object ID")
                         font.bold: true
-
                     }
                 }
                 Rectangle {
@@ -279,7 +282,11 @@ Item {
                     width: parent.width * 0.8
                     height: parent.height
                     Label {
-                        anchors.centerIn: parent
+                        anchors.fill: parent
+                        anchors.margins: 4
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
                         text: qsTr("Timestamp")
                         font.bold: true
                     }
@@ -296,9 +303,12 @@ Item {
                     width: parent.width * 0.2
                     height: parent.height
                     Label {
-                        anchors.centerIn: parent
+                        anchors.fill: parent
+                        anchors.margins: 4
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
                         text: featureOidRole
-
                     }
                 }
                 Rectangle {
@@ -307,7 +317,11 @@ Item {
                     width: parent.width * 0.8
                     height: parent.height
                     Label {
-                        anchors.centerIn: parent
+                        anchors.fill: parent
+                        anchors.margins: 4
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
                         text: featureTimestampRole
                     }
                 }

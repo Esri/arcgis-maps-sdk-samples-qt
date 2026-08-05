@@ -48,6 +48,13 @@ Item {
         mapView: view
     }
 
+    Connections {
+        target: model
+        function onSymbolResultsChanged() {
+            Qt.callLater(updateSymbol);
+        }
+    }
+
     Rectangle {
         anchors {
             fill: optionGrid
@@ -88,7 +95,7 @@ Item {
         SymbolComboBox {
             id: eyeComboBox
             model: model.eyesResults
-            onCurrentTextChanged: updateSymbol()
+            onCurrentTextChanged: Qt.callLater(updateSymbol)
         }
 
         Label {
@@ -98,7 +105,7 @@ Item {
         SymbolComboBox {
             id: mouthComboBox
             model: model.mouthResults
-            onCurrentTextChanged: updateSymbol()
+            onCurrentTextChanged: Qt.callLater(updateSymbol)
         }
 
         Label {
@@ -108,7 +115,7 @@ Item {
         SymbolComboBox {
             id: hatComboBox
             model: model.hatResults
-            onCurrentTextChanged: updateSymbol()
+            onCurrentTextChanged: Qt.callLater(updateSymbol)
         }
 
         Label {
@@ -118,7 +125,7 @@ Item {
         ComboBox {
             id: colorComboBox
             model: ["yellow", "green", "pink"]
-            onCurrentTextChanged: updateSymbol()
+            onCurrentTextChanged: Qt.callLater(updateSymbol)
         }
 
         Label {
@@ -131,7 +138,7 @@ Item {
             from: 1
             to: 60
             value: 40
-            onValueChanged: updateSymbol()
+            onValueChanged: Qt.callLater(updateSymbol)
         }
 
         Label {

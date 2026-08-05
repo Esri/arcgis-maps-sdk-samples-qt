@@ -71,6 +71,7 @@ class SampleManager : public QObject
   Q_PROPERTY(QUrl qtSdkUrl READ qtSdkUrl NOTIFY sampleInitComplete)
   Q_PROPERTY(QUrl qtSamplesUrl READ qtSamplesUrl NOTIFY sampleInitComplete)
   Q_PROPERTY(QString api READ api CONSTANT)
+  Q_PROPERTY(bool showApiKeyOption READ showApiKeyOption CONSTANT)
   Q_PROPERTY(Reachability reachability READ reachability NOTIFY reachabilityChanged)
   Q_PROPERTY(DownloadsManager* downloadsManager READ downloadsManager CONSTANT)
   Q_PROPERTY(SampleListModel* favoriteSamples READ favoriteSamples NOTIFY favoriteSamplesChanged)
@@ -103,8 +104,12 @@ public:
   // Utility methods
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
-  Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
+  Q_INVOKABLE void setCurrentApiKeyToMapsSDK();
+  Q_INVOKABLE void unsetApiKeyFromMapsSDK();
+  Q_INVOKABLE void setApiKey(const QString& enteredApiKey);
+  Q_INVOKABLE bool showApiKeyOption() const;
   Q_INVOKABLE void resetAuthenticationState();
+  Q_INVOKABLE void moveToBackgroundAndroid();
 
   // Favorites
   Q_INVOKABLE void addSampleToFavorites(Sample* sample);
@@ -142,11 +147,14 @@ signals:
   void currentSourceCodeChanged();
   void reachabilityChanged();
   void favoriteSamplesChanged();
+  void backPressed();
 
 protected:
   void buildCategoriesList();
   SampleCategory* createCategory(const QString& name, const QString& displayName, const QDir& dir);
   bool appendCategoryToManager(SampleCategory* category);
+
+  bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
   SampleListModel* buildSamplesList(const QDir& dir, const QString& prefix);
@@ -161,6 +169,7 @@ private:
   void setCurrentMode(const CurrentMode& mode);
 
   Sample* currentSample() const;
+  bool currentSampleSupportsApiKey() const;
   void cacheToolkitChallengeHandler();
   void setCurrentSample(Sample* sample);
   void setCurrentSample(const QVariant& sample);

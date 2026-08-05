@@ -30,6 +30,21 @@ Item {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
+
+        Button {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.attributionTop
+                bottomMargin: 10
+            }
+            text: qsTr("Save kmz file")
+
+            enabled: model.busy === false
+
+            onClicked: {
+                model.saveKml();
+            }
+        }
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
@@ -38,21 +53,6 @@ Item {
         mapView: view
 
         onKmlSaveCompleted: saveCompleteDialog.open();
-    }
-
-    Button {
-        anchors{
-            left: parent.left
-            top: parent.top
-            margins: 3
-        }
-        text: qsTr("Save kmz file")
-
-        enabled: model.busy === false
-
-        onClicked: {
-            model.saveKml();
-        }
     }
 
     BusyIndicator {

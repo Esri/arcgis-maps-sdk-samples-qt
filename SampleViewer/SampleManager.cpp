@@ -33,6 +33,7 @@
 #include <QFileInfo>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QKeyEvent>
 #include <QNetworkProxy>
 #include <QQmlEngine>
 #include <QSet>
@@ -43,12 +44,19 @@
 #include <QVariant>
 #include <QVariantList>
 #include <QVariantMap>
+#include <QWindow>
 
 // STL headers
 #include <NetworkRequestProgress.h>
 
 // Other headers
 #include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
+
+// Platform specific headers
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#include <QCoreApplication>
+#endif
 
 // toolkit authentication support
 #include "AuthenticatorController.h"
@@ -89,7 +97,7 @@ static QString homePath();
 namespace
 {
   QString apiKey = ""; // Provide your API key here
-}
+} // namespace
 
 SampleManager::SampleManager(QObject* parent) :
   QObject(parent),
@@ -176,6 +184,21 @@ DownloadsManager* SampleManager::downloadsManager() const
 
 void SampleManager::init()
 {
+  // Install event filter so SampleManager::eventFilter() runs
+  connect(qApp, &QGuiApplication::focusWindowChanged, this, [this](QWindow* window)
+  {
+    if (window)
+    {
+      window->installEventFilter(this);
+    }
+  });
+
+  // If window is already focused
+  if (QWindow* window = qApp->focusWindow())
+  {
+    window->installEventFilter(this);
+  }
+
   m_featuredSamples = new SampleListModel(this);
   m_offlineDataSamples = new SampleListModel(this);
 
@@ -298,6 +321,19 @@ bool SampleManager::appendCategoryToManager(SampleCategory* category)
   }
 
   return false;
+}
+
+bool SampleManager::eventFilter(QObject* obj, QEvent* event)
+{
+  if (event->type() == QEvent::KeyRelease)
+  {
+    if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Back)
+    {
+      emit backPressed();
+      return true;
+    }
+  }
+  return QObject::eventFilter(obj, event);
 }
 
 // Build the Samples List
@@ -434,20 +470,29 @@ void SampleManager::setCurrentSample(Sample* sample)
   cacheToolkitChallengeHandler();
   m_currentSample = sample;
 
-  // NOTE - currently we know we cannot set an API Key for the
-  // following samples since they use named user login instead.
-
-  const QString sampleName = m_currentSample->name().toString();
-  if (sampleName == "Create and save map" || sampleName == "Add items to portal" || sampleName == "Search for web map by keyword")
+  if (currentSampleSupportsApiKey())
   {
-    setApiKey(false);
+    setCurrentApiKeyToMapsSDK();
   }
   else
   {
-    setApiKey(true);
+    unsetApiKeyFromMapsSDK();
   }
 
   emit currentSampleChanged();
+}
+
+bool SampleManager::currentSampleSupportsApiKey() const
+{
+  // NOTE - currently we know we cannot set an API Key for the
+  // following samples since they use named user login instead.
+  if (!m_currentSample)
+  {
+    return true;
+  }
+
+  const QString sampleName = m_currentSample->name().toString();
+  return sampleName != "Create and save map" && sampleName != "Add items to portal" && sampleName != "Search for web map by keyword";
 }
 
 void SampleManager::setCurrentSample(const QVariant& sample)
@@ -470,21 +515,59 @@ void SampleManager::setCurrentCategory(SampleCategory* category)
   emit currentCategoryChanged();
 }
 
-void SampleManager::setApiKey(bool isSupportsApiKey)
+void SampleManager::setCurrentApiKeyToMapsSDK()
 {
-#ifdef SAMPLE_VIEWER_API_KEY
-  // If the API key identifier is defined in the respective .pro file it will be used here
-  // Otherwise use the API key provided by the user at the top of this file
-  apiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
-#endif
+  QString sampleApiKey = apiKey;
 
-  if (isSupportsApiKey && apiKey == "")
+  if (sampleApiKey.isEmpty())
+  {
+#ifdef SAMPLE_VIEWER_API_KEY
+    // If the API key identifier is defined in the respective .pro file it will be used here
+    // Otherwise use the API key provided by the user at the top of this file
+    sampleApiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
+#endif
+  }
+
+  if (sampleApiKey.isEmpty())
   {
     qWarning() << "This sample expects an API key to be set, but none was provided. Please provide an API key in SampleViewer/SampleManager.cpp";
   }
-  const QString sampleApiKey = isSupportsApiKey ? apiKey : ""; // empty string will "unset" the key
   // set apikey for the sample viewer
   ArcGISRuntimeEnvironment::setApiKey(sampleApiKey);
+}
+
+void SampleManager::unsetApiKeyFromMapsSDK()
+{
+  // empty string will "unset" the key
+  ArcGISRuntimeEnvironment::setApiKey("");
+}
+
+bool SampleManager::showApiKeyOption() const
+{
+#ifdef SHOW_APIKEY_OPTION
+  return QString(QUOTE(SHOW_APIKEY_OPTION)) == "true";
+#else
+  return false;
+#endif
+}
+
+void SampleManager::setApiKey(const QString& enteredApiKey)
+{
+  if (apiKey == enteredApiKey)
+  {
+    return;
+  }
+
+  apiKey = enteredApiKey;
+
+  if (currentSampleSupportsApiKey())
+  {
+    setCurrentApiKeyToMapsSDK();
+  }
+  else
+  {
+    unsetApiKeyFromMapsSDK();
+  }
 }
 
 void SampleManager::resetAuthenticationState()
@@ -507,6 +590,14 @@ void SampleManager::resetAuthenticationState()
   {
     authController->cancelOutstandingChallenges();
   }
+}
+
+void SampleManager::moveToBackgroundAndroid()
+{
+#ifdef Q_OS_ANDROID
+  QJniObject activity = QJniObject::callStaticObjectMethod("org/qtproject/qt/android/QtNative", "activity", "()Landroid/app/Activity;");
+  activity.callMethod<jboolean>("moveTaskToBack", true);
+#endif
 }
 
 bool SampleManager::dataItemsExists()

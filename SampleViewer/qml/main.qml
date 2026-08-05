@@ -39,6 +39,38 @@ ApplicationWindow {
     readonly property string os: Qt.platform.os
     readonly property string fontFamily: "Helvetica"
 
+
+    // Back navigation stack
+    property var backStack: []
+    property bool controlConsumedBack: false
+    property bool backPressInProgress: false
+    readonly property var overlayTags: ["drawer", "optionsMenu", "proxy", "about"]
+
+    function pushBack(tag, action) {
+        backStack.push({ tag: tag, action: action });
+    }
+
+    function removeEntry(tag) {
+        var hadEntry = backStack.some(entry => entry.tag === tag);
+        backStack = backStack.filter(entry => entry.tag !== tag);
+        if (hadEntry && backPressInProgress)
+            controlConsumedBack = true;
+    }
+
+    function popBack() {
+        if (backStack.length > 0) {
+            controlConsumedBack = false;
+            var entry = backStack.pop();
+            entry.action();
+        } else if (controlConsumedBack) {
+            controlConsumedBack = false;
+        } else {
+            if (Qt.platform.os === "android") {
+                SampleManager.moveToBackgroundAndroid();
+            }
+        }
+    }
+
     header: ToolBar {
         height: 42
 
@@ -167,6 +199,8 @@ ApplicationWindow {
                 x: parent.width - width
                 transformOrigin: Item.TopRight
                 width: 200
+                onOpened: pushBack("optionsMenu", () => optionsMenu.close())
+                onClosed: removeEntry("optionsMenu")
 
                 readonly property real menuFontSize: 16
 
@@ -180,6 +214,18 @@ ApplicationWindow {
                         aboutView.visible = false;
                         proxySetupView.visible = false;
                         SampleManager.currentMode = SampleManager.HomepageView
+                    }
+                }
+                MenuItem {
+                    width: parent.width
+                    height: visible ? 48 : 0
+                    text: qsTr("Enter API Key")
+                    visible: SampleManager.showApiKeyOption
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = false;
+                        apiKeyTextField.text = "";
+                        apiKeyPopup.open();
                     }
                 }
                 MenuItem {
@@ -314,6 +360,9 @@ ApplicationWindow {
         id: drawer
         width: 252
         height: parent.height
+        onOpened: pushBack("drawer", () => drawer.close())
+        onClosed: removeEntry("drawer")
+
     }
 
     SourceCodeView {
@@ -354,11 +403,19 @@ ApplicationWindow {
     ProxySetupView {
         id: proxySetupView
         anchors.fill: parent
+        onVisibleChanged: {
+            if (visible) pushBack("proxy", () => { proxySetupView.visible = false })
+            else removeEntry("proxy")
+        }
     }
 
     AboutView {
         id: aboutView
         anchors.fill: parent
+        onVisibleChanged: {
+            if (visible) pushBack("about", () => { aboutView.visible = false })
+            else removeEntry("about")
+        }
     }
 
     Connections {
@@ -366,7 +423,26 @@ ApplicationWindow {
 
         property var pendingSampleChangeConnection: null
 
+        function onBackPressed() {
+            backPressInProgress = true;
+            popBack();
+            backPressInProgress = false;
+        }
+
         function onCurrentSampleChanged() {
+            backStack = backStack.filter(entry => overlayTags.includes(entry.tag));
+
+            // Back to home when new sample is opened
+            pushBack("homepage", () => {
+                         isNavigatingBack = true;
+                         SampleManager.currentMode = SampleManager.HomepageView;
+                         isNavigatingBack = false;
+                     });
+
+            // Reset state for new sample
+            lastStableMode = -1;
+            modeStackId = 0;
+
             // If we're in ManageOfflineData view and a download is in progress,
             // cancel all downloads and wait for completion before changing samples
             if (SampleManager.currentMode === SampleManager.ManageOfflineDataView &&
@@ -431,8 +507,35 @@ ApplicationWindow {
             SampleManager.currentMode = SampleManager.HomepageView;
         }
 
+        property int previousMode: -1
+        property int lastStableMode: -1
+        property int modeStackId: 0
+        property bool isNavigatingBack: false
+
+        function isTransientMode(mode) {
+            return mode === SampleManager.DownloadDataView;
+        }
+
         function onCurrentModeChanged() {
-            if (SampleManager.currentMode === SampleManager.LiveSampleView)
+            var current = SampleManager.currentMode;
+
+            if (!isNavigatingBack && !isTransientMode(current)
+                    && lastStableMode !== -1 && lastStableMode !== current) {
+                var restoreMode = lastStableMode;
+                var tag = "mode_" + modeStackId++;
+                pushBack(tag, () => {
+                             isNavigatingBack = true;
+                             SampleManager.currentMode = restoreMode;
+                             isNavigatingBack = false;
+                         });
+            }
+
+            if (!isTransientMode(current))
+                lastStableMode = current;
+
+            previousMode = current;
+
+            if (current === SampleManager.LiveSampleView)
                 showSample();
         }
     }
@@ -477,6 +580,73 @@ ApplicationWindow {
     Loader {
         id: qmlLoaderAuthView
         anchors.fill: parent
+    }
+
+    Popup {
+        id: apiKeyPopup
+        anchors.centerIn: parent
+        width: Math.min(parent.width - 40, 520)
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        padding: 16
+
+        background: Rectangle {
+            radius: 8
+            color: Calcite.background
+            border.color: Calcite.border1
+            border.width: 1
+        }
+
+        contentItem: Column {
+            spacing: 12
+            width: parent.width
+
+            Label {
+                width: parent.width
+                text: qsTr("API Key")
+                font.pixelSize: 18
+                font.family: fontFamily
+                color: Calcite.text1
+            }
+
+            Label {
+                width: parent.width
+                wrapMode: Text.WordWrap
+                text: qsTr("Enter an API key to use in the sample viewer.")
+                color: Calcite.text2
+                font.pixelSize: 14
+            }
+
+            TextField {
+                id: apiKeyTextField
+                width: parent.width
+                selectByMouse: true
+                echoMode: TextInput.Password
+                placeholderText: qsTr("Enter API key")
+            }
+
+            Row {
+                width: parent.width
+                spacing: 8
+                layoutDirection: Qt.RightToLeft
+
+                Button {
+                    text: qsTr("Save")
+                    enabled: apiKeyTextField.text !== ""
+                    onClicked: {
+                        SampleManager.setApiKey(apiKeyTextField.text);
+                        showToast(qsTr("API key saved"));
+                        apiKeyPopup.close();
+                    }
+                }
+
+                Button {
+                    text: qsTr("Cancel")
+                    onClicked: apiKeyPopup.close()
+                }
+            }
+        }
     }
 
     // Toast notification (using Popup to appear above Drawer)
