@@ -21,14 +21,14 @@ The sample loads with a viewshed analysis initialized from an elevation raster c
 
 ## Relevant API
 
-- AnalysisOverlay
-- Colormap
-- ColormapRenderer
-- ContinuousField
-- ContinuousFieldFunction
-- FieldAnalysis
-- ViewshedFunction
-- ViewshedParameters
+* AnalysisOverlay
+* Colormap
+* ColormapRenderer
+* ContinuousField
+* ContinuousFieldFunction
+* FieldAnalysis
+* ViewshedFunction
+* ViewshedParameters
 
 ## Offline data
 
