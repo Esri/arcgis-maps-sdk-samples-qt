@@ -213,7 +213,7 @@ void EditWithBranchVersioning::onSgdbDoneLoadingCompleted_(const Error& error)
     }
 
     // once the service feature table is loaded set the mapview extent to the full extent of the feature layer
-    m_mapView->setViewpointAsync(m_featureLayer->fullExtent());
+    m_mapView->setViewpointAsync(Viewpoint(m_featureLayer->fullExtent()));
 
     m_busy = false;
     emit busyChanged();
