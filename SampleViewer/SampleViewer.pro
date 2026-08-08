@@ -153,6 +153,17 @@ include(samples.pri)
 # contains source files for zlib-ng and minizip-ng
 include($$PWD/../3rdparty/zlib_minizip_ng.pri)
 
+# Optional performance overlay. Off by default; enable with: qmake CONFIG+=perfmonitor
+# When off, none of its sources, headers or QML are compiled into the binary.
+perfmonitor {
+  message("Performance monitor: ENABLED")
+  DEFINES += PERFORMANCE_MONITOR
+  include($$COMMONVIEWER/PerformanceMonitor/perfmonitor.pri)
+  # The adapter is app code, not module code - it knows SampleManager and the ArcGIS views.
+  HEADERS += $$COMMONVIEWER/SampleViewerPerfAdapter.h
+  SOURCES += $$COMMONVIEWER/SampleViewerPerfAdapter.cpp
+}
+
 CONFIG(precompile_header): DEFINES += PCH_BUILD
 
 android {
