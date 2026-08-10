@@ -29,8 +29,6 @@
 #include "PerformanceMonitor.h"
 
 static constexpr int PUBLISH_INTERVAL_MS = 1000;
-
-// Above every sample and above the viewer chrome.
 static constexpr qreal OVERLAY_Z = 9999.0;
 
 PerformanceMonitor* PerformanceMonitor::install(QQmlApplicationEngine* engine)
@@ -60,7 +58,6 @@ PerformanceMonitor* PerformanceMonitor::install(QQmlApplicationEngine* engine)
   auto* overlay = qobject_cast<QQuickItem*>(created);
   if (!overlay)
   {
-    // The span API and frame timing still work without the HUD.
     qWarning() << "PerformanceMonitor: overlay not created:" << (created ? QStringLiteral("root object is not an Item") : component.errorString());
     delete created;
     return monitor;
@@ -68,7 +65,6 @@ PerformanceMonitor* PerformanceMonitor::install(QQmlApplicationEngine* engine)
 
   QQuickItem* host = window->contentItem();
 
-  // Controls popups (drawers, dialogs) render in the QQuickOverlay layer above all content, so host the HUD there when present.
   const QList<QQuickItem*> hostChildren = host->childItems();
   for (QQuickItem* child : hostChildren)
   {
@@ -160,7 +156,6 @@ void PerformanceMonitor::setForceRender(bool forceRender)
     return;
   }
 
-  // Kick the loop once; onFrameEnd keeps it going from there.
   if (forceRender && m_window)
   {
     m_window->update();

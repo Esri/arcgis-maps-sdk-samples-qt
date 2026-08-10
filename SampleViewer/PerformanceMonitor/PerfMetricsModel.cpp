@@ -42,7 +42,6 @@ QHash<int, QByteArray> PerfMetricsModel::roleNames() const
   return {{static_cast<int>(Role::Label), "label"}, {static_cast<int>(Role::Value), "value"}};
 }
 
-// Updates the named row in place or appends a new one; first-report order is display order.
 void PerfMetricsModel::upsert(const QString& label, double value)
 {
   for (int i = 0; i < static_cast<int>(m_rows.size()); ++i)
