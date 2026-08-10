@@ -46,12 +46,14 @@ private:
   void attachToGeoView();
   template<typename ViewType>
   bool attachIfFound(QQuickItem* content);
+  void onNavigationChanged(bool navigating, Esri::ArcGISRuntime::DrawStatus drawStatus);
   void onDrawStatusChanged(Esri::ArcGISRuntime::DrawStatus status);
 
   PerformanceMonitor* m_monitor = nullptr;
   SampleManager* m_sampleManager = nullptr;
   QQuickWindow* m_window = nullptr;
   QMetaObject::Connection m_drawStatusConn;
+  QMetaObject::Connection m_navigationConn;
 
   QPointer<QQuickItem> m_attachedView;
   QPointer<QQuickItem> m_staleView;
@@ -62,6 +64,7 @@ private:
   bool m_loadPending = false;
   bool m_initialDrawStarted = false;
 
+  bool m_navigating = false;
   bool m_drawOpen = false;
 };
 

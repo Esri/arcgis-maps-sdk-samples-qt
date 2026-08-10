@@ -90,6 +90,7 @@ void SampleViewerPerfAdapter::onSampleChanged()
   m_monitor->beginSpan(INITIAL_LOAD_SPAN);
   m_loadPending = true;
   m_initialDrawStarted = false;
+  m_navigating = false;
   m_drawOpen = false;
 
   m_staleView = m_attachedView;
@@ -97,6 +98,7 @@ void SampleViewerPerfAdapter::onSampleChanged()
   m_attachAttempts = 0;
 
   disconnect(m_drawStatusConn);
+  disconnect(m_navigationConn);
 
   QTimer::singleShot(0, this, &SampleViewerPerfAdapter::attachToGeoView);
 }
@@ -124,9 +126,11 @@ void SampleViewerPerfAdapter::onModeChanged()
   // The sample Loader gets its source only after data is in place, so restarting here excludes download time.
   m_monitor->beginSpan(INITIAL_LOAD_SPAN);
   m_initialDrawStarted = false;
+  m_navigating = false;
   m_drawOpen = false;
   m_attachAttempts = 0;
   disconnect(m_drawStatusConn);
+  disconnect(m_navigationConn);
 
   QTimer::singleShot(0, this, &SampleViewerPerfAdapter::attachToGeoView);
 }
@@ -140,6 +144,7 @@ void SampleViewerPerfAdapter::attachToGeoView()
 
   // Two queued attach attempts can land in one event-loop turn; never stack connections.
   disconnect(m_drawStatusConn);
+  disconnect(m_navigationConn);
 
   QQuickItem* content = m_window->contentItem();
 
@@ -166,9 +171,36 @@ bool SampleViewerPerfAdapter::attachIfFound(QQuickItem* content)
   }
 
   m_attachedView = view;
+  m_navigating = view->isNavigating();
   m_drawStatusConn = connect(view, &ViewType::drawStatusChanged, this, &SampleViewerPerfAdapter::onDrawStatusChanged);
+  m_navigationConn = connect(view, &ViewType::navigatingChanged, this, [this, view]()
+  {
+    onNavigationChanged(view->isNavigating(), view->drawStatus());
+  });
   onDrawStatusChanged(view->drawStatus());
   return true;
+}
+
+void SampleViewerPerfAdapter::onNavigationChanged(bool navigating, DrawStatus drawStatus)
+{
+  m_navigating = navigating;
+
+  if (m_loadPending)
+  {
+    return;
+  }
+
+  if (m_navigating)
+  {
+    m_drawOpen = false;
+    return;
+  }
+
+  if (drawStatus == DrawStatus::InProgress)
+  {
+    m_monitor->beginSpan(DRAW_SPAN);
+    m_drawOpen = true;
+  }
 }
 
 void SampleViewerPerfAdapter::onDrawStatusChanged(DrawStatus status)
@@ -179,7 +211,7 @@ void SampleViewerPerfAdapter::onDrawStatusChanged(DrawStatus status)
     {
       m_initialDrawStarted = true;
     }
-    else
+    else if (!m_navigating)
     {
       m_monitor->beginSpan(DRAW_SPAN);
       m_drawOpen = true;
