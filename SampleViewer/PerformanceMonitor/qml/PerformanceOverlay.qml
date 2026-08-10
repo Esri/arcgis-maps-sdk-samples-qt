@@ -13,8 +13,6 @@
 // limitations under the License.
 // [Legal]
 
-// Draggable performance HUD, collapsed to a pill by default; colors are hardcoded so the module carries no toolkit dependency.
-
 pragma ComponentBehavior: Bound
 
 import QtQuick
@@ -27,7 +25,7 @@ Item {
 
     property bool expanded: false
 
-    // Locked at expand time so the panel grows toward the window center and collapses back onto the pill.
+    // Recomputed at open and close: growth heads toward the window center, collapse heads away from it.
     property bool expandLeft: false
     property bool expandUp: false
 
@@ -41,11 +39,9 @@ Item {
     readonly property color badColor: "#D6503C"
     readonly property color mutedColor: "#8C8C8C"
 
-    // The root stays pill-sized; the panel expands out of it via anchors, so x/y never move on expand/collapse.
     width: 78
     height: 30
 
-    // Set once, not bound (a binding would fight the drag); top-left, below the 42px header ToolBar.
     Component.onCompleted: {
         x = 16;
         y = 50;
@@ -62,11 +58,18 @@ Item {
         return value > 0 ? value.toFixed(1) + " ms" : "—";
     }
 
-    // label + right-aligned value. Self-contained so it needs no ids from the enclosing scope.
+    function reanchorForClose() {
+        const px = x + panel.x;
+        const py = y + panel.y;
+        expandLeft = px + panel.width / 2 > parent.width / 2;
+        expandUp = py + panel.height / 2 > parent.height / 2;
+        x = Math.min(Math.max(0, expandLeft ? px + panel.width - width : px), parent.width - width);
+        y = Math.min(Math.max(0, expandUp ? py + panel.height - height : py), parent.height - height);
+    }
+
     component MetricRow: Item {
         id: metricRow
 
-        // Not named "value": that name is reserved for auto-filling from the metrics model role.
         required property string label
         required property string valueText
         property color valueColor: "#DDDDDD"
@@ -97,7 +100,6 @@ Item {
         }
     }
 
-    // Declared before the panel so later siblings (the toggle) get first refusal on a press; misses fall through to drag/click here.
     MouseArea {
         anchors.fill: panel
         acceptedButtons: Qt.LeftButton | Qt.RightButton
@@ -106,18 +108,22 @@ Item {
         drag {
             target: root
             threshold: 8
-            minimumX: 0
-            maximumX: root.parent ? Math.max(0, root.parent.width - root.width) : 0
-            minimumY: 0
-            maximumY: root.parent ? Math.max(0, root.parent.height - root.height) : 0
+            minimumX: root.expandLeft ? panel.width - root.width : 0
+            maximumX: root.parent ? Math.max(0, root.parent.width - (root.expandLeft ? root.width : panel.width)) : 0
+            minimumY: root.expandUp ? panel.height - root.height : 0
+            maximumY: root.parent ? Math.max(0, root.parent.height - (root.expandUp ? root.height : panel.height)) : 0
         }
 
         onClicked: mouse => {
             if (mouse.button !== Qt.LeftButton)
-                return;
-            if (!root.expanded && root.parent) {
-                root.expandLeft = root.x + root.width / 2 > root.parent.width / 2;
-                root.expandUp = root.y + root.height / 2 > root.parent.height / 2;
+            return;
+            if (root.parent) {
+                if (root.expanded) {
+                    root.reanchorForClose();
+                } else {
+                    root.expandLeft = root.x + root.width / 2 > root.parent.width / 2;
+                    root.expandUp = root.y + root.height / 2 > root.parent.height / 2;
+                }
             }
             root.expanded = !root.expanded;
         }
@@ -128,10 +134,8 @@ Item {
     Rectangle {
         id: panel
 
-        // Grabs two-finger gestures so a pinch starting on the HUD cannot zoom the map beneath it.
         PinchHandler { target: null }
 
-        // The anchored edge is the one nearest the window corner, so growth heads toward the center.
         anchors {
             left: root.expandLeft ? undefined : root.left
             right: root.expandLeft ? root.right : undefined
@@ -148,7 +152,6 @@ Item {
         Behavior on width { NumberAnimation { duration: 120; easing.type: Easing.OutQuad } }
         Behavior on height { NumberAnimation { duration: 120; easing.type: Easing.OutQuad } }
 
-        // Collapsed: just the headline number.
         Text {
             anchors.centerIn: parent
             visible: !root.expanded
@@ -195,7 +198,6 @@ Item {
 
             MetricRow { label: "frame"; valueText: root.ms(root.monitor.frameTimeMs) }
 
-            // One row per app-reported metric, in first-report order; unbound while collapsed so hidden rows cost nothing.
             Repeater {
                 model: root.expanded ? root.monitor.metrics : null
 
@@ -219,7 +221,6 @@ Item {
                     font.pixelSize: 11
                 }
 
-                // A plain rectangle rather than a Controls Switch, so the viewer's Calcite styling cannot reach this module.
                 Rectangle {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
@@ -241,7 +242,6 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        // Negative margins enlarge the hit target for touch.
                         anchors.margins: -6
                         onClicked: root.monitor.forceRender = !root.monitor.forceRender
                     }
