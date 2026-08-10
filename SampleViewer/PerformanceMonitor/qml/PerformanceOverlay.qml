@@ -32,7 +32,7 @@ Item {
     readonly property real targetFps: monitor.refreshRateHz > 0 ? monitor.refreshRateHz : 60
     readonly property real rawFps: monitor.frameTimeMs > 0 ? 1000 / monitor.frameTimeMs : 0
 
-    readonly property real fps: monitor.forceRender ? rawFps : Math.min(rawFps, targetFps)
+    readonly property real fps: Math.min(rawFps, targetFps)
 
     readonly property bool idle: monitor.frameTimeMs <= 0
 
