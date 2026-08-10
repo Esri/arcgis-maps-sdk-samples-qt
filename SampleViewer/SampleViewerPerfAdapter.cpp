@@ -36,8 +36,11 @@
 
 using namespace Esri::ArcGISRuntime;
 
-static const QString DRAW_SPAN = QStringLiteral("previous draw time");
+static const QString DRAW_SPAN = QStringLiteral("draw time");
 static const QString INITIAL_LOAD_SPAN = QStringLiteral("initial load");
+
+static constexpr int ATTACH_RETRY_MS = 100;
+static constexpr int ATTACH_MAX_ATTEMPTS = 50;
 
 // Walks the visual tree, not the QObject tree.
 template<typename ViewType>
@@ -86,7 +89,13 @@ void SampleViewerPerfAdapter::onSampleChanged()
   m_monitor->clearMetrics();
   m_monitor->beginSpan(INITIAL_LOAD_SPAN);
   m_loadPending = true;
+  m_initialDrawStarted = false;
   m_drawOpen = false;
+
+  m_staleView = m_attachedView;
+  m_attachedView.clear();
+  m_attachAttempts = 0;
+
   disconnect(m_drawStatusConn);
 
   QTimer::singleShot(0, this, &SampleViewerPerfAdapter::attachToGeoView);
@@ -114,7 +123,9 @@ void SampleViewerPerfAdapter::onModeChanged()
 
   // The sample Loader gets its source only after data is in place, so restarting here excludes download time.
   m_monitor->beginSpan(INITIAL_LOAD_SPAN);
+  m_initialDrawStarted = false;
   m_drawOpen = false;
+  m_attachAttempts = 0;
   disconnect(m_drawStatusConn);
 
   QTimer::singleShot(0, this, &SampleViewerPerfAdapter::attachToGeoView);
@@ -122,7 +133,7 @@ void SampleViewerPerfAdapter::onModeChanged()
 
 void SampleViewerPerfAdapter::attachToGeoView()
 {
-  if (!m_window)
+  if (!m_window || m_attachedView)
   {
     return;
   }
@@ -134,8 +145,13 @@ void SampleViewerPerfAdapter::attachToGeoView()
 
   if (!attachIfFound<MapQuickView>(content) && !attachIfFound<SceneQuickView>(content) && !attachIfFound<LocalSceneQuickView>(content))
   {
-    // m_loadPending stays set, so the mode flip to LiveSampleView after a download retries the hunt.
-    qDebug() << "SampleViewerPerfAdapter: no GeoView found for this sample (yet)";
+    if (m_loadPending && ++m_attachAttempts < ATTACH_MAX_ATTEMPTS)
+    {
+      QTimer::singleShot(ATTACH_RETRY_MS, this, &SampleViewerPerfAdapter::attachToGeoView);
+      return;
+    }
+
+    qDebug() << "SampleViewerPerfAdapter: no GeoView found for this sample";
   }
 }
 
@@ -143,11 +159,13 @@ template<typename ViewType>
 bool SampleViewerPerfAdapter::attachIfFound(QQuickItem* content)
 {
   auto* view = findViewInTree<ViewType>(content);
-  if (!view)
+
+  if (!view || view == m_staleView)
   {
     return false;
   }
 
+  m_attachedView = view;
   m_drawStatusConn = connect(view, &ViewType::drawStatusChanged, this, &SampleViewerPerfAdapter::onDrawStatusChanged);
   onDrawStatusChanged(view->drawStatus());
   return true;
@@ -157,8 +175,15 @@ void SampleViewerPerfAdapter::onDrawStatusChanged(DrawStatus status)
 {
   if (status == DrawStatus::InProgress)
   {
-    m_monitor->beginSpan(DRAW_SPAN);
-    m_drawOpen = true;
+    if (m_loadPending)
+    {
+      m_initialDrawStarted = true;
+    }
+    else
+    {
+      m_monitor->beginSpan(DRAW_SPAN);
+      m_drawOpen = true;
+    }
     return;
   }
 
@@ -173,9 +198,10 @@ void SampleViewerPerfAdapter::onDrawStatusChanged(DrawStatus status)
     m_monitor->endSpan(DRAW_SPAN);
   }
 
-  if (m_loadPending)
+  if (m_loadPending && m_initialDrawStarted)
   {
     m_loadPending = false;
+    m_initialDrawStarted = false;
     m_monitor->endSpan(INITIAL_LOAD_SPAN);
   }
 }

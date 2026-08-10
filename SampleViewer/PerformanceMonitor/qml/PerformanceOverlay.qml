@@ -29,15 +29,26 @@ Item {
     property bool expandLeft: false
     property bool expandUp: false
 
-    readonly property real fps: monitor.frameTimeMs > 0 ? 1000 / monitor.frameTimeMs : 0
-    readonly property bool idle: monitor.frameTimeMs <= 0
     readonly property real targetFps: monitor.refreshRateHz > 0 ? monitor.refreshRateHz : 60
-    readonly property color fpsColor: idle ? mutedColor : fps >= targetFps - 5 ? goodColor : fps >= 30 ? warnColor : badColor
+    readonly property real rawFps: monitor.frameTimeMs > 0 ? 1000 / monitor.frameTimeMs : 0
+
+    readonly property real fps: monitor.forceRender ? rawFps : Math.min(rawFps, targetFps)
+
+    readonly property bool idle: monitor.frameTimeMs <= 0
+
+    readonly property color fpsColor: {
+        if (idle)
+        return mutedColor;
+        if (!monitor.forceRender)
+        return neutralColor;
+        return fps >= targetFps - 5 ? goodColor : fps >= 30 ? warnColor : badColor;
+    }
 
     readonly property color goodColor: "#3BB273"
     readonly property color warnColor: "#E5B301"
     readonly property color badColor: "#D6503C"
     readonly property color mutedColor: "#8C8C8C"
+    readonly property color neutralColor: "#DDDDDD"
 
     width: 78
     height: 30
@@ -55,7 +66,11 @@ Item {
     }
 
     function ms(value: real): string {
-        return value > 0 ? value.toFixed(1) + " ms" : "—";
+        if (value <= 0)
+            return "—";
+        if (value >= 1000)
+            return (value / 1000).toFixed(2) + " s";
+        return value.toFixed(1) + " ms";
     }
 
     function reanchorForClose() {
@@ -72,20 +87,27 @@ Item {
 
         required property string label
         required property string valueText
-        property color valueColor: "#DDDDDD"
+        property color valueColor: root.neutralColor
 
         width: parent ? parent.width : 0
         height: 16
 
         Text {
-            anchors.verticalCenter: parent.verticalCenter
+            anchors {
+                left: parent.left
+                right: valueItem.left
+                rightMargin: 8
+                verticalCenter: parent.verticalCenter
+            }
             text: metricRow.label
             textFormat: Text.PlainText
+            elide: Text.ElideRight
             color: "#8C8C8C"
             font.pixelSize: 11
         }
 
         Text {
+            id: valueItem
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             text: metricRow.valueText

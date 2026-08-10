@@ -28,6 +28,7 @@ class SampleManager;
 
 #include <QMetaObject>
 #include <QObject>
+#include <QPointer>
 
 // Feeds Sample Viewer events (sample changes, GeoView draw status) into the monitor's generic span.
 class SampleViewerPerfAdapter : public QObject
@@ -52,8 +53,14 @@ private:
   QQuickWindow* m_window = nullptr;
   QMetaObject::Connection m_drawStatusConn;
 
+  QPointer<QQuickItem> m_attachedView;
+  QPointer<QQuickItem> m_staleView;
+
+  int m_attachAttempts = 0;
+
   // Set on sample change, cleared by the first completed draw; gates the re-arm in onModeChanged.
   bool m_loadPending = false;
+  bool m_initialDrawStarted = false;
 
   bool m_drawOpen = false;
 };
