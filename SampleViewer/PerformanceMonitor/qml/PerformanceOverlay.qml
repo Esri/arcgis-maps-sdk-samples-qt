@@ -61,8 +61,8 @@ Item {
     Connections {
         target: root.parent
 
-        function onWidthChanged() { root.x = Math.min(root.x, Math.max(0, root.parent.width - root.width - 8)) }
-        function onHeightChanged() { root.y = Math.min(root.y, Math.max(0, root.parent.height - root.height - 8)) }
+        function onWidthChanged() { const w = root.expandLeft ? root.width : panel.width; root.x = Math.min(root.x, Math.max(0, root.parent.width - w - 8)) }
+        function onHeightChanged() { const h = root.expandUp ? root.height : panel.height; root.y = Math.min(root.y, Math.max(0, root.parent.height - h - 8)) }
     }
 
     function ms(value: real): string {
