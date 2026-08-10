@@ -29,8 +29,7 @@ class SampleManager;
 #include <QMetaObject>
 #include <QObject>
 
-// Feeds Sample Viewer events (sample changes, GeoView draw status) into the monitor's generic span API.
-// App code, not module code: compiled from SampleViewer.pro's perfmonitor block only.
+// Feeds Sample Viewer events (sample changes, GeoView draw status) into the monitor's generic span.
 class SampleViewerPerfAdapter : public QObject
 {
   Q_OBJECT
@@ -56,7 +55,6 @@ private:
   // Set on sample change, cleared by the first completed draw; gates the re-arm in onModeChanged.
   bool m_loadPending = false;
 
-  // GeoViews repeat Completed without a fresh InProgress; only the first one closes a draw cycle.
   bool m_drawOpen = false;
 };
 
