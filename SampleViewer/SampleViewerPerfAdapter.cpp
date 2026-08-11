@@ -36,7 +36,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-static const QString DRAW_SPAN = QStringLiteral("draw time");
+static const QString DRAW_SPAN = QStringLiteral("post-nav draw");
 static const QString INITIAL_LOAD_SPAN = QStringLiteral("initial load");
 
 static constexpr int ATTACH_RETRY_MS = 100;
@@ -193,6 +193,7 @@ void SampleViewerPerfAdapter::onNavigationChanged(bool navigating, DrawStatus dr
   if (m_navigating)
   {
     m_drawOpen = false;
+    m_monitor->setValue(DRAW_SPAN, 0.0);
     return;
   }
 
