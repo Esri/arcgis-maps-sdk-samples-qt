@@ -69,8 +69,8 @@ Item {
         if (value <= 0)
             return "—";
         if (value >= 1000)
-            return (value / 1000).toFixed(2) + " s";
-        return value.toFixed(1) + " ms";
+            return qsTr("%1 s").arg((value / 1000).toFixed(2));
+        return qsTr("%1 ms").arg(value.toFixed(1));
     }
 
     function reanchorForClose() {
@@ -177,7 +177,7 @@ Item {
         Text {
             anchors.centerIn: parent
             visible: !root.expanded
-            text: root.idle ? "idle" : root.fps.toFixed(0) + " fps"
+            text: root.idle ? qsTr("idle") : qsTr("%1 fps").arg(root.fps.toFixed(0))
             textFormat: Text.PlainText
             color: root.fpsColor
 
@@ -199,7 +199,7 @@ Item {
             clip: true
 
             Text {
-                text: "PERFORMANCE"
+                text: qsTr("PERFORMANCE")
                 textFormat: Text.PlainText
                 color: "#FFFFFF"
 
@@ -213,12 +213,12 @@ Item {
             Rectangle { width: content.width; height: 1; color: "#33FFFFFF" }
 
             MetricRow {
-                label: "FPS"
-                valueText: root.idle ? "idle" : root.fps.toFixed(1)
+                label: qsTr("FPS")
+                valueText: root.idle ? qsTr("idle") : root.fps.toFixed(1)
                 valueColor: root.fpsColor
             }
 
-            MetricRow { label: "frame"; valueText: root.ms(root.monitor.frameTimeMs) }
+            MetricRow { label: qsTr("frame"); valueText: root.ms(root.monitor.frameTimeMs) }
 
             Repeater {
                 model: root.expanded ? root.monitor.metrics : null
@@ -238,7 +238,7 @@ Item {
 
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
-                    text: "force render"
+                    text: qsTr("force render")
                     color: root.mutedColor
                     font.pixelSize: 11
                 }
@@ -272,7 +272,7 @@ Item {
 
             Text {
                 text: root.monitor.refreshRateHz > 0
-                      ? "target " + root.monitor.refreshRateHz.toFixed(0) + " Hz"
+                      ? qsTr("target %1 Hz").arg(root.monitor.refreshRateHz.toFixed(0))
                       : ""
                 visible: root.monitor.refreshRateHz > 0
                 color: "#6E6E6E"
