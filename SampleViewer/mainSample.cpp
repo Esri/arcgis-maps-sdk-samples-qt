@@ -58,6 +58,11 @@
 #include "buildnum.h"
 #endif
 
+#ifdef PERFORMANCE_MONITOR
+#include "PerformanceMonitor.h"
+#include "SampleViewerPerfAdapter.h"
+#endif // PERFORMANCE_MONITOR
+
 // All Samples
 #include "../CppSamples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h"
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
@@ -375,6 +380,16 @@ int main(int argc, char* argv[])
   engine.addImageProvider(name, new MapImageProvider);
 
   engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+
+#ifdef PERFORMANCE_MONITOR
+  // load() populates rootObjects() synchronously, so the window exists by now.
+  if (auto* monitor = PerformanceMonitor::install(&engine))
+  {
+    // The adapter feeds sample and GeoView events into the monitor and dies with its parent.
+    new SampleViewerPerfAdapter(monitor, engine.singletonInstance<SampleManager*>("Esri.ArcGISRuntimeSamples", "SampleManager"),
+                                qobject_cast<QQuickWindow*>(engine.rootObjects().constFirst()), monitor);
+  }
+#endif // PERFORMANCE_MONITOR
 
   return app.exec();
 }

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/perf">
+        <file alias="PerformanceOverlay.qml">qml/PerformanceOverlay.qml</file>
+    </qresource>
+</RCC>
