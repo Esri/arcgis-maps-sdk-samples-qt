@@ -36,8 +36,8 @@
 
 using namespace Esri::ArcGISRuntime;
 
-static const QString DRAW_SPAN = QStringLiteral("post-nav draw");
-static const QString INITIAL_LOAD_SPAN = QStringLiteral("initial load");
+static const QString DRAW_TIMING = QStringLiteral("post-nav draw");
+static const QString INITIAL_LOAD_TIMING = QStringLiteral("initial load");
 
 static constexpr int ATTACH_RETRY_MS = 100;
 static constexpr int ATTACH_MAX_ATTEMPTS = 50;
@@ -87,7 +87,7 @@ SampleViewerPerfAdapter::SampleViewerPerfAdapter(PerformanceMonitor* monitor, Sa
 void SampleViewerPerfAdapter::onSampleChanged()
 {
   m_monitor->clearMetrics();
-  m_monitor->beginSpan(INITIAL_LOAD_SPAN);
+  m_monitor->beginTiming(INITIAL_LOAD_TIMING);
   m_loadPending = true;
   m_initialDrawStarted = false;
   m_navigating = false;
@@ -124,7 +124,7 @@ void SampleViewerPerfAdapter::onModeChanged()
   }
 
   // The sample Loader gets its source only after data is in place, so restarting here excludes download time.
-  m_monitor->beginSpan(INITIAL_LOAD_SPAN);
+  m_monitor->beginTiming(INITIAL_LOAD_TIMING);
   m_initialDrawStarted = false;
   m_navigating = false;
   m_drawOpen = false;
@@ -193,13 +193,13 @@ void SampleViewerPerfAdapter::onNavigationChanged(bool navigating, DrawStatus dr
   if (m_navigating)
   {
     m_drawOpen = false;
-    m_monitor->setValue(DRAW_SPAN, 0.0);
+    m_monitor->setValue(DRAW_TIMING, 0.0);
     return;
   }
 
   if (drawStatus == DrawStatus::InProgress)
   {
-    m_monitor->beginSpan(DRAW_SPAN);
+    m_monitor->beginTiming(DRAW_TIMING);
     m_drawOpen = true;
   }
 }
@@ -214,7 +214,7 @@ void SampleViewerPerfAdapter::onDrawStatusChanged(DrawStatus status)
     }
     else if (!m_navigating)
     {
-      m_monitor->beginSpan(DRAW_SPAN);
+      m_monitor->beginTiming(DRAW_TIMING);
       m_drawOpen = true;
     }
     return;
@@ -228,14 +228,14 @@ void SampleViewerPerfAdapter::onDrawStatusChanged(DrawStatus status)
   if (m_drawOpen)
   {
     m_drawOpen = false;
-    m_monitor->endSpan(DRAW_SPAN);
+    m_monitor->endTiming(DRAW_TIMING);
   }
 
   if (m_loadPending && m_initialDrawStarted)
   {
     m_loadPending = false;
     m_initialDrawStarted = false;
-    m_monitor->endSpan(INITIAL_LOAD_SPAN);
+    m_monitor->endTiming(INITIAL_LOAD_TIMING);
   }
 }
 

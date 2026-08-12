@@ -30,7 +30,7 @@ class SampleManager;
 #include <QObject>
 #include <QPointer>
 
-// Feeds Sample Viewer events (sample changes, GeoView draw status) into the monitor's generic span.
+// Feeds Sample Viewer events (sample changes, GeoView draw status) into the monitor's timing API.
 class SampleViewerPerfAdapter : public QObject
 {
   Q_OBJECT

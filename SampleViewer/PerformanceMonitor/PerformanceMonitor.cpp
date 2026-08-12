@@ -99,22 +99,22 @@ QAbstractItemModel* PerformanceMonitor::metrics() const
   return m_metricsModel;
 }
 
-void PerformanceMonitor::beginSpan(const QString& name)
+void PerformanceMonitor::beginTiming(const QString& name)
 {
-  m_openSpans[name].restart();
+  m_activeTimings[name].restart();
 }
 
-void PerformanceMonitor::endSpan(const QString& name)
+void PerformanceMonitor::endTiming(const QString& name)
 {
-  const auto it = m_openSpans.constFind(name);
-  if (it == m_openSpans.constEnd())
+  const auto it = m_activeTimings.constFind(name);
+  if (it == m_activeTimings.constEnd())
   {
-    qDebug() << "PerformanceMonitor: endSpan for span that was never begun:" << name << "- ignored";
+    qDebug() << "PerformanceMonitor: endTiming for timing that was never begun:" << name << "- ignored";
     return;
   }
 
   const double ms = static_cast<double>(it->nsecsElapsed()) / 1.0e6;
-  m_openSpans.erase(it);
+  m_activeTimings.erase(it);
   m_metricsModel->upsert(name, ms);
 }
 
@@ -125,7 +125,7 @@ void PerformanceMonitor::setValue(const QString& name, double ms)
 
 void PerformanceMonitor::clearMetrics()
 {
-  m_openSpans.clear();
+  m_activeTimings.clear();
   m_metricsModel->clear();
 }
 

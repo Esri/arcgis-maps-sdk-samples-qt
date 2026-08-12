@@ -48,8 +48,8 @@ public:
   ~PerformanceMonitor() override;
 
   // App-facing API, GUI thread only; names double as overlay row labels.
-  Q_INVOKABLE void beginSpan(const QString& name);
-  Q_INVOKABLE void endSpan(const QString& name);
+  Q_INVOKABLE void beginTiming(const QString& name);
+  Q_INVOKABLE void endTiming(const QString& name);
   Q_INVOKABLE void setValue(const QString& name, double ms);
   Q_INVOKABLE void clearMetrics();
 
@@ -88,8 +88,8 @@ private:
   QTimer* m_publishTimer = nullptr;
   QQuickWindow* m_window = nullptr;
 
-  // Spans and reported metrics, GUI thread only.
-  QHash<QString, QElapsedTimer> m_openSpans;
+  // Active timings and reported metrics, GUI thread only.
+  QHash<QString, QElapsedTimer> m_activeTimings;
   PerfMetricsModel* m_metricsModel = nullptr;
 
   double m_frameTimeMs = 0.0;
