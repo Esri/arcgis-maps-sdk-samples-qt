@@ -13,6 +13,10 @@
 // limitations under the License.
 // [Legal]
 
+// STL headers
+#include <algorithm>
+#include <iterator>
+
 // Other headers
 #include "PerfMetricsModel.h"
 
@@ -44,14 +48,17 @@ QHash<int, QByteArray> PerfMetricsModel::roleNames() const
 
 void PerfMetricsModel::upsert(const QString& label, double value)
 {
-  for (int i = 0; i < static_cast<int>(m_rows.size()); ++i)
+  const auto rowIt = std::find_if(m_rows.begin(), m_rows.end(), [&label](const Row& row)
   {
-    if (m_rows[i].label == label)
-    {
-      m_rows[i].value = value;
-      emit dataChanged(index(i), index(i), {static_cast<int>(Role::Value)});
-      return;
-    }
+    return row.label == label;
+  });
+
+  if (rowIt != m_rows.end())
+  {
+    rowIt->value = value;
+    const int row = static_cast<int>(std::distance(m_rows.begin(), rowIt));
+    emit dataChanged(index(row), index(row), {static_cast<int>(Role::Value)});
+    return;
   }
 
   const int row = static_cast<int>(m_rows.size());
