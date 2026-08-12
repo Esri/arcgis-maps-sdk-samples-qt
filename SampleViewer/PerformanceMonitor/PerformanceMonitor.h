@@ -50,6 +50,7 @@ public:
   // App-facing API, GUI thread only; names double as overlay row labels.
   Q_INVOKABLE void beginTiming(const QString& name);
   Q_INVOKABLE void endTiming(const QString& name);
+  Q_INVOKABLE void cancelTiming(const QString& name);
   Q_INVOKABLE void setValue(const QString& name, double ms);
   Q_INVOKABLE void clearMetrics();
 

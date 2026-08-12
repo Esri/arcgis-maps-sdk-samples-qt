@@ -157,6 +157,9 @@ void SampleViewerPerfAdapter::attachToGeoView()
     }
 
     qDebug() << "SampleViewerPerfAdapter: no GeoView found for this sample";
+    m_monitor->cancelTiming(INITIAL_LOAD_TIMING);
+    m_loadPending = false;
+    m_initialDrawStarted = false;
   }
 }
 

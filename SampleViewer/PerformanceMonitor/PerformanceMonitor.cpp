@@ -118,6 +118,11 @@ void PerformanceMonitor::endTiming(const QString& name)
   m_metricsModel->upsert(name, ms);
 }
 
+void PerformanceMonitor::cancelTiming(const QString& name)
+{
+  m_activeTimings.remove(name);
+}
+
 void PerformanceMonitor::setValue(const QString& name, double ms)
 {
   m_metricsModel->upsert(name, ms);
