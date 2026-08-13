@@ -30,7 +30,7 @@ Tap on the features to prompt a popup that displays information about the featur
 
 ## About the data
 
-This sample uses a [feature layer](https://services1.arcgis.com/ySviQvEr4wv1b4QW/arcgis/rest/services/California%20Peaks/FeatureServer/0) that contains point features for every mountain peak in California with an elevation that exceeds 14,000 feet (4,267.2 meters) above mean sea level. Each feature contains a predefined popup with information about its associated peak, including an image, chart, and feature table data.
+This sample uses a [feature layer](https://arcgis.com/home/item.html?id=f7a011555feb423397601a47a56665d8) that contains point features for every mountain peak in California with an elevation that exceeds 14,000 feet (4,267.2 meters) above mean sea level. Each feature contains a predefined popup with information about its associated peak, including an image, chart, and feature table data.
 
 ## Additional information
 
