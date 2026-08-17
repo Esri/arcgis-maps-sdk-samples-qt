@@ -213,6 +213,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.h" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/MissionData.h" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.h" \
+    "$$SAMPLEPATHCPP/Scenes/ApplyPointCloudRendererAndFilter/ApplyPointCloudRendererAndFilter.h" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.h" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h" \
@@ -451,6 +452,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.cpp" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/MissionData.cpp" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/ApplyPointCloudRendererAndFilter/ApplyPointCloudRendererAndFilter.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.cpp" \
@@ -677,6 +679,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.qrc" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/ApplyPointCloudRendererAndFilter/ApplyPointCloudRendererAndFilter.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.qrc" \
