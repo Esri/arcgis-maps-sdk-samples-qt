@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/ApplyPointCloudRendererAndFilter">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ApplyPointCloudRendererAndFilter.qml</file>
+        <file>ApplyPointCloudRendererAndFilter.h</file>
+        <file>ApplyPointCloudRendererAndFilter.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
