@@ -91,14 +91,15 @@ Item {
     ScrollView {
         id: controlsPanel
         width: Math.min(340, root.width - 24)
+        height: Math.min(controlsContent.implicitHeight, root.height - 24)
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 12
-        anchors.bottom: parent.bottom
         clip: true
         background: Item {}
 
         Column {
+            id: controlsContent
             width: controlsPanel.availableWidth
             spacing: 12
 
@@ -306,70 +307,38 @@ Item {
                         width: parent.width
                         spacing: 8
 
+                        Label {
+                            text: "Scan direction flag"
+                            font.weight: Font.DemiBold
+                        }
+
+                        ButtonGroup {
+                            id: scanDirectionFlagButtonGroup
+                        }
+
                         Row {
                             width: parent.width
                             spacing: 8
 
-                            Column {
-                                id: setBitsColumn
-                                width: 64
-                                spacing: 4
-
-                                Label {
-                                    width: parent.width
-                                    text: "Set bits"
-                                    font.weight: Font.DemiBold
-                                    horizontalAlignment: Text.AlignHCenter
-                                }
-
-                                CheckBox {
-                                    id: requiredSetScanDirectionBit
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                    onToggled: {
-                                        if (checked) {
-                                            requiredClearScanDirectionBit.checked = false
-                                        }
+                            RadioButton {
+                                text: "Set"
+                                ButtonGroup.group: scanDirectionFlagButtonGroup
+                                onToggled: {
+                                    if (checked) {
                                         sampleModel.toggleBitfieldBit(6, true)
                                         sampleModel.applyBitfieldFilter()
                                     }
                                 }
                             }
 
-                            Column {
-                                width: 72
-                                spacing: 4
-
-                                Label {
-                                    width: parent.width
-                                    text: "Clear bits"
-                                    font.weight: Font.DemiBold
-                                    horizontalAlignment: Text.AlignHCenter
-                                }
-
-                                CheckBox {
-                                    id: requiredClearScanDirectionBit
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                    onToggled: {
-                                        if (checked) {
-                                            requiredSetScanDirectionBit.checked = false
-                                        }
+                            RadioButton {
+                                text: "Clear"
+                                ButtonGroup.group: scanDirectionFlagButtonGroup
+                                onToggled: {
+                                    if (checked) {
                                         sampleModel.toggleBitfieldBit(6, false)
                                         sampleModel.applyBitfieldFilter()
                                     }
-                                }
-                            }
-
-                            Item {
-                                width: parent.width - 152
-                                height: setBitsColumn.height
-
-                                Label {
-                                    anchors.left: parent.left
-                                    anchors.right: parent.right
-                                    anchors.bottom: parent.bottom
-                                    height: requiredClearScanDirectionBit.height
-                                    text: "Scan direction flag"
-                                    verticalAlignment: Text.AlignVCenter
                                 }
                             }
                         }
@@ -378,8 +347,9 @@ Item {
                             width: parent.width
                             text: "Clear bitfield filter"
                             onClicked: {
-                                requiredSetScanDirectionBit.checked = false
-                                requiredClearScanDirectionBit.checked = false
+                                if (scanDirectionFlagButtonGroup.checkedButton) {
+                                    scanDirectionFlagButtonGroup.checkedButton.checked = false
+                                }
                                 sampleModel.clearBitfieldFilter()
                             }
                         }
