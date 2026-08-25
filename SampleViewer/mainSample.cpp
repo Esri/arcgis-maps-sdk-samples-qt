@@ -248,6 +248,7 @@
 #include "../CppSamples/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.h"
 #include "../CppSamples/Scenes/Animate3DSymbols/Animate3DSymbols.h"
 #include "../CppSamples/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.h"
+#include "../CppSamples/Scenes/ApplyPointCloudRendererAndFilter/ApplyPointCloudRendererAndFilter.h"
 #include "../CppSamples/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h"
 #include "../CppSamples/Scenes/ChooseCameraController/ChooseCameraController.h"
 #include "../CppSamples/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h"
@@ -413,6 +414,7 @@ void registerCppSampleClasses()
   AnimateImagesWithImageOverlay::init();
   ApplyMapAlgebra::init();
   ApplyMosaicRuleToRasters::init();
+  ApplyPointCloudRendererAndFilter::init();
   ApplyScheduledMapUpdates::init();
   ApplyUniqueValuesWithAlternateSymbols::init();
   ArcGISMapImageLayerUrl::init();
