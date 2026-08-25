@@ -20,6 +20,9 @@
 // sample headers
 #include "FlightInfoListModel.h"
 
+// ArcGIS Maps SDK headers
+#include "Polygon.h"
+
 // Qt headers
 #include <QObject>
 
@@ -29,13 +32,11 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class GraphicsOverlay;
   class Geometry;
-  class Polygon;
   class DynamicEntityLayer;
   class Point;
   class CustomDynamicEntityDataSource;
   class DynamicEntityQueryParameters;
   class DynamicEntity;
-  class Polygon;
 } // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
@@ -76,7 +77,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_bufferGraphicsOverlay = nullptr;
 
-  Esri::ArcGISRuntime::Polygon* m_phoenixAirportBuffer = nullptr;
+  Esri::ArcGISRuntime::Polygon m_phoenixAirportBuffer;
   Esri::ArcGISRuntime::DynamicEntityLayer* m_dynamicEntityLayer = nullptr;
   Esri::ArcGISRuntime::CustomDynamicEntityDataSource* m_dataSource = nullptr;
   Esri::ArcGISRuntime::DynamicEntityQueryParameters* m_params = nullptr;
