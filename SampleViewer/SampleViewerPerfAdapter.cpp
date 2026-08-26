@@ -176,10 +176,16 @@ bool SampleViewerPerfAdapter::attachIfFound(QQuickItem* content)
   m_attachedView = view;
   m_navigating = view->isNavigating();
   m_drawStatusConn = connect(view, &ViewType::drawStatusChanged, this, &SampleViewerPerfAdapter::onDrawStatusChanged);
-  m_navigationConn = connect(view, &ViewType::navigatingChanged, this, [this, view]()
+  const QPointer<ViewType> safeView(view);
+  m_navigationConn = connect(view, &ViewType::navigatingChanged, this, [this, safeView]()
   {
-    onNavigationChanged(view->isNavigating(), view->drawStatus());
-  });
+    if (!safeView || safeView != m_attachedView.data())
+    {
+      return;
+    }
+
+    onNavigationChanged(safeView->isNavigating(), safeView->drawStatus());
+  }, Qt::QueuedConnection);
   onDrawStatusChanged(view->drawStatus());
   return true;
 }
