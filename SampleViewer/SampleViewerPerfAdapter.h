@@ -65,6 +65,7 @@ private:
   bool m_initialDrawStarted = false;
 
   bool m_navigating = false;
+  Esri::ArcGISRuntime::DrawStatus m_drawStatus = Esri::ArcGISRuntime::DrawStatus::Completed;
   bool m_drawOpen = false;
 };
 
