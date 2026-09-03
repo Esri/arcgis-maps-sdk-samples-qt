@@ -175,8 +175,18 @@ bool SampleViewerPerfAdapter::attachIfFound(QQuickItem* content)
 
   m_attachedView = view;
   m_navigating = view->isNavigating();
-  m_drawStatusConn = connect(view, &ViewType::drawStatusChanged, this, &SampleViewerPerfAdapter::onDrawStatusChanged);
+  m_drawStatus = view->drawStatus();
   const QPointer<ViewType> safeView(view);
+  m_drawStatusConn = connect(view, &ViewType::drawStatusChanged, this, [this, safeView](DrawStatus status)
+  {
+    if (!safeView || safeView != m_attachedView.data())
+    {
+      return;
+    }
+
+    m_drawStatus = status;
+    onDrawStatusChanged(status);
+  }, Qt::QueuedConnection);
   m_navigationConn = connect(view, &ViewType::navigatingChanged, this, [this, safeView]()
   {
     if (!safeView || safeView != m_attachedView.data())
@@ -184,9 +194,9 @@ bool SampleViewerPerfAdapter::attachIfFound(QQuickItem* content)
       return;
     }
 
-    onNavigationChanged(safeView->isNavigating(), safeView->drawStatus());
+    onNavigationChanged(!m_navigating, m_drawStatus);
   }, Qt::QueuedConnection);
-  onDrawStatusChanged(view->drawStatus());
+  onDrawStatusChanged(m_drawStatus);
   return true;
 }
 
@@ -202,6 +212,7 @@ void SampleViewerPerfAdapter::onNavigationChanged(bool navigating, DrawStatus dr
   if (m_navigating)
   {
     m_drawOpen = false;
+    m_monitor->cancelTiming(DRAW_TIMING);
     m_monitor->setValue(DRAW_TIMING, 0.0);
     return;
   }
