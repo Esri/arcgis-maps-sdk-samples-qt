@@ -16,7 +16,7 @@
 
 #include "MapLoaded.h"
 #include "Map.h"
-#include "MapGraphicsView.h"
+#include "MapWidget.h"
 #include "MapTypes.h"
 #include <QLabel>
 #include <QVBoxLayout>
@@ -30,7 +30,8 @@ MapLoaded::MapLoaded(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // Create a map view, and pass in the map
-  m_mapView = new MapGraphicsView(m_map, this);
+  m_mapWidget = new MapWidget(this);
+  m_mapWidget->setMap(m_map);
 
   // Create the load status label
   m_loadStatus = new QLabel("", this);
@@ -60,7 +61,7 @@ MapLoaded::MapLoaded(QWidget* parent) :
 
   // Set up the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
+  vBoxLayout->addWidget(m_mapWidget);
   vBoxLayout->addWidget(m_loadStatus);
   setLayout(vBoxLayout);
 }

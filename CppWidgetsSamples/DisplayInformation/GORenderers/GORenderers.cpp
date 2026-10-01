@@ -16,7 +16,7 @@
 
 #include "GORenderers.h"
 #include "Map.h"
-#include "MapGraphicsView.h"
+#include "MapWidget.h"
 #include "SpatialReference.h"
 #include "Point.h"
 #include "PolygonBuilder.h"
@@ -42,7 +42,8 @@ GORenderers::GORenderers(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Create a map view, and pass in the map
-  m_mapView = new MapGraphicsView(m_map, this);
+  m_mapWidget = new MapWidget(this);
+  m_mapWidget->setMap(m_map);
 
   // add the graphics overlays
   addGraphicsOverlay();
@@ -58,7 +59,7 @@ void GORenderers::createUi()
   layout->setContentsMargins(10, 10, 10, 10);
 
   QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
+  vBoxLayout->addWidget(m_mapWidget);
   setLayout(vBoxLayout);
 }
 
@@ -78,7 +79,7 @@ void GORenderers::addGraphicsOverlay()
   // add the graphic to the overlay
   pointGraphicOverlay->graphics()->append(pointGraphic);
   // add the overlay to the mapview
-  m_mapView->graphicsOverlays()->append(pointGraphicOverlay);
+  m_mapWidget->graphicsOverlays()->append(pointGraphicOverlay);
 
   // create line geometry
   PolygonBuilder polylineBuilder(SpatialReference::webMercator());
@@ -97,7 +98,7 @@ void GORenderers::addGraphicsOverlay()
   // add the graphic to the overlay
   lineGraphicOverlay->graphics()->append(lineGraphic);
   // add the overlay to the mapview
-  m_mapView->graphicsOverlays()->append(lineGraphicOverlay);
+  m_mapWidget->graphicsOverlays()->append(lineGraphicOverlay);
 
   // create the polygon geometry
   PolygonBuilder polygonBuilder(SpatialReference::webMercator());
@@ -111,5 +112,5 @@ void GORenderers::addGraphicsOverlay()
   GraphicsOverlay* polygonGraphicsOverlay = new GraphicsOverlay(this);
   polygonGraphicsOverlay->setRenderer(new SimpleRenderer(sfs, this));
   polygonGraphicsOverlay->graphics()->append(polygonGraphic);
-  m_mapView->graphicsOverlays()->append(polygonGraphicsOverlay);
+  m_mapWidget->graphicsOverlays()->append(polygonGraphicsOverlay);
 }
