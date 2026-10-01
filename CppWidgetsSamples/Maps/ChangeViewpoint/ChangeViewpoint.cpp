@@ -44,7 +44,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
   // Create and populate a combo box with several viewpoint types
   m_viewpointCombo = new QComboBox(this);
   m_viewpointCombo->adjustSize();
-  m_viewpointCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
+  m_viewpointCombo->setStyleSheet("QComboBox { color: black; background-color: white;}");
   m_viewpointCombo->addItems(QStringList{"Center", "Center and scale", "Geometry", "Geometry and padding", "Rotation", "Scale: 1:5,000,000",
                                          "Scale: 1:10,000,000", "Animation"});
 

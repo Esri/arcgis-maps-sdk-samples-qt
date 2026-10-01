@@ -48,12 +48,12 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
   // Create the bookmark combo box
   m_bookmarkCombo = new QComboBox(this);
   m_bookmarkCombo->setFixedWidth(200);
-  m_bookmarkCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
+  m_bookmarkCombo->setStyleSheet("QComboBox { color: black; background-color: white;}");
 
   // Create the button to display the input dialog
   m_button = new QPushButton(this);
   m_button->setText("Add Bookmark");
-  m_button->setStyleSheet("QPushbutton#text {color: black;}");
+  m_button->setStyleSheet("QPushButton { color: black; background-color: white;}");
 
   // Create the input dialog
   m_inputDialog = new QInputDialog(this);
