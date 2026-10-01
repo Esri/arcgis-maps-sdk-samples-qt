@@ -16,12 +16,12 @@
 
 #include "OpenExistingMap.h"
 #include "Map.h"
-#include "MapGraphicsView.h"
+#include "MapWidget.h"
+#include <QGridLayout>
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QInputDialog>
 #include <QPushButton>
-#include <QGraphicsProxyWidget>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -30,7 +30,7 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
   QWidget(parent)
 {
   // Create a map view
-  m_mapView = new MapGraphicsView(this);
+  m_mapWidget = new MapWidget(this);
 
   // Create the portal items
   createPortalMaps();
@@ -38,7 +38,7 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
   // Create the button to display the input dialog
   m_button = new QPushButton(this);
   m_button->setText("Open a Map");
-  m_button->setStyleSheet("QPushbutton#text {color: black;}");
+  m_button->setStyleSheet("QPushButton {color: black; background-color: white;}");
 
   // Create the input dialog
   m_inputDialog = new QInputDialog(this);
@@ -69,7 +69,7 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
     Map* map = new Map(portalItem, this);
 
     // set the map to the map view
-    m_mapView->setMap(map);
+    m_mapWidget->setMap(map);
   });
 
   // Set up the UI
@@ -87,18 +87,17 @@ void OpenExistingMap::createPortalMaps()
 
 void OpenExistingMap::createUi()
 {
-  QWidget* widget = new QWidget();
+  QWidget* widget = new QWidget(this);
+  widget->setAttribute(Qt::WA_NativeWindow);
   QVBoxLayout* layout = new QVBoxLayout();
   layout->setContentsMargins(10, 10, 10, 10);
   layout->addWidget(m_button);
   widget->setPalette(QPalette(QPalette::Base));
   widget->setLayout(layout);
 
-  QGraphicsProxyWidget* proxy = m_mapView->scene()->addWidget(widget);
-  proxy->setPos(10, 10);
-  proxy->setOpacity(0.95);
-
-  QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
-  setLayout(vBoxLayout);
+  QGridLayout* gridLayout = new QGridLayout();
+  gridLayout->addWidget(m_mapWidget, 0, 0);
+  gridLayout->addWidget(widget, 0, 0, Qt::AlignTop | Qt::AlignLeft);
+  setLayout(gridLayout);
+  widget->raise();
 }
