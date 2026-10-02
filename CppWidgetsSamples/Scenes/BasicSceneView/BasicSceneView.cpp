@@ -33,8 +33,9 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
   // Create a scene using the Imagery basemap
   m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
-  // Create a scene widget, and pass in the scene
-  m_sceneWidget = new SceneWidget(m_scene, this);
+  // Create a scene widget and set its scene
+  m_sceneWidget = new SceneWidget(this);
+  m_sceneWidget->setScene(m_scene);
 
   // create an elevation source
   ArcGISTiledElevationSource* elevationSource =
