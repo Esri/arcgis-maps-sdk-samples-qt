@@ -129,6 +129,7 @@ void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
 void ManageBookmarks::createUi()
 {
   QWidget* widget = new QWidget(this);
+  widget->setAttribute(Qt::WA_NativeWindow);
   QVBoxLayout* layout = new QVBoxLayout();
   layout->setContentsMargins(10, 10, 10, 10);
   layout->addWidget(m_bookmarkCombo);
