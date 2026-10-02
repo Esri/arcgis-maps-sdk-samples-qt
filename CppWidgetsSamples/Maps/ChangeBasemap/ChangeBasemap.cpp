@@ -65,6 +65,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
 
   // Set up the UI
   QWidget* widget = new QWidget(this);
+  widget->setAttribute(Qt::WA_NativeWindow);
   QVBoxLayout* layout = new QVBoxLayout();
   layout->setContentsMargins(5, 5, 0, 0);
   layout->addWidget(m_basemapCombo);
