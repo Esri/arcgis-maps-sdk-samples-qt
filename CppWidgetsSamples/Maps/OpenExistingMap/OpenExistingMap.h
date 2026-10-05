@@ -20,7 +20,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Map;
-  class MapGraphicsView;
+  class MapWidget;
 } // namespace Esri::ArcGISRuntime
 
 class QPushButton;
@@ -43,7 +43,7 @@ private:
   void createPortalMaps();
 
 private:
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::MapWidget* m_mapWidget = nullptr;
   QPushButton* m_button = nullptr;
   QInputDialog* m_inputDialog = nullptr;
   QMap<QString, QString> m_portalIds;

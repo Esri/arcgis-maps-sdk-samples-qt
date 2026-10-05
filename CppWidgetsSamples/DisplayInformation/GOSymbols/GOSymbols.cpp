@@ -16,7 +16,7 @@
 
 #include "GOSymbols.h"
 #include "Map.h"
-#include "MapGraphicsView.h"
+#include "MapWidget.h"
 #include "Viewpoint.h"
 #include "SpatialReference.h"
 #include "Point.h"
@@ -49,13 +49,13 @@ GOSymbols::GOSymbols(QWidget* parent) :
   m_map->setInitialViewpoint(Viewpoint(lat, lon, scale));
 
   // Create a map view, and pass in the map
-  m_mapView = new MapGraphicsView(m_map, this);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // create a new graphics overlay
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
   // add the overlay to the mapview
-  m_mapView->graphicsOverlays()->append(graphicsOverlay);
+  m_mapWidget->graphicsOverlays()->append(graphicsOverlay);
 
   // add graphics to the graphics overlays
   //  add point graphics
@@ -81,7 +81,7 @@ void GOSymbols::createUi()
   layout->setContentsMargins(10, 10, 10, 10);
 
   QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
+  vBoxLayout->addWidget(m_mapWidget);
   setLayout(vBoxLayout);
 }
 

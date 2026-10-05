@@ -16,7 +16,7 @@
 
 #include "ChangeViewpoint.h"
 #include "Map.h"
-#include "MapGraphicsView.h"
+#include "MapWidget.h"
 #include "MapTypes.h"
 #include "SpatialReference.h"
 #include "Envelope.h"
@@ -26,8 +26,8 @@
 
 #include <QComboBox>
 #include <QFuture>
+#include <QGridLayout>
 #include <QVBoxLayout>
-#include <QGraphicsProxyWidget>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -38,12 +38,12 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
   // Create a map view, and pass in the map
-  m_mapView = new MapGraphicsView(m_map, this);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // Create and populate a combo box with several viewpoint types
   m_viewpointCombo = new QComboBox(this);
   m_viewpointCombo->adjustSize();
-  m_viewpointCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
+  m_viewpointCombo->setStyleSheet("QComboBox { color: black; background-color: white;}");
   m_viewpointCombo->addItems(QStringList{"Center", "Center and scale", "Geometry", "Geometry and padding", "Rotation", "Scale: 1:5,000,000",
                                          "Scale: 1:10,000,000", "Animation"});
 
@@ -51,19 +51,18 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
   connect(m_viewpointCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ChangeViewpoint::changeToNewViewpoint);
 
   // Set up the UI
-  QWidget* widget = new QWidget();
+  QWidget* widget = new QWidget(this);
+  widget->setAttribute(Qt::WA_NativeWindow);
   QVBoxLayout* layout = new QVBoxLayout();
-  layout->setContentsMargins(0, 0, 0, 0);
+  layout->setContentsMargins(5, 5, 0, 0);
   layout->addWidget(m_viewpointCombo);
   widget->setLayout(layout);
 
-  QGraphicsProxyWidget* proxy = m_mapView->scene()->addWidget(widget);
-  proxy->setPos(10, 10);
-  proxy->setOpacity(0.95);
-
-  QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
-  setLayout(vBoxLayout);
+  QGridLayout* gridLayout = new QGridLayout();
+  gridLayout->addWidget(m_mapWidget, 0, 0);
+  gridLayout->addWidget(widget, 0, 0, Qt::AlignTop | Qt::AlignLeft);
+  setLayout(gridLayout);
+  widget->raise();
 }
 
 ChangeViewpoint::~ChangeViewpoint() = default;
@@ -81,36 +80,36 @@ void ChangeViewpoint::changeToNewViewpoint(int index)
   {
     // Call setViewpoint and pass in the appropriate viewpoint
     case 0: // "Center"
-      m_mapView->setViewpointCenterAsync(ptEsriHeadquarters);
+      m_mapWidget->setViewpointCenterAsync(ptEsriHeadquarters);
       break;
     case 1: // "Center and scale"
-      m_mapView->setViewpointCenterAsync(ptHawaii, 4000000.0);
+      m_mapWidget->setViewpointCenterAsync(ptHawaii, 4000000.0);
       break;
     case 2: // "Geometry"
-      m_mapView->setViewpointGeometryAsync(envBeijing);
+      m_mapWidget->setViewpointGeometryAsync(envBeijing);
       break;
     case 3: // "Geometry and padding"
-      m_mapView->setViewpointGeometryAsync(envBeijing, 200 * screenRatio());
+      m_mapWidget->setViewpointGeometryAsync(envBeijing, 200 * screenRatio());
       break;
     case 4: // "Rotation"
       m_rotationValue = (m_rotationValue + 45) % 360;
-      m_mapView->setViewpointRotationAsync(m_rotationValue);
+      m_mapWidget->setViewpointRotationAsync(m_rotationValue);
       break;
     case 5: // "Scale: 1:5,000,000"
-      m_mapView->setViewpointScaleAsync(5000000.0);
+      m_mapWidget->setViewpointScaleAsync(5000000.0);
       break;
     case 6: // "Scale: 1:10,000,000"
-      m_mapView->setViewpointScaleAsync(10000000.0);
+      m_mapWidget->setViewpointScaleAsync(10000000.0);
       break;
     case 7: // "Scale: 1:5,000,000"
-      m_mapView->setViewpointAsync(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
+      m_mapWidget->setViewpointAsync(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
       break;
   }
 }
 
 double ChangeViewpoint::screenRatio() const
 {
-  const double width = static_cast<double>(m_mapView->width());
-  const double height = static_cast<double>(m_mapView->height());
+  const double width = static_cast<double>(m_mapWidget->width());
+  const double height = static_cast<double>(m_mapWidget->height());
   return height > width ? width / height : height / width;
 }

@@ -16,7 +16,7 @@
 
 #include "ManageBookmarks.h"
 #include "Map.h"
-#include "MapGraphicsView.h"
+#include "MapWidget.h"
 #include "Viewpoint.h"
 #include "Bookmark.h"
 #include "MapTypes.h"
@@ -24,12 +24,12 @@
 #include "SpatialReference.h"
 #include "BookmarkListModel.h"
 
+#include <QGridLayout>
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QFuture>
 #include <QPushButton>
 #include <QInputDialog>
-#include <QGraphicsProxyWidget>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -42,17 +42,17 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
   m_map->setInitialViewpoint(Viewpoint(env1));
 
   // Create a map view, and pass in the map
-  m_mapView = new MapGraphicsView(m_map, this);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // Create the bookmark combo box
   m_bookmarkCombo = new QComboBox(this);
   m_bookmarkCombo->setFixedWidth(200);
-  m_bookmarkCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
+  m_bookmarkCombo->setStyleSheet("QComboBox { color: black; background-color: white;}");
 
   // Create the button to display the input dialog
   m_button = new QPushButton(this);
   m_button->setText("Add Bookmark");
-  m_button->setStyleSheet("QPushbutton#text {color: black;}");
+  m_button->setStyleSheet("QPushButton { color: black; background-color: white;}");
 
   // Create the input dialog
   m_inputDialog = new QInputDialog(this);
@@ -66,7 +66,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
   connect(m_bookmarkCombo, QOverload<const QString&>::of(&QComboBox::currentTextChanged), [this](const QString& name)
   {
     // Use the map of bookmarks created to obtain the viewpoint of a given name
-    m_mapView->setViewpointAsync(m_bookmarks.value(name));
+    m_mapWidget->setViewpointAsync(m_bookmarks.value(name));
   });
 
   // Connect the button clicked signal to lambda for showing input dialog
@@ -78,7 +78,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
   // Connect the input dialog for newly added bookmarks
   connect(m_inputDialog, &QInputDialog::accepted, [this]()
   {
-    createBookmark(m_inputDialog->textValue(), m_mapView->currentViewpoint(ViewpointType::BoundingGeometry));
+    createBookmark(m_inputDialog->textValue(), m_mapWidget->currentViewpoint(ViewpointType::BoundingGeometry));
   });
 
   // Set up the UI
@@ -127,7 +127,8 @@ void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
 
 void ManageBookmarks::createUi()
 {
-  QWidget* widget = new QWidget();
+  QWidget* widget = new QWidget(this);
+  widget->setAttribute(Qt::WA_NativeWindow);
   QVBoxLayout* layout = new QVBoxLayout();
   layout->setContentsMargins(10, 10, 10, 10);
   layout->addWidget(m_bookmarkCombo);
@@ -135,11 +136,9 @@ void ManageBookmarks::createUi()
   widget->setPalette(QPalette(QPalette::Base));
   widget->setLayout(layout);
 
-  QGraphicsProxyWidget* proxy = m_mapView->scene()->addWidget(widget);
-  proxy->setPos(10, 10);
-  proxy->setOpacity(0.95);
-
-  QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
-  setLayout(vBoxLayout);
+  QGridLayout* gridLayout = new QGridLayout();
+  gridLayout->addWidget(m_mapWidget, 0, 0);
+  gridLayout->addWidget(widget, 0, 0, Qt::AlignTop | Qt::AlignLeft);
+  setLayout(gridLayout);
+  widget->raise();
 }

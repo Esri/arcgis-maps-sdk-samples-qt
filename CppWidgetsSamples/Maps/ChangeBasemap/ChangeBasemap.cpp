@@ -16,13 +16,13 @@
 
 #include "ChangeBasemap.h"
 #include "Map.h"
-#include "MapGraphicsView.h"
+#include "MapWidget.h"
 #include "MapTypes.h"
 #include "Basemap.h"
 
 #include <QComboBox>
+#include <QGridLayout>
 #include <QVBoxLayout>
-#include <QGraphicsProxyWidget>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -33,12 +33,12 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Create a map view, and pass in the map
-  m_mapView = new MapGraphicsView(m_map, this);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // Create and populate a combo box with several basemap styles
   m_basemapCombo = new QComboBox(this);
   m_basemapCombo->adjustSize();
-  m_basemapCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
+  m_basemapCombo->setStyleSheet("QComboBox { color: black; background-color: white;}");
   m_basemapCombo->addItems(QStringList{"Topographic", "Streets", "Imagery", "Oceans"});
 
   // Connect the combo box signal to lambda for setting new basemaps
@@ -63,19 +63,18 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
   });
 
   // Set up the UI
-  QWidget* widget = new QWidget();
+  QWidget* widget = new QWidget(this);
+  widget->setAttribute(Qt::WA_NativeWindow);
   QVBoxLayout* layout = new QVBoxLayout();
-  layout->setContentsMargins(0, 0, 0, 0);
+  layout->setContentsMargins(5, 5, 0, 0);
   layout->addWidget(m_basemapCombo);
   widget->setLayout(layout);
 
-  QGraphicsProxyWidget* proxy = m_mapView->scene()->addWidget(widget);
-  proxy->setPos(10, 10);
-  proxy->setOpacity(0.95);
-
-  QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
-  setLayout(vBoxLayout);
+  QGridLayout* gridLayout = new QGridLayout();
+  gridLayout->addWidget(m_mapWidget, 0, 0);
+  gridLayout->addWidget(widget, 0, 0, Qt::AlignTop | Qt::AlignLeft);
+  setLayout(gridLayout);
+  widget->raise();
 }
 
 ChangeBasemap::~ChangeBasemap() = default;

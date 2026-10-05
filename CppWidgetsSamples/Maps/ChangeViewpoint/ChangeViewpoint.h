@@ -20,7 +20,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Map;
-  class MapGraphicsView;
+  class MapWidget;
 } // namespace Esri::ArcGISRuntime
 
 class QComboBox;
@@ -42,7 +42,7 @@ private:
   double screenRatio() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::MapWidget* m_mapWidget = nullptr;
   QComboBox* m_viewpointCombo = nullptr;
   int m_rotationValue = 0;
 };
