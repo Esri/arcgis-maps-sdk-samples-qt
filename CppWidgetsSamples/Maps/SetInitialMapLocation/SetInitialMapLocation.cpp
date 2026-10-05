@@ -35,8 +35,7 @@ SetInitialMapLocation::SetInitialMapLocation(QWidget* parent) :
   m_map->setInitialViewpoint(Viewpoint(lat, lon, scale));
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(this);
-  m_mapWidget->setMap(m_map);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // Set up the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout();

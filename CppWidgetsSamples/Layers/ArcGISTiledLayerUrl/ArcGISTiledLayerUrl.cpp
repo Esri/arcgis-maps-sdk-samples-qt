@@ -40,8 +40,7 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
   m_map = new Map(m_basemap, this);
 
   // add the Map to a MapWidget
-  m_mapWidget = new MapWidget(this);
-  m_mapWidget->setMap(m_map);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // setup the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout();

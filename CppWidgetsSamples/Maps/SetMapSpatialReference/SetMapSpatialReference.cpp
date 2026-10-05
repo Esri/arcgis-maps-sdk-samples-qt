@@ -44,8 +44,7 @@ SetMapSpatialReference::SetMapSpatialReference(QWidget* parent) :
   m_map->setBasemap(m_basemap);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(this);
-  m_mapWidget->setMap(m_map);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // Set up the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout(this);

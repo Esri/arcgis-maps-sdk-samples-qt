@@ -49,8 +49,7 @@ GOSymbols::GOSymbols(QWidget* parent) :
   m_map->setInitialViewpoint(Viewpoint(lat, lon, scale));
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(this);
-  m_mapWidget->setMap(m_map);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // create a new graphics overlay
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);

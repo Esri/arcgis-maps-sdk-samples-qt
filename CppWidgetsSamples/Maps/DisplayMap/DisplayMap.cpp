@@ -29,8 +29,7 @@ DisplayMap::DisplayMap(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
   // Create a map widget and set its map
-  m_mapWidget = new MapWidget(this);
-  m_mapWidget->setMap(m_map);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // Set up the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout();

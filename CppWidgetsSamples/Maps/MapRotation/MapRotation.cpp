@@ -34,8 +34,7 @@ MapRotation::MapRotation(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(this);
-  m_mapWidget->setMap(m_map);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // Users should use slider to rotate map view
   m_mapWidget->setRotationByPinchingEnabled(false);

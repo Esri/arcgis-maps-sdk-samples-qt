@@ -38,8 +38,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(this);
-  m_mapWidget->setMap(m_map);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // Create and populate a combo box with several viewpoint types
   m_viewpointCombo = new QComboBox(this);
