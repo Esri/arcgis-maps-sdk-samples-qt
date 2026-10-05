@@ -42,8 +42,7 @@ GORenderers::GORenderers(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(this);
-  m_mapWidget->setMap(m_map);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // add the graphics overlays
   addGraphicsOverlay();
