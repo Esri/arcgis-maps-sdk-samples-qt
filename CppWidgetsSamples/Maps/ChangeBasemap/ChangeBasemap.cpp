@@ -33,8 +33,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(this);
-  m_mapWidget->setMap(m_map);
+  m_mapWidget = new MapWidget(m_map, this);
 
   // Create and populate a combo box with several basemap styles
   m_basemapCombo = new QComboBox(this);
@@ -70,6 +69,16 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
   layout->setContentsMargins(5, 5, 0, 0);
   layout->addWidget(m_basemapCombo);
   widget->setLayout(layout);
+  
+  /*
+  QGraphicsProxyWidget* proxy = m_mapView->scene()->addWidget(widget);
+  proxy->setPos(10, 10);
+  proxy->setOpacity(0.95);
+
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
+  */
 
   QGridLayout* gridLayout = new QGridLayout();
   gridLayout->addWidget(m_mapWidget, 0, 0);
