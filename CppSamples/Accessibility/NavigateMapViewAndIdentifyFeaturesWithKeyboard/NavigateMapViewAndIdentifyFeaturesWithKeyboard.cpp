@@ -423,7 +423,7 @@ bool NavigateMapViewAndIdentifyFeaturesWithKeyboard::showCallout(int featureNumb
   const Point leaderLocation = m_mapView->screenToLocation(screenPoint.x(), screenPoint.y() - 4.0);
   calloutData->setLocation(leaderLocation.isValid() ? leaderLocation : featureLocation);
   calloutData->setTitle(name.isEmpty() ? tr("Restaurant") : name);
-  calloutData->setDetail(tr("Lat: %1\nLon: %2").arg(location.y(), 0, 'f', 6).arg(location.x(), 0, 'f', 6));
+  calloutData->setDetail(tr("Lat: %1, Lon: %2").arg(location.y(), 0, 'f', 6).arg(location.x(), 0, 'f', 6));
   calloutData->setVisible(true);
   return true;
 }
