@@ -290,7 +290,7 @@ void ManageFeaturesFeatureService::onIdentifyLayerCompleted_(const IdentifyLayer
     m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
     m_selectedFeature->setParent(this);
     m_featureType = m_selectedFeature->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
-    m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
+    m_mapView->calloutData()->setTitle(QString("<font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
     m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
     emit featureTypeChanged();
     emit featureSelected();
