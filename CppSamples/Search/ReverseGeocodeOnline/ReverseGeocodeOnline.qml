@@ -34,6 +34,7 @@ Item {
         Callout {
             id: callout
             calloutData: view.calloutData
+            font.pointSize: 16
             accessoryButtonVisible: false
             leaderPosition: Callout.LeaderPosition.Top
             padding: 5
