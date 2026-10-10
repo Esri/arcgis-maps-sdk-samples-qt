@@ -421,7 +421,7 @@ void EditWithBranchVersioning::onIdentifyLayerCompleted_(IdentifyLayerResult* id
 
     // Obtain placename attribute for the callout title
     const QString featureName = m_selectedFeature->attributes()->attributeValue("PLACENAME").toString();
-    m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\">%1</font>").arg(featureName));
+    m_mapView->calloutData()->setTitle(QString("<font size=\"+2\">%1</font>").arg(featureName));
     m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
 
     m_currentTypeDamage = m_selectedFeature->attributes()->attributeValue("TYPDAMAGE").toString();

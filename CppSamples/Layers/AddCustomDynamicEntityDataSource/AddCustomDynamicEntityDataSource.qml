@@ -40,8 +40,14 @@ Item {
 
     Callout {
         id: callout
-        height: 120
         calloutData: view.calloutData
         accessoryButtonVisible: false
+        contentWidth: Math.min(callout.maxWidth, callout.contentItem.implicitWidth)
+
+        contentItem: Label {
+            text: callout.calloutData ? callout.calloutData.detail : ""
+            textFormat: Text.PlainText
+            wrapMode: Text.WordWrap
+        }
     }
 }

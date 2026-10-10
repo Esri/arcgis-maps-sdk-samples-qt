@@ -49,10 +49,18 @@ Item {
                 id: callout
                 calloutData: view.calloutData
                 maxWidth: Math.min(root.width * 0.6, 320)
-                implicitHeight: 120
+                contentWidth: Math.min(maxWidth, contentItem.implicitWidth)
                 screenOffsetY: -19
                 accessoryButtonVisible: false
                 leaderPosition: Callout.LeaderPosition.Automatic
+
+                contentItem: Label {
+                    text: callout.calloutData ? callout.calloutData.detail : ""
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Qt.AlignHCenter
+                    verticalAlignment: Qt.AlignVCenter
+                }
             }
 
             Label {

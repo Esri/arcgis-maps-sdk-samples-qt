@@ -44,10 +44,18 @@ MobileMap_SearchAndRouteSample {
 
             // callout to display information
             Callout {
+                id: callout
                 calloutData: mapView.calloutData
                 screenOffsetY: -19
                 accessoryButtonVisible: false
+                contentWidth: Math.min(callout.maxWidth, callout.contentItem.implicitWidth)
                 leaderPosition: Callout.LeaderPosition.Automatic
+
+                contentItem: Label {
+                    text: callout.calloutData ? callout.calloutData.title + "\n" + callout.calloutData.detail : ""
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                }
             }
 
             Rectangle {
