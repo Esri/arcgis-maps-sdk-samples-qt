@@ -30,9 +30,7 @@
 #include <QFontDatabase>
 #endif
 
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngineQuick>
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebView>
 
 #include "ArcGISRuntimeEnvironment.h"
 #include "ArcGISQt_global.h" // IWYU pragma: keep - for LOCALSERVER_SUPPORTED
@@ -322,9 +320,7 @@ void registerCppSampleClasses();
 
 int main(int argc, char* argv[])
 {
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngineQuick::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebView::initialize();
 
   QGuiApplication::setApplicationName("ArcGIS Maps Qt Samples");
   QGuiApplication::setOrganizationName("Esri");
