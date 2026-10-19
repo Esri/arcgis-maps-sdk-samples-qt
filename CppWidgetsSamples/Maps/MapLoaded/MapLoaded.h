@@ -20,7 +20,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Map;
-  class MapWidget;
+  class MapViewWidget;
 } // namespace Esri::ArcGISRuntime
 
 class QLabel;
@@ -37,7 +37,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapWidget* m_mapWidget = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapWidget = nullptr;
   QLabel* m_loadStatus = nullptr;
 };
 

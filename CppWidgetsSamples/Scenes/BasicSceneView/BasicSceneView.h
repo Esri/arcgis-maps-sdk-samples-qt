@@ -20,7 +20,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Scene;
-  class SceneWidget;
+  class SceneViewWidget;
 } // namespace Esri::ArcGISRuntime
 
 #include <QWidget>
@@ -35,7 +35,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneWidget* m_sceneWidget = nullptr;
+  Esri::ArcGISRuntime::SceneViewWidget* m_sceneWidget = nullptr;
 };
 
 #endif // BASIC_SCENEVIEW_H

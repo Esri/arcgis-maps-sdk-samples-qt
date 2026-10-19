@@ -16,7 +16,7 @@
 
 #include "ArcGISTiledLayerUrl.h"
 #include "Map.h"
-#include "MapWidget.h"
+#include "MapViewWidget.h"
 #include "Basemap.h"
 #include "ArcGISTiledLayer.h"
 #include <QUrl>
@@ -39,8 +39,8 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
   // create a Map by passing in the Basemap
   m_map = new Map(m_basemap, this);
 
-  // add the Map to a MapWidget
-  m_mapWidget = new MapWidget(m_map, this);
+  // add the Map to a MapViewWidget
+  m_mapWidget = new MapViewWidget(m_map, this);
 
   // setup the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout();

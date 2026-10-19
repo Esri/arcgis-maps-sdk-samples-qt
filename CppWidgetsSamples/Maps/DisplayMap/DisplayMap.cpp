@@ -16,7 +16,7 @@
 
 #include "DisplayMap.h"
 #include "Map.h"
-#include "MapWidget.h"
+#include "MapViewWidget.h"
 #include "MapTypes.h"
 #include <QVBoxLayout>
 
@@ -29,7 +29,7 @@ DisplayMap::DisplayMap(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
   // Create a map widget and set its map
-  m_mapWidget = new MapWidget(m_map, this);
+  m_mapWidget = new MapViewWidget(m_map, this);
 
   // Set up the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout();

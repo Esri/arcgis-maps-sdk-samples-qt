@@ -16,7 +16,7 @@
 
 #include "BasicSceneView.h"
 #include "Scene.h"
-#include "SceneWidget.h"
+#include "SceneViewWidget.h"
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "MapTypes.h"
@@ -34,7 +34,7 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
   m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
   // Create a scene widget and set its scene
-  m_sceneWidget = new SceneWidget(m_scene, this);
+  m_sceneWidget = new SceneViewWidget(m_scene, this);
 
   // create an elevation source
   ArcGISTiledElevationSource* elevationSource =

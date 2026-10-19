@@ -16,7 +16,7 @@
 
 #include "MapRotation.h"
 #include "Map.h"
-#include "MapWidget.h"
+#include "MapViewWidget.h"
 #include "MapTypes.h"
 
 #include <QFuture>
@@ -34,7 +34,7 @@ MapRotation::MapRotation(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(m_map, this);
+  m_mapWidget = new MapViewWidget(m_map, this);
 
   // Users should use slider to rotate map view
   m_mapWidget->setRotationByPinchingEnabled(false);

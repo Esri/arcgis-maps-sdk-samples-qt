@@ -16,7 +16,7 @@
 
 #include "ManageBookmarks.h"
 #include "Map.h"
-#include "MapWidget.h"
+#include "MapViewWidget.h"
 #include "Viewpoint.h"
 #include "Bookmark.h"
 #include "MapTypes.h"
@@ -42,7 +42,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
   m_map->setInitialViewpoint(Viewpoint(env1));
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(m_map, this);
+  m_mapWidget = new MapViewWidget(m_map, this);
 
   // Create the bookmark combo box
   m_bookmarkCombo = new QComboBox(this);

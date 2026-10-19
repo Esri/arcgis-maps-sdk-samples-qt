@@ -16,7 +16,7 @@
 
 #include "GORenderers.h"
 #include "Map.h"
-#include "MapWidget.h"
+#include "MapViewWidget.h"
 #include "SpatialReference.h"
 #include "Point.h"
 #include "PolygonBuilder.h"
@@ -42,7 +42,7 @@ GORenderers::GORenderers(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(m_map, this);
+  m_mapWidget = new MapViewWidget(m_map, this);
 
   // add the graphics overlays
   addGraphicsOverlay();

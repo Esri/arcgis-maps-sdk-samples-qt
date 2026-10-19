@@ -16,7 +16,7 @@
 
 #include "ChangeBasemap.h"
 #include "Map.h"
-#include "MapWidget.h"
+#include "MapViewWidget.h"
 #include "MapTypes.h"
 #include "Basemap.h"
 
@@ -33,7 +33,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(m_map, this);
+  m_mapWidget = new MapViewWidget(m_map, this);
 
   // Create and populate a combo box with several basemap styles
   m_basemapCombo = new QComboBox(this);
