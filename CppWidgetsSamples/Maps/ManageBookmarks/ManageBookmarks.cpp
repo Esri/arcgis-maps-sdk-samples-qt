@@ -42,7 +42,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
   m_map->setInitialViewpoint(Viewpoint(env1));
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapViewWidget(m_map, this);
+  m_mapViewWidget = new MapViewWidget(m_map, this);
 
   // Create the bookmark combo box
   m_bookmarkCombo = new QComboBox(this);
@@ -66,7 +66,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
   connect(m_bookmarkCombo, QOverload<const QString&>::of(&QComboBox::currentTextChanged), [this](const QString& name)
   {
     // Use the map of bookmarks created to obtain the viewpoint of a given name
-    m_mapWidget->setViewpointAsync(m_bookmarks.value(name));
+    m_mapViewWidget->setViewpointAsync(m_bookmarks.value(name));
   });
 
   // Connect the button clicked signal to lambda for showing input dialog
@@ -78,7 +78,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
   // Connect the input dialog for newly added bookmarks
   connect(m_inputDialog, &QInputDialog::accepted, [this]()
   {
-    createBookmark(m_inputDialog->textValue(), m_mapWidget->currentViewpoint(ViewpointType::BoundingGeometry));
+    createBookmark(m_inputDialog->textValue(), m_mapViewWidget->currentViewpoint(ViewpointType::BoundingGeometry));
   });
 
   // Set up the UI
@@ -137,7 +137,7 @@ void ManageBookmarks::createUi()
   widget->setLayout(layout);
 
   QGridLayout* gridLayout = new QGridLayout();
-  gridLayout->addWidget(m_mapWidget, 0, 0);
+  gridLayout->addWidget(m_mapViewWidget, 0, 0);
   gridLayout->addWidget(widget, 0, 0, Qt::AlignTop | Qt::AlignLeft);
   setLayout(gridLayout);
   widget->raise();

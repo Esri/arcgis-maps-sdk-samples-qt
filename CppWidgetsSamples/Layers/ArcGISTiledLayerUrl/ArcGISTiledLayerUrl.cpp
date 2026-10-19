@@ -40,11 +40,11 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
   m_map = new Map(m_basemap, this);
 
   // add the Map to a MapViewWidget
-  m_mapWidget = new MapViewWidget(m_map, this);
+  m_mapViewWidget = new MapViewWidget(m_map, this);
 
   // setup the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapWidget);
+  vBoxLayout->addWidget(m_mapViewWidget);
   setLayout(vBoxLayout);
 }
 

@@ -34,7 +34,7 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
   m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
   // Create a scene widget and set its scene
-  m_sceneWidget = new SceneViewWidget(m_scene, this);
+  m_sceneViewWidget = new SceneViewWidget(m_scene, this);
 
   // create an elevation source
   ArcGISTiledElevationSource* elevationSource =
@@ -44,11 +44,11 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
   // create a camera
   Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 0.0);
   // set the viewpoint to the camera
-  m_sceneWidget->setViewpointCameraAndWait(camera);
+  m_sceneViewWidget->setViewpointCameraAndWait(camera);
 
   // Set up the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout(this);
-  vBoxLayout->addWidget(m_sceneWidget);
+  vBoxLayout->addWidget(m_sceneViewWidget);
   setLayout(vBoxLayout);
 }
 

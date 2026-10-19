@@ -35,7 +35,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneViewWidget* m_sceneWidget = nullptr;
+  Esri::ArcGISRuntime::SceneViewWidget* m_sceneViewWidget = nullptr;
 };
 
 #endif // BASIC_SCENEVIEW_H

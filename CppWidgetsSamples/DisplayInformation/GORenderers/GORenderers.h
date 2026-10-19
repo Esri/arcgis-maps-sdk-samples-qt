@@ -38,7 +38,7 @@ private:
   void addGraphicsOverlay();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapViewWidget* m_mapWidget = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
 };
 
 #endif // GORENDERERS_H

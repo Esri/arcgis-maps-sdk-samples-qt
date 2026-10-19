@@ -38,7 +38,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapViewWidget(m_map, this);
+  m_mapViewWidget = new MapViewWidget(m_map, this);
 
   // Create and populate a combo box with several viewpoint types
   m_viewpointCombo = new QComboBox(this);
@@ -59,7 +59,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
   widget->setLayout(layout);
 
   QGridLayout* gridLayout = new QGridLayout();
-  gridLayout->addWidget(m_mapWidget, 0, 0);
+  gridLayout->addWidget(m_mapViewWidget, 0, 0);
   gridLayout->addWidget(widget, 0, 0, Qt::AlignTop | Qt::AlignLeft);
   setLayout(gridLayout);
   widget->raise();
@@ -80,36 +80,36 @@ void ChangeViewpoint::changeToNewViewpoint(int index)
   {
     // Call setViewpoint and pass in the appropriate viewpoint
     case 0: // "Center"
-      m_mapWidget->setViewpointCenterAsync(ptEsriHeadquarters);
+      m_mapViewWidget->setViewpointCenterAsync(ptEsriHeadquarters);
       break;
     case 1: // "Center and scale"
-      m_mapWidget->setViewpointCenterAsync(ptHawaii, 4000000.0);
+      m_mapViewWidget->setViewpointCenterAsync(ptHawaii, 4000000.0);
       break;
     case 2: // "Geometry"
-      m_mapWidget->setViewpointGeometryAsync(envBeijing);
+      m_mapViewWidget->setViewpointGeometryAsync(envBeijing);
       break;
     case 3: // "Geometry and padding"
-      m_mapWidget->setViewpointGeometryAsync(envBeijing, 200 * screenRatio());
+      m_mapViewWidget->setViewpointGeometryAsync(envBeijing, 200 * screenRatio());
       break;
     case 4: // "Rotation"
       m_rotationValue = (m_rotationValue + 45) % 360;
-      m_mapWidget->setViewpointRotationAsync(m_rotationValue);
+      m_mapViewWidget->setViewpointRotationAsync(m_rotationValue);
       break;
     case 5: // "Scale: 1:5,000,000"
-      m_mapWidget->setViewpointScaleAsync(5000000.0);
+      m_mapViewWidget->setViewpointScaleAsync(5000000.0);
       break;
     case 6: // "Scale: 1:10,000,000"
-      m_mapWidget->setViewpointScaleAsync(10000000.0);
+      m_mapViewWidget->setViewpointScaleAsync(10000000.0);
       break;
     case 7: // "Scale: 1:5,000,000"
-      m_mapWidget->setViewpointAsync(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
+      m_mapViewWidget->setViewpointAsync(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
       break;
   }
 }
 
 double ChangeViewpoint::screenRatio() const
 {
-  const double width = static_cast<double>(m_mapWidget->width());
-  const double height = static_cast<double>(m_mapWidget->height());
+  const double width = static_cast<double>(m_mapViewWidget->width());
+  const double height = static_cast<double>(m_mapViewWidget->height());
   return height > width ? width / height : height / width;
 }

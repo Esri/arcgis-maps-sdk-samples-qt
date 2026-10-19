@@ -43,7 +43,7 @@ private:
   void createPortalMaps();
 
 private:
-  Esri::ArcGISRuntime::MapViewWidget* m_mapWidget = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
   QPushButton* m_button = nullptr;
   QInputDialog* m_inputDialog = nullptr;
   QMap<QString, QString> m_portalIds;

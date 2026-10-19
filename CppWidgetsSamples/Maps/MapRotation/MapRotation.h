@@ -38,7 +38,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapViewWidget* m_mapWidget = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
   QSlider* m_slider = nullptr;
   QLabel* m_degrees = nullptr;
 };

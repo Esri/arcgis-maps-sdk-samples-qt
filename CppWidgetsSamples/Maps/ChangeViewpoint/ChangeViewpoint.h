@@ -42,7 +42,7 @@ private:
   double screenRatio() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapViewWidget* m_mapWidget = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
   QComboBox* m_viewpointCombo = nullptr;
   int m_rotationValue = 0;
 };

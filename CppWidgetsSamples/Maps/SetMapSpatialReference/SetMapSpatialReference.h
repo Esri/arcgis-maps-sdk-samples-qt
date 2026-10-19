@@ -37,7 +37,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapViewWidget* m_mapWidget = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
   Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
   Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer = nullptr;
 };
