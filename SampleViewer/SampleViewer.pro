@@ -137,10 +137,6 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   DEFINES += BUILD_FROM_CONFIGURED_SDK
 }
 
-qtHaveModule(webenginequick) {
-  QT += webenginequick
-  DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
-}
 
 QMAKE_TARGET_COMPANY = Esri, Inc.
 QMAKE_TARGET_PRODUCT = ArcGIS Runtime SDK for Qt Samples - Cpp

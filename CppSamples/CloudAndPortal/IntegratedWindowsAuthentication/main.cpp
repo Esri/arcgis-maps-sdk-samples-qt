@@ -31,9 +31,7 @@
 #include <Windows.h>
 #endif
 
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngineQuick>
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebView>
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -42,9 +40,7 @@
 
 int main(int argc, char* argv[])
 {
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngineQuick::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebView::initialize();
 
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("IntegratedWindowsAuthentication"));
