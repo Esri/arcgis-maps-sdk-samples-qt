@@ -90,7 +90,7 @@
     </layout>
    </item>
    <item>
-    <widget class="Esri::ArcGISRuntime::MapWidget" name="mapView">
+    <widget class="Esri::ArcGISRuntime::MapViewWidget" name="mapView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
        <horstretch>0</horstretch>
@@ -103,9 +103,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Esri::ArcGISRuntime::MapWidget</class>
+   <class>Esri::ArcGISRuntime::MapViewWidget</class>
    <extends>QWidget</extends>
-   <header location="global">MapWidget.h</header>
+   <header location="global">MapViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

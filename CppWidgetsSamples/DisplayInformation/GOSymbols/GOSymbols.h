@@ -20,7 +20,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Map;
-  class MapWidget;
+  class MapViewWidget;
   class Viewpoint;
   class GraphicsOverlay;
 } // namespace Esri::ArcGISRuntime
@@ -45,7 +45,7 @@ private:
   void createUi();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapWidget* m_mapWidget = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
 };
 
 #endif // GOSYMBOLS_H

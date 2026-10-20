@@ -16,7 +16,7 @@
 
 #include "MapRotation.h"
 #include "Map.h"
-#include "MapWidget.h"
+#include "MapViewWidget.h"
 #include "MapTypes.h"
 
 #include <QFuture>
@@ -34,10 +34,10 @@ MapRotation::MapRotation(QWidget* parent) :
   m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // Create a map view, and pass in the map
-  m_mapWidget = new MapWidget(m_map, this);
+  m_mapViewWidget = new MapViewWidget(m_map, this);
 
   // Users should use slider to rotate map view
-  m_mapWidget->setRotationByPinchingEnabled(false);
+  m_mapViewWidget->setRotationByPinchingEnabled(false);
 
   m_slider = new QSlider(Qt::Horizontal, this);
   m_slider->setMinimum(0);
@@ -48,7 +48,7 @@ MapRotation::MapRotation(QWidget* parent) :
   connect(m_slider, &QSlider::valueChanged, [this](int value)
   {
     m_degrees->setText(QString::number(value));
-    m_mapWidget->setViewpointRotationAsync(value);
+    m_mapViewWidget->setViewpointRotationAsync(value);
   });
 
   // Set up the UI
@@ -57,7 +57,7 @@ MapRotation::MapRotation(QWidget* parent) :
   hBoxLayout->addWidget(m_degrees);
 
   QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapWidget);
+  vBoxLayout->addWidget(m_mapViewWidget);
   vBoxLayout->addLayout(hBoxLayout);
 
   setLayout(vBoxLayout);
