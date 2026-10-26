@@ -21,7 +21,7 @@ namespace Esri::ArcGISRuntime
 {
 
   class Map;
-  class MapWidget;
+  class MapViewWidget;
   class Basemap;
   class ArcGISTiledLayer;
 } // namespace Esri::ArcGISRuntime
@@ -38,7 +38,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapWidget* m_mapWidget = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
   Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
   Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
   QString m_path;

@@ -16,7 +16,7 @@
 
 #include "OpenExistingMap.h"
 #include "Map.h"
-#include "MapWidget.h"
+#include "MapViewWidget.h"
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QComboBox>
@@ -30,7 +30,7 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
   QWidget(parent)
 {
   // Create a map view
-  m_mapWidget = new MapWidget(this);
+  m_mapViewWidget = new MapViewWidget(this);
 
   // Create the portal items
   createPortalMaps();
@@ -69,7 +69,7 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
     Map* map = new Map(portalItem, this);
 
     // set the map to the map view
-    m_mapWidget->setMap(map);
+    m_mapViewWidget->setMap(map);
   });
 
   // Set up the UI
@@ -96,7 +96,7 @@ void OpenExistingMap::createUi()
   widget->setLayout(layout);
 
   QGridLayout* gridLayout = new QGridLayout();
-  gridLayout->addWidget(m_mapWidget, 0, 0);
+  gridLayout->addWidget(m_mapViewWidget, 0, 0);
   gridLayout->addWidget(widget, 0, 0, Qt::AlignTop | Qt::AlignLeft);
   setLayout(gridLayout);
   widget->raise();

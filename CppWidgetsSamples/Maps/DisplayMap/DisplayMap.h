@@ -20,7 +20,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Map;
-  class MapWidget;
+  class MapViewWidget;
 } // namespace Esri::ArcGISRuntime
 
 #include <QWidget>
@@ -35,7 +35,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapWidget* m_mapWidget = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
 };
 
 #endif // DISPLAY_MAP_H
