@@ -17,6 +17,7 @@ mac {
 
 CONFIG += c++17
 QT += qml quick
+
 TEMPLATE = app
 TARGET = AddFeaturesWithSharedTemplates
 
@@ -32,7 +33,18 @@ win32 {
     LIBS += Ole32.lib
 }
 
+ios {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+
+    OTHER_FILES += \
+        $$PWD/Info.plist
+
+    QMAKE_INFO_PLIST = $$PWD/Info.plist
+}
+
 android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
+

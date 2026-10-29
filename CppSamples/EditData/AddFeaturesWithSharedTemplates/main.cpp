@@ -1,3 +1,4 @@
+// [WriteFile Name=AddFeaturesWithSharedTemplates, Category=EditData]
 // [Legal]
 // Copyright 2026 Esri.
 //
@@ -21,43 +22,52 @@
 
 // Qt headers
 #include <QCommandLineParser>
-#include <QDebug>
 #include <QDir>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QUrl>
+
+void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
-  QGuiApplication::setApplicationName(QStringLiteral("AddFeaturesWithSharedTemplates"));
+  QGuiApplication::setApplicationName(QString("AddFeaturesWithSharedTemplates"));
 
-  QCommandLineParser parser;
-  parser.addHelpOption();
-  const QCommandLineOption apiKeyOption(QStringList{QStringLiteral("k"), QStringLiteral("api")},
-                                        QStringLiteral("The API key used to access ArcGIS location services."), QStringLiteral("apiKey"));
-  parser.addOption(apiKeyOption);
-  parser.process(app);
-  const QString accessToken = parser.value(apiKeyOption);
-  if (accessToken.isEmpty())
-  {
-    qWarning() << "Use of ArcGIS location services requires an ArcGIS identity or an API key.";
-  }
-  else
-  {
-    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
-  }
+  const QString accessToken = QString("");
+  setAPIKey(app, accessToken);
 
   AddFeaturesWithSharedTemplates::init();
+
   QQmlApplicationEngine engine;
-  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath(QStringLiteral("qml")));
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
   engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
-  engine.load(QUrl(QStringLiteral("qrc:/Samples/EditData/AddFeaturesWithSharedTemplates/main.qml")));
-  if (engine.rootObjects().isEmpty())
-  {
-    return 1;
-  }
+
+  engine.load(QUrl("qrc:/Samples/EditData/AddFeaturesWithSharedTemplates/main.qml"));
+
   return QGuiApplication::exec();
+}
+
+void setAPIKey(const QGuiApplication& app, QString apiKey)
+{
+  if (apiKey.isEmpty())
+  {
+    QCommandLineParser commandLineParser;
+    QCommandLineOption apiKeyArgument(QStringList{"k", "api"}, "The API Key property used to access Esri location services", "apiKeyInput");
+    commandLineParser.addOption(apiKeyArgument);
+    commandLineParser.process(app);
+
+    apiKey = commandLineParser.value(apiKeyArgument);
+
+    if (apiKey.isEmpty())
+    {
+      qWarning() << "Use of Esri location services, including basemaps, requires"
+                 << "you to authenticate with an ArcGIS identity or set the API Key property.";
+      return;
+    }
+  }
+
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
 }
