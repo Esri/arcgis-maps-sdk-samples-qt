@@ -100,6 +100,7 @@
 #include "../CppSamples/DisplayInformation/Simple_Renderer/Simple_Renderer.h"
 #include "../CppSamples/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h"
 #include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
+#include "../CppSamples/EditData/AddFeaturesWithSharedTemplates/AddFeaturesWithSharedTemplates.h"
 #include "../CppSamples/EditData/ContingentValues/ContingentValues.h"
 #include "../CppSamples/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h"
 #include "../CppSamples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h"
@@ -402,6 +403,7 @@ void registerCppSampleClasses()
   AddBuildingSceneLayer::init();
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
+  AddFeaturesWithSharedTemplates::init();
   AddGraphicsWithRenderer::init();
   AddIntegratedMeshLayer::init();
   AddVectorTiledLayerFromCustomStyle::init();

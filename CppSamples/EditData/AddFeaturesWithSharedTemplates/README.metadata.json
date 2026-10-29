@@ -1,0 +1,32 @@
+{
+    "category": "Edit data",
+    "description": "Create features from preset and group shared templates.",
+    "featured": false,
+    "ignore": false,
+    "images": [],
+    "keywords": [
+        "edit",
+        "feature",
+        "group",
+        "preset",
+        "shared template",
+        "shared template source",
+        "template"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "GeometryConstructionTool",
+        "GeometryEditor",
+        "SharedTemplateSource",
+        "ServiceGeodatabase",
+        "SharedTemplate",
+        "SharedTemplateFeatureCreationSet",
+        "SharedTemplateQueryParameters"
+    ],
+    "snippets": [
+        "AddFeaturesWithSharedTemplates.cpp",
+        "AddFeaturesWithSharedTemplates.h",
+        "AddFeaturesWithSharedTemplates.qml"
+    ],
+    "title": "Add features with shared templates"
+}
