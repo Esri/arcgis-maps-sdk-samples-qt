@@ -23,11 +23,11 @@ Hover over a shared template to view its description. Select a template and clic
 
 * GeometryConstructionTool
 * GeometryEditor
-* SharedTemplateSource
 * ServiceGeodatabase
 * SharedTemplate
 * SharedTemplateFeatureCreationSet
 * SharedTemplateQueryParameters
+* SharedTemplateSource
 
 ## About the data
 

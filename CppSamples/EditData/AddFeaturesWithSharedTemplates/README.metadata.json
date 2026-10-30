@@ -3,7 +3,9 @@
     "description": "Create features from preset and group shared templates.",
     "featured": false,
     "ignore": false,
-    "images": [],
+    "images": [
+        "screenshot.png"
+    ],
     "keywords": [
         "edit",
         "feature",
@@ -17,11 +19,11 @@
     "relevant_apis": [
         "GeometryConstructionTool",
         "GeometryEditor",
-        "SharedTemplateSource",
         "ServiceGeodatabase",
         "SharedTemplate",
         "SharedTemplateFeatureCreationSet",
-        "SharedTemplateQueryParameters"
+        "SharedTemplateQueryParameters",
+        "SharedTemplateSource"
     ],
     "snippets": [
         "AddFeaturesWithSharedTemplates.cpp",
