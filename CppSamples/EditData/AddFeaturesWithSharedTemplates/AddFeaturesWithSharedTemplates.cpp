@@ -78,7 +78,7 @@ AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) 
 
   m_statusResetTimer->setSingleShot(true);
   m_statusResetTimer->setInterval(2000);
-  connect(m_statusResetTimer, &QTimer::timeout, this, [this]()
+  connect(m_statusResetTimer, &QTimer::timeout, this, [this]
   {
     if (!m_busy && !drawing() && !m_hasPendingEdits)
     {
@@ -177,7 +177,6 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
           [this](const QMap<qint64, QList<SharedTemplate*>>& templatesByLayer)
   {
     QSet<SharedTemplateType> includedTypes;
-    // QMap visits layer IDs in ascending order. Keep only the first template of each supported type.
     for (auto it = templatesByLayer.cbegin(); it != templatesByLayer.cend(); ++it)
     {
       for (auto* sharedTemplate : it.value())
@@ -192,7 +191,7 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
         m_templates.append(QVariantMap{{QStringLiteral("name"), sharedTemplate->name()},
                                        {QStringLiteral("kind"), type == SharedTemplateType::Preset ? tr("Preset") : tr("Group")},
                                        {QStringLiteral("description"), sharedTemplate->description()},
-                                       {QStringLiteral("swatch"), QString()}});
+                                       {QStringLiteral("swatch"), QString()},});
       }
     }
     emit templatesChanged();
@@ -237,10 +236,11 @@ void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
     m_templates[index] = entry;
     emit templatesChanged();
   })
-    .onFailed(this, [](const ErrorException& error)
+    .onFailed(this, [this, index](const ErrorException& error)
   {
     // A swatch failure leaves the visible placeholder and must not prevent template selection.
-    qWarning() << "Unable to create shared template swatch:" << error.error().message();
+    qWarning() << "Unable to create shared template swatch:" << m_templateItems.at(index).sharedTemplate->name()
+               << "layer ID:" << m_templateItems.at(index).layerId << error.error();
   });
 }
 
@@ -316,7 +316,7 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
     }
     m_serviceGeodatabase->addFeaturesAsync(creationSet)
       .then(this,
-            [this, creationSet]()
+            [this, creationSet]
     {
       creationSet->deleteLater();
       finishOperation_(tr("Features added."));
@@ -345,7 +345,7 @@ void AddFeaturesWithSharedTemplates::saveEdits()
     .then(this,
           [this](const QList<FeatureTableEditResult*>& results)
   {
-    const QScopeGuard cleanup{[&results]()
+    const QScopeGuard cleanup{[&results]
     {
       qDeleteAll(results);
     }};
@@ -383,7 +383,7 @@ void AddFeaturesWithSharedTemplates::undoEdits()
   setStatusText_(tr("Undoing local edits..."));
   m_serviceGeodatabase->undoLocalEditsAsync()
     .then(this,
-          [this]()
+          [this]
   {
     finishOperation_(tr("Edits undone."));
   })

@@ -6,5 +6,6 @@
         <file>AddFeaturesWithSharedTemplates.cpp</file>
         <file>main.qml</file>
         <file>README.md</file>
+        <file>screenshot.png</file>
     </qresource>
 </RCC>
