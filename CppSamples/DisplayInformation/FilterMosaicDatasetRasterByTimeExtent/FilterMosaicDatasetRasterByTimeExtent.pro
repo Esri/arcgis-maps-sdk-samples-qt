@@ -13,8 +13,6 @@
 # limitations under the License.
 #-------------------------------------------------
 
-ARCGIS_RUNTIME_VERSION = 300.2.0
-
 mac {
     cache()
 }
