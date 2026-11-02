@@ -33,6 +33,7 @@
 #include "TimeExtent.h"
 
 // Qt headers
+#include <QDebug>
 #include <QFuture>
 #include <QStandardPaths>
 
@@ -92,18 +93,31 @@ void FilterMosaicDatasetRasterByTimeExtent::setMapView(MapQuickView* mapView)
   {
     if (!error.isEmpty())
     {
+      failLoading();
       return;
     }
 
     m_mapView->setViewpointGeometryAsync(m_rasterLayer->fullExtent(), 100);
 
-    m_mosaicDatasetRaster->distinctTimestampsAsync().then(this, [this](const QList<QDateTime>& timestamps)
+    m_mosaicDatasetRaster->distinctTimestampsAsync()
+      .then(this,
+            [this](const QList<QDateTime>& timestamps)
     {
       m_timestamps = timestamps;
       emit timestampsChanged();
 
       // Display the imagery for the initial timestamp
       setCurrentIndex(0);
+      finishLoading();
+    })
+      .onFailed(this,
+                [this]
+    {
+      failLoading();
+    })
+      .onCanceled(this, [this]
+    {
+      failLoading();
     });
   });
 
@@ -115,6 +129,21 @@ void FilterMosaicDatasetRasterByTimeExtent::setMapView(MapQuickView* mapView)
 int FilterMosaicDatasetRasterByTimeExtent::currentIndex() const
 {
   return m_currentIndex;
+}
+
+void FilterMosaicDatasetRasterByTimeExtent::finishLoading()
+{
+  m_loading = false;
+  emit loadingChanged();
+}
+
+void FilterMosaicDatasetRasterByTimeExtent::failLoading()
+{
+  m_loadError = tr("Load error");
+  qWarning().noquote() << QStringLiteral("Unable to load offline imagery or its timestamps. Download and extract ElToroMosaicDataset to %1, "
+                                         "ensure el_toro.geodatabase is readable, then reopen the sample.")
+                            .arg(defaultDataPath() + "/ArcGIS/Runtime/Data/raster/ElToroMosaicDataset");
+  finishLoading();
 }
 
 void FilterMosaicDatasetRasterByTimeExtent::setCurrentIndex(int index)

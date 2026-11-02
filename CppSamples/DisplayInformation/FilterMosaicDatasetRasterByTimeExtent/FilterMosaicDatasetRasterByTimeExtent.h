@@ -40,6 +40,8 @@ class FilterMosaicDatasetRasterByTimeExtent : public QObject
   Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
   Q_PROPERTY(int timestampCount READ timestampCount NOTIFY timestampsChanged)
   Q_PROPERTY(QString currentTimestamp READ currentTimestamp NOTIFY currentIndexChanged)
+  Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
+  Q_PROPERTY(QString loadError READ loadError NOTIFY loadingChanged)
 
 public:
   explicit FilterMosaicDatasetRasterByTimeExtent(QObject* parent = nullptr);
@@ -53,6 +55,7 @@ signals:
   void mapViewChanged();
   void currentIndexChanged();
   void timestampsChanged();
+  void loadingChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -63,12 +66,27 @@ private:
   int timestampCount() const;
   QString currentTimestamp() const;
 
+  bool loading() const
+  {
+    return m_loading;
+  }
+
+  QString loadError() const
+  {
+    return m_loadError;
+  }
+
+  void finishLoading();
+  void failLoading();
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::MosaicDatasetRaster* m_mosaicDatasetRaster = nullptr;
   Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
   QList<QDateTime> m_timestamps;
   int m_currentIndex = -1;
+  bool m_loading = true;
+  QString m_loadError;
 };
 
 #endif // FILTERMOSAICDATASETRASTERBYTIMEEXTENT_H

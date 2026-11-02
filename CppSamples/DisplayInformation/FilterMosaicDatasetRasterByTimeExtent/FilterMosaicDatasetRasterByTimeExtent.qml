@@ -71,7 +71,10 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         width: 100
                         horizontalAlignment: Text.AlignHCenter
-                        text: model.timestampCount > 0 ? model.currentTimestamp : qsTr("Loading...")
+                        wrapMode: Text.Wrap
+                        text: model.loading ? qsTr("Loading...")
+                              : model.loadError.length > 0 ? qsTr("Offline data error")
+                              : model.timestampCount > 0 ? model.currentTimestamp : qsTr("No timestamps")
                     }
 
                     ToolButton {
@@ -109,11 +112,21 @@ Item {
                 Slider {
                     id: opacitySlider
                     width: 280
+                    enabled: !model.loading && model.loadError.length === 0 && model.timestampCount > 0
                     from: 0
                     to: 1
                     stepSize: 0.01
                     value: 1
                     onValueChanged: model.setRasterOpacity(value)
+                }
+
+                Label {
+                    width: opacitySlider.width
+                    visible: model.loadError.length > 0
+                    text: model.loadError
+                    textFormat: Text.PlainText
+                    wrapMode: Text.Wrap
+                    Accessible.name: text
                 }
             }
         }
