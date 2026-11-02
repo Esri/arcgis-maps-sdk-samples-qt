@@ -84,6 +84,7 @@
 #include "../CppSamples/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h"
 #include "../CppSamples/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h"
 #include "../CppSamples/DisplayInformation/DisplayClusters/DisplayClusters.h"
+#include "../CppSamples/DisplayInformation/FilterMosaicDatasetRasterByTimeExtent/FilterMosaicDatasetRasterByTimeExtent.h"
 #include "../CppSamples/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h"
 #include "../CppSamples/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h"
 #include "../CppSamples/DisplayInformation/GOSymbols/GOSymbols.h"
@@ -502,6 +503,7 @@ void registerCppSampleClasses()
   FilterByDefinitionExpressionOrDisplayFilter::init();
   FilterBuildingSceneLayer::init();
   FilterFeaturesInScene::init();
+  FilterMosaicDatasetRasterByTimeExtent::init();
   FindAddress::init();
   FindClosestFacilityToMultipleIncidentsService::init();
   FindPlace::init();

@@ -1,0 +1,45 @@
+{
+    "category": "DisplayInformation",
+    "dataItems": [
+        {
+            "itemId": "5d1c805850054a098667cdb217d76476",
+            "path": "~/ArcGIS/Runtime/Data/raster/ElToroMosaicDataset/el_toro.geodatabase"
+        }
+    ],
+    "description": "Visualize changes in rasters over time by filtering a mosaic dataset raster for a selected timestamp.",
+    "featured": true,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "aerial imagery",
+        "date",
+        "mosaic dataset",
+        "raster",
+        "time",
+        "time extent",
+        "time-aware",
+        "time-enabled",
+        "timestamp",
+        "Map",
+        "MapView",
+        "MosaicDatasetRaster",
+        "RasterLayer",
+        "TimeAware"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "MosaicDatasetRaster",
+        "RasterLayer",
+        "TimeAware"
+    ],
+    "snippets": [
+        "FilterMosaicDatasetRasterByTimeExtent.cpp",
+        "FilterMosaicDatasetRasterByTimeExtent.h",
+        "FilterMosaicDatasetRasterByTimeExtent.qml"
+    ],
+    "title": "Filter mosaic dataset raster by time extent"
+}
