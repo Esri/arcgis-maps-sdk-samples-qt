@@ -4,6 +4,11 @@ Perform an interactive viewshed analysis to determine visible and non-visible ar
 
 ![](screenshot.png)
 
+## Use case
+
+A viewshed analysis calculates the visible and non-visible areas from an observer's location, based on factors such as elevation and topographic features. For example, an interactive viewshed analysis can be used to identify which areas can be seen from a helicopter moving along a given flight path for monitoring wildfires while taking parameters such as height, field of view, and heading into account to give immediate visual feedback. A user could further extend their viewshed analysis calculations by using map algebra to e.g. only return viewshed results in geographical areas not covered in forest if they have an additional land cover raster dataset.
+Note: This analysis is a form of "data-driven analysis", which means the analysis is calculated at the resolution of the data rather than the resolution of the display.
+
 ## How to use the sample
 
 The sample loads with a viewshed analysis initialized from an elevation raster covering the Isle of Arran, Scotland. Transparent green shows the area visible from the observer position, and grey shows the non-visible areas. Move the observer position by clicking and dragging over the island to interactively evaluate the viewshed result and display it in the analysis overlay. Alternatively, click on the map to see the viewshed from the clicked location. Use the control panel to explore how the viewshed analysis results change when adjusting the observer elevation, target height, maximum radius, field of view, heading and elevation sampling interval. As you move the observer and update the viewshed parameters, the analysis overlay refreshes to show the evaluated viewshed result.
@@ -21,15 +26,15 @@ The sample loads with a viewshed analysis initialized from an elevation raster c
 
 ## Relevant API
 
-- AnalysisOverlay
-- Colormap
-- ColormapRenderer
-- ContinuousField
-- ContinuousFieldFunction
-- ContinuousFieldSupplier
-- FieldAnalysis
-- ViewshedFunction
-- ViewshedParameters
+* AnalysisOverlay
+* Colormap
+* ColormapRenderer
+* ContinuousField
+* ContinuousFieldFunction
+* ContinuousFieldSupplier
+* FieldAnalysis
+* ViewshedFunction
+* ViewshedParameters
 
 ## Offline data
 
@@ -39,4 +44,3 @@ The sample uses a [10m resolution digital terrain elevation raster of the Isle o
 ## Tags
 
 analysis overlay, elevation, field analysis, interactive, raster, spatial analysis, terrain, viewshed, visibility
-
