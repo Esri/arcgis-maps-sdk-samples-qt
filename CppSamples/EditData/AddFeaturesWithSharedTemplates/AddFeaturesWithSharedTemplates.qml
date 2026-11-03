@@ -23,7 +23,7 @@ Item {
     id: root
 
     readonly property bool editing: sampleModel.hasPendingEdits
-    readonly property bool drawing: sampleModel.drawing
+    readonly property bool sketchInProgress: sampleModel.sketchInProgress
     readonly property bool hasTemplates: sampleModel.templates.length > 0
 
     component ToolbarButton: Button {
@@ -67,7 +67,7 @@ Item {
                     Layout.fillWidth: true
                 }
                 Label {
-                    visible: !sampleModel.busy && !root.drawing && root.hasTemplates && text !== sampleModel.statusText
+                    visible: !sampleModel.busy && !root.sketchInProgress && root.hasTemplates && text !== sampleModel.statusText
                     text: root.editing ? qsTr("Save or undo edits.") : qsTr("Open Shared Templates and select a template to create features.")
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
@@ -123,7 +123,7 @@ Item {
             ToolbarButton {
                 text: root.editing ? qsTr("Save") : qsTr("Cancel")
                 highlighted: root.editing
-                visible: root.editing || root.drawing
+                visible: root.editing || root.sketchInProgress
                 onClicked: root.editing
                            ? sampleModel.saveEdits()
                            : sampleModel.cancelDrawing()
@@ -134,7 +134,7 @@ Item {
             ToolbarButton {
                 text: qsTr("Shared Templates")
                 highlighted: true
-                visible: !root.editing && !root.drawing
+                visible: !root.editing && !root.sketchInProgress
                 onClicked: templatePicker.open()
             }
             Item {
@@ -143,7 +143,7 @@ Item {
             ToolbarButton {
                 text: root.editing ? qsTr("Undo") : qsTr("Complete")
                 highlighted: !root.editing
-                visible: root.editing || root.drawing
+                visible: root.editing || root.sketchInProgress
                 enabled: root.editing || sampleModel.canComplete
                 onClicked: root.editing
                            ? sampleModel.undoEdits()
@@ -230,7 +230,7 @@ Item {
                         }
                         onClicked: {
                             sampleModel.startDrawing(index);
-                            if (sampleModel.drawing) {
+                            if (sampleModel.sketchInProgress) {
                                 templatePicker.close();
                             }
                         }

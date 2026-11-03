@@ -41,13 +41,13 @@ class AddFeaturesWithSharedTemplates : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QVariantList templates READ templates NOTIFY templatesChanged)
-  Q_PROPERTY(QString statusText READ statusText NOTIFY statusTextChanged)
-  Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
-  Q_PROPERTY(bool ready READ ready NOTIFY readyChanged)
-  Q_PROPERTY(bool drawing READ drawing NOTIFY drawingChanged)
-  Q_PROPERTY(bool hasPendingEdits READ hasPendingEdits NOTIFY hasPendingEditsChanged)
-  Q_PROPERTY(bool canComplete READ canComplete NOTIFY canCompleteChanged)
+  Q_PROPERTY(QVariantList templates MEMBER m_templates NOTIFY templatesChanged)
+  Q_PROPERTY(QString statusText MEMBER m_statusText NOTIFY statusTextChanged)
+  Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
+  Q_PROPERTY(bool ready MEMBER m_ready NOTIFY readyChanged)
+  Q_PROPERTY(bool sketchInProgress READ sketchInProgress NOTIFY sketchInProgressChanged)
+  Q_PROPERTY(bool hasPendingEdits MEMBER m_hasPendingEdits NOTIFY hasPendingEditsChanged)
+  Q_PROPERTY(bool canComplete MEMBER m_canComplete NOTIFY canCompleteChanged)
 
 public:
   explicit AddFeaturesWithSharedTemplates(QObject* parent = nullptr);
@@ -63,13 +63,7 @@ public:
 
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  QVariantList templates() const;
-  QString statusText() const;
-  bool busy() const;
-  bool ready() const;
-  bool drawing() const;
-  bool hasPendingEdits() const;
-  bool canComplete() const;
+  bool sketchInProgress() const;
 
 signals:
   void mapViewChanged();
@@ -77,7 +71,7 @@ signals:
   void statusTextChanged();
   void busyChanged();
   void readyChanged();
-  void drawingChanged();
+  void sketchInProgressChanged();
   void hasPendingEditsChanged();
   void canCompleteChanged();
   void errorOccurred(const QString& message);

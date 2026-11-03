@@ -50,7 +50,6 @@
 #include <QImage>
 #include <QMap>
 #include <QScopeGuard>
-#include <QSet>
 #include <QStringList>
 #include <QTimer>
 #include <QVariantMap>
@@ -80,7 +79,7 @@ AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) 
   m_statusResetTimer->setInterval(2000);
   connect(m_statusResetTimer, &QTimer::timeout, this, [this]
   {
-    if (!m_busy && !drawing() && !m_hasPendingEdits)
+    if (!m_busy && !sketchInProgress() && !m_hasPendingEdits)
     {
       setStatusText_(tr("Open Shared Templates and select a template to create features."));
     }
@@ -135,39 +134,9 @@ void AddFeaturesWithSharedTemplates::setMapView(MapQuickView* mapView)
   m_map->load();
 }
 
-QVariantList AddFeaturesWithSharedTemplates::templates() const
-{
-  return m_templates;
-}
-
-QString AddFeaturesWithSharedTemplates::statusText() const
-{
-  return m_statusText;
-}
-
-bool AddFeaturesWithSharedTemplates::busy() const
-{
-  return m_busy;
-}
-
-bool AddFeaturesWithSharedTemplates::ready() const
-{
-  return m_ready;
-}
-
-bool AddFeaturesWithSharedTemplates::drawing() const
+bool AddFeaturesWithSharedTemplates::sketchInProgress() const
 {
   return m_activeTemplateIndex >= 0;
-}
-
-bool AddFeaturesWithSharedTemplates::hasPendingEdits() const
-{
-  return m_hasPendingEdits;
-}
-
-bool AddFeaturesWithSharedTemplates::canComplete() const
-{
-  return m_canComplete;
 }
 
 void AddFeaturesWithSharedTemplates::loadTemplates_()
@@ -176,22 +145,22 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
     .then(this,
           [this](const QMap<qint64, QList<SharedTemplate*>>& templatesByLayer)
   {
-    QSet<SharedTemplateType> includedTypes;
     for (auto it = templatesByLayer.cbegin(); it != templatesByLayer.cend(); ++it)
     {
       for (auto* sharedTemplate : it.value())
       {
         const auto type = sharedTemplate->type();
-        if ((type != SharedTemplateType::Preset && type != SharedTemplateType::Group) || includedTypes.contains(type))
+        if (type != SharedTemplateType::Preset && type != SharedTemplateType::Group)
         {
           continue;
         }
-        includedTypes.insert(type);
         m_templateItems.append({sharedTemplate, it.key()});
-        m_templates.append(QVariantMap{{QStringLiteral("name"), sharedTemplate->name()},
-                                       {QStringLiteral("kind"), type == SharedTemplateType::Preset ? tr("Preset") : tr("Group")},
-                                       {QStringLiteral("description"), sharedTemplate->description()},
-                                       {QStringLiteral("swatch"), QString()},});
+        m_templates.append(QVariantMap{
+          {QStringLiteral("name"), sharedTemplate->name()},
+          {QStringLiteral("kind"), type == SharedTemplateType::Preset ? tr("Preset") : tr("Group")},
+          {QStringLiteral("description"), sharedTemplate->description()},
+          {QStringLiteral("swatch"), QString()},
+        });
       }
     }
     emit templatesChanged();
@@ -246,7 +215,7 @@ void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
 
 void AddFeaturesWithSharedTemplates::startDrawing(int index)
 {
-  if (m_busy || drawing() || m_hasPendingEdits)
+  if (m_busy || sketchInProgress() || m_hasPendingEdits)
   {
     return;
   }
@@ -266,29 +235,29 @@ void AddFeaturesWithSharedTemplates::startDrawing(int index)
   m_activeTemplateIndex = index;
   setStatusText_(isPoint ? tr("Place a point, then tap Complete or Cancel.") : tr("Sketch a line, then tap Complete or Cancel."));
   m_geometryEditor->start(isPoint ? GeometryType::Point : GeometryType::Polyline);
-  emit drawingChanged();
+  emit sketchInProgressChanged();
 }
 
 void AddFeaturesWithSharedTemplates::cancelDrawing()
 {
-  if (m_busy || !drawing())
+  if (m_busy || !sketchInProgress())
   {
     return;
   }
   m_geometryEditor->stop();
   m_activeTemplateIndex = -1;
-  emit drawingChanged();
+  emit sketchInProgressChanged();
   setStatusText_(tr("Draw canceled."));
   m_statusResetTimer->start();
 }
 
 void AddFeaturesWithSharedTemplates::completeDrawing()
 {
-  if (m_busy || !drawing())
+  if (m_busy || !sketchInProgress())
   {
     return;
   }
-  if (!canComplete())
+  if (!m_canComplete)
   {
     setStatusText_(tr("Draw a valid geometry, then tap Complete or Cancel."));
     return;
@@ -297,7 +266,7 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
   setBusy_(true);
   const Geometry geometry = m_geometryEditor->stop();
   m_activeTemplateIndex = -1;
-  emit drawingChanged();
+  emit sketchInProgressChanged();
   if (geometry.isEmpty())
   {
     finishOperation_(tr("No geometry was drawn."));
@@ -307,23 +276,26 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
 
   m_serviceGeodatabase->createFeaturesAsync(sharedTemplate, geometry, this)
     .then(this,
-          [this](SharedTemplateFeatureCreationSet* creationSet)
+          [this](SharedTemplateFeatureCreationSet* result)
   {
-    if (!creationSet)
+    if (!result)
     {
       reportError_(tr(createFeatureError), tr("No feature creation set was returned."));
       return;
     }
-    m_serviceGeodatabase->addFeaturesAsync(creationSet)
+    const std::shared_ptr<SharedTemplateFeatureCreationSet> creationSet(result, [](SharedTemplateFeatureCreationSet* value)
+    {
+      value->deleteLater();
+    });
+    creationSet->setParent(nullptr);
+    m_serviceGeodatabase->addFeaturesAsync(creationSet.get())
       .then(this,
             [this, creationSet]
     {
-      creationSet->deleteLater();
       finishOperation_(tr("Features added."));
     })
       .onFailed(this, [this, creationSet](const ErrorException& error)
     {
-      creationSet->deleteLater();
       reportError_(tr(createFeatureError), error.error().message());
     });
   })

@@ -21,20 +21,40 @@
 #include "ArcGISRuntimeEnvironment.h"
 
 // Qt headers
-#include <QCommandLineParser>
 #include <QDir>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-
-void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
   QGuiApplication::setApplicationName(QString("AddFeaturesWithSharedTemplates"));
 
+  // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
+  // requires an access token. For more information see
+  // https://links.esri.com/arcgis-runtime-security-auth.
+
+  // The following methods grant an access token:
+
+  // 1. User authentication: Grants a temporary access token associated with a user's ArcGIS account.
+  // To generate a token, a user logs in to the app with an ArcGIS account that is part of an
+  // organization in ArcGIS Online or ArcGIS Enterprise.
+
+  // 2. API key authentication: Get a long-lived access token that gives your application access to
+  // ArcGIS location services. Go to the tutorial at https://links.esri.com/create-an-api-key.
+  // Copy the API Key access token.
+
   const QString accessToken = QString("");
-  setAPIKey(app, accessToken);
+
+  if (accessToken.isEmpty())
+  {
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
+  }
+  else
+  {
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+  }
 
   AddFeaturesWithSharedTemplates::init();
 
@@ -48,26 +68,4 @@ int main(int argc, char* argv[])
   engine.load(QUrl("qrc:/Samples/EditData/AddFeaturesWithSharedTemplates/main.qml"));
 
   return QGuiApplication::exec();
-}
-
-void setAPIKey(const QGuiApplication& app, QString apiKey)
-{
-  if (apiKey.isEmpty())
-  {
-    QCommandLineParser commandLineParser;
-    QCommandLineOption apiKeyArgument(QStringList{"k", "api"}, "The API Key property used to access Esri location services", "apiKeyInput");
-    commandLineParser.addOption(apiKeyArgument);
-    commandLineParser.process(app);
-
-    apiKey = commandLineParser.value(apiKeyArgument);
-
-    if (apiKey.isEmpty())
-    {
-      qWarning() << "Use of Esri location services, including basemaps, requires"
-                 << "you to authenticate with an ArcGIS identity or set the API Key property.";
-      return;
-    }
-  }
-
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
 }
