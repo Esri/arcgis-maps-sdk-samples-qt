@@ -95,6 +95,7 @@ Item {
                 }
 
                 Item {
+                    anchors.horizontalCenter: parent.horizontalCenter
                     width: opacitySlider.width
                     height: opacityLabel.height
 
@@ -111,6 +112,7 @@ Item {
 
                 Slider {
                     id: opacitySlider
+                    anchors.horizontalCenter: parent.horizontalCenter
                     width: 280
                     enabled: !model.loading && model.loadError.length === 0 && model.timestampCount > 0
                     from: 0
@@ -121,6 +123,7 @@ Item {
                 }
 
                 Label {
+                    anchors.horizontalCenter: parent.horizontalCenter
                     width: opacitySlider.width
                     visible: model.loadError.length > 0
                     text: model.loadError
