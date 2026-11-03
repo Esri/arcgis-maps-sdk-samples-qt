@@ -1,4 +1,4 @@
-// [WriteFile Name=ExportTiles, Category=Layers]
+// [WriteFile Name=DownloadRasterTilesToLocalCache, Category=Layers]
 // [Legal]
 // Copyright 2016 Esri.
 //
@@ -30,13 +30,13 @@ namespace Esri::ArcGISRuntime
   class TileCache;
 } // namespace Esri::ArcGISRuntime
 
-class ExportTiles : public QQuickItem
+class DownloadRasterTilesToLocalCache : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit ExportTiles(QQuickItem* parent = nullptr);
-  ~ExportTiles() override;
+  explicit DownloadRasterTilesToLocalCache(QQuickItem* parent = nullptr);
+  ~DownloadRasterTilesToLocalCache() override;
 
   void componentComplete() override;
   static void init();

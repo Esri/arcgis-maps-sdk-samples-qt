@@ -1,4 +1,4 @@
-// [WriteFile Name=ExportTiles, Category=Layers]
+// [WriteFile Name=DownloadRasterTilesToLocalCache, Category=Layers]
 // [Legal]
 // Copyright 2016 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "ExportTiles.h"
+#include "DownloadRasterTilesToLocalCache.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISTiledLayer.h"
@@ -50,20 +50,20 @@ using namespace Esri::ArcGISRuntime;
 static constexpr double s_minScale = 10000000;
 static const QUrl s_worldOceanBaseForExportUrl("https://tiledbasemaps.arcgis.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer");
 
-ExportTiles::ExportTiles(QQuickItem* parent) :
+DownloadRasterTilesToLocalCache::DownloadRasterTilesToLocalCache(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-ExportTiles::~ExportTiles() = default;
+DownloadRasterTilesToLocalCache::~DownloadRasterTilesToLocalCache() = default;
 
-void ExportTiles::init()
+void DownloadRasterTilesToLocalCache::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<ExportTiles>("Esri.Samples", 1, 0, "ExportTilesSample");
+  qmlRegisterType<DownloadRasterTilesToLocalCache>("Esri.Samples", 1, 0, "DownloadRasterTilesToLocalCacheSample");
 }
 
-void ExportTiles::componentComplete()
+void DownloadRasterTilesToLocalCache::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -94,7 +94,7 @@ void ExportTiles::componentComplete()
   m_mapView->setMap(m_map);
 }
 
-void ExportTiles::createExportTileCacheTask()
+void DownloadRasterTilesToLocalCache::createExportTileCacheTask()
 {
   // Get a tile layer from the basemap
   ArcGISTiledLayer* tiledLayer = dynamic_cast<ArcGISTiledLayer*>(m_map->basemap()->baseLayers()->at(0));
@@ -114,7 +114,7 @@ void ExportTiles::createExportTileCacheTask()
   m_exportTileCacheTask->load();
 }
 
-void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
+void DownloadRasterTilesToLocalCache::exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
@@ -130,9 +130,9 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
   });
 }
 
-void ExportTiles::onDefaultExportTileCacheParametersCompleted_(const ExportTileCacheParameters& parameters)
+void DownloadRasterTilesToLocalCache::onDefaultExportTileCacheParametersCompleted_(const ExportTileCacheParameters& parameters)
 {
-  //! [ExportTiles start job]
+  //! [DownloadRasterTilesToLocalCache start job]
   // execute the task and obtain the job
   ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(parameters, m_tempPath.path() + "/offlinemap.tpkx");
 
@@ -177,7 +177,7 @@ void ExportTiles::onDefaultExportTileCacheParametersCompleted_(const ExportTileC
     // start the export job
     exportJob->start();
   }
-  //! [ExportTiles start job]
+  //! [DownloadRasterTilesToLocalCache start job]
   else
   {
     emit updateStatus("Export failed");
@@ -186,7 +186,7 @@ void ExportTiles::onDefaultExportTileCacheParametersCompleted_(const ExportTileC
 }
 
 // display the tile cache once the task is complete
-void ExportTiles::displayOutputTileCache(TileCache* tileCache)
+void DownloadRasterTilesToLocalCache::displayOutputTileCache(TileCache* tileCache)
 {
   // create a new tiled layer from the output tile cache
   ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);

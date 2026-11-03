@@ -1,4 +1,4 @@
-// [WriteFile Name=ExportVectorTiles, Category=Layers]
+// [WriteFile Name=DownloadVectorTilesToLocalCache, Category=Layers]
 // [Legal]
 // Copyright 2022 Esri.
 //
@@ -115,25 +115,25 @@ Item {
 
         onClicked: {
             switch(model.jobStatus) {
-            case ExportVectorTilesSample.ExportStatusNotStarted:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusNotStarted:
                 model.startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
                 extentRectangle.visible = false;
                 break;
-            case ExportVectorTilesSample.ExportStatusStarted:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusStarted:
                 model.cancel();
                 extentRectangle.visible = true;
                 break;
-            case ExportVectorTilesSample.ExportStatusPaused:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusPaused:
                 break;
-            case ExportVectorTilesSample.ExportStatusSucceeded:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusSucceeded:
                 model.reset();
                 extentRectangle.visible = true;
                 break;
-            case ExportVectorTilesSample.ExportStatusFailed:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusFailed:
                 model.startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
                 extentRectangle.visible = false;
                 break;
-            case ExportVectorTilesSample.ExportStatusCancelling:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusCancelling:
                 break;
             default:
                 break;
@@ -142,30 +142,30 @@ Item {
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
-    ExportVectorTilesSample {
+    DownloadVectorTilesToLocalCacheSample {
         id: model
         mapView: view
 
         onJobStatusChanged: {
             switch(model.jobStatus) {
-            case ExportVectorTilesSample.ExportStatusNotStarted:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusNotStarted:
                 button.text = "Export area";
                 break;
-            case ExportVectorTilesSample.ExportStatusStarted:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusStarted:
                 button.text = "Cancel export";
                 exportProgressWindow.visible = true;
                 break;
-            case ExportVectorTilesSample.ExportStatusPaused:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusPaused:
                 break;
-            case ExportVectorTilesSample.ExportStatusSucceeded:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusSucceeded:
                 button.text = "Reset";
                 exportProgressWindow.visible = false;
                 break;
-            case ExportVectorTilesSample.ExportStatusFailed:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusFailed:
                 button.text = "Export area";
                 exportProgressWindow.visible = false;
                 break;
-            case ExportVectorTilesSample.ExportStatusCancelling:
+            case DownloadVectorTilesToLocalCacheSample.ExportStatusCancelling:
                 break;
             default:
                 break;

@@ -162,8 +162,8 @@
 #include "../CppSamples/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h"
 #include "../CppSamples/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h"
 #include "../CppSamples/Layers/DisplayWfsLayer/DisplayWfsLayer.h"
-#include "../CppSamples/Layers/ExportTiles/ExportTiles.h"
-#include "../CppSamples/Layers/ExportVectorTiles/ExportVectorTiles.h"
+#include "../CppSamples/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.h"
+#include "../CppSamples/Layers/DownloadVectorTilesToLocalCache/DownloadVectorTilesToLocalCache.h"
 #include "../CppSamples/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h"
 #include "../CppSamples/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h"
 #include "../CppSamples/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h"
@@ -486,8 +486,8 @@ void registerCppSampleClasses()
   EditGeometriesWithProgrammaticReticleTool::init();
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
-  ExportTiles::init();
-  ExportVectorTiles::init();
+  DownloadRasterTilesToLocalCache::init();
+  DownloadVectorTilesToLocalCache::init();
   ExtrudeGraphics::init();
   FeatureCollectionLayerFromPortal::init();
   FeatureCollectionLayerQuery::init();

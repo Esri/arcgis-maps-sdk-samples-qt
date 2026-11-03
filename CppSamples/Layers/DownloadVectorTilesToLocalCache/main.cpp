@@ -1,6 +1,6 @@
-// [WriteFile Name=ExportTiles, Category=Layers]
+// [WriteFile Name=DownloadVectorTilesToLocalCache, Category=Layers]
 // [Legal]
-// Copyright 2015 Esri.
+// Copyright 2022 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "ExportTiles.h"
+#include "DownloadVectorTilesToLocalCache.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -24,22 +24,17 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QGuiApplication>
-#include <QQmlEngine>
-#include <QQuickView>
-#include <QSettings>
+#include <QQmlApplicationEngine>
 
 // Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
-#define STRINGIZE(x) #x
-#define QUOTE(x) STRINGIZE(x)
-
 int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("ExportTiles"));
+  app.setApplicationName(QString("DownloadVectorTilesToLocalCache"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -68,31 +63,19 @@ int main(int argc, char* argv[])
   }
 
   // Initialize the sample
-  ExportTiles::init();
+  DownloadVectorTilesToLocalCache::init();
 
   // Initialize application view
-  QQuickView view;
-  view.setResizeMode(QQuickView::SizeRootObjectToView);
-
+  QQmlApplicationEngine engine;
   // Add the import Path
-  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-
-#if defined(LINUX_PLATFORM_REPLACEMENT)
-  // on some linux platforms the string 'linux' is replaced with 1
-  // fix the replacement paths which were created
-  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-  // Add the Runtime and Extras path
-  view.engine()->addImportPath(arcGISRuntimeImportPath);
-
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Layers/ExportTiles/ExportTiles.qml"));
-
-  view.show();
+  engine.load(QUrl("qrc:/Samples/Layers/DownloadVectorTilesToLocalCache/main.qml"));
 
   return app.exec();
 }
