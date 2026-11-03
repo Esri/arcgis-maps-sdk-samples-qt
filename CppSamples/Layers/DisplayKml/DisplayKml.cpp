@@ -100,7 +100,7 @@ void DisplayKml::createFromUrl()
   clearLayers();
 
   // Create the Dataset from an Online URL
-  m_kmlDataset = new KmlDataset(QUrl("https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx_latest.kml"), this);
+  m_kmlDataset = new KmlDataset(QUrl("https://www.arcgis.com/sharing/rest/content/items/f5e0e5cd088846a5b97b7ed66a8bad5c/data"), this);
 
   // Create the Layer
   m_kmlLayer = new KmlLayer(m_kmlDataset, this);
