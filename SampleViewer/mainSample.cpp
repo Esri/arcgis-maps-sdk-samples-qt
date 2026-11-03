@@ -63,6 +63,7 @@
 
 // All Samples
 #include "../CppSamples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h"
+#include "../CppSamples/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.h"
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
@@ -614,6 +615,7 @@ void registerCppSampleClasses()
   TokenAuthentication::init();
   TraceUtilityNetwork::init();
   Unique_Value_Renderer::init();
+  UpdateLabelsAndSymbolsToScaleForVisualAccessibility::init();
   ValidateUtilityNetworkTopology::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
