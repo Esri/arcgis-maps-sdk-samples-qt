@@ -33,7 +33,7 @@ This sample uses a [floor-aware web map](https://www.arcgis.com/home/item.html?i
 
 The `FloorFilter` component supports manual site and facility selection, as well as automatic selection based on the map's viewpoint.
 
-This sample uses the `FloorFilter` component from the [ArcGIS Maps SDK for Qt toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt), which must be cloned and set up locally to build the sample. For setup instructions, see the toolkit's [Qt Quick UI tools documentation](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt/blob/main/uitools/README.md).
+This sample uses the `FloorFilter` component from the [ArcGIS Maps SDK for Qt toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt), which must be cloned and set up locally to build the sample. For setup instructions, see the toolkit's [Qt Quick UI tools documentation](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt/blob/main/uitools/toolkitcpp/README.md).
 
 ## Tags
 
