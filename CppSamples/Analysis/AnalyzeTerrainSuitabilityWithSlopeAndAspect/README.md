@@ -15,7 +15,7 @@ When the sample opens, the map shows a preconfigured terrain suitability analysi
 ## How it works
 
 1. Create a blank `Map` with a spatial reference set to UTM 30N so the analysis runs in a conformal coordinate system.
-2. Create a `ContinuousField` from the elevation raster and project it to the map spatial reference.
+2. Create a `ContinuousFieldFunction` from the continuous field, using `ContinuousFieldSupplier`.
 3. Create a `ContinuousFieldFunction` from the continuous field and derive `slope` and `aspect` functions.
 4. Build `BooleanFieldFunction` masks for slope, aspect, elevation, and land-only areas using range checks and long-form boolean field methods.
 5. Combine the masks with `logicalAnd` and `logicalOr` to build a final scenario mask.
@@ -31,6 +31,7 @@ When the sample opens, the map shows a preconfigured terrain suitability analysi
 * ColormapRenderer
 * ContinuousField
 * ContinuousFieldFunction
+* ContinuousFieldSupplier
 * DiscreteFieldFunction
 * FieldAnalysis
 * Map
