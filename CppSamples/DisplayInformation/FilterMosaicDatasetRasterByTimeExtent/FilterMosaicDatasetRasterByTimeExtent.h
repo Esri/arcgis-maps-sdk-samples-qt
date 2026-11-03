@@ -40,8 +40,8 @@ class FilterMosaicDatasetRasterByTimeExtent : public QObject
   Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
   Q_PROPERTY(int timestampCount READ timestampCount NOTIFY timestampsChanged)
   Q_PROPERTY(QString currentTimestamp READ currentTimestamp NOTIFY currentIndexChanged)
-  Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
-  Q_PROPERTY(QString loadError READ loadError NOTIFY loadingChanged)
+  Q_PROPERTY(bool loading MEMBER m_loading NOTIFY loadingChanged)
+  Q_PROPERTY(QString loadError MEMBER m_loadError NOTIFY loadingChanged)
 
 public:
   explicit FilterMosaicDatasetRasterByTimeExtent(QObject* parent = nullptr);
@@ -65,16 +65,6 @@ private:
   void setCurrentIndex(int index);
   int timestampCount() const;
   QString currentTimestamp() const;
-
-  bool loading() const
-  {
-    return m_loading;
-  }
-
-  QString loadError() const
-  {
-    return m_loadError;
-  }
 
   void finishLoading();
   void failLoading();
