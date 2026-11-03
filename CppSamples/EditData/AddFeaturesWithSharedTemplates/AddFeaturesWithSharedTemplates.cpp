@@ -51,7 +51,6 @@
 #include <QMap>
 #include <QScopeGuard>
 #include <QStringList>
-#include <QTimer>
 #include <QVariantMap>
 
 // STL headers
@@ -68,22 +67,11 @@ AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) 
   QObject(parent),
   m_map(new Map(new PortalItem(QStringLiteral("b635be46dfb545b888077389ac7f0962"), this), this)),
   m_geometryEditor(new GeometryEditor(this)),
-  m_statusResetTimer(new QTimer(this)),
   m_statusText(tr("Loading shared templates..."))
 {
   m_geometryEditor->setTool(new VertexTool(this));
   connect(m_geometryEditor, &GeometryEditor::geometryChanged, this, &AddFeaturesWithSharedTemplates::updateCanComplete_);
   connect(m_geometryEditor, &GeometryEditor::isStartedChanged, this, &AddFeaturesWithSharedTemplates::updateCanComplete_);
-
-  m_statusResetTimer->setSingleShot(true);
-  m_statusResetTimer->setInterval(2000);
-  connect(m_statusResetTimer, &QTimer::timeout, this, [this]
-  {
-    if (!m_busy && !sketchInProgress() && !m_hasPendingEdits)
-    {
-      setStatusText_(tr("Open Shared Templates and select a template to create features."));
-    }
-  });
 
   connect(m_map, &Map::doneLoading, this, [this](const Error& error)
   {
@@ -248,7 +236,6 @@ void AddFeaturesWithSharedTemplates::cancelDrawing()
   m_activeTemplateIndex = -1;
   emit sketchInProgressChanged();
   setStatusText_(tr("Draw canceled."));
-  m_statusResetTimer->start();
 }
 
 void AddFeaturesWithSharedTemplates::completeDrawing()
@@ -382,7 +369,6 @@ void AddFeaturesWithSharedTemplates::updateCanComplete_()
 
 void AddFeaturesWithSharedTemplates::setStatusText_(const QString& status)
 {
-  m_statusResetTimer->stop();
   if (m_statusText != status)
   {
     m_statusText = status;

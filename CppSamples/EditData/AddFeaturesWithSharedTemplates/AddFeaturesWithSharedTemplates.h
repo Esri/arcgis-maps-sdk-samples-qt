@@ -32,8 +32,6 @@ namespace Esri::ArcGISRuntime
   class SharedTemplate;
 } // namespace Esri::ArcGISRuntime
 
-class QTimer;
-
 Q_MOC_INCLUDE("MapQuickView.h")
 
 class AddFeaturesWithSharedTemplates : public QObject
@@ -100,7 +98,6 @@ private:
   Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
   QList<TemplateItem> m_templateItems;
   QVariantList m_templates;
-  QTimer* m_statusResetTimer = nullptr;
   QString m_statusText;
   int m_activeTemplateIndex = -1;
   bool m_busy = true;
