@@ -28,9 +28,9 @@
         "KmlLayer"
     ],
     "snippets": [
-        "DisplayKml.cpp",
-        "DisplayKml.h",
-        "DisplayKml.qml"
+        "AddKmlLayer.cpp",
+        "AddKmlLayer.h",
+        "AddKmlLayer.qml"
     ],
-    "title": "Display KML"
+    "title": "Add KML layer"
 }

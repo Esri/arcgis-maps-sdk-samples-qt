@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += qml quick
 
 TEMPLATE = app
-TARGET = DisplayKml
+TARGET = AddKmlLayer
 
 include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    DisplayKml.h
+    AddKmlLayer.h
 
 SOURCES += \
     main.cpp \
-    DisplayKml.cpp
+    AddKmlLayer.cpp
 
-RESOURCES += DisplayKml.qrc
+RESOURCES += AddKmlLayer.qrc
 
 #-------------------------------------------------------------------------------
 

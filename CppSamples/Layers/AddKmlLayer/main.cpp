@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayKml, Category=Layers]
+// [WriteFile Name=AddKmlLayer, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
 //
@@ -15,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "DisplayKml.h"
+#include "AddKmlLayer.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("DisplayKml"));
+  app.setApplicationName(QString("AddKmlLayer"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
   }
 
   // Initialize the sample
-  DisplayKml::init();
+  AddKmlLayer::init();
 
   // Initialize application view
   QQuickView view;
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Layers/DisplayKml/DisplayKml.qml"));
+  view.setSource(QUrl("qrc:/Samples/Layers/AddKmlLayer/AddKmlLayer.qml"));
 
   view.show();
 

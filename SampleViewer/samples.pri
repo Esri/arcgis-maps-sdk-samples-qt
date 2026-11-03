@@ -105,6 +105,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
+    "$$SAMPLEPATHCPP/Layers/AddKmlLayer/AddKmlLayer.h" \
     "$$SAMPLEPATHCPP/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMapAlgebra/ApplyMapAlgebra.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
@@ -121,7 +122,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.h" \
-    "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h" \
@@ -344,6 +344,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddKmlLayer/AddKmlLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMapAlgebra/ApplyMapAlgebra.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
@@ -360,7 +361,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.cpp" \
-    "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.cpp" \
@@ -575,6 +575,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
+    "$$SAMPLEPATHCPP/Layers/AddKmlLayer/AddKmlLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMapAlgebra/ApplyMapAlgebra.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
@@ -591,7 +592,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.qrc" \
-    "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.qrc" \

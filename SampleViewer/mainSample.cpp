@@ -140,6 +140,7 @@
 #include "../CppSamples/Layers/AddBuildingSceneLayer/AddBuildingSceneLayer.h"
 #include "../CppSamples/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h"
 #include "../CppSamples/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h"
+#include "../CppSamples/Layers/AddKmlLayer/AddKmlLayer.h"
 #include "../CppSamples/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.h"
 #include "../CppSamples/Layers/ApplyMapAlgebra/ApplyMapAlgebra.h"
 #include "../CppSamples/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h"
@@ -157,7 +158,6 @@
 #include "../CppSamples/Layers/DisplayAnnotation/DisplayAnnotation.h"
 #include "../CppSamples/Layers/DisplayDimensions/DisplayDimensions.h"
 #include "../CppSamples/Layers/DisplayFeatureLayers/DisplayFeatureLayers.h"
-#include "../CppSamples/Layers/DisplayKml/DisplayKml.h"
 #include "../CppSamples/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.h"
 #include "../CppSamples/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h"
 #include "../CppSamples/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h"
@@ -404,6 +404,7 @@ void registerCppSampleClasses()
   AddDynamicEntityLayer::init();
   AddGraphicsWithRenderer::init();
   AddIntegratedMeshLayer::init();
+  AddKmlLayer::init();
   AddVectorTiledLayerFromCustomStyle::init();
   AnalyzeHotspots::init();
   Animate3DSymbols::init();
@@ -461,7 +462,6 @@ void registerCppSampleClasses()
   DisplayDimensions::init();
   DisplayDrawingStatus::init();
   DisplayFeatureLayers::init();
-  DisplayKml::init();
   DisplayKmlNetworkLinks::init();
   DisplayLayerViewDrawState::init();
   DisplayLocalSceneView::init();
