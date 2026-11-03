@@ -119,7 +119,6 @@ void AddFeaturesWithSharedTemplates::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
   m_mapView->setGeometryEditor(m_geometryEditor);
   emit mapViewChanged();
-  m_map->load();
 }
 
 bool AddFeaturesWithSharedTemplates::sketchInProgress() const
@@ -192,6 +191,11 @@ void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
     entry.insert(QStringLiteral("swatch"), QStringLiteral("data:image/png;base64,") + QString::fromLatin1(buffer.data().toBase64()));
     m_templates[index] = entry;
     emit templatesChanged();
+  }).onFailed(this, [this, index](const ErrorException& error)
+  {
+    // A swatch failure leaves the visible placeholder and must not prevent template selection.
+    qDebug() << "Unable to create shared template swatch:" << m_templateItems.at(index).sharedTemplate->name()
+               << "layer ID:" << m_templateItems.at(index).layerId << error.error();
   });
 }
 
