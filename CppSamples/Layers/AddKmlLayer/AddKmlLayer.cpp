@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayKml, Category=Layers]
+// [WriteFile Name=AddKmlLayer, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "DisplayKml.h"
+#include "AddKmlLayer.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
@@ -61,21 +61,21 @@ namespace
   }
 } // namespace
 
-DisplayKml::DisplayKml(QQuickItem* parent /* = nullptr */) :
+AddKmlLayer::AddKmlLayer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
 
-DisplayKml::~DisplayKml() = default;
+AddKmlLayer::~AddKmlLayer() = default;
 
-void DisplayKml::init()
+void AddKmlLayer::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<DisplayKml>("Esri.Samples", 1, 0, "DisplayKmlSample");
+  qmlRegisterType<AddKmlLayer>("Esri.Samples", 1, 0, "AddKmlLayerSample");
 }
 
-void DisplayKml::componentComplete()
+void AddKmlLayer::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -95,7 +95,7 @@ void DisplayKml::componentComplete()
   m_viewpoint = Viewpoint(pt, scale, camera);
 }
 
-void DisplayKml::createFromUrl()
+void AddKmlLayer::createFromUrl()
 {
   clearLayers();
 
@@ -109,7 +109,7 @@ void DisplayKml::createFromUrl()
   addLayerToScene(m_kmlLayer);
 }
 
-void DisplayKml::createFromFile()
+void AddKmlLayer::createFromFile()
 {
   clearLayers();
 
@@ -124,7 +124,7 @@ void DisplayKml::createFromFile()
   addLayerToScene(m_kmlLayer);
 }
 
-void DisplayKml::createFromPortalItem()
+void AddKmlLayer::createFromPortalItem()
 {
   clearLayers();
 
@@ -138,7 +138,7 @@ void DisplayKml::createFromPortalItem()
   addLayerToScene(m_kmlLayer);
 }
 
-void DisplayKml::addLayerToScene(KmlLayer* layer)
+void AddKmlLayer::addLayerToScene(KmlLayer* layer)
 {
   if (!m_scene)
   {
@@ -155,7 +155,7 @@ void DisplayKml::addLayerToScene(KmlLayer* layer)
   m_sceneView->setViewpointAsync(m_viewpoint);
 }
 
-void DisplayKml::clearLayers()
+void AddKmlLayer::clearLayers()
 {
   if (!m_scene)
   {

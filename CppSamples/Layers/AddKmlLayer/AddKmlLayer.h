@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayKml, Category=Layers]
+// [WriteFile Name=AddKmlLayer, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
 //
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DISPLAYKML_H
-#define DISPLAYKML_H
+#ifndef ADDKMLLAYER_H
+#define ADDKMLLAYER_H
 
 // ArcGIS Maps SDK headers
 #include "Viewpoint.h"
@@ -32,13 +32,13 @@ namespace Esri::ArcGISRuntime
   class PortalItem;
 } // namespace Esri::ArcGISRuntime
 
-class DisplayKml : public QQuickItem
+class AddKmlLayer : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit DisplayKml(QQuickItem* parent = nullptr);
-  ~DisplayKml() override;
+  explicit AddKmlLayer(QQuickItem* parent = nullptr);
+  ~AddKmlLayer() override;
 
   void componentComplete() override;
   static void init();
@@ -59,4 +59,4 @@ private:
   void clearLayers();
 };
 
-#endif // DISPLAYKML_H
+#endif // ADDKMLLAYER_H

@@ -1,4 +1,4 @@
-# Display KML
+# Add KML layer
 
 Display KML from a URL, portal item, or local KML file.
 

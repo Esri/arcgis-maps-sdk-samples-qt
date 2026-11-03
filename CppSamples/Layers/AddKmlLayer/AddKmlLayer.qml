@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayKml, Category=Layers]
+// [WriteFile Name=AddKmlLayer, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
 //
@@ -18,7 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import Esri.Samples
 
-DisplayKmlSample {
+AddKmlLayerSample {
     id: rootRectangle
     clip: true
     width: 800
