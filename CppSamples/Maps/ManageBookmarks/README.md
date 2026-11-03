@@ -27,8 +27,10 @@ The map in the sample comes pre-populated with a set of bookmarks. Select a book
 * BookmarksView
 * Viewpoint
 
+## Additional information
+
 This sample uses the `BookmarksView` component from the [ArcGIS Maps SDK for Qt toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt), which must be cloned and set up locally to build the sample. For setup instructions, see the toolkit's [Qt Quick UI tools documentation](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt/blob/main/uitools/README.md).
 
 ## Tags
 
-bookmark, extent, location, zoom, toolkit
+bookmark, extent, location, toolkit, zoom
