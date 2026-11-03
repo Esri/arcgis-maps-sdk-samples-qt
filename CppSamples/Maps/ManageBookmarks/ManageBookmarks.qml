@@ -68,6 +68,7 @@ ManageBookmarksSample {
         }
     }
 
+    //! [Display bookmarks with BookmarksView]
     BookmarksView {
         id: bookmarksView
         anchors {
@@ -79,6 +80,7 @@ ManageBookmarksSample {
         height: 200
         geoView: mapView
     }
+    //! [Display bookmarks with BookmarksView]
 
 
     // Create a window so names for new bookmarks can be specified

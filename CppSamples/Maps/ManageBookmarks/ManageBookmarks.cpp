@@ -100,15 +100,22 @@ void ManageBookmarks::createInitialBookmarks()
 
 void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
 {
+  //! [Add bookmarks to the list model]
   // Create the bookmark from the name and viewpoint
   Bookmark* bookmark = new Bookmark(name, viewpoint, this);
 
   // Add it to the map's bookmark list
   m_bookmarks->append(bookmark);
+  //! [Add bookmarks to the list model]
 }
 
 void ManageBookmarks::addBookmark(QString newBookmarkName)
 {
+  if (!m_mapView || !m_bookmarks)
+  {
+    return;
+  }
+
   const Viewpoint viewpoint = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry);
   createBookmark(newBookmarkName, viewpoint);
   m_mapView->setViewpointAsync(viewpoint);
