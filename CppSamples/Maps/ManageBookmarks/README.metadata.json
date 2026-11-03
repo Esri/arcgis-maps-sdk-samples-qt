@@ -11,8 +11,10 @@
         "extent",
         "location",
         "zoom",
+        "toolkit",
         "Bookmark",
         "BookmarkListModel",
+        "BookmarksView",
         "Viewpoint"
     ],
     "redirect_from": [
@@ -21,6 +23,7 @@
     "relevant_apis": [
         "Bookmark",
         "BookmarkListModel",
+        "BookmarksView",
         "Viewpoint"
     ],
     "snippets": [

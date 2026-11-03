@@ -17,6 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import Esri.ArcGISRuntime.Toolkit
 import Esri.Samples
 
 ManageBookmarksSample {
@@ -67,51 +68,16 @@ ManageBookmarksSample {
         }
     }
 
-    Pane {
+    BookmarksView {
+        id: bookmarksView
         anchors {
             left: parent.left
             top: parent.top
             margins: 15
         }
-
-        width: bookmarkComboBox.width + leftPadding + rightPadding
-        height: bookmarkComboBox.height + topPadding + bottomPadding
-        padding: 8
-
-        //! [Use BookmarkListModel in View]
-        ComboBox {
-            id: bookmarkComboBox
-            anchors.centerIn: parent
-
-            property int bestWidth: implicitWidth
-            width: bestWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
-            // Set the model to the BookmarkListModel
-            model: manageBookmarksSample.bookmarks
-
-            onModelChanged: {
-                const model = bookmarkComboBox.model;
-                if (model)
-                {
-                    let w = bestWidth;
-                    for (let i = 0; i < model.rowCount(); ++i) {
-                        metrics.text = manageBookmarksSample.bookmarkNameForIndex(i);
-                        w = Math.max(w, metrics.width);
-                    }
-                    bestWidth = w;
-                }
-            }
-
-            onCurrentTextChanged: {
-                // Call C++ invokable function to to go to the bookmark
-                manageBookmarksSample.goToBookmark(bookmarkComboBox.currentIndex);
-            }
-
-            TextMetrics {
-                id: metrics
-                font: bookmarkComboBox.font
-            }
-        }
-        //! [Use BookmarkListModel in View]
+        width: 250
+        height: 200
+        geoView: mapView
     }
 
 
@@ -166,7 +132,6 @@ ManageBookmarksSample {
                 onClicked: {
                     // Call the C++ invokable function and pass in the name specified
                     manageBookmarksSample.addBookmark(textField.text);
-                    bookmarkComboBox.currentIndex = bookmarkComboBox.count - 1;
                     textField.text = "";
                     addWindow.visible = false;
                 }

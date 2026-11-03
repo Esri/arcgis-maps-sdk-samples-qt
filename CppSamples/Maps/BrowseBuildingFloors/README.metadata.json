@@ -17,12 +17,13 @@
         "level",
         "site",
         "story",
-        "FloorLevel",
+        "toolkit",
+        "FloorFilter",
         "FloorManager"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "FloorLevel",
+        "FloorFilter",
         "FloorManager"
     ],
     "snippets": [

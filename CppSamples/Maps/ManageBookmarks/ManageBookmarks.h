@@ -18,11 +18,11 @@
 #define MANAGE_BOOKMARKS_H
 
 // Qt headers
-#include <QAbstractListModel>
 #include <QQuickItem>
 
 namespace Esri::ArcGISRuntime
 {
+  class BookmarkListModel;
   class Map;
   class MapQuickView;
   class Viewpoint;
@@ -33,9 +33,6 @@ class QString;
 class ManageBookmarks : public QQuickItem
 {
   Q_OBJECT
-  //! [Expose the list model to QML]
-  Q_PROPERTY(QAbstractListModel* bookmarks READ bookmarks NOTIFY bookmarksChanged)
-  //! [Expose the list model to QML]
 
 public:
   explicit ManageBookmarks(QQuickItem* parent = nullptr);
@@ -43,23 +40,16 @@ public:
 
   void componentComplete() override;
   static void init();
-  Q_INVOKABLE void goToBookmark(int bookmarkIndex);
   Q_INVOKABLE void addBookmark(QString newBookmarkName);
-
-  Q_INVOKABLE QString bookmarkNameForIndex(int index) const;
-
-signals:
-  void bookmarksChanged();
 
 private:
   void createInitialBookmarks();
   void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
-  QAbstractListModel* bookmarks() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  QAbstractListModel* m_bookmarks = nullptr;
+  Esri::ArcGISRuntime::BookmarkListModel* m_bookmarks = nullptr;
 };
 
 #endif // MANAGE_BOOKMARKS_H

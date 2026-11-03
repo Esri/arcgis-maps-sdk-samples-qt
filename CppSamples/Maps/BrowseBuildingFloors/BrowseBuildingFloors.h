@@ -24,8 +24,6 @@ namespace Esri::ArcGISRuntime
 {
   class Map;
   class MapQuickView;
-  class FloorManager;
-  class FloorLevel;
 } // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
@@ -41,7 +39,6 @@ public:
   ~BrowseBuildingFloors();
 
   static void init();
-  Q_INVOKABLE void selectFloor(const QString& floor_number);
 
 signals:
   void mapViewChanged();
@@ -52,7 +49,6 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::FloorManager* m_floorManager = nullptr;
 };
 
 #endif // BROWSEBUILDINGFLOORS_H
