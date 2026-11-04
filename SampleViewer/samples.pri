@@ -58,6 +58,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
+    "$$SAMPLEPATHCPP/EditData/AddFeaturesWithSharedTemplates/AddFeaturesWithSharedTemplates.h" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.h" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h" \
@@ -297,6 +298,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
+    "$$SAMPLEPATHCPP/EditData/AddFeaturesWithSharedTemplates/AddFeaturesWithSharedTemplates.cpp" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.cpp" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.cpp" \
@@ -534,6 +536,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
+    "$$SAMPLEPATHCPP/EditData/AddFeaturesWithSharedTemplates/AddFeaturesWithSharedTemplates.qrc" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.qrc" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qrc" \
