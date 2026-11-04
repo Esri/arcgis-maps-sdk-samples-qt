@@ -114,6 +114,27 @@ QUrl UpdateLabelsAndSymbolsToScaleForVisualAccessibility::symbolSwatchUrl() cons
   return m_symbolSwatchUrl;
 }
 
+double UpdateLabelsAndSymbolsToScaleForVisualAccessibility::symbolSize() const
+{
+  return m_symbolSize;
+}
+
+void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::setSymbolSize(double symbolSize)
+{
+  if (symbolSize <= 0 || qFuzzyCompare(m_symbolSize, symbolSize))
+  {
+    return;
+  }
+
+  m_symbolSize = symbolSize;
+  if (m_restaurantSymbol)
+  {
+    m_restaurantSymbol->setSize(m_symbolSize);
+  }
+
+  emit symbolSizeChanged();
+}
+
 void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::loadRestaurantSymbol()
 {
   // Get the restaurant symbol from Esri's 2D point symbol web style
@@ -127,7 +148,8 @@ void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::loadRestaurantSymbol()
       return;
     }
 
-    restaurantSymbol->setSize(24);
+    m_restaurantSymbol = restaurantSymbol;
+    restaurantSymbol->setSize(m_symbolSize);
 
     // Display the restaurants with the symbol
     m_restaurantsLayer->setRenderer(new SimpleRenderer(restaurantSymbol, this));

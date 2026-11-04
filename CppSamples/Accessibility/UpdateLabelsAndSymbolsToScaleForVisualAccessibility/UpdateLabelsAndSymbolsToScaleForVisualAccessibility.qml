@@ -118,7 +118,7 @@ Item {
                     Image {
                         id: symbolsLegendIcon
                         anchors.verticalCenter: parent.verticalCenter
-                        width: Math.round(fontMetrics.height * 1.5)
+                        width: model.symbolSize
                         height: width
                         fillMode: Image.PreserveAspectFit
                         source: model.symbolSwatchUrl
@@ -206,5 +206,6 @@ Item {
     UpdateLabelsAndSymbolsToScaleForVisualAccessibilitySample {
         id: model
         mapView: view
+        symbolSize: labelScaleLabel.font.pixelSize * 1.5
     }
 }

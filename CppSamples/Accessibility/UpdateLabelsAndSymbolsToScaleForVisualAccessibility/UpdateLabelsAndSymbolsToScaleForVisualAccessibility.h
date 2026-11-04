@@ -26,6 +26,7 @@ namespace Esri::ArcGISRuntime
   class FeatureLayer;
   class Map;
   class MapQuickView;
+  class MultilayerPointSymbol;
 } // namespace Esri::ArcGISRuntime
 
 class QMouseEvent;
@@ -38,6 +39,7 @@ class UpdateLabelsAndSymbolsToScaleForVisualAccessibility : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QUrl symbolSwatchUrl READ symbolSwatchUrl NOTIFY symbolSwatchUrlChanged)
+  Q_PROPERTY(double symbolSize READ symbolSize WRITE setSymbolSize NOTIFY symbolSizeChanged)
 
 public:
   explicit UpdateLabelsAndSymbolsToScaleForVisualAccessibility(QObject* parent = nullptr);
@@ -48,11 +50,14 @@ public:
 signals:
   void mapViewChanged();
   void symbolSwatchUrlChanged();
+  void symbolSizeChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QUrl symbolSwatchUrl() const;
+  double symbolSize() const;
+  void setSymbolSize(double symbolSize);
 
   void loadRestaurantSymbol();
   void addLabels();
@@ -61,6 +66,8 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_restaurantsLayer = nullptr;
+  Esri::ArcGISRuntime::MultilayerPointSymbol* m_restaurantSymbol = nullptr;
+  double m_symbolSize = 24;
   QUrl m_symbolSwatchUrl;
 };
 
