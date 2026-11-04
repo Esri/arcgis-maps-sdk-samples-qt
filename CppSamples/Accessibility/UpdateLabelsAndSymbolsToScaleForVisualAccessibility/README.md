@@ -10,7 +10,7 @@ Use this pattern to improve map readability for users who increase text size in 
 
 ## How to use the sample
 
-Change the text size in the operating system's accessibility settings to see the restaurant labels and symbols resize. On iOS, open **Settings** > **Accessibility** > **Display & Text Size** > **Larger Text**.
+Change the text size in the operating system's accessibility settings to see the restaurant labels resize. Restart the sample to see the restaurant symbols resize. On iOS, open **Settings** > **Accessibility** > **Display & Text Size** > **Larger Text**.
 
 Clear **Apply system text size to labels** to stop labels from following the system text size, then select it again to restore system text scaling. Restaurant symbols continue to follow the system text size independently of this setting. The legend and current values show how labels and symbols are scaled.
 
@@ -38,6 +38,8 @@ The restaurant symbol comes from [Esri's 2D point symbol web style](https://www.
 ## Additional information
 
 `MapView.useSystemTextScale` is supported on iOS, Android, Windows, and Linux (GNOME desktop environments only). It is not supported on macOS.
+
+The symbol size and callout text are based on the application font, which Qt reads from the system text size when the app starts. Restart the sample after changing the system text size to update them.
 
 ## Tags
 
