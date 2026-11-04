@@ -43,6 +43,7 @@ Item {
 
     // Instructions, legend, label scaling toggle, and current values
     Pane {
+        id: panel
         anchors {
             top: parent.top
             right: parent.right
@@ -54,19 +55,13 @@ Item {
 
         ScrollView {
             anchors.fill: parent
-            contentWidth: availableWidth
+            contentWidth: panel.availableWidth
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
             Column {
                 id: contentColumn
                 width: parent.width
                 spacing: 8
-
-                // Size the legend symbol and check box from the text so they scale with the text size
-                FontMetrics {
-                    id: fontMetrics
-                    font: labelScaleLabel.font
-                }
 
                 Label {
                     width: parent.width
@@ -158,7 +153,7 @@ Item {
                         CheckBox {
                             id: labelScaleCheckBox
                             anchors.centerIn: parent
-                            scale: Math.max(1, fontMetrics.ascent / indicator.height)
+                            scale: Math.max(1, labelScaleLabel.font.pixelSize / indicator.height)
                             checked: true
                             Accessible.name: labelScaleLabel.text
                         }
