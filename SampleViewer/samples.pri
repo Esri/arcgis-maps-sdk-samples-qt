@@ -723,6 +723,9 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.qrc"
 
+# Include the accessibility sample's text scale monitor sources and platform-specific dependencies.
+include($$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/SystemTextScaleMonitor/SystemTextScaleMonitor.pri)
+
 # Local Server Only (Linux x86_64 and Windows x86_64)
 win32:contains(QMAKE_TARGET.arch, x86_64)|unix:contains(QMAKE_TARGET.arch, x86_64) {
   INCLUDEPATH += \
