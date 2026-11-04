@@ -14,12 +14,30 @@
 // limitations under the License.
 // [Legal]
 
+// Allow the inline font probe to update its enclosing Loader
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntime.Toolkit
 import Esri.Samples
 
 Item {
+
+    // Query a raw Text font instead of the Qt Quick Controls style font
+    Loader {
+        id: systemTextScaleSource
+        visible: false
+        property real pixelSize: 0
+        sourceComponent: Text {
+            Component.onCompleted: systemTextScaleSource.pixelSize = font.pixelSize
+        }
+
+        function refresh() {
+            active = false;
+            active = true;
+        }
+    }
 
     // add a mapView component
     MapView {
@@ -38,6 +56,7 @@ Item {
             calloutData: view.calloutData
             accessoryButtonVisible: false
             leaderPosition: Callout.LeaderPosition.Automatic
+            font.pixelSize: systemTextScaleSource.pixelSize
         }
     }
 
@@ -121,9 +140,26 @@ Item {
 
                     Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        width: Math.min(implicitWidth, contentColumn.width - symbolsLegendIcon.width - parent.spacing)
+                        width: Math.min(implicitWidth, contentColumn.width - symbolsLegendIcon.width - refreshSystemTextSizeButton.width - parent.spacing * 2)
                         wrapMode: Text.Wrap
-                        text: qsTr("Symbols: system text size")
+                        text: qsTr("Symbols: application font size")
+                    }
+
+                    Button {
+                        id: refreshSystemTextSizeButton
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 28
+                        height: width
+                        leftPadding: 6
+                        rightPadding: leftPadding
+                        display: AbstractButton.IconOnly
+                        text: qsTr("Refresh text size")
+                        icon.source: "qrc:/Samples/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/refresh-24.svg"
+                        icon.color: palette.buttonText
+                        onClicked: systemTextScaleSource.refresh()
+
+                        ToolTip.visible: hovered
+                        ToolTip.text: text
                     }
                 }
 
@@ -153,7 +189,7 @@ Item {
                         CheckBox {
                             id: labelScaleCheckBox
                             anchors.centerIn: parent
-                            scale: Math.max(1, labelScaleLabel.font.pixelSize / indicator.height)
+                            scale: Math.max(1, systemTextScaleSource.pixelSize / indicator.height)
                             checked: true
                             Accessible.name: labelScaleLabel.text
                         }
@@ -201,6 +237,6 @@ Item {
     UpdateLabelsAndSymbolsToScaleForVisualAccessibilitySample {
         id: model
         mapView: view
-        symbolSize: labelScaleLabel.font.pixelSize * 1.5
+        symbolSize: systemTextScaleSource.pixelSize * 1.5
     }
 }

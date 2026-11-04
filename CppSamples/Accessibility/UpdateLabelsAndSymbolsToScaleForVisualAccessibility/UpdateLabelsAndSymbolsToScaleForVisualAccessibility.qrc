@@ -7,5 +7,6 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file alias="refresh-24.svg">../../../arcgis-maps-sdk-toolkit-qt/calcite/calcite-design-system/packages/ui-icons/icons/refresh-24.svg</file>
     </qresource>
 </RCC>
