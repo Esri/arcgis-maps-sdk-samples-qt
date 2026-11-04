@@ -21,12 +21,6 @@ import Esri.Samples
 
 Item {
 
-    // Read the system text size from a plain Text, since Qt Quick Controls use the style font instead
-    Text {
-        id: systemTextScaleSource
-        visible: false
-    }
-
     // add a mapView component
     MapView {
         id: view
@@ -44,7 +38,6 @@ Item {
             calloutData: view.calloutData
             accessoryButtonVisible: false
             leaderPosition: Callout.LeaderPosition.Automatic
-            font.pixelSize: systemTextScaleSource.font.pixelSize
         }
     }
 
@@ -160,7 +153,6 @@ Item {
                         CheckBox {
                             id: labelScaleCheckBox
                             anchors.centerIn: parent
-                            scale: Math.max(1, systemTextScaleSource.font.pixelSize / indicator.height)
                             checked: true
                             Accessible.name: labelScaleLabel.text
                         }
