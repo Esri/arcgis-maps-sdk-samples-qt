@@ -49,6 +49,8 @@ SOURCES += \
 
 RESOURCES += UpdateLabelsAndSymbolsToScaleForVisualAccessibility.qrc
 
+include($$PWD/SystemTextScaleMonitor/SystemTextScaleMonitor.pri)
+
 #-------------------------------------------------------------------------------
 
 win32 {

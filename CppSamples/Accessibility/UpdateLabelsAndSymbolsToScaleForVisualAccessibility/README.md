@@ -39,8 +39,6 @@ The restaurant symbol comes from [Esri's 2D point symbol web style](https://www.
 
 `MapView.useSystemTextScale` is supported on iOS, Android, Windows, and Linux (GNOME desktop environments only). It is not supported on macOS.
 
-The symbol size and callout text are based on the application font, which Qt reads from the system text size when the app starts. Restart the sample after changing the system text size to update them.
-
 ## Tags
 
 accessibility, label, readability, scale, symbol, text, visual impairment

@@ -21,6 +21,14 @@
 #include <QObject>
 #include <QUrl>
 
+// STL headers
+#include <memory>
+
+namespace AccessibilitySample
+{
+  class SystemTextScaleMonitor;
+}
+
 namespace Esri::ArcGISRuntime
 {
   class FeatureLayer;
@@ -39,7 +47,7 @@ class UpdateLabelsAndSymbolsToScaleForVisualAccessibility : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QUrl symbolSwatchUrl READ symbolSwatchUrl NOTIFY symbolSwatchUrlChanged)
-  Q_PROPERTY(double symbolSize READ symbolSize WRITE setSymbolSize NOTIFY symbolSizeChanged)
+  Q_PROPERTY(double symbolSize READ symbolSize NOTIFY symbolSizeChanged)
 
 public:
   explicit UpdateLabelsAndSymbolsToScaleForVisualAccessibility(QObject* parent = nullptr);
@@ -58,6 +66,7 @@ private:
   QUrl symbolSwatchUrl() const;
   double symbolSize() const;
   void setSymbolSize(double symbolSize);
+  void updateSymbolSize();
 
   void loadRestaurantSymbol();
   void addLabels();
@@ -67,6 +76,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_restaurantsLayer = nullptr;
   Esri::ArcGISRuntime::MultilayerPointSymbol* m_restaurantSymbol = nullptr;
+  std::shared_ptr<AccessibilitySample::SystemTextScaleMonitor> m_systemTextScaleMonitor;
   double m_symbolSize = 24;
   QUrl m_symbolSwatchUrl;
 };

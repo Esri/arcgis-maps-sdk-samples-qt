@@ -46,6 +46,9 @@
 #include "TextSymbol.h"
 #include "Viewpoint.h"
 
+// qt_common headers
+#include "SystemTextScaleMonitor/SystemTextScaleMonitor.h"
+
 // Qt headers
 #include <QBuffer>
 #include <QFuture>
@@ -58,6 +61,13 @@ UpdateLabelsAndSymbolsToScaleForVisualAccessibility::UpdateLabelsAndSymbolsToSca
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISLightGray, this))
 {
+  m_systemTextScaleMonitor = AccessibilitySample::SystemTextScaleMonitor::sharedInstance();
+  connect(m_systemTextScaleMonitor.get(), &AccessibilitySample::SystemTextScaleMonitor::textScaleChanged, this, [this](float)
+  {
+    updateSymbolSize();
+  });
+  updateSymbolSize();
+
   m_map->setInitialViewpoint(Viewpoint(Point(-117.1793, 34.0556, SpatialReference::wgs84()), 2500));
 
   // Create a feature layer of restaurants in Redlands and add it to the map
@@ -133,6 +143,12 @@ void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::setSymbolSize(double s
   }
 
   emit symbolSizeChanged();
+}
+
+void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::updateSymbolSize()
+{
+  const double textScale = m_systemTextScaleMonitor->textScale();
+  setSymbolSize(24.0 * textScale);
 }
 
 void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::loadRestaurantSymbol()

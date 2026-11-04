@@ -130,7 +130,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         width: Math.min(implicitWidth, contentColumn.width - symbolsLegendIcon.width - parent.spacing)
                         wrapMode: Text.Wrap
-                        text: qsTr("Symbols: application font size")
+                        text: qsTr("Symbols: system text size")
                     }
                 }
 
@@ -208,6 +208,5 @@ Item {
     UpdateLabelsAndSymbolsToScaleForVisualAccessibilitySample {
         id: model
         mapView: view
-        symbolSize: systemTextScaleSource.font.pixelSize * 1.5
     }
 }
