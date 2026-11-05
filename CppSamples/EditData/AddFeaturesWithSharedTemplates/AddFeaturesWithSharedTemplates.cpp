@@ -24,9 +24,7 @@
 // ArcGIS Maps SDK headers
 #include "Error.h"
 #include "ErrorException.h"
-#include "FeatureEditResult.h"
 #include "FeatureLayer.h"
-#include "FeatureTableEditResult.h"
 #include "GeodatabaseTypes.h"
 #include "Geometry.h"
 #include "GeometryBuilder.h"
@@ -49,8 +47,6 @@
 #include <QFuture>
 #include <QImage>
 #include <QMap>
-#include <QScopeGuard>
-#include <QStringList>
 #include <QVariantMap>
 
 // STL headers
@@ -191,17 +187,18 @@ void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
     entry.insert(QStringLiteral("swatch"), QStringLiteral("data:image/png;base64,") + QString::fromLatin1(buffer.data().toBase64()));
     m_templates[index] = entry;
     emit templatesChanged();
-  }).onFailed(this, [this, index](const ErrorException& error)
+  })
+    .onFailed(this, [this, index](const ErrorException& error)
   {
     // A swatch failure leaves the visible placeholder and must not prevent template selection.
     qDebug() << "Unable to create shared template swatch:" << m_templateItems.at(index).sharedTemplate->name()
-               << "layer ID:" << m_templateItems.at(index).layerId << error.error();
+             << "layer ID:" << m_templateItems.at(index).layerId << error.error();
   });
 }
 
 void AddFeaturesWithSharedTemplates::startDrawing(int index)
 {
-  if (m_busy || sketchInProgress() || m_hasPendingEdits)
+  if (m_busy || sketchInProgress())
   {
     return;
   }
@@ -290,66 +287,6 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
   });
 }
 
-void AddFeaturesWithSharedTemplates::saveEdits()
-{
-  if (m_busy || !m_hasPendingEdits)
-  {
-    return;
-  }
-  setBusy_(true);
-  setStatusText_(tr("Saving edits..."));
-  m_serviceGeodatabase->applyEditsAsync()
-    .then(this,
-          [this](const QList<FeatureTableEditResult*>& results)
-  {
-    const QScopeGuard cleanup{[&results]
-    {
-      qDeleteAll(results);
-    }};
-    QStringList errors;
-    for (const auto* tableResult : results)
-    {
-      for (const auto* featureResult : tableResult->editResults())
-      {
-        if (featureResult->isCompletedWithErrors())
-        {
-          errors.append(featureResult->error().message());
-        }
-      }
-    }
-    if (!errors.isEmpty())
-    {
-      reportError_(tr("Unable to save edits."), errors.join(QLatin1Char('\n')));
-      return;
-    }
-    finishOperation_(tr("Edits saved."));
-  })
-    .onFailed(this, [this](const ErrorException& error)
-  {
-    reportError_(tr("Unable to save edits."), error.error().message());
-  });
-}
-
-void AddFeaturesWithSharedTemplates::undoEdits()
-{
-  if (m_busy || !m_hasPendingEdits)
-  {
-    return;
-  }
-  setBusy_(true);
-  setStatusText_(tr("Undoing local edits..."));
-  m_serviceGeodatabase->undoLocalEditsAsync()
-    .then(this,
-          [this]
-  {
-    finishOperation_(tr("Edits undone."));
-  })
-    .onFailed(this, [this](const ErrorException& error)
-  {
-    reportError_(tr("Unable to undo edits."), error.error().message());
-  });
-}
-
 void AddFeaturesWithSharedTemplates::updateCanComplete_()
 {
   bool canComplete = false;
@@ -383,18 +320,8 @@ void AddFeaturesWithSharedTemplates::setBusy_(bool busy)
   }
 }
 
-void AddFeaturesWithSharedTemplates::setHasPendingEdits_(bool hasPendingEdits)
-{
-  if (m_hasPendingEdits != hasPendingEdits)
-  {
-    m_hasPendingEdits = hasPendingEdits;
-    emit hasPendingEditsChanged();
-  }
-}
-
 void AddFeaturesWithSharedTemplates::finishOperation_(const QString& status)
 {
-  setHasPendingEdits_(m_serviceGeodatabase && m_serviceGeodatabase->hasLocalEdits());
   setStatusText_(status);
   setBusy_(false);
 }
