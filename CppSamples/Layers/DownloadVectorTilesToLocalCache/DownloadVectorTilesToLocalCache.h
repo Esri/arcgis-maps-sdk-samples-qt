@@ -1,4 +1,4 @@
-// [WriteFile Name=ExportVectorTiles, Category=Layers]
+// [WriteFile Name=DownloadVectorTilesToLocalCache, Category=Layers]
 // [Legal]
 // Copyright 2022 Esri.
 //
@@ -32,7 +32,7 @@ namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
-class ExportVectorTiles : public QObject
+class DownloadVectorTilesToLocalCache : public QObject
 {
   Q_OBJECT
 
@@ -41,8 +41,8 @@ class ExportVectorTiles : public QObject
   Q_PROPERTY(int jobStatus READ jobStatus NOTIFY jobStatusChanged)
 
 public:
-  explicit ExportVectorTiles(QObject* parent = nullptr);
-  ~ExportVectorTiles();
+  explicit DownloadVectorTilesToLocalCache(QObject* parent = nullptr);
+  ~DownloadVectorTilesToLocalCache();
 
   enum ExportJobStatus
   {

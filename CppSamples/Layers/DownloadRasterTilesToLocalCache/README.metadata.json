@@ -1,6 +1,6 @@
 {
     "category": "Layers",
-    "description": "Download tiles to a local tile cache file stored on the device.",
+    "description": "Download raster tiles to a local tile cache file stored on the device.",
     "featured": false,
     "ignore": false,
     "images": [
@@ -27,9 +27,9 @@
         "TileCache"
     ],
     "snippets": [
-        "ExportTiles.cpp",
-        "ExportTiles.h",
-        "ExportTiles.qml"
+        "DownloadRasterTilesToLocalCache.cpp",
+        "DownloadRasterTilesToLocalCache.h",
+        "DownloadRasterTilesToLocalCache.qml"
     ],
-    "title": "Export tiles"
+    "title": "Download raster tiles to local cache"
 }

@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += qml quick
 
 TEMPLATE = app
-TARGET = ExportVectorTiles
+TARGET = DownloadVectorTilesToLocalCache
 
 include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ExportVectorTiles.h
+    DownloadVectorTilesToLocalCache.h
 
 SOURCES += \
     main.cpp \
-    ExportVectorTiles.cpp
+    DownloadVectorTilesToLocalCache.cpp
 
-RESOURCES += ExportVectorTiles.qrc
+RESOURCES += DownloadVectorTilesToLocalCache.qrc
 
 #-------------------------------------------------------------------------------
 

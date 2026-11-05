@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/DownloadVectorTilesToLocalCache">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>DownloadVectorTilesToLocalCache.qml</file>
+        <file>DownloadVectorTilesToLocalCache.h</file>
+        <file>DownloadVectorTilesToLocalCache.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
