@@ -34,8 +34,7 @@ namespace AccessibilitySample
   public:
     ~SystemTextScaleMonitor() override;
 
-    // The sample retains this monitor to track system text-size changes, even when scaling is disabled.
-    // Callers share ownership; releasing the last shared_ptr destroys the monitor and stops monitoring.
+    // Returns a shared monitor for tracking system text-size changes.
     [[nodiscard]] static std::shared_ptr<SystemTextScaleMonitor> sharedInstance();
 
     float textScale() const;
