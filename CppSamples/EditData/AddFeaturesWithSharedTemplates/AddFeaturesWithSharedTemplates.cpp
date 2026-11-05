@@ -192,7 +192,7 @@ void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
   {
     // A swatch failure leaves the visible placeholder and must not prevent template selection.
     qDebug() << "Unable to create shared template swatch:" << m_templateItems.at(index).sharedTemplate->name()
-              << "layer ID:" << m_templateItems.at(index).layerId << error.error();
+               << "layer ID:" << m_templateItems.at(index).layerId << error.error();
   });
 }
 
