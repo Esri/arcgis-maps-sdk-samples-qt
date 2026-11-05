@@ -21,7 +21,6 @@ import Esri.Samples
 
 Item {
 
-    // add a mapView component
     MapView {
         id: view
         anchors.fill: parent
@@ -141,7 +140,6 @@ Item {
                     text: qsTr("Toggles")
                 }
 
-                // A separate label lets the check box text wrap at large text sizes
                 Row {
                     anchors.horizontalCenter: parent.horizontalCenter
 
