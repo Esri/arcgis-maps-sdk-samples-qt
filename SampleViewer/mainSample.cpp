@@ -311,6 +311,10 @@
 #include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
 #endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
 
+#ifdef SHOW_CONTROL_MAP_ALGEBRA_INPUTS_WITH_FLOAT_SUPPLIERS_SAMPLE
+#include "../CppSamples/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h"
+#endif // SHOW_CONTROL_MAP_ALGEBRA_INPUTS_WITH_FLOAT_SUPPLIERS_SAMPLE
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -639,6 +643,10 @@ void registerCppSampleClasses()
 #ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
   AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
 #endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
+
+#ifdef SHOW_CONTROL_MAP_ALGEBRA_INPUTS_WITH_FLOAT_SUPPLIERS_SAMPLE
+  ControlMapAlgebraInputsWithFloatSuppliers::init();
+#endif // SHOW_CONTROL_MAP_ALGEBRA_INPUTS_WITH_FLOAT_SUPPLIERS_SAMPLE
 
 #ifdef LOCALSERVER_SUPPORTED
   LocalServerServices::init();
