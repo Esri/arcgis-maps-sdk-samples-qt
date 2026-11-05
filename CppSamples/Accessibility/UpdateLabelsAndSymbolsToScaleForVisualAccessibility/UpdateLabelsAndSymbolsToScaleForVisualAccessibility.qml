@@ -112,7 +112,7 @@ Item {
                     Image {
                         id: symbolsLegendIcon
                         anchors.verticalCenter: parent.verticalCenter
-                        width: model.symbolSize
+                        width: 24
                         height: width
                         fillMode: Image.PreserveAspectFit
                         source: model.symbolSwatchUrl

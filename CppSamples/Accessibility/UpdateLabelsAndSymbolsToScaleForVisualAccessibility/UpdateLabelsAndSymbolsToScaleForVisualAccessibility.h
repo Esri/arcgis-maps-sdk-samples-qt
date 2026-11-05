@@ -47,7 +47,6 @@ class UpdateLabelsAndSymbolsToScaleForVisualAccessibility : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QUrl symbolSwatchUrl READ symbolSwatchUrl NOTIFY symbolSwatchUrlChanged)
-  Q_PROPERTY(double symbolSize READ symbolSize NOTIFY symbolSizeChanged)
 
 public:
   explicit UpdateLabelsAndSymbolsToScaleForVisualAccessibility(QObject* parent = nullptr);
@@ -58,13 +57,11 @@ public:
 signals:
   void mapViewChanged();
   void symbolSwatchUrlChanged();
-  void symbolSizeChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QUrl symbolSwatchUrl() const;
-  double symbolSize() const;
   void setSymbolSize(double symbolSize);
   void updateSymbolSize();
 

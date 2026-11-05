@@ -124,11 +124,6 @@ QUrl UpdateLabelsAndSymbolsToScaleForVisualAccessibility::symbolSwatchUrl() cons
   return m_symbolSwatchUrl;
 }
 
-double UpdateLabelsAndSymbolsToScaleForVisualAccessibility::symbolSize() const
-{
-  return m_symbolSize;
-}
-
 void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::setSymbolSize(double symbolSize)
 {
   if (symbolSize <= 0 || qFuzzyCompare(m_symbolSize, symbolSize))
@@ -141,8 +136,6 @@ void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::setSymbolSize(double s
   {
     m_restaurantSymbol->setSize(m_symbolSize);
   }
-
-  emit symbolSizeChanged();
 }
 
 void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::updateSymbolSize()
@@ -170,8 +163,7 @@ void UpdateLabelsAndSymbolsToScaleForVisualAccessibility::loadRestaurantSymbol()
     // Display the restaurants with the symbol
     m_restaurantsLayer->setRenderer(new SimpleRenderer(restaurantSymbol, this));
 
-    // Create a high resolution swatch of the symbol for the legend so it stays sharp as the text size grows
-    restaurantSymbol->createSwatchAsync(3).then(this, [this](const QImage& swatch)
+    restaurantSymbol->createSwatchAsync().then(this, [this](const QImage& swatch)
     {
       QByteArray swatchBytes;
       QBuffer buffer(&swatchBytes);
