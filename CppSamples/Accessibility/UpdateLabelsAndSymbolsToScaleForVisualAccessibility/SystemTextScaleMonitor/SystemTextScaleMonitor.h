@@ -25,7 +25,7 @@
 
 namespace AccessibilitySample
 {
-  // SystemTextScaleMonitor is a singleton that reports the current system text scale as a positive multiplier.
+  // Shared sample helper that reports the current system text scale as a positive multiplier.
 
   class SystemTextScaleMonitor : public QObject
   {
@@ -34,10 +34,8 @@ namespace AccessibilitySample
   public:
     ~SystemTextScaleMonitor() override;
 
-    // this class must do some minor work when it's running to track system changes,
-    // so if the user opts out of this, the GeoView (or wherever this is used) should
-    // reset/drop its reference. The last GeoView to drop its reference will cause
-    // this class to be destroyed, and it will stop doing work.
+    // The sample retains this monitor to track system text-size changes, even when scaling is disabled.
+    // Callers share ownership; releasing the last shared_ptr destroys the monitor and stops monitoring.
     [[nodiscard]] static std::shared_ptr<SystemTextScaleMonitor> sharedInstance();
 
     float textScale() const;

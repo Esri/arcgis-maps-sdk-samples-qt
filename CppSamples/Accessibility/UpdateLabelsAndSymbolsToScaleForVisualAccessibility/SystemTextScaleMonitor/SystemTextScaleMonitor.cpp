@@ -93,7 +93,7 @@ namespace AccessibilitySample
     // Convert the platform value to a text-scale multiplier.
     const auto convertedTextScale = textScaleFromPlatformTextScale(platformTextScale());
 
-    // apply the default if the converted value is not in the documented range of valid values.
+    // Use the default scale if the platform value does not produce a finite, positive multiplier.
     return std::isfinite(convertedTextScale) && convertedTextScale > 0.0F ? convertedTextScale : defaultTextScale();
   }
 
