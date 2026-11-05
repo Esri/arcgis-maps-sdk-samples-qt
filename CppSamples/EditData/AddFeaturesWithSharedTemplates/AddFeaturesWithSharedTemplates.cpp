@@ -31,6 +31,7 @@
 #include "GeometryConstructionTool.h"
 #include "GeometryEditor.h"
 #include "GeometryTypes.h"
+#include "Layer.h"
 #include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -56,7 +57,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-  constexpr auto createFeatureError = QT_TRANSLATE_NOOP("AddFeaturesWithSharedTemplates", "Unable to create or add features.");
+  constexpr const char* createFeatureError = QT_TRANSLATE_NOOP("AddFeaturesWithSharedTemplates", "Unable to create or add features.");
 } // namespace
 
 AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) :
@@ -77,10 +78,10 @@ AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) 
       return;
     }
 
-    for (auto* layer : *m_map->operationalLayers())
+    for (Layer* layer : *m_map->operationalLayers())
     {
-      auto* featureLayer = qobject_cast<FeatureLayer*>(layer);
-      auto* table = featureLayer ? qobject_cast<ServiceFeatureTable*>(featureLayer->featureTable()) : nullptr;
+      FeatureLayer* featureLayer = qobject_cast<FeatureLayer*>(layer);
+      ServiceFeatureTable* table = featureLayer ? qobject_cast<ServiceFeatureTable*>(featureLayer->featureTable()) : nullptr;
       if (table && table->serviceGeodatabase())
       {
         m_serviceGeodatabase = table->serviceGeodatabase();
@@ -128,11 +129,11 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
     .then(this,
           [this](const QMap<qint64, QList<SharedTemplate*>>& templatesByLayer)
   {
-    for (auto it = templatesByLayer.cbegin(); it != templatesByLayer.cend(); ++it)
+    for (QMap<qint64, QList<SharedTemplate*>>::const_iterator it = templatesByLayer.cbegin(); it != templatesByLayer.cend(); ++it)
     {
-      for (auto* sharedTemplate : it.value())
+      for (SharedTemplate* sharedTemplate : it.value())
       {
-        const auto type = sharedTemplate->type();
+        const SharedTemplateType type = sharedTemplate->type();
         if (type != SharedTemplateType::Preset && type != SharedTemplateType::Group)
         {
           continue;
@@ -167,7 +168,7 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
 
 void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
 {
-  const auto& item = m_templateItems.at(index);
+  const TemplateItem& item = m_templateItems.at(index);
   item.sharedTemplate->createSwatchAsync(item.layerId)
     .then(this,
           [this, index](const QImage& image)
@@ -183,7 +184,7 @@ void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
       qWarning() << "Unable to encode shared template swatch.";
       return;
     }
-    auto entry = m_templates.at(index).toMap();
+    QVariantMap entry = m_templates.at(index).toMap();
     entry.insert(QStringLiteral("swatch"), QStringLiteral("data:image/png;base64,") + QString::fromLatin1(buffer.data().toBase64()));
     m_templates[index] = entry;
     emit templatesChanged();
@@ -192,7 +193,7 @@ void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
   {
     // A swatch failure leaves the visible placeholder and must not prevent template selection.
     qDebug() << "Unable to create shared template swatch:" << m_templateItems.at(index).sharedTemplate->name()
-               << "layer ID:" << m_templateItems.at(index).layerId << error.error();
+             << "layer ID:" << m_templateItems.at(index).layerId << error.error();
   });
 }
 
@@ -207,8 +208,8 @@ void AddFeaturesWithSharedTemplates::startDrawing(int index)
     reportError_(tr("Unable to start drawing."), tr("Select an available shared template."));
     return;
   }
-  const auto& item = m_templateItems.at(index);
-  auto* tool = item.sharedTemplate->defaultConstructionTool(item.layerId);
+  const TemplateItem& item = m_templateItems.at(index);
+  GeometryConstructionTool* tool = item.sharedTemplate->defaultConstructionTool(item.layerId);
   if (!tool || (tool->toolType() != GeometryConstructionToolType::Point && tool->toolType() != GeometryConstructionToolType::Line))
   {
     reportError_(tr("Unable to start drawing."), tr("The template's default construction tool is not supported by this sample."));
@@ -244,7 +245,7 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
     setStatusText_(tr("Draw a valid geometry, then tap Complete or Cancel."));
     return;
   }
-  auto* sharedTemplate = m_templateItems.at(m_activeTemplateIndex).sharedTemplate;
+  SharedTemplate* sharedTemplate = m_templateItems.at(m_activeTemplateIndex).sharedTemplate;
   setBusy_(true);
   const Geometry geometry = m_geometryEditor->stop();
   m_activeTemplateIndex = -1;
