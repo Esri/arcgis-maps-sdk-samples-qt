@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-// qt_common headers
+// Sample headers
 #include "SystemTextScaleMonitor.h"
 
 // Qt headers
