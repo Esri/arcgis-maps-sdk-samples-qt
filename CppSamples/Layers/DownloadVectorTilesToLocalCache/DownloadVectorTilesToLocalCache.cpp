@@ -1,4 +1,4 @@
-// [WriteFile Name=ExportVectorTiles, Category=Layers]
+// [WriteFile Name=DownloadVectorTilesToLocalCache, Category=Layers]
 // [Legal]
 // Copyright 2022 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "ExportVectorTiles.h"
+#include "DownloadVectorTilesToLocalCache.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISVectorTiledLayer.h"
@@ -53,28 +53,28 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ExportVectorTiles::ExportVectorTiles(QObject* parent /* = nullptr */) :
+DownloadVectorTilesToLocalCache::DownloadVectorTilesToLocalCache(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this))
 {
 }
 
-ExportVectorTiles::~ExportVectorTiles() = default;
+DownloadVectorTilesToLocalCache::~DownloadVectorTilesToLocalCache() = default;
 
-void ExportVectorTiles::init()
+void DownloadVectorTilesToLocalCache::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<ExportVectorTiles>("Esri.Samples", 1, 0, "ExportVectorTilesSample");
+  qmlRegisterType<DownloadVectorTilesToLocalCache>("Esri.Samples", 1, 0, "DownloadVectorTilesToLocalCacheSample");
 }
 
-MapQuickView* ExportVectorTiles::mapView() const
+MapQuickView* DownloadVectorTilesToLocalCache::mapView() const
 {
   return m_mapView;
 }
 
 // Set the view (created in QML)
-void ExportVectorTiles::setMapView(MapQuickView* mapView)
+void DownloadVectorTilesToLocalCache::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
   {
@@ -97,7 +97,7 @@ void ExportVectorTiles::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double yNE)
+void DownloadVectorTilesToLocalCache::startExport(double xSW, double ySW, double xNE, double yNE)
 {
   if (!m_map->basemap() || m_map->basemap()->baseLayers()->isEmpty() ||
       m_map->basemap()->baseLayers()->first()->layerType() != LayerType::ArcGISVectorTiledLayer)
@@ -171,7 +171,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
   });
 }
 
-void ExportVectorTiles::cancel()
+void DownloadVectorTilesToLocalCache::cancel()
 {
   m_exportJob->disconnect(this);
   m_jobStatus = ExportStatusCancelling;
@@ -185,7 +185,7 @@ void ExportVectorTiles::cancel()
   });
 }
 
-void ExportVectorTiles::reset()
+void DownloadVectorTilesToLocalCache::reset()
 {
   m_exportInProgress = false;
   if (m_isUsingOfflineBasemap)
@@ -199,12 +199,12 @@ void ExportVectorTiles::reset()
   emit jobStatusChanged();
 }
 
-int ExportVectorTiles::exportProgress() const
+int DownloadVectorTilesToLocalCache::exportProgress() const
 {
   return m_exportProgress;
 }
 
-int ExportVectorTiles::jobStatus() const
+int DownloadVectorTilesToLocalCache::jobStatus() const
 {
   return m_jobStatus;
 }

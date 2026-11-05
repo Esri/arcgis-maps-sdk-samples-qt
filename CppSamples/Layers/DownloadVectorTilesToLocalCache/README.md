@@ -1,6 +1,6 @@
-# Export vector tiles
+# Download vector tiles to local cache
 
-Export tiles from an online vector tile service.
+Download vector tiles from an online vector tile service to a local cache.
 
 ![](screenshot.png)
 
