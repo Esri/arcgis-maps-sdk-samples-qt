@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/ControlMapAlgebraInputsWithFloatSuppliers">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ControlMapAlgebraInputsWithFloatSuppliers.qml</file>
+        <file>ControlMapAlgebraInputsWithFloatSuppliers.h</file>
+        <file>ControlMapAlgebraInputsWithFloatSuppliers.cpp</file>
+        <file>main.qml</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

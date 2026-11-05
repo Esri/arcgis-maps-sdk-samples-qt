@@ -1,0 +1,46 @@
+{
+  "category": "Analysis",
+  "dataItems": [
+    {
+      "itemId": "e8fe90cd623b48dfa683f448bef65e70",
+      "path": "~/ArcGIS/Runtime/Data/raster/Meribel_32N.zip"
+    }
+  ],
+  "description": "Use float suppliers to update a slope-range map algebra analysis as slider values change.",
+  "featured": false,
+  "ignore": false,
+  "images": [],
+  "keywords": [
+    "elevation",
+    "field analysis",
+    "float supplier",
+    "map algebra",
+    "raster",
+    "slope",
+    "AnalysisOverlay",
+    "BooleanFieldFunction",
+    "ContinuousField",
+    "ContinuousFieldFunction",
+    "ContinuousFieldSupplier",
+    "FieldAnalysis",
+    "FloatSupplier",
+    "StretchRenderer"
+  ],
+  "redirect_from": "",
+  "relevant_apis": [
+    "AnalysisOverlay",
+    "BooleanFieldFunction",
+    "ContinuousField",
+    "ContinuousFieldFunction",
+    "ContinuousFieldSupplier",
+    "FieldAnalysis",
+    "FloatSupplier",
+    "StretchRenderer"
+  ],
+  "snippets": [
+    "ControlMapAlgebraInputsWithFloatSuppliers.cpp",
+    "ControlMapAlgebraInputsWithFloatSuppliers.h",
+    "ControlMapAlgebraInputsWithFloatSuppliers.qml"
+  ],
+  "title": "Control map algebra inputs with float suppliers"
+}
