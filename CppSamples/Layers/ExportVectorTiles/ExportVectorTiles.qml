@@ -101,6 +101,11 @@ Item {
         }
     }
 
+    MouseArea {
+        anchors.fill: button
+        enabled: !button.enabled
+    }
+
     // Button to start the download
     Button {
         id: button
@@ -110,6 +115,7 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
         width: 150
+        enabled: model.jobStatus !== ExportVectorTilesSample.ExportStatusCancelling && !jobCancelDoneTimer.running
 
         text: qsTr("Export area")
 
