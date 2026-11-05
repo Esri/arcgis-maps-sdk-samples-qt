@@ -10,7 +10,7 @@ Use this pattern to improve map readability for users who increase text size in 
 
 ## How to use the sample
 
-Change the text size in the operating system's accessibility settings to see the restaurant labels resize. Restart the sample to see the restaurant symbols resize. On iOS, open **Settings** > **Accessibility** > **Display & Text Size** > **Larger Text**.
+Change the text size in the operating system's accessibility settings to see the restaurant labels and symbols resize. On iOS, open **Settings** > **Accessibility** > **Display & Text Size** > **Larger Text**. On Linux (GNOME), open **Settings** > **Accessibility** > **Seeing** > **Large Text**.
 
 Clear **Apply system text size to labels** to stop labels from following the system text size, then select it again to restore system text scaling. Restaurant symbols continue to follow the system text size independently of this setting. The legend and current values show how labels and symbols are scaled.
 
@@ -22,12 +22,13 @@ Select a restaurant to show its name and WGS 84 coordinates in a callout. Select
 2. Load the `restaurant` symbol from `Esri2DPointSymbolsStyle` and apply it with a `SimpleRenderer`.
 3. Load the feature layer, then add a `LabelDefinition` with a `TextSymbol`.
 4. To scale labels, enable `MapView.useSystemTextScale`.
-5. Use the checkbox to toggle system text scaling for labels without changing symbol scaling.
-6. Identify a restaurant with `GeoView::identifyLayerAsync` and show its name and WGS 84 coordinates in a callout.
+5. To scale symbols, read `SystemTextScaleMonitor::textScale()` and connect to its `textScaleChanged` signal. This sample helper monitors the platform's system text-size setting. Set `MultilayerPointSymbol::setSize()` to the base symbol size multiplied by the system text-scale factor.
+6. Use the checkbox to toggle system text scaling for labels without changing symbol scaling.
+7. Identify a restaurant with `GeoView::identifyLayerAsync` and show its name and WGS 84 coordinates in a callout.
 
 ## Relevant API
 
-- MapView.useSystemTextScale
+- GeoView.useSystemTextScale
 
 ## About the data
 
@@ -37,7 +38,7 @@ The restaurant symbol comes from [Esri's 2D point symbol web style](https://www.
 
 ## Additional information
 
-`MapView.useSystemTextScale` is supported on iOS, Android, Windows, and Linux (GNOME desktop environments only). It is not supported on macOS.
+`GeoView.useSystemTextScale` is supported on iOS, Android, Windows, and Linux (GNOME desktop environments only). It is not supported on macOS.
 
 ## Tags
 
