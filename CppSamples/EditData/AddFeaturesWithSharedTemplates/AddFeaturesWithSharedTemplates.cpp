@@ -57,14 +57,14 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-  const QString createFeatureError = QStringLiteral("Unable to create or add features.");
+  const QString createFeatureError = "Unable to create or add features.";
 } // namespace
 
 AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) :
   QObject(parent),
   m_map(new Map(new PortalItem(QStringLiteral("b635be46dfb545b888077389ac7f0962"), this), this)),
   m_geometryEditor(new GeometryEditor(this)),
-  m_statusText(tr("Loading shared templates..."))
+  m_statusText("Loading shared templates...")
 {
   m_geometryEditor->setTool(new VertexTool(this));
   connect(m_geometryEditor, &GeometryEditor::geometryChanged, this, &AddFeaturesWithSharedTemplates::updateCanComplete_);
@@ -74,7 +74,7 @@ AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) 
   {
     if (!error.isEmpty())
     {
-      reportError_(tr("Unable to load templates."), error.message());
+      reportError_("Unable to load templates.", error.message());
       return;
     }
 
@@ -89,7 +89,7 @@ AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) 
         return;
       }
     }
-    reportError_(tr("Unable to load templates."), tr("The map does not contain a shared template source."));
+    reportError_("Unable to load templates.", "The map does not contain a shared template source.");
   });
 }
 
@@ -141,7 +141,7 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
         m_templateItems.append({sharedTemplate, it.key()});
         m_templates.append(QVariantMap{
           {QStringLiteral("name"), sharedTemplate->name()},
-          {QStringLiteral("kind"), type == SharedTemplateType::Preset ? tr("Preset") : tr("Group")},
+          {QStringLiteral("kind"), type == SharedTemplateType::Preset ? "Preset" : "Group"},
           {QStringLiteral("description"), sharedTemplate->description()},
           {QStringLiteral("swatch"), QString()},
         });
@@ -153,8 +153,8 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
       m_ready = true;
       emit readyChanged();
     }
-    finishOperation_(m_templates.isEmpty() ? tr("This map has no preset or group shared templates.") :
-                                             tr("Open Shared Templates and select a template to create features."));
+    finishOperation_(m_templates.isEmpty() ? "This map has no preset or group shared templates." :
+                                             "Open Shared Templates and select a template to create features.");
     for (qsizetype index = 0; index < m_templateItems.size(); ++index)
     {
       createSwatch_(index);
@@ -162,7 +162,7 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
   })
     .onFailed(this, [this](const ErrorException& error)
   {
-    reportError_(tr("Unable to load templates."), error.error().message());
+    reportError_("Unable to load templates.", error.error().message());
   });
 }
 
@@ -205,19 +205,19 @@ void AddFeaturesWithSharedTemplates::startDrawing(int index)
   }
   if (index < 0 || index >= m_templateItems.size())
   {
-    reportError_(tr("Unable to start drawing."), tr("Select an available shared template."));
+    reportError_("Unable to start drawing.", "Select an available shared template.");
     return;
   }
   const TemplateItem& item = m_templateItems.at(index);
   GeometryConstructionTool* tool = item.sharedTemplate->defaultConstructionTool(item.layerId);
   if (!tool || (tool->toolType() != GeometryConstructionToolType::Point && tool->toolType() != GeometryConstructionToolType::Line))
   {
-    reportError_(tr("Unable to start drawing."), tr("The template's default construction tool is not supported by this sample."));
+    reportError_("Unable to start drawing.", "The template's default construction tool is not supported by this sample.");
     return;
   }
   const bool isPoint = tool->toolType() == GeometryConstructionToolType::Point;
   m_activeTemplateIndex = index;
-  setStatusText_(isPoint ? tr("Place a point, then tap Complete or Cancel.") : tr("Sketch a line, then tap Complete or Cancel."));
+  setStatusText_(isPoint ? "Place a point, then tap Complete or Cancel." : "Sketch a line, then tap Complete or Cancel.");
   m_geometryEditor->start(isPoint ? GeometryType::Point : GeometryType::Polyline);
   emit sketchInProgressChanged();
 }
@@ -231,7 +231,7 @@ void AddFeaturesWithSharedTemplates::cancelDrawing()
   m_geometryEditor->stop();
   m_activeTemplateIndex = -1;
   emit sketchInProgressChanged();
-  setStatusText_(tr("Draw canceled."));
+  setStatusText_("Draw canceled.");
 }
 
 void AddFeaturesWithSharedTemplates::completeDrawing()
@@ -242,7 +242,7 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
   }
   if (!m_canComplete)
   {
-    setStatusText_(tr("Draw a valid geometry, then tap Complete or Cancel."));
+    setStatusText_("Draw a valid geometry, then tap Complete or Cancel.");
     return;
   }
   SharedTemplate* sharedTemplate = m_templateItems.at(m_activeTemplateIndex).sharedTemplate;
@@ -252,10 +252,10 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
   emit sketchInProgressChanged();
   if (geometry.isEmpty())
   {
-    finishOperation_(tr("No geometry was drawn."));
+    finishOperation_("No geometry was drawn.");
     return;
   }
-  setStatusText_(tr("Creating features..."));
+  setStatusText_("Creating features...");
 
   m_serviceGeodatabase->createFeaturesAsync(sharedTemplate, geometry, this)
     .then(this,
@@ -263,7 +263,7 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
   {
     if (!result)
     {
-      reportError_(createFeatureError, tr("No feature creation set was returned."));
+      reportError_(createFeatureError, "No feature creation set was returned.");
       return;
     }
     const std::shared_ptr<SharedTemplateFeatureCreationSet> creationSet(result, [](SharedTemplateFeatureCreationSet* value)
@@ -275,7 +275,7 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
       .then(this,
             [this, creationSet]
     {
-      finishOperation_(tr("Features added."));
+      finishOperation_("Features added.");
     })
       .onFailed(this, [this, creationSet](const ErrorException& error)
     {
