@@ -57,7 +57,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-  constexpr const char* createFeatureError = QT_TRANSLATE_NOOP("AddFeaturesWithSharedTemplates", "Unable to create or add features.");
+  const QString createFeatureError = QStringLiteral("Unable to create or add features.");
 } // namespace
 
 AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) :
@@ -263,7 +263,7 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
   {
     if (!result)
     {
-      reportError_(tr(createFeatureError), tr("No feature creation set was returned."));
+      reportError_(createFeatureError, tr("No feature creation set was returned."));
       return;
     }
     const std::shared_ptr<SharedTemplateFeatureCreationSet> creationSet(result, [](SharedTemplateFeatureCreationSet* value)
@@ -279,12 +279,12 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
     })
       .onFailed(this, [this, creationSet](const ErrorException& error)
     {
-      reportError_(tr(createFeatureError), error.error().message());
+      reportError_(createFeatureError, error.error().message());
     });
   })
     .onFailed(this, [this](const ErrorException& error)
   {
-    reportError_(tr(createFeatureError), error.error().message());
+    reportError_(createFeatureError, error.error().message());
   });
 }
 
