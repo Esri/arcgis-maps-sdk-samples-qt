@@ -815,3 +815,20 @@ win32|android|ios {
   RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.qrc"
 }
+
+# Exclude ControlMapAlgebraInputsWithFloatSuppliers from Windows.
+!win32 {
+  DEFINES += SHOW_CONTROL_MAP_ALGEBRA_INPUTS_WITH_FLOAT_SUPPLIERS_SAMPLE
+
+  INCLUDEPATH += \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers"
+
+  HEADERS += \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h"
+
+  SOURCES += \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.cpp"
+
+  RESOURCES += \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.qrc"
+}
