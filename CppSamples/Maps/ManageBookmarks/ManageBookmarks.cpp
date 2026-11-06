@@ -48,7 +48,6 @@ void ManageBookmarks::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ManageBookmarks>("Esri.Samples", 1, 0, "ManageBookmarksSample");
-  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 void ManageBookmarks::componentComplete()
@@ -99,49 +98,25 @@ void ManageBookmarks::createInitialBookmarks()
   createBookmark("Grand Prismatic Spring", viewpoint4);
 }
 
-void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
+void ManageBookmarks::createBookmark(const QString& name, Viewpoint viewpoint)
 {
   //! [Add bookmarks to the list model]
-  // Get the bookmark list
-  BookmarkListModel* bookmarks = dynamic_cast<BookmarkListModel*>(m_bookmarks);
-  if (!bookmarks)
-  {
-    return;
-  }
-
   // Create the bookmark from the name and viewpoint
   Bookmark* bookmark = new Bookmark(name, viewpoint, this);
 
   // Add it to the map's bookmark list
-  bookmarks->append(bookmark);
-
-  // emit that model has changed
-  emit bookmarksChanged();
+  m_bookmarks->append(bookmark);
   //! [Add bookmarks to the list model]
 }
 
-void ManageBookmarks::goToBookmark(int bookmarkIndex)
+void ManageBookmarks::addBookmark(const QString& newBookmarkName)
 {
-  BookmarkListModel* bookmarks = dynamic_cast<BookmarkListModel*>(m_bookmarks);
-  if (!bookmarks)
+  if (!m_mapView || !m_bookmarks)
   {
     return;
   }
 
-  m_mapView->setViewpointAsync(bookmarks->at(bookmarkIndex)->viewpoint());
-}
-
-QAbstractListModel* ManageBookmarks::bookmarks() const
-{
-  return m_bookmarks;
-}
-
-void ManageBookmarks::addBookmark(QString newBookmarkName)
-{
-  createBookmark(newBookmarkName, m_mapView->currentViewpoint(ViewpointType::BoundingGeometry));
-}
-
-QString ManageBookmarks::bookmarkNameForIndex(int index) const
-{
-  return m_bookmarks->data(m_bookmarks->index(index), BookmarkListModel::BookmarkNameRole).toString();
+  const Viewpoint viewpoint = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry);
+  createBookmark(newBookmarkName, viewpoint);
+  m_mapView->setViewpointAsync(viewpoint);
 }
