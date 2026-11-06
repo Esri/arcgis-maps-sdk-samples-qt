@@ -156,6 +156,10 @@ void ControlMapAlgebraInputsWithFloatSuppliers::loadElevationField()
     .then(this, [this](ContinuousField* continuousField)
   {
     onContinuousFieldCreated(continuousField);
+  })
+    .onFailed(this, [this]()
+  {
+    setErrorMessage(QStringLiteral("Failed to load the elevation raster. Verify that Meribel_32N.tif is readable and valid."));
   });
 }
 
