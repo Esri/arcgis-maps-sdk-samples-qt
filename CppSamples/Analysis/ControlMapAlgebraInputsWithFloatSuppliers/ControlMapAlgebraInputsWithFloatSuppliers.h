@@ -22,7 +22,9 @@
 
 namespace Esri::ArcGISRuntime
 {
+  class Analysis;
   class AnalysisOverlay;
+  class AnalysisViewState;
   class ContinuousField;
   class ContinuousFieldFunction;
   class FieldAnalysis;
@@ -68,6 +70,7 @@ signals:
 private:
   void loadElevationField();
   void onContinuousFieldCreated(Esri::ArcGISRuntime::ContinuousField* continuousField);
+  void onAnalysisViewStateChanged(Esri::ArcGISRuntime::Analysis* analysis, const Esri::ArcGISRuntime::AnalysisViewState& viewState);
   void setUpdating(bool updating);
   void setErrorMessage(const QString& errorMessage);
 

@@ -118,6 +118,7 @@ QString ControlMapAlgebraInputsWithFloatSuppliers::errorMessage() const
   return m_errorMessage;
 }
 
+// 5. Slider changes update the suppliers used by the existing analysis function.
 void ControlMapAlgebraInputsWithFloatSuppliers::setSlopeRange(int minimum, int maximum)
 {
   if (minimum == m_minimumSlope && maximum == m_maximumSlope)
@@ -150,6 +151,7 @@ void ControlMapAlgebraInputsWithFloatSuppliers::loadElevationField()
     return;
   }
 
+  // 1. Create a continuous field from the raster, then wrap it in a supplier after loading.
   ContinuousField::createFromFilesAsync({path}, band, utm32NSpatialReference, this)
     .then(this, [this](ContinuousField* continuousField)
   {
@@ -167,11 +169,13 @@ void ControlMapAlgebraInputsWithFloatSuppliers::onContinuousFieldCreated(Continu
 
   continuousField->setParent(this);
   m_elevationFunction = new ContinuousFieldSupplier(continuousField, this);
+  // 2. Derive slope and create suppliers for its minimum and maximum values.
   m_slopeFunction = m_elevationFunction->slope();
   m_slopeFunction->setParent(this);
   m_minimumSlopeSupplier = new FloatSupplier(static_cast<float>(m_minimumSlope), this);
   m_maximumSlopeSupplier = new FloatSupplier(static_cast<float>(m_maximumSlope), this);
 
+  // 3. Compare the slope to both suppliers, combine the conditions, and mask the slope field.
   BooleanFieldFunction* aboveMinimum = m_slopeFunction->isGreaterThanOrEqualTo(m_minimumSlopeSupplier);
   BooleanFieldFunction* belowMaximum = m_slopeFunction->isLessThanOrEqualTo(m_maximumSlopeSupplier);
   aboveMinimum->setParent(this);
@@ -198,6 +202,7 @@ void ControlMapAlgebraInputsWithFloatSuppliers::onContinuousFieldCreated(Continu
 
   StretchRenderer* slopeRenderer = new StretchRenderer(slopeStretchParameters, gammaValues, estimateStats, slopeColorRamp, this);
 
+  // 4. Display the elevation and masked slope functions as analyses in an overlay.
   m_analysisOverlay = new AnalysisOverlay(this);
   m_mapView->analysisOverlays()->append(m_analysisOverlay);
 
@@ -210,29 +215,39 @@ void ControlMapAlgebraInputsWithFloatSuppliers::onContinuousFieldCreated(Continu
 
   m_slopeAnalysis = FieldAnalysis::create(selectedSlopes, slopeRenderer, this);
 
-  connect(m_mapView, &MapQuickView::analysisViewStateChanged, this, [this](Analysis* analysis, const AnalysisViewState& viewState)
-  {
-    if (analysis != m_slopeAnalysis)
-    {
-      return;
-    }
-
-    setUpdating(viewState.status() == AnalysisViewStatus::Updating);
-    if (viewState.status() == AnalysisViewStatus::Error)
-    {
-      const Error error = viewState.error();
-      setErrorMessage(error.additionalMessage().isEmpty() ? error.message() : error.message() + QStringLiteral("\n") + error.additionalMessage());
-    }
-    else if (viewState.status() == AnalysisViewStatus::UpToDate)
-    {
-      setErrorMessage(QString());
-    }
-  });
+  connect(m_mapView, &MapQuickView::analysisViewStateChanged, this, &ControlMapAlgebraInputsWithFloatSuppliers::onAnalysisViewStateChanged);
 
   m_analysisOverlay->analyses()->append(m_slopeAnalysis);
   const double initialViewpointScale = 10000.0;
   m_mapView->setViewpointCenterAsync(continuousField->extent().center(), initialViewpointScale);
   setErrorMessage(QString());
+}
+
+void ControlMapAlgebraInputsWithFloatSuppliers::onAnalysisViewStateChanged(Analysis* analysis, const AnalysisViewState& viewState)
+{
+  if (analysis != m_slopeAnalysis)
+  {
+    return;
+  }
+
+  const AnalysisViewStatus status = viewState.status();
+  switch (status)
+  {
+    case AnalysisViewStatus::Updating:
+      setUpdating(true);
+      break;
+    case AnalysisViewStatus::Error:
+    {
+      setUpdating(false);
+      const Error error = viewState.error();
+      setErrorMessage(error.additionalMessage().isEmpty() ? error.message() : error.message() + QStringLiteral("\n") + error.additionalMessage());
+      break;
+    }
+    case AnalysisViewStatus::UpToDate:
+      setUpdating(false);
+      setErrorMessage(QString());
+      break;
+  }
 }
 
 void ControlMapAlgebraInputsWithFloatSuppliers::setUpdating(bool updating)
