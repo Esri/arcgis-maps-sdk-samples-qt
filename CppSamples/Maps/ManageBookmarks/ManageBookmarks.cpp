@@ -98,7 +98,7 @@ void ManageBookmarks::createInitialBookmarks()
   createBookmark("Grand Prismatic Spring", viewpoint4);
 }
 
-void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
+void ManageBookmarks::createBookmark(const QString& name, Viewpoint viewpoint)
 {
   //! [Add bookmarks to the list model]
   // Create the bookmark from the name and viewpoint
@@ -109,7 +109,7 @@ void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
   //! [Add bookmarks to the list model]
 }
 
-void ManageBookmarks::addBookmark(QString newBookmarkName)
+void ManageBookmarks::addBookmark(const QString& newBookmarkName)
 {
   if (!m_mapView || !m_bookmarks)
   {

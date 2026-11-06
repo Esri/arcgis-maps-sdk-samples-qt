@@ -40,11 +40,11 @@ public:
 
   void componentComplete() override;
   static void init();
-  Q_INVOKABLE void addBookmark(QString newBookmarkName);
+  Q_INVOKABLE void addBookmark(const QString& newBookmarkName);
 
 private:
   void createInitialBookmarks();
-  void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
+  void createBookmark(const QString& name, Esri::ArcGISRuntime::Viewpoint viewpoint);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
