@@ -22,7 +22,6 @@ import Esri.Samples
 Item {
     id: root
 
-    readonly property bool editing: sampleModel.hasPendingEdits
     readonly property bool sketchInProgress: sampleModel.sketchInProgress
     readonly property bool hasTemplates: sampleModel.templates.length > 0
 
@@ -68,7 +67,7 @@ Item {
                 }
                 Label {
                     visible: !sampleModel.busy && !root.sketchInProgress && root.hasTemplates && text !== sampleModel.statusText
-                    text: root.editing ? qsTr("Save or undo edits.") : qsTr("Open Shared Templates and select a template to create features.")
+                    text: qsTr("Open Shared Templates and select a template to create features.")
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
                     Layout.fillWidth: true
@@ -121,12 +120,9 @@ Item {
             spacing: 12
             enabled: !sampleModel.busy
             ToolbarButton {
-                text: root.editing ? qsTr("Save") : qsTr("Cancel")
-                highlighted: root.editing
-                visible: root.editing || root.sketchInProgress
-                onClicked: root.editing
-                           ? sampleModel.saveEdits()
-                           : sampleModel.cancelDrawing()
+                text: qsTr("Cancel")
+                visible: root.sketchInProgress
+                onClicked: sampleModel.cancelDrawing()
             }
             Item {
                 Layout.fillWidth: true
@@ -134,20 +130,18 @@ Item {
             ToolbarButton {
                 text: qsTr("Shared Templates")
                 highlighted: true
-                visible: !root.editing && !root.sketchInProgress
+                visible: !root.sketchInProgress
                 onClicked: templatePicker.open()
             }
             Item {
                 Layout.fillWidth: true
             }
             ToolbarButton {
-                text: root.editing ? qsTr("Undo") : qsTr("Complete")
-                highlighted: !root.editing
-                visible: root.editing || root.sketchInProgress
-                enabled: root.editing || sampleModel.canComplete
-                onClicked: root.editing
-                           ? sampleModel.undoEdits()
-                           : sampleModel.completeDrawing()
+                text: qsTr("Complete")
+                highlighted: true
+                visible: root.sketchInProgress
+                enabled: sampleModel.canComplete
+                onClicked: sampleModel.completeDrawing()
             }
         }
     }
