@@ -173,12 +173,16 @@ void DownloadVectorTilesToLocalCache::startExport(double xSW, double ySW, double
 
 void DownloadVectorTilesToLocalCache::cancel()
 {
+  m_exportJob->disconnect(this);
+  m_jobStatus = ExportStatusCancelling;
+  emit jobStatusChanged();
+
+  // Only allow a new export once the cancel has actually finished
   m_exportJob->cancelJobAsync().then(this, [this](bool succeeded)
   {
     emit jobCancelDone(succeeded);
-    ;
+    reset();
   });
-  reset();
 }
 
 void DownloadVectorTilesToLocalCache::reset()
