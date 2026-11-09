@@ -2,6 +2,8 @@
 
 Sample field function values at a given position from a field analysis.
 
+![](screenshot.png)
+
 ## Use case
 
 In flight planning, elevation and ground clearance at a location help identify potential hazards as the planned aircraft altitude changes.

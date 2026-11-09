@@ -9,7 +9,9 @@
     "description": "Sample field function values from a point in an elevation field analysis.",
     "featured": false,
     "ignore": false,
-    "images": [],
+    "images": [
+        "screenshot.png"
+    ],
     "keywords": [
         "analysis",
         "boolean field function",
