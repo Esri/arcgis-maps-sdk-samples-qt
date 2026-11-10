@@ -64,6 +64,7 @@
 // All Samples
 #include "../CppSamples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h"
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
+#include "../CppSamples/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
@@ -311,10 +312,6 @@
 #include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
 #endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
 
-#ifdef SHOW_CONTROL_MAP_ALGEBRA_INPUTS_WITH_FLOAT_SUPPLIERS_SAMPLE
-#include "../CppSamples/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h"
-#endif // SHOW_CONTROL_MAP_ALGEBRA_INPUTS_WITH_FLOAT_SUPPLIERS_SAMPLE
-
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -443,6 +440,7 @@ void registerCppSampleClasses()
   ConfigureSceneEnvironment::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();
+  ControlMapAlgebraInputsWithFloatSuppliers::init();
   CreateKmlMultiTrack::init();
   ControlAnnotationSublayerVisibility::init();
   ControlTimeExtentTimeSlider::init();
@@ -643,10 +641,6 @@ void registerCppSampleClasses()
 #ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
   AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
 #endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-
-#ifdef SHOW_CONTROL_MAP_ALGEBRA_INPUTS_WITH_FLOAT_SUPPLIERS_SAMPLE
-  ControlMapAlgebraInputsWithFloatSuppliers::init();
-#endif // SHOW_CONTROL_MAP_ALGEBRA_INPUTS_WITH_FLOAT_SUPPLIERS_SAMPLE
 
 #ifdef LOCALSERVER_SUPPORTED
   LocalServerServices::init();
