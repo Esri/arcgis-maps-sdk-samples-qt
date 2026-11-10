@@ -5,6 +5,7 @@
         <file>ControlMapAlgebraInputsWithFloatSuppliers.h</file>
         <file>ControlMapAlgebraInputsWithFloatSuppliers.cpp</file>
         <file>main.qml</file>
+        <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>
 </RCC>
