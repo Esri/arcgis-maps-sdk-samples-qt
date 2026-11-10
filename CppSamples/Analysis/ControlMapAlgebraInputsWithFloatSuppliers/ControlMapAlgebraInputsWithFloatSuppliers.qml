@@ -110,6 +110,7 @@ Item {
                     Layout.maximumWidth: 40
                     Layout.preferredHeight: 40
                     text: "X"
+                    background.opacity: 1
                     Accessible.name: qsTr("Close settings")
                     ToolTip.visible: hovered
                     ToolTip.text: qsTr("Close settings")
