@@ -9,7 +9,9 @@
   "description": "Use float suppliers to update a slope-range map algebra analysis as slider values change.",
   "featured": false,
   "ignore": false,
-  "images": [],
+  "images": [
+    "screenshot.png"
+  ],
   "keywords": [
     "elevation",
     "field analysis",
