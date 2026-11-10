@@ -31,16 +31,29 @@ Item {
         anchors.fill: parent
         objectName: "mapView"
         focus: true
+
+        Button {
+            id: settingsButton
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
+                bottomMargin: 8
+            }
+            text: qsTr("Settings")
+            visible: !settingsPanel.visible
+            onClicked: settingsPanel.visible = true
+        }
     }
 
     Component.onCompleted: model.mapView = view
 
     Rectangle {
         id: settingsPanel
+        visible: false
         anchors {
             left: parent.left
             right: parent.right
-            bottom: parent.bottom
+            bottom: view.bottom
             leftMargin: compactUi ? 8 : 18
             rightMargin: compactUi ? 8 : 18
             bottomMargin: compactUi ? 8 : 18
@@ -78,24 +91,29 @@ Item {
             RowLayout {
                 Layout.fillWidth: true
 
+                Item {
+                    Layout.minimumWidth: 40
+                    Layout.maximumWidth: 40
+                }
+
                 Label {
+                    Layout.fillWidth: true
                     Layout.minimumWidth: 0
-                    text: qsTr("Slope range")
+                    text: qsTr("Slope range: %1 to %2 degrees").arg(model.minimumSlope).arg(model.maximumSlope)
                     color: palette.text
-                    font.bold: true
+                    horizontalAlignment: Text.AlignHCenter
                     elide: Text.ElideRight
                 }
 
-                Item {
-                    Layout.fillWidth: true
-                }
-
-                Label {
-                    Layout.minimumWidth: 0
-                    text: qsTr("%1 to %2 degrees").arg(model.minimumSlope).arg(model.maximumSlope)
-                    color: palette.text
-                    horizontalAlignment: Text.AlignRight
-                    elide: Text.ElideLeft
+                ToolButton {
+                    Layout.minimumWidth: 40
+                    Layout.maximumWidth: 40
+                    Layout.preferredHeight: 40
+                    text: "X"
+                    Accessible.name: qsTr("Close settings")
+                    ToolTip.visible: hovered
+                    ToolTip.text: qsTr("Close settings")
+                    onClicked: settingsPanel.visible = false
                 }
             }
 
