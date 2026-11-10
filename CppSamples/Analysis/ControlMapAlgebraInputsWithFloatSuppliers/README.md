@@ -2,6 +2,8 @@
 
 Use float suppliers to dynamically update numeric inputs to a map algebra expression and refresh analysis results as the input values change.
 
+![](screenshot.png)
+
 ## Use case
 
 Adjust a slope range to explore terrain. The sample initially highlights slopes from 0 to 10 degrees over an elevation field. Change the minimum and maximum values from 0 to 85 degrees to update the displayed slope results.
