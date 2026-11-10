@@ -64,6 +64,7 @@
 // All Samples
 #include "../CppSamples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h"
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
+#include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
@@ -307,10 +308,6 @@
 #include "../CppSamples/Layers/RasterFunctionFile/RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
-#ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-#include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
-#endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -410,6 +407,7 @@ void registerCppSampleClasses()
   AddKmlLayer::init();
   AddVectorTiledLayerFromCustomStyle::init();
   AnalyzeHotspots::init();
+  AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
   Animate3DSymbols::init();
   AnimateImagesWithImageOverlay::init();
   ApplyMapAlgebra::init();
@@ -635,10 +633,6 @@ void registerCppSampleClasses()
 #ifdef SHOW_RASTER_FUNCTION_SAMPLE
   RasterFunctionFile::init();
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
-
-#ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-  AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
-#endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
 
 #ifdef LOCALSERVER_SUPPORTED
   LocalServerServices::init();
