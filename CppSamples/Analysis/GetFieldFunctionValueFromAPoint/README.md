@@ -29,22 +29,22 @@ Red areas indicate terrain that would have no ground clearance given the set alt
 
 ## Relevant API
 
-- AnalysisOverlay
-- BooleanFieldFunction
-- BooleanFieldSampleFunction
-- CalloutData
-- Colormap
-- ColormapRenderer
-- ContinuousFieldFunction
-- ContinuousFieldSampleFunction
-- ContinuousFieldSupplier
-- FieldAnalysis
-- FloatSupplier
-- MinMaxStretchParameters
-- PictureMarkerSymbol
-- StretchRenderer
+* AnalysisOverlay
+* BooleanFieldFunction
+* BooleanFieldSampleFunction
+* CalloutData
+* Colormap
+* ColormapRenderer
+* ContinuousFieldFunction
+* ContinuousFieldSampleFunction
+* ContinuousFieldSupplier
+* FieldAnalysis
+* FloatSupplier
+* MinMaxStretchParameters
+* PictureMarkerSymbol
+* StretchRenderer
 
-## Data
+## About the data
 
 The sample uses a [1m resolution digital terrain elevation raster of the area over Méribel](https://www.arcgis.com/home/item.html?id=6bb0ad0e3bd5410fa52191184578f0b2), in the French Alps.
 
