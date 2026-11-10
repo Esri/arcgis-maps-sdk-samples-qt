@@ -98,45 +98,25 @@ void ControlMapAlgebraInputsWithFloatSuppliers::setMapView(MapQuickView* mapView
   emit mapViewChanged();
 }
 
-int ControlMapAlgebraInputsWithFloatSuppliers::minimumSlope() const
-{
-  return m_minimumSlope;
-}
-
-int ControlMapAlgebraInputsWithFloatSuppliers::maximumSlope() const
-{
-  return m_maximumSlope;
-}
-
-bool ControlMapAlgebraInputsWithFloatSuppliers::updating() const
-{
-  return m_updating;
-}
-
-QString ControlMapAlgebraInputsWithFloatSuppliers::errorMessage() const
-{
-  return m_errorMessage;
-}
-
 // 5. Slider changes update the suppliers used by the existing analysis function.
-void ControlMapAlgebraInputsWithFloatSuppliers::setSlopeRange(int minimum, int maximum)
+void ControlMapAlgebraInputsWithFloatSuppliers::setSlopeRange(float minimum, float maximum)
 {
   if (minimum == m_minimumSlope && maximum == m_maximumSlope)
   {
     return;
   }
 
-  const int previousMinimum = m_minimumSlope;
-  const int previousMaximum = m_maximumSlope;
+  const float previousMinimum = m_minimumSlope;
+  const float previousMaximum = m_maximumSlope;
   m_minimumSlope = minimum;
   m_maximumSlope = maximum;
   if (m_minimumSlopeSupplier && previousMinimum != minimum)
   {
-    m_minimumSlopeSupplier->setValue(static_cast<float>(minimum));
+    m_minimumSlopeSupplier->setValue(std::make_optional<float>(minimum));
   }
   if (m_maximumSlopeSupplier && previousMaximum != maximum)
   {
-    m_maximumSlopeSupplier->setValue(static_cast<float>(maximum));
+    m_maximumSlopeSupplier->setValue(std::make_optional<float>(maximum));
   }
   emit slopeRangeChanged();
 }
@@ -153,7 +133,8 @@ void ControlMapAlgebraInputsWithFloatSuppliers::loadElevationField()
 
   // 1. Create a continuous field from the raster, then wrap it in a supplier after loading.
   ContinuousField::createFromFilesAsync({path}, band, utm32NSpatialReference, this)
-    .then(this, [this](ContinuousField* continuousField)
+    .then(this,
+          [this](ContinuousField* continuousField)
   {
     onContinuousFieldCreated(continuousField);
   })
@@ -171,23 +152,17 @@ void ControlMapAlgebraInputsWithFloatSuppliers::onContinuousFieldCreated(Continu
     return;
   }
 
-  continuousField->setParent(this);
   m_elevationFunction = new ContinuousFieldSupplier(continuousField, this);
   // 2. Derive slope and create suppliers for its minimum and maximum values.
   m_slopeFunction = m_elevationFunction->slope();
-  m_slopeFunction->setParent(this);
-  m_minimumSlopeSupplier = new FloatSupplier(static_cast<float>(m_minimumSlope), this);
-  m_maximumSlopeSupplier = new FloatSupplier(static_cast<float>(m_maximumSlope), this);
+  m_minimumSlopeSupplier = new FloatSupplier(std::make_optional<float>(m_minimumSlope), this);
+  m_maximumSlopeSupplier = new FloatSupplier(std::make_optional<float>(m_maximumSlope), this);
 
   // 3. Compare the slope to both suppliers, combine the conditions, and mask the slope field.
   BooleanFieldFunction* aboveMinimum = m_slopeFunction->isGreaterThanOrEqualTo(m_minimumSlopeSupplier);
   BooleanFieldFunction* belowMaximum = m_slopeFunction->isLessThanOrEqualTo(m_maximumSlopeSupplier);
-  aboveMinimum->setParent(this);
-  belowMaximum->setParent(this);
   BooleanFieldFunction* inRange = aboveMinimum->logicalAnd(belowMaximum);
-  inRange->setParent(this);
   ContinuousFieldFunction* selectedSlopes = m_slopeFunction->mask(inRange);
-  selectedSlopes->setParent(this);
 
   const int colorRampSize = 256;
   const QList<double> gammaValues{1.0};
@@ -222,7 +197,7 @@ void ControlMapAlgebraInputsWithFloatSuppliers::onContinuousFieldCreated(Continu
   connect(m_mapView, &MapQuickView::analysisViewStateChanged, this, &ControlMapAlgebraInputsWithFloatSuppliers::onAnalysisViewStateChanged);
 
   m_analysisOverlay->analyses()->append(m_slopeAnalysis);
-  const double initialViewpointScale = 10000.0;
+  constexpr double initialViewpointScale = 10000.0;
   m_mapView->setViewpointCenterAsync(continuousField->extent().center(), initialViewpointScale);
   setErrorMessage(QString());
 }

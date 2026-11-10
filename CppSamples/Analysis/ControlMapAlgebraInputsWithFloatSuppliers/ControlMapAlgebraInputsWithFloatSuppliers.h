@@ -40,10 +40,10 @@ class ControlMapAlgebraInputsWithFloatSuppliers : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(int minimumSlope READ minimumSlope NOTIFY slopeRangeChanged)
-  Q_PROPERTY(int maximumSlope READ maximumSlope NOTIFY slopeRangeChanged)
-  Q_PROPERTY(bool updating READ updating NOTIFY updatingChanged)
-  Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY errorMessageChanged)
+  Q_PROPERTY(float minimumSlope MEMBER m_minimumSlope NOTIFY slopeRangeChanged)
+  Q_PROPERTY(float maximumSlope MEMBER m_maximumSlope NOTIFY slopeRangeChanged)
+  Q_PROPERTY(bool updating MEMBER m_updating NOTIFY updatingChanged)
+  Q_PROPERTY(QString errorMessage MEMBER m_errorMessage NOTIFY errorMessageChanged)
 
 public:
   explicit ControlMapAlgebraInputsWithFloatSuppliers(QObject* parent = nullptr);
@@ -54,12 +54,7 @@ public:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-  int minimumSlope() const;
-  int maximumSlope() const;
-  bool updating() const;
-  QString errorMessage() const;
-
-  Q_INVOKABLE void setSlopeRange(int minimum, int maximum);
+  Q_INVOKABLE void setSlopeRange(float minimum, float maximum);
 
 signals:
   void mapViewChanged();
@@ -83,8 +78,8 @@ private:
   Esri::ArcGISRuntime::FloatSupplier* m_maximumSlopeSupplier = nullptr;
   Esri::ArcGISRuntime::FieldAnalysis* m_slopeAnalysis = nullptr;
 
-  int m_minimumSlope = 0;
-  int m_maximumSlope = 10;
+  float m_minimumSlope = 0.0;
+  float m_maximumSlope = 10.0;
   bool m_updating = false;
   QString m_errorMessage;
 };
