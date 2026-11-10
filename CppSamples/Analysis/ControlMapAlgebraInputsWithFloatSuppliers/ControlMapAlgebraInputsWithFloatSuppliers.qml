@@ -81,6 +81,7 @@ Item {
                 Label {
                     Layout.minimumWidth: 0
                     text: qsTr("Slope range")
+                    color: palette.text
                     font.bold: true
                     elide: Text.ElideRight
                 }
@@ -92,6 +93,7 @@ Item {
                 Label {
                     Layout.minimumWidth: 0
                     text: qsTr("%1 to %2 degrees").arg(model.minimumSlope).arg(model.maximumSlope)
+                    color: palette.text
                     horizontalAlignment: Text.AlignRight
                     elide: Text.ElideLeft
                 }
@@ -106,6 +108,14 @@ Item {
                 stepSize: 1
                 first.value: model.minimumSlope
                 second.value: model.maximumSlope
+
+                SystemPalette {
+                    id: systemPalette
+                }
+
+                palette.window: systemPalette.button
+                palette.light: systemPalette.light
+                palette.mid: systemPalette.buttonText
 
                 first.onMoved: model.setSlopeRange(Math.round(first.value), Math.round(second.value))
                 second.onMoved: model.setSlopeRange(Math.round(first.value), Math.round(second.value))
@@ -159,6 +169,7 @@ Item {
                     }
                     width: parent.width * 0.25
                     text: qsTr("Flattest")
+                    color: palette.text
                     elide: Text.ElideRight
                 }
 
@@ -180,6 +191,7 @@ Item {
                         anchors.centerIn: parent
                         width: Math.max(0, parent.width - (updatingIndicator.visible ? 2 * (updatingIndicator.width + 4) : 0))
                         text: qsTr("Analysis updating")
+                        color: palette.text
                         elide: Text.ElideRight
                         horizontalAlignment: Text.AlignHCenter
                     }
@@ -206,6 +218,7 @@ Item {
                     }
                     width: parent.width * 0.25
                     text: qsTr("Steepest")
+                    color: palette.text
                     elide: Text.ElideRight
                     horizontalAlignment: Text.AlignRight
                 }
