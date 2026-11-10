@@ -123,7 +123,7 @@ void ControlMapAlgebraInputsWithFloatSuppliers::setSlopeRange(float minimum, flo
 
 void ControlMapAlgebraInputsWithFloatSuppliers::loadElevationField()
 {
-  const int band = 0;
+  constexpr int band = 0;
   const QString path = elevationRasterPath();
   if (!QFileInfo::exists(path))
   {
@@ -164,9 +164,9 @@ void ControlMapAlgebraInputsWithFloatSuppliers::onContinuousFieldCreated(Continu
   BooleanFieldFunction* inRange = aboveMinimum->logicalAnd(belowMaximum);
   ContinuousFieldFunction* selectedSlopes = m_slopeFunction->mask(inRange);
 
-  const int colorRampSize = 256;
+  constexpr int colorRampSize = 256;
   const QList<double> gammaValues{1.0};
-  const bool estimateStats = false;
+  constexpr bool estimateStats = false;
   const QList<double> elevationMinimumValues{1199.0};
   const QList<double> elevationMaximumValues{2740.0};
   const MinMaxStretchParameters elevationStretchParameters(elevationMinimumValues, elevationMaximumValues);
