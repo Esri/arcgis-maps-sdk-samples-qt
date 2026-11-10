@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>UpdateLabelsAndSymbolsToScaleForVisualAccessibility.qml</file>
+        <file>UpdateLabelsAndSymbolsToScaleForVisualAccessibility.h</file>
+        <file>UpdateLabelsAndSymbolsToScaleForVisualAccessibility.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

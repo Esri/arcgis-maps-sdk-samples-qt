@@ -93,16 +93,20 @@ Rectangle {
                                 bottom: img.bottom
                                 left: img.left
                                 right: img.right
+                                leftMargin: -1
                             }
-                            height: txt.height
+                            height: Math.min(txt.implicitHeight, img.height)
+                            clip: true
                             color: "#80000000"
 
-                            Text {
+                            Label {
                                 id: txt
                                 padding: 5
                                 width: txtBackground.width - (padding * 2)
                                 text: name
                                 wrapMode: Text.WordWrap
+                                maximumLineCount: 3
+                                elide: Text.ElideRight
                                 font.bold: true
                                 clip: true
                                 color: "white"
