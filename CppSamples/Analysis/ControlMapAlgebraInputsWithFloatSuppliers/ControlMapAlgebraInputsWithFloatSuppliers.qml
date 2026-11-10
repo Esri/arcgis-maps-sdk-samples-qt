@@ -141,7 +141,7 @@ Item {
 
                 background: Rectangle {
                     x: slopeRange.leftPadding
-                    y: slopeRange.topPadding + slopeRange.availableHeight / 2 - height / 2
+                    y: slopeRange.topPadding + (slopeRange.availableHeight / 2) - (height / 2)
                     width: slopeRange.availableWidth
                     height: 8
                     radius: 4
