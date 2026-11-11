@@ -7,7 +7,7 @@ win32 {
 }
 
 ios {
-    OBJECTIVE_SOURCES += $$PWD/SystemTextScaleMonitor_ios.mm
+    SOURCES += $$PWD/SystemTextScaleMonitor_ios.mm
     LIBS += -framework UIKit -framework Foundation
 }
 
