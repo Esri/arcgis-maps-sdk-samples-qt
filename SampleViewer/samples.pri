@@ -21,6 +21,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h" \
     "$$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.h" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.h" \
@@ -264,6 +265,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.cpp" \
     "$$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.cpp" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.cpp" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.cpp" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.cpp" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.cpp" \
@@ -507,6 +509,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.qrc" \
     "$$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.qrc" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.qrc" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.qrc" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qrc" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.qrc" \

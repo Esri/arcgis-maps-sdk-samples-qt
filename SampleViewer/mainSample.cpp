@@ -65,6 +65,7 @@
 #include "../CppSamples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h"
 #include "../CppSamples/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.h"
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
+#include "../CppSamples/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h"
 #include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
@@ -438,6 +439,7 @@ void registerCppSampleClasses()
   ConfigureSceneEnvironment::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();
+  ControlMapAlgebraInputsWithFloatSuppliers::init();
   CreateKmlMultiTrack::init();
   ControlAnnotationSublayerVisibility::init();
   ControlTimeExtentTimeSlider::init();
