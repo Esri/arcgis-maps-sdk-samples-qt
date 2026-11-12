@@ -1,0 +1,35 @@
+{
+    "category": "Layers",
+    "description": "Download raster tiles to a local tile cache file stored on the device.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "cache",
+        "download",
+        "offline",
+        "ArcGISTiledLayer",
+        "ExportTileCacheJob",
+        "ExportTileCacheParameters",
+        "ExportTileCacheTask",
+        "TileCache"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-exporttiles.htm"
+    ],
+    "relevant_apis": [
+        "ArcGISTiledLayer",
+        "ExportTileCacheJob",
+        "ExportTileCacheParameters",
+        "ExportTileCacheTask",
+        "TileCache"
+    ],
+    "snippets": [
+        "DownloadRasterTilesToLocalCache.cpp",
+        "DownloadRasterTilesToLocalCache.h",
+        "DownloadRasterTilesToLocalCache.qml"
+    ],
+    "title": "Download raster tiles to local cache"
+}

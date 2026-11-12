@@ -63,8 +63,10 @@
 
 // All Samples
 #include "../CppSamples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h"
+#include "../CppSamples/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.h"
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
 #include "../CppSamples/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h"
+#include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
@@ -165,8 +167,8 @@
 #include "../CppSamples/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h"
 #include "../CppSamples/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h"
 #include "../CppSamples/Layers/DisplayWfsLayer/DisplayWfsLayer.h"
-#include "../CppSamples/Layers/ExportTiles/ExportTiles.h"
-#include "../CppSamples/Layers/ExportVectorTiles/ExportVectorTiles.h"
+#include "../CppSamples/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.h"
+#include "../CppSamples/Layers/DownloadVectorTilesToLocalCache/DownloadVectorTilesToLocalCache.h"
 #include "../CppSamples/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h"
 #include "../CppSamples/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h"
 #include "../CppSamples/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h"
@@ -308,10 +310,6 @@
 #include "../CppSamples/Layers/RasterFunctionFile/RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
-#ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-#include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
-#endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -411,6 +409,7 @@ void registerCppSampleClasses()
   AddKmlLayer::init();
   AddVectorTiledLayerFromCustomStyle::init();
   AnalyzeHotspots::init();
+  AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
   Animate3DSymbols::init();
   AnimateImagesWithImageOverlay::init();
   ApplyMapAlgebra::init();
@@ -491,8 +490,8 @@ void registerCppSampleClasses()
   EditGeometriesWithProgrammaticReticleTool::init();
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
-  ExportTiles::init();
-  ExportVectorTiles::init();
+  DownloadRasterTilesToLocalCache::init();
+  DownloadVectorTilesToLocalCache::init();
   ExtrudeGraphics::init();
   FeatureCollectionLayerFromPortal::init();
   FeatureCollectionLayerQuery::init();
@@ -620,6 +619,7 @@ void registerCppSampleClasses()
   TokenAuthentication::init();
   TraceUtilityNetwork::init();
   Unique_Value_Renderer::init();
+  UpdateLabelsAndSymbolsToScaleForVisualAccessibility::init();
   ValidateUtilityNetworkTopology::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
@@ -637,10 +637,6 @@ void registerCppSampleClasses()
 #ifdef SHOW_RASTER_FUNCTION_SAMPLE
   RasterFunctionFile::init();
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
-
-#ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-  AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
-#endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
 
 #ifdef LOCALSERVER_SUPPORTED
   LocalServerServices::init();

@@ -361,7 +361,12 @@ ApplicationWindow {
         width: 252
         height: parent.height
         onOpened: pushBack("drawer", () => drawer.close())
-        onClosed: removeEntry("drawer")
+        onClosed: {
+            removeEntry("drawer");
+            // Closing the drawer restores focus to the window, so hand it back to the sample
+            if (liveSample.visible)
+                liveSample.forceActiveFocus();
+        }
 
     }
 

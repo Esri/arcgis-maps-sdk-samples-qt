@@ -24,15 +24,14 @@
 // ArcGIS Maps SDK headers
 #include "Error.h"
 #include "ErrorException.h"
-#include "FeatureEditResult.h"
 #include "FeatureLayer.h"
-#include "FeatureTableEditResult.h"
 #include "GeodatabaseTypes.h"
 #include "Geometry.h"
 #include "GeometryBuilder.h"
 #include "GeometryConstructionTool.h"
 #include "GeometryEditor.h"
 #include "GeometryTypes.h"
+#include "Layer.h"
 #include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -49,8 +48,6 @@
 #include <QFuture>
 #include <QImage>
 #include <QMap>
-#include <QScopeGuard>
-#include <QStringList>
 #include <QVariantMap>
 
 // STL headers
@@ -60,14 +57,14 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-  constexpr auto createFeatureError = QT_TRANSLATE_NOOP("AddFeaturesWithSharedTemplates", "Unable to create or add features.");
+  const QString createFeatureError = "Unable to create or add features.";
 } // namespace
 
 AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) :
   QObject(parent),
   m_map(new Map(new PortalItem(QStringLiteral("b635be46dfb545b888077389ac7f0962"), this), this)),
   m_geometryEditor(new GeometryEditor(this)),
-  m_statusText(tr("Loading shared templates..."))
+  m_statusText("Loading shared templates...")
 {
   m_geometryEditor->setTool(new VertexTool(this));
   connect(m_geometryEditor, &GeometryEditor::geometryChanged, this, &AddFeaturesWithSharedTemplates::updateCanComplete_);
@@ -77,14 +74,14 @@ AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) 
   {
     if (!error.isEmpty())
     {
-      reportError_(tr("Unable to load templates."), error.message());
+      reportError_("Unable to load templates.", error.message());
       return;
     }
 
-    for (auto* layer : *m_map->operationalLayers())
+    for (Layer* layer : *m_map->operationalLayers())
     {
-      auto* featureLayer = qobject_cast<FeatureLayer*>(layer);
-      auto* table = featureLayer ? qobject_cast<ServiceFeatureTable*>(featureLayer->featureTable()) : nullptr;
+      FeatureLayer* featureLayer = qobject_cast<FeatureLayer*>(layer);
+      ServiceFeatureTable* table = featureLayer ? qobject_cast<ServiceFeatureTable*>(featureLayer->featureTable()) : nullptr;
       if (table && table->serviceGeodatabase())
       {
         m_serviceGeodatabase = table->serviceGeodatabase();
@@ -92,7 +89,7 @@ AddFeaturesWithSharedTemplates::AddFeaturesWithSharedTemplates(QObject* parent) 
         return;
       }
     }
-    reportError_(tr("Unable to load templates."), tr("The map does not contain a shared template source."));
+    reportError_("Unable to load templates.", "The map does not contain a shared template source.");
   });
 }
 
@@ -132,11 +129,11 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
     .then(this,
           [this](const QMap<qint64, QList<SharedTemplate*>>& templatesByLayer)
   {
-    for (auto it = templatesByLayer.cbegin(); it != templatesByLayer.cend(); ++it)
+    for (QMap<qint64, QList<SharedTemplate*>>::const_iterator it = templatesByLayer.cbegin(); it != templatesByLayer.cend(); ++it)
     {
-      for (auto* sharedTemplate : it.value())
+      for (SharedTemplate* sharedTemplate : it.value())
       {
-        const auto type = sharedTemplate->type();
+        const SharedTemplateType type = sharedTemplate->type();
         if (type != SharedTemplateType::Preset && type != SharedTemplateType::Group)
         {
           continue;
@@ -144,7 +141,7 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
         m_templateItems.append({sharedTemplate, it.key()});
         m_templates.append(QVariantMap{
           {QStringLiteral("name"), sharedTemplate->name()},
-          {QStringLiteral("kind"), type == SharedTemplateType::Preset ? tr("Preset") : tr("Group")},
+          {QStringLiteral("kind"), type == SharedTemplateType::Preset ? "Preset" : "Group"},
           {QStringLiteral("description"), sharedTemplate->description()},
           {QStringLiteral("swatch"), QString()},
         });
@@ -156,8 +153,8 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
       m_ready = true;
       emit readyChanged();
     }
-    finishOperation_(m_templates.isEmpty() ? tr("This map has no preset or group shared templates.") :
-                                             tr("Open Shared Templates and select a template to create features."));
+    finishOperation_(m_templates.isEmpty() ? "This map has no preset or group shared templates." :
+                                             "Open Shared Templates and select a template to create features.");
     for (qsizetype index = 0; index < m_templateItems.size(); ++index)
     {
       createSwatch_(index);
@@ -165,13 +162,13 @@ void AddFeaturesWithSharedTemplates::loadTemplates_()
   })
     .onFailed(this, [this](const ErrorException& error)
   {
-    reportError_(tr("Unable to load templates."), error.error().message());
+    reportError_("Unable to load templates.", error.error().message());
   });
 }
 
 void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
 {
-  const auto& item = m_templateItems.at(index);
+  const TemplateItem& item = m_templateItems.at(index);
   item.sharedTemplate->createSwatchAsync(item.layerId)
     .then(this,
           [this, index](const QImage& image)
@@ -187,39 +184,40 @@ void AddFeaturesWithSharedTemplates::createSwatch_(qsizetype index)
       qWarning() << "Unable to encode shared template swatch.";
       return;
     }
-    auto entry = m_templates.at(index).toMap();
+    QVariantMap entry = m_templates.at(index).toMap();
     entry.insert(QStringLiteral("swatch"), QStringLiteral("data:image/png;base64,") + QString::fromLatin1(buffer.data().toBase64()));
     m_templates[index] = entry;
     emit templatesChanged();
-  }).onFailed(this, [this, index](const ErrorException& error)
+  })
+    .onFailed(this, [this, index](const ErrorException& error)
   {
     // A swatch failure leaves the visible placeholder and must not prevent template selection.
     qDebug() << "Unable to create shared template swatch:" << m_templateItems.at(index).sharedTemplate->name()
-               << "layer ID:" << m_templateItems.at(index).layerId << error.error();
+             << "layer ID:" << m_templateItems.at(index).layerId << error.error();
   });
 }
 
 void AddFeaturesWithSharedTemplates::startDrawing(int index)
 {
-  if (m_busy || sketchInProgress() || m_hasPendingEdits)
+  if (m_busy || sketchInProgress())
   {
     return;
   }
   if (index < 0 || index >= m_templateItems.size())
   {
-    reportError_(tr("Unable to start drawing."), tr("Select an available shared template."));
+    reportError_("Unable to start drawing.", "Select an available shared template.");
     return;
   }
-  const auto& item = m_templateItems.at(index);
-  auto* tool = item.sharedTemplate->defaultConstructionTool(item.layerId);
+  const TemplateItem& item = m_templateItems.at(index);
+  GeometryConstructionTool* tool = item.sharedTemplate->defaultConstructionTool(item.layerId);
   if (!tool || (tool->toolType() != GeometryConstructionToolType::Point && tool->toolType() != GeometryConstructionToolType::Line))
   {
-    reportError_(tr("Unable to start drawing."), tr("The template's default construction tool is not supported by this sample."));
+    reportError_("Unable to start drawing.", "The template's default construction tool is not supported by this sample.");
     return;
   }
   const bool isPoint = tool->toolType() == GeometryConstructionToolType::Point;
   m_activeTemplateIndex = index;
-  setStatusText_(isPoint ? tr("Place a point, then tap Complete or Cancel.") : tr("Sketch a line, then tap Complete or Cancel."));
+  setStatusText_(isPoint ? "Place a point, then tap Complete or Cancel." : "Sketch a line, then tap Complete or Cancel.");
   m_geometryEditor->start(isPoint ? GeometryType::Point : GeometryType::Polyline);
   emit sketchInProgressChanged();
 }
@@ -233,7 +231,7 @@ void AddFeaturesWithSharedTemplates::cancelDrawing()
   m_geometryEditor->stop();
   m_activeTemplateIndex = -1;
   emit sketchInProgressChanged();
-  setStatusText_(tr("Draw canceled."));
+  setStatusText_("Draw canceled.");
 }
 
 void AddFeaturesWithSharedTemplates::completeDrawing()
@@ -244,20 +242,20 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
   }
   if (!m_canComplete)
   {
-    setStatusText_(tr("Draw a valid geometry, then tap Complete or Cancel."));
+    setStatusText_("Draw a valid geometry, then tap Complete or Cancel.");
     return;
   }
-  auto* sharedTemplate = m_templateItems.at(m_activeTemplateIndex).sharedTemplate;
+  SharedTemplate* sharedTemplate = m_templateItems.at(m_activeTemplateIndex).sharedTemplate;
   setBusy_(true);
   const Geometry geometry = m_geometryEditor->stop();
   m_activeTemplateIndex = -1;
   emit sketchInProgressChanged();
   if (geometry.isEmpty())
   {
-    finishOperation_(tr("No geometry was drawn."));
+    finishOperation_("No geometry was drawn.");
     return;
   }
-  setStatusText_(tr("Creating features..."));
+  setStatusText_("Creating features...");
 
   m_serviceGeodatabase->createFeaturesAsync(sharedTemplate, geometry, this)
     .then(this,
@@ -265,7 +263,7 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
   {
     if (!result)
     {
-      reportError_(tr(createFeatureError), tr("No feature creation set was returned."));
+      reportError_(createFeatureError, "No feature creation set was returned.");
       return;
     }
     const std::shared_ptr<SharedTemplateFeatureCreationSet> creationSet(result, [](SharedTemplateFeatureCreationSet* value)
@@ -277,76 +275,16 @@ void AddFeaturesWithSharedTemplates::completeDrawing()
       .then(this,
             [this, creationSet]
     {
-      finishOperation_(tr("Features added."));
+      finishOperation_("Features added.");
     })
       .onFailed(this, [this, creationSet](const ErrorException& error)
     {
-      reportError_(tr(createFeatureError), error.error().message());
+      reportError_(createFeatureError, error.error().message());
     });
   })
     .onFailed(this, [this](const ErrorException& error)
   {
-    reportError_(tr(createFeatureError), error.error().message());
-  });
-}
-
-void AddFeaturesWithSharedTemplates::saveEdits()
-{
-  if (m_busy || !m_hasPendingEdits)
-  {
-    return;
-  }
-  setBusy_(true);
-  setStatusText_(tr("Saving edits..."));
-  m_serviceGeodatabase->applyEditsAsync()
-    .then(this,
-          [this](const QList<FeatureTableEditResult*>& results)
-  {
-    const QScopeGuard cleanup{[&results]
-    {
-      qDeleteAll(results);
-    }};
-    QStringList errors;
-    for (const auto* tableResult : results)
-    {
-      for (const auto* featureResult : tableResult->editResults())
-      {
-        if (featureResult->isCompletedWithErrors())
-        {
-          errors.append(featureResult->error().message());
-        }
-      }
-    }
-    if (!errors.isEmpty())
-    {
-      reportError_(tr("Unable to save edits."), errors.join(QLatin1Char('\n')));
-      return;
-    }
-    finishOperation_(tr("Edits saved."));
-  })
-    .onFailed(this, [this](const ErrorException& error)
-  {
-    reportError_(tr("Unable to save edits."), error.error().message());
-  });
-}
-
-void AddFeaturesWithSharedTemplates::undoEdits()
-{
-  if (m_busy || !m_hasPendingEdits)
-  {
-    return;
-  }
-  setBusy_(true);
-  setStatusText_(tr("Undoing local edits..."));
-  m_serviceGeodatabase->undoLocalEditsAsync()
-    .then(this,
-          [this]
-  {
-    finishOperation_(tr("Edits undone."));
-  })
-    .onFailed(this, [this](const ErrorException& error)
-  {
-    reportError_(tr("Unable to undo edits."), error.error().message());
+    reportError_(createFeatureError, error.error().message());
   });
 }
 
@@ -383,18 +321,8 @@ void AddFeaturesWithSharedTemplates::setBusy_(bool busy)
   }
 }
 
-void AddFeaturesWithSharedTemplates::setHasPendingEdits_(bool hasPendingEdits)
-{
-  if (m_hasPendingEdits != hasPendingEdits)
-  {
-    m_hasPendingEdits = hasPendingEdits;
-    emit hasPendingEditsChanged();
-  }
-}
-
 void AddFeaturesWithSharedTemplates::finishOperation_(const QString& status)
 {
-  setHasPendingEdits_(m_serviceGeodatabase && m_serviceGeodatabase->hasLocalEdits());
   setStatusText_(status);
   setBusy_(false);
 }

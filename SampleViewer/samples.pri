@@ -19,8 +19,10 @@
 
 HEADERS += \
     "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h" \
+    "$$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.h" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
     "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h" \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h" \
@@ -129,8 +131,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.h" \
-    "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.h" \
-    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.h" \
+    "$$SAMPLEPATHCPP/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.h" \
+    "$$SAMPLEPATHCPP/Layers/DownloadVectorTilesToLocalCache/DownloadVectorTilesToLocalCache.h" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h" \
@@ -261,8 +263,10 @@ HEADERS += \
 
 SOURCES += \
     "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.cpp" \
+    "$$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.cpp" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.cpp" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.cpp" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.cpp" \
@@ -371,8 +375,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.cpp" \
-    "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.cpp" \
-    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.cpp" \
+    "$$SAMPLEPATHCPP/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.cpp" \
+    "$$SAMPLEPATHCPP/Layers/DownloadVectorTilesToLocalCache/DownloadVectorTilesToLocalCache.cpp" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.cpp" \
@@ -503,8 +507,10 @@ SOURCES += \
 
 RESOURCES += \
     "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.qrc" \
+    "$$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.qrc" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.qrc" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qrc" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.qrc" \
@@ -605,8 +611,8 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.qrc" \
-    "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.qrc" \
-    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.qrc" \
+    "$$SAMPLEPATHCPP/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.qrc" \
+    "$$SAMPLEPATHCPP/Layers/DownloadVectorTilesToLocalCache/DownloadVectorTilesToLocalCache.qrc" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
@@ -729,6 +735,9 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.qrc"
 
+# Include the accessibility sample's text scale monitor sources and platform-specific dependencies.
+include($$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/SystemTextScaleMonitor/SystemTextScaleMonitor.pri)
+
 # Local Server Only (Linux x86_64 and Windows x86_64)
 win32:contains(QMAKE_TARGET.arch, x86_64)|unix:contains(QMAKE_TARGET.arch, x86_64) {
   INCLUDEPATH += \
@@ -801,21 +810,3 @@ win32|android|ios {
   RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/RasterFunctionFile/RasterFunctionFile.qrc"
 }
-
-# Exclude AnalyzeTerrainSuitabilityWithSlopeAndAspect from Windows.
-!win32 {
-  DEFINES += SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-
-  INCLUDEPATH += \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect"
-
-  HEADERS += \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
-
-  SOURCES += \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.cpp"
-
-  RESOURCES += \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.qrc"
-}
-

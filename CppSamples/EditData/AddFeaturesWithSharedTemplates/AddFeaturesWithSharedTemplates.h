@@ -44,7 +44,6 @@ class AddFeaturesWithSharedTemplates : public QObject
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
   Q_PROPERTY(bool ready MEMBER m_ready NOTIFY readyChanged)
   Q_PROPERTY(bool sketchInProgress READ sketchInProgress NOTIFY sketchInProgressChanged)
-  Q_PROPERTY(bool hasPendingEdits MEMBER m_hasPendingEdits NOTIFY hasPendingEditsChanged)
   Q_PROPERTY(bool canComplete MEMBER m_canComplete NOTIFY canCompleteChanged)
 
 public:
@@ -56,8 +55,6 @@ public:
   Q_INVOKABLE void startDrawing(int index);
   Q_INVOKABLE void cancelDrawing();
   Q_INVOKABLE void completeDrawing();
-  Q_INVOKABLE void saveEdits();
-  Q_INVOKABLE void undoEdits();
 
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
@@ -70,7 +67,6 @@ signals:
   void busyChanged();
   void readyChanged();
   void sketchInProgressChanged();
-  void hasPendingEditsChanged();
   void canCompleteChanged();
   void errorOccurred(const QString& message);
 
@@ -88,7 +84,6 @@ private:
   void updateCanComplete_();
   void setStatusText_(const QString& status);
   void setBusy_(bool busy);
-  void setHasPendingEdits_(bool hasPendingEdits);
   void finishOperation_(const QString& status);
   void reportError_(const QString& status, const QString& message);
 
@@ -102,7 +97,6 @@ private:
   int m_activeTemplateIndex = -1;
   bool m_busy = true;
   bool m_ready = false;
-  bool m_hasPendingEdits = false;
   bool m_canComplete = false;
 };
 
