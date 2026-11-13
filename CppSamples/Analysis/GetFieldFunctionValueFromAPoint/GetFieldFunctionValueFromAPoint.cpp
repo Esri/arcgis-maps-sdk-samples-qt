@@ -159,7 +159,7 @@ void GetFieldFunctionValueFromAPoint::connectSignals()
       return;
     }
 
-    requestSampleAtPoint(m_mapView->screenToLocation(event.position().x(), event.position().y()));
+    requestSampleAtMousePosition(event);
   });
 
   connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](QMouseEvent& event)
@@ -170,7 +170,7 @@ void GetFieldFunctionValueFromAPoint::connectSignals()
     }
 
     m_isDraggingPoint = true;
-    requestSampleAtPoint(m_mapView->screenToLocation(event.position().x(), event.position().y()));
+    requestSampleAtMousePosition(event);
   });
 
   connect(m_mapView, &MapQuickView::mouseMoved, this, [this](QMouseEvent& event)
@@ -180,7 +180,7 @@ void GetFieldFunctionValueFromAPoint::connectSignals()
       return;
     }
 
-    requestSampleAtPoint(m_mapView->screenToLocation(event.position().x(), event.position().y()));
+    requestSampleAtMousePosition(event);
   });
 
   connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent& event)
@@ -190,7 +190,7 @@ void GetFieldFunctionValueFromAPoint::connectSignals()
       return;
     }
 
-    requestSampleAtPoint(m_mapView->screenToLocation(event.position().x(), event.position().y()));
+    requestSampleAtMousePosition(event);
     m_isDraggingPoint = false;
   });
 
@@ -268,8 +268,8 @@ void GetFieldFunctionValueFromAPoint::initializeFieldAnalysis()
   m_samplePoint = Point(fieldCenter.x(), fieldCenter.y(), m_aircraftAltitude, fieldCenter.spatialReference());
   PictureMarkerSymbol* aircraftSymbol =
     new PictureMarkerSymbol(QImage(QStringLiteral(":/Samples/Analysis/GetFieldFunctionValueFromAPoint/helicopter.png")), this);
-  aircraftSymbol->setWidth(28.0f);
-  aircraftSymbol->setHeight(28.0f);
+  aircraftSymbol->setWidth(28.0F);
+  aircraftSymbol->setHeight(28.0F);
   m_samplePointGraphic = new Graphic(m_samplePoint, aircraftSymbol, this);
   m_graphicsOverlay->graphics()->append(m_samplePointGraphic);
 
@@ -312,7 +312,7 @@ bool GetFieldFunctionValueFromAPoint::createFieldAnalysis(ContinuousFieldFunctio
   {
     return false;
   }
-  elevationAnalysis->setOpacity(0.5f);
+  elevationAnalysis->setOpacity(0.5F);
   m_analysisOverlay->analyses()->append(elevationAnalysis);
 
   // Boolean colormap index 0 is false (no clearance), and index 1 is true (clear).
@@ -324,9 +324,14 @@ bool GetFieldFunctionValueFromAPoint::createFieldAnalysis(ContinuousFieldFunctio
   {
     return false;
   }
-  clearanceAnalysis->setOpacity(0.5f);
+  clearanceAnalysis->setOpacity(0.5F);
   m_analysisOverlay->analyses()->append(clearanceAnalysis);
   return true;
+}
+
+void GetFieldFunctionValueFromAPoint::requestSampleAtMousePosition(const QMouseEvent& event)
+{
+  requestSampleAtPoint(m_mapView->screenToLocation(event.position().x(), event.position().y()));
 }
 
 void GetFieldFunctionValueFromAPoint::requestSampleAtPoint(const Point& point)
@@ -425,7 +430,7 @@ void GetFieldFunctionValueFromAPoint::finishSampling(quint64 requestId, bool fai
 
 void GetFieldFunctionValueFromAPoint::setAircraftAltitude(float altitude)
 {
-  if (m_aircraftAltitude == altitude)
+  if (qFuzzyCompare(m_aircraftAltitude, altitude))
   {
     return;
   }

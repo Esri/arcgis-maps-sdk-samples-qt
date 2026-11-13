@@ -25,6 +25,8 @@
 #include <Point.h>
 #include <optional>
 
+class QMouseEvent;
+
 namespace Esri::ArcGISRuntime
 {
   class AnalysisOverlay;
@@ -81,6 +83,7 @@ private:
   void initializeFieldAnalysis();
   void onContinuousFieldCreated(Esri::ArcGISRuntime::ContinuousField* continuousField);
   void finishSampling(quint64 requestId, bool failed = false);
+  void requestSampleAtMousePosition(const QMouseEvent& event);
   void requestSampleAtPoint(const Esri::ArcGISRuntime::Point& point);
   void sampleCurrentPoint();
   void setLoading(bool loading);
@@ -99,7 +102,7 @@ private:
   Esri::ArcGISRuntime::Point m_samplePoint;
   const QString m_elevationFilePath;
   quint64 m_sampleRequestId = 0;
-  float m_aircraftAltitude = 2000.0f;
+  float m_aircraftAltitude = 2000.0F;
   bool m_mapLoaded = false;
   bool m_initialized = false;
   bool m_loading = true;
