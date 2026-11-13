@@ -19,7 +19,6 @@
 
 // Qt headers
 #include <QObject>
-#include <QSet>
 #include <QString>
 
 // STL headers
@@ -28,7 +27,6 @@
 
 namespace Esri::ArcGISRuntime
 {
-  class Analysis;
   class AnalysisOverlay;
   class BooleanFieldFunction;
   class BooleanFieldSampleFunction;
@@ -51,7 +49,7 @@ class GetFieldFunctionValueFromAPoint : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool initialized READ initialized NOTIFY initializedChanged)
   Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
-  Q_PROPERTY(double aircraftAltitude READ aircraftAltitude WRITE setAircraftAltitude NOTIFY aircraftAltitudeChanged)
+  Q_PROPERTY(float aircraftAltitude READ aircraftAltitude WRITE setAircraftAltitude NOTIFY aircraftAltitudeChanged)
   Q_PROPERTY(bool analysisUpdating READ analysisUpdating NOTIFY analysisUpdatingChanged)
 
 public:
@@ -59,7 +57,7 @@ public:
   ~GetFieldFunctionValueFromAPoint() override;
 
   static void init();
-  double aircraftAltitude() const;
+  float aircraftAltitude() const;
   bool analysisUpdating() const;
   bool initialized() const;
   bool loading() const;
@@ -74,7 +72,7 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void setAircraftAltitude(double altitude);
+  void setAircraftAltitude(float altitude);
   void addOverlays();
   void connectSignals();
   bool createFieldAnalysis(Esri::ArcGISRuntime::ContinuousFieldFunction* elevationFunction,
@@ -83,7 +81,7 @@ private:
   void initializeFieldAnalysis();
   void onContinuousFieldCreated(Esri::ArcGISRuntime::ContinuousField* continuousField);
   void finishSampling(quint64 requestId, bool failed = false);
-  void requestSample(const Esri::ArcGISRuntime::Point& point);
+  void requestSampleAtPoint(const Esri::ArcGISRuntime::Point& point);
   void sampleCurrentPoint();
   void setLoading(bool loading);
   QString sampleDetail(std::optional<float> elevation, std::optional<bool> hasClearance) const;
@@ -101,14 +99,13 @@ private:
   Esri::ArcGISRuntime::Point m_samplePoint;
   const QString m_elevationFilePath;
   quint64 m_sampleRequestId = 0;
-  double m_aircraftAltitude = 2000.0;
+  float m_aircraftAltitude = 2000.0f;
   bool m_mapLoaded = false;
   bool m_initialized = false;
   bool m_loading = true;
   bool m_isSampling = false;
   bool m_isDraggingPoint = false;
   bool m_analysisUpdating = false;
-  QSet<Esri::ArcGISRuntime::Analysis*> m_updatingAnalyses;
 };
 
 #endif // GETFIELDFUNCTIONVALUEFROMAPOINT_H

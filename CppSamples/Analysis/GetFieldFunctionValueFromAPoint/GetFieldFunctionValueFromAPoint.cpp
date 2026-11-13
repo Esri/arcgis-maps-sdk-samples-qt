@@ -64,7 +64,6 @@
 #include <QFuture>
 #include <QImage>
 #include <QMouseEvent>
-#include <QSet>
 #include <QStandardPaths>
 #include <QtGlobal>
 
@@ -160,7 +159,7 @@ void GetFieldFunctionValueFromAPoint::connectSignals()
       return;
     }
 
-    requestSample(m_mapView->screenToLocation(event.position().x(), event.position().y()));
+    requestSampleAtPoint(m_mapView->screenToLocation(event.position().x(), event.position().y()));
   });
 
   connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](QMouseEvent& event)
@@ -171,7 +170,7 @@ void GetFieldFunctionValueFromAPoint::connectSignals()
     }
 
     m_isDraggingPoint = true;
-    requestSample(m_mapView->screenToLocation(event.position().x(), event.position().y()));
+    requestSampleAtPoint(m_mapView->screenToLocation(event.position().x(), event.position().y()));
   });
 
   connect(m_mapView, &MapQuickView::mouseMoved, this, [this](QMouseEvent& event)
@@ -181,7 +180,7 @@ void GetFieldFunctionValueFromAPoint::connectSignals()
       return;
     }
 
-    requestSample(m_mapView->screenToLocation(event.position().x(), event.position().y()));
+    requestSampleAtPoint(m_mapView->screenToLocation(event.position().x(), event.position().y()));
   });
 
   connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent& event)
@@ -191,26 +190,33 @@ void GetFieldFunctionValueFromAPoint::connectSignals()
       return;
     }
 
-    requestSample(m_mapView->screenToLocation(event.position().x(), event.position().y()));
+    requestSampleAtPoint(m_mapView->screenToLocation(event.position().x(), event.position().y()));
     m_isDraggingPoint = false;
   });
 
   connect(m_mapView, &MapQuickView::analysisViewStateChanged, this, [this](Analysis* analysis, const AnalysisViewState& viewState)
   {
-    // Track rendering progress separately for the elevation and clearance analyses.
-    const bool wasUpdating = m_analysisUpdating;
-    if (viewState.status() == AnalysisViewStatus::Updating)
+    const auto* analyses = m_analysisOverlay->analyses();
+    if (!analyses->contains(analysis))
     {
-      m_updatingAnalyses.insert(analysis);
-    }
-    else
-    {
-      m_updatingAnalyses.remove(analysis);
+      return;
     }
 
-    m_analysisUpdating = !m_updatingAnalyses.isEmpty();
-    if (m_analysisUpdating != wasUpdating)
+    bool updating = false;
+    for (int i = 0; i < analyses->size(); ++i)
     {
+      Analysis* current = analyses->at(i);
+      const auto status = current == analysis ? viewState.status() : m_mapView->analysisViewState(current).status();
+      if (status == AnalysisViewStatus::Updating)
+      {
+        updating = true;
+        break;
+      }
+    }
+
+    if (m_analysisUpdating != updating)
+    {
+      m_analysisUpdating = updating;
       emit analysisUpdatingChanged();
     }
   });
@@ -252,10 +258,9 @@ void GetFieldFunctionValueFromAPoint::initializeFieldAnalysis()
 
   // Create the continuous field function used to sample elevation values.
   ContinuousFieldSupplier* elevationFunction = new ContinuousFieldSupplier(m_continuousField, this);
-  m_aircraftAltitudeSupplier = new FloatSupplier(static_cast<float>(m_aircraftAltitude), this);
+  m_aircraftAltitudeSupplier = new FloatSupplier(std::make_optional(m_aircraftAltitude), this);
   // The boolean function is true where terrain elevation is below the supplied aircraft altitude.
   BooleanFieldFunction* clearanceFunction = elevationFunction->isLessThan(m_aircraftAltitudeSupplier);
-  clearanceFunction->setParent(this);
 
   // Place the initial sample at the center of the elevation field.
   const Point fieldCenter = m_continuousField->extent().center();
@@ -291,7 +296,7 @@ void GetFieldFunctionValueFromAPoint::initializeFieldAnalysis()
   setLoading(false);
   emit initializedChanged();
   // Sample the initial point to populate the callout.
-  requestSample(m_samplePoint);
+  requestSampleAtPoint(m_samplePoint);
 }
 
 bool GetFieldFunctionValueFromAPoint::createFieldAnalysis(ContinuousFieldFunction* elevationFunction, BooleanFieldFunction* clearanceFunction)
@@ -299,7 +304,8 @@ bool GetFieldFunctionValueFromAPoint::createFieldAnalysis(ContinuousFieldFunctio
   // Render elevation using a stretch renderer and a purple-gray-to-white color ramp.
   const MinMaxStretchParameters stretchParameters({1199.0}, {2740.0});
   ColorRamp* colorRamp = ColorRamp::createFromColors({QColor(96, 98, 148), QColor(Qt::white)}, 256, this);
-  StretchRenderer* stretchRenderer = new StretchRenderer(stretchParameters, {1.0}, false, colorRamp, this);
+  constexpr bool estimateStats = false;
+  StretchRenderer* stretchRenderer = new StretchRenderer(stretchParameters, {1.0}, estimateStats, colorRamp, this);
 
   FieldAnalysis* elevationAnalysis = FieldAnalysis::create(elevationFunction, stretchRenderer, this);
   if (!elevationAnalysis)
@@ -323,7 +329,7 @@ bool GetFieldFunctionValueFromAPoint::createFieldAnalysis(ContinuousFieldFunctio
   return true;
 }
 
-void GetFieldFunctionValueFromAPoint::requestSample(const Point& point)
+void GetFieldFunctionValueFromAPoint::requestSampleAtPoint(const Point& point)
 {
   if (!m_initialized)
   {
@@ -334,7 +340,7 @@ void GetFieldFunctionValueFromAPoint::requestSample(const Point& point)
   m_samplePoint = Point(point.x(), point.y(), m_aircraftAltitude, point.spatialReference());
   m_samplePointGraphic->setGeometry(m_samplePoint);
   ++m_sampleRequestId;
-  updateCallout(tr("Sampling field functions..."));
+  updateCallout(QStringLiteral("Sampling field functions..."));
   sampleCurrentPoint();
 }
 
@@ -417,9 +423,9 @@ void GetFieldFunctionValueFromAPoint::finishSampling(quint64 requestId, bool fai
   }
 }
 
-void GetFieldFunctionValueFromAPoint::setAircraftAltitude(double altitude)
+void GetFieldFunctionValueFromAPoint::setAircraftAltitude(float altitude)
 {
-  if (qFuzzyCompare(m_aircraftAltitude, altitude))
+  if (m_aircraftAltitude == altitude)
   {
     return;
   }
@@ -433,8 +439,8 @@ void GetFieldFunctionValueFromAPoint::setAircraftAltitude(double altitude)
   }
 
   // The supplier updates the analysis; reevaluate the sample functions to refresh the callout.
-  m_aircraftAltitudeSupplier->setValue(static_cast<float>(m_aircraftAltitude));
-  requestSample(m_samplePoint);
+  m_aircraftAltitudeSupplier->setValue(std::make_optional(m_aircraftAltitude));
+  requestSampleAtPoint(m_samplePoint);
 }
 
 void GetFieldFunctionValueFromAPoint::setLoading(bool loading)
@@ -457,13 +463,13 @@ void GetFieldFunctionValueFromAPoint::updateCallout(const QString& detail)
 
   // Display the sampled field values at the current map location.
   CalloutData* calloutData = m_mapView->calloutData();
-  calloutData->setTitle(tr("Field function values"));
+  calloutData->setTitle(QStringLiteral("Field function values"));
   calloutData->setLocation(m_samplePoint);
   calloutData->setDetail(detail);
   calloutData->setVisible(true);
 }
 
-double GetFieldFunctionValueFromAPoint::aircraftAltitude() const
+float GetFieldFunctionValueFromAPoint::aircraftAltitude() const
 {
   return m_aircraftAltitude;
 }
@@ -476,11 +482,12 @@ bool GetFieldFunctionValueFromAPoint::analysisUpdating() const
 QString GetFieldFunctionValueFromAPoint::sampleDetail(std::optional<float> elevation, std::optional<bool> hasClearance) const
 {
   // Keep null for NoData, such as locations outside the raster extent.
-  const QString elevationText = elevation ? QString::number(*elevation, 'f', 2) : QStringLiteral("null");
+  const QString elevationText = elevation.has_value() ? QString::number(elevation.value(), 'f', 2) : QStringLiteral("null");
   // Calculate numeric ground clearance as aircraft altitude minus terrain elevation.
-  const QString clearanceText = elevation ? QString::number(m_aircraftAltitude - *elevation, 'f', 2) : QStringLiteral("null");
-  const QString clearanceStatus = hasClearance ? (*hasClearance ? tr("Clear") : tr("Not Clear")) : QStringLiteral("null");
-  return tr("Elevation (m): %1 \nClearance above the ground (m): %2 \nGround clearance status: %3")
+  const QString clearanceText = elevation.has_value() ? QString::number(m_aircraftAltitude - elevation.value(), 'f', 2) : QStringLiteral("null");
+  const QString clearanceStatus =
+    hasClearance.has_value() ? (hasClearance.value() ? QStringLiteral("Clear") : QStringLiteral("Not Clear")) : QStringLiteral("null");
+  return QStringLiteral("Elevation (m): %1 \nClearance above the ground (m): %2 \nGround clearance status: %3")
     .arg(elevationText, clearanceText, clearanceStatus);
 }
 
