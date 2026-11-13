@@ -69,6 +69,7 @@
 #include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
+#include "../CppSamples/Analysis/GetFieldFunctionValueFromAPoint/GetFieldFunctionValueFromAPoint.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
@@ -522,6 +523,7 @@ void registerCppSampleClasses()
   GenerateOfflineMap_Overrides::init();
   GeodesicOperations::init();
   Geotriggers::init();
+  GetFieldFunctionValueFromAPoint::init();
   GetElevationAtPoint::init();
   GroupLayers::init();
   Hillshade_Renderer::init();
