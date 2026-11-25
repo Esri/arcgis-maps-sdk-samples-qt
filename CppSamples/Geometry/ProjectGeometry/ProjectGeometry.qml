@@ -44,7 +44,14 @@ ProjectGeometrySample {
             accessoryButtonVisible: false
             autoAdjustWidth: true
             maxWidth: 350
+            contentWidth: Math.min(callout.maxWidth, callout.contentItem.implicitWidth)
             leaderPosition: Callout.LeaderPosition.Automatic
+
+            contentItem: Label {
+                text: callout.calloutData ? callout.calloutData.title + "\n" + callout.calloutData.detail : ""
+                textFormat: Text.PlainText
+                wrapMode: Text.WordWrap
+            }
         }
     }
 }

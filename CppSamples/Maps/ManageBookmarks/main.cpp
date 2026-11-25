@@ -1,3 +1,4 @@
+// [WriteFile Name=ManageBookmarks, Category=Maps]
 // [Legal]
 // Copyright 2015 Esri.
 //
@@ -26,6 +27,9 @@
 #include <QQmlEngine>
 #include <QQuickView>
 #include <QSettings>
+
+// Other headers
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
 
 // Platform specific headers
 #ifdef Q_OS_WIN
@@ -75,7 +79,7 @@ int main(int argc, char* argv[])
                                                 "BookmarkListModel",
                                                 "BookmarkListModel is an uncreatable type");
   //! [Register the list model for QML]
-  */
+ */
 
   // Initialize application view
   QQuickView view;
@@ -95,6 +99,8 @@ int main(int argc, char* argv[])
 
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/ManageBookmarks/ManageBookmarks.qml"));

@@ -25,7 +25,7 @@
 #include "ElevationSourceListModel.h"
 #include "Scene.h"
 #include "Surface.h"
-#include %{JS: ( '%{GeoViewType}' === 'globalScene' ? '"SceneGraphicsView.h"' : '"LocalSceneWidget.h"' )}
+#include %{JS: ( '%{GeoViewType}' === 'globalScene' ? '"SceneGraphicsView.h"' : '"LocalSceneViewWidget.h"' )}
 @else
 #include "Map.h"
 #include "MapGraphicsView.h"
@@ -53,7 +53,7 @@ using namespace Esri::ArcGISRuntime;
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // Create a scene view, and pass in the scene
-  m_sceneView = new %{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneGraphicsView' : 'LocalSceneWidget' )}(m_scene, this);
+  m_sceneView = new %{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneGraphicsView' : 'LocalSceneViewWidget' )}(m_scene, this);
 
 @else
   // Create a map using the topo basemap
@@ -83,7 +83,7 @@ using namespace Esri::ArcGISRuntime;
     m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
     // Create a scene view, and pass in the scene
-    m_sceneView = new %{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneGraphicsView' : 'LocalSceneWidget' )}(m_scene, this);
+    m_sceneView = new %{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneGraphicsView' : 'LocalSceneViewWidget' )}(m_scene, this);
 
   @else
     // Create a map using the imagery basemap

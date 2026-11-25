@@ -16,7 +16,7 @@
 
 #include "SetInitialMapLocation.h"
 #include "Map.h"
-#include "MapGraphicsView.h"
+#include "MapViewWidget.h"
 #include "MapTypes.h"
 #include "Viewpoint.h"
 #include <QVBoxLayout>
@@ -35,11 +35,11 @@ SetInitialMapLocation::SetInitialMapLocation(QWidget* parent) :
   m_map->setInitialViewpoint(Viewpoint(lat, lon, scale));
 
   // Create a map view, and pass in the map
-  m_mapView = new MapGraphicsView(m_map, this);
+  m_mapViewWidget = new MapViewWidget(m_map, this);
 
   // Set up the UI
   QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
+  vBoxLayout->addWidget(m_mapViewWidget);
   setLayout(vBoxLayout);
 }
 

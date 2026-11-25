@@ -71,7 +71,7 @@ EditFeatureAttachmentsSample {
         opacity: 0.90
         clip: true
 
-        // accept mouse events so they do not propogate down to the map
+        // accept mouse events so they do not propagate down to the map
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
@@ -138,7 +138,7 @@ EditFeatureAttachmentsSample {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (attachmentsList.currentIndex !== -1)  {
+                            if (attachmentsList.currentIndex !== -1) {
                                 // Call invokable C++ method to add an attachment to the model
                                 editAttachmentsSample.deleteAttachment(attachmentsList.currentIndex);
                             }
@@ -216,7 +216,7 @@ EditFeatureAttachmentsSample {
     FileDialog {
         id: fileDialog
         folder: {
-            const locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
+            const locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation);
             return locs.length > 0 ? locs[locs.length - 1] : "";
         }
         onAccepted: {

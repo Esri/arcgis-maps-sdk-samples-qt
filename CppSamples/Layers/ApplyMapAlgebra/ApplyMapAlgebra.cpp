@@ -28,6 +28,7 @@
 #include "ColormapRenderer.h"
 #include "ContinuousField.h"
 #include "ContinuousFieldFunction.h"
+#include "ContinuousFieldSupplier.h"
 #include "DiscreteField.h"
 #include "DiscreteFieldFunction.h"
 #include "LayerListModel.h"
@@ -208,7 +209,7 @@ void ApplyMapAlgebra::createElevationField()
 
 void ApplyMapAlgebra::createGeomorphicField()
 {
-  ContinuousFieldFunction* continuousFieldFunction = ContinuousFieldFunction::create(m_elevationField, this);
+  ContinuousFieldSupplier* continuousFieldFunction = new ContinuousFieldSupplier(m_elevationField, this);
   ContinuousFieldFunction* elevationFieldFunction = continuousFieldFunction->mask(continuousFieldFunction->isGreaterThanOrEqualTo(0.0));
 
   DiscreteFieldFunction* tenMeterBinField = elevationFieldFunction->divide(10)->floor()->multiply(10)->toDiscreteFieldFunction();

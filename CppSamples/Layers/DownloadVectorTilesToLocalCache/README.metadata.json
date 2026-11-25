@@ -1,0 +1,41 @@
+{
+    "category": "Layers",
+    "description": "Download vector tiles from an online vector tile service to a local cache.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "cache",
+        "download",
+        "offline",
+        "vector",
+        "vector tiled layer",
+        "ArcGISVectorTiledLayer",
+        "ExportVectorTilesJob",
+        "ExportVectorTilesParameters",
+        "ExportVectorTilesResult",
+        "ExportVectorTilesTask",
+        "ItemResourceCache",
+        "VectorTileCache"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-exportvectortiles.htm"
+    ],
+    "relevant_apis": [
+        "ArcGISVectorTiledLayer",
+        "ExportVectorTilesJob",
+        "ExportVectorTilesParameters",
+        "ExportVectorTilesResult",
+        "ExportVectorTilesTask",
+        "ItemResourceCache",
+        "VectorTileCache"
+    ],
+    "snippets": [
+        "DownloadVectorTilesToLocalCache.cpp",
+        "DownloadVectorTilesToLocalCache.h",
+        "DownloadVectorTilesToLocalCache.qml"
+    ],
+    "title": "Download vector tiles to local cache"
+}

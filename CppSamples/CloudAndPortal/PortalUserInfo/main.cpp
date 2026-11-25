@@ -21,9 +21,7 @@
 #include <QQmlEngine>
 #include <QQuickView>
 
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngineQuick>
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebView>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -39,9 +37,7 @@
 
 int main(int argc, char* argv[])
 {
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngineQuick::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebView::initialize();
 
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("Portal User Info"));

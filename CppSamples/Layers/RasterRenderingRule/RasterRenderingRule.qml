@@ -41,18 +41,22 @@ RasterRenderingRuleSample {
                 top: parent.top
                 margins: 5
             }
-            height: childrenRect.height
-            width: childrenRect.width
+            width: Math.min(controlsLayout.implicitWidth, parent.width - 10)
+            height: controlsLayout.implicitHeight
             color: palette.base
             radius: 5
 
             GridLayout {
+                id: controlsLayout
+                width: parent.width
                 columns: 2
 
                 Label {
                     Layout.margins: 10
                     Layout.columnSpan: 2
+                    Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter
+                    horizontalAlignment: Text.AlignHCenter
                     text: qsTr("Apply a Rendering Rule")
                     font.pixelSize: 16
                 }
@@ -60,19 +64,24 @@ RasterRenderingRuleSample {
                 ComboBox {
                     id: renderingRulesCombo
                     property int modelWidth: 0
-                    Layout.minimumWidth: Math.min(modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10),
-                                                  rootRectangle.width * 0.5)
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: 0
+                    Layout.preferredWidth: modelWidth + leftPadding + rightPadding +
+                                           (indicator ? indicator.width : 10)
+                    Layout.maximumWidth: rootRectangle.width - applyButton.implicitWidth - 50
                     Layout.margins: 10
                     model: renderingRuleNames
 
                     onModelChanged: {
-                        for (let i = 0; i < model.length; ++i) {
-                            metrics.text = model[i];
-                            modelWidth = Math.max(modelWidth, metrics.width);
+                        modelWidth = 0;
+                        for (let index = 0; index < model.length; ++index) {
+                            optionMetrics.text = model[index];
+                            modelWidth = Math.max(modelWidth, optionMetrics.width);
                         }
                     }
+
                     TextMetrics {
-                        id: metrics
+                        id: optionMetrics
                         font: renderingRulesCombo.font
                     }
                 }

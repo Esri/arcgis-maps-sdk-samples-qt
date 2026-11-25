@@ -19,9 +19,13 @@
 
 HEADERS += \
     "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h" \
+    "$$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.h" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h" \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.h" \
+    "$$SAMPLEPATHCPP/Analysis/GetFieldFunctionValueFromAPoint/GetFieldFunctionValueFromAPoint.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h" \
@@ -41,6 +45,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/FilterMosaicDatasetRasterByTimeExtent/FilterMosaicDatasetRasterByTimeExtent.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.h" \
@@ -58,6 +63,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
+    "$$SAMPLEPATHCPP/EditData/AddFeaturesWithSharedTemplates/AddFeaturesWithSharedTemplates.h" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.h" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h" \
@@ -105,6 +111,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
+    "$$SAMPLEPATHCPP/Layers/AddKmlLayer/AddKmlLayer.h" \
     "$$SAMPLEPATHCPP/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMapAlgebra/ApplyMapAlgebra.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
@@ -121,13 +128,12 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.h" \
-    "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.h" \
-    "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.h" \
-    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.h" \
+    "$$SAMPLEPATHCPP/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.h" \
+    "$$SAMPLEPATHCPP/Layers/DownloadVectorTilesToLocalCache/DownloadVectorTilesToLocalCache.h" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h" \
@@ -213,6 +219,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.h" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/MissionData.h" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.h" \
+    "$$SAMPLEPATHCPP/Scenes/ApplyPointCloudRendererAndFilter/ApplyPointCloudRendererAndFilter.h" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.h" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h" \
@@ -257,9 +264,13 @@ HEADERS += \
 
 SOURCES += \
     "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.cpp" \
+    "$$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.cpp" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.cpp" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.cpp" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/GetFieldFunctionValueFromAPoint/GetFieldFunctionValueFromAPoint.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.cpp" \
@@ -279,6 +290,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/FilterMosaicDatasetRasterByTimeExtent/FilterMosaicDatasetRasterByTimeExtent.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.cpp" \
@@ -296,6 +308,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
+    "$$SAMPLEPATHCPP/EditData/AddFeaturesWithSharedTemplates/AddFeaturesWithSharedTemplates.cpp" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.cpp" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.cpp" \
@@ -343,6 +356,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddKmlLayer/AddKmlLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMapAlgebra/ApplyMapAlgebra.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
@@ -359,13 +373,12 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.cpp" \
-    "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.cpp" \
-    "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.cpp" \
-    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.cpp" \
+    "$$SAMPLEPATHCPP/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.cpp" \
+    "$$SAMPLEPATHCPP/Layers/DownloadVectorTilesToLocalCache/DownloadVectorTilesToLocalCache.cpp" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.cpp" \
@@ -451,6 +464,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.cpp" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/MissionData.cpp" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/ApplyPointCloudRendererAndFilter/ApplyPointCloudRendererAndFilter.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.cpp" \
@@ -495,9 +509,13 @@ SOURCES += \
 
 RESOURCES += \
     "$$SAMPLEPATHCPP/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.qrc" \
+    "$$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.qrc" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.qrc" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qrc" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/GetFieldFunctionValueFromAPoint/GetFieldFunctionValueFromAPoint.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.qrc" \
@@ -516,6 +534,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/FilterMosaicDatasetRasterByTimeExtent/FilterMosaicDatasetRasterByTimeExtent.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.qrc" \
@@ -532,6 +551,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
+    "$$SAMPLEPATHCPP/EditData/AddFeaturesWithSharedTemplates/AddFeaturesWithSharedTemplates.qrc" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.qrc" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qrc" \
@@ -573,6 +593,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
+    "$$SAMPLEPATHCPP/Layers/AddKmlLayer/AddKmlLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMapAlgebra/ApplyMapAlgebra.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
@@ -589,13 +610,12 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.qrc" \
-    "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.qrc" \
-    "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.qrc" \
-    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.qrc" \
+    "$$SAMPLEPATHCPP/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.qrc" \
+    "$$SAMPLEPATHCPP/Layers/DownloadVectorTilesToLocalCache/DownloadVectorTilesToLocalCache.qrc" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
@@ -677,6 +697,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.qrc" \
     "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/ApplyPointCloudRendererAndFilter/ApplyPointCloudRendererAndFilter.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.qrc" \
@@ -716,6 +737,9 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.qrc"
+
+# Include the accessibility sample's text scale monitor sources and platform-specific dependencies.
+include($$SAMPLEPATHCPP/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/SystemTextScaleMonitor/SystemTextScaleMonitor.pri)
 
 # Local Server Only (Linux x86_64 and Windows x86_64)
 win32:contains(QMAKE_TARGET.arch, x86_64)|unix:contains(QMAKE_TARGET.arch, x86_64) {
@@ -788,21 +812,4 @@ win32|android|ios {
 
   RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/RasterFunctionFile/RasterFunctionFile.qrc"
-}
-
-# Exclude AnalyzeTerrainSuitabilityWithSlopeAndAspect from Windows.
-!win32 {
-  DEFINES += SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-
-  INCLUDEPATH += \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect"
-
-  HEADERS += \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
-
-  SOURCES += \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.cpp"
-
-  RESOURCES += \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.qrc"
 }

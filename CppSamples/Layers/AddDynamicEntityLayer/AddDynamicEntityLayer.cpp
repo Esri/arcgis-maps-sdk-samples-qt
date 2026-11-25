@@ -108,13 +108,13 @@ AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */) :
   previousObservationValues.append(new UniqueValue("", "", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 3, this), this));
   previousObservationValues.append(new UniqueValue("", "", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 3, this), this));
 
-  UniqueValueRenderer* trackRenderer =
-    new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 3, this), {"agency"}, previousObservationValues);
+  UniqueValueRenderer* trackRenderer = new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 3, this),
+                                                               {"agency"}, previousObservationValues, this);
   m_dynamicEntityLayer->trackDisplayProperties()->setPreviousObservationRenderer(trackRenderer);
 
   // Use a simple renderer to change the style of the trackline
   m_dynamicEntityLayer->trackDisplayProperties()->setTrackLineRenderer(
-    new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::lightGray, 2, this)));
+    new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::lightGray, 2, this), this));
 
   m_map->operationalLayers()->append(m_dynamicEntityLayer);
 }

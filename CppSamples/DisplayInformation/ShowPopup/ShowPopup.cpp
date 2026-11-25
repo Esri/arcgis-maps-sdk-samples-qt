@@ -39,7 +39,7 @@ using namespace Esri::ArcGISRuntime;
 
 ShowPopup::ShowPopup(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_map(new Map(QUrl("https://runtime.maps.arcgis.com/home/webmap/viewer.html?webmap=e4c6eb667e6c43b896691f10cc2f1580"), this))
+  m_map(new Map(QUrl("https://runtime.maps.arcgis.com/home/webmap/viewer.html?webmap=9f3a674e998f461580006e626611f9ad"), this))
 {
 }
 

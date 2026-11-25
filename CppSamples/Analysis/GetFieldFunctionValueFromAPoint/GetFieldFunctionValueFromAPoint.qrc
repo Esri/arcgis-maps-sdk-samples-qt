@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/GetFieldFunctionValueFromAPoint">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>screenshot.png</file>
+        <file>GetFieldFunctionValueFromAPoint.qml</file>
+        <file>GetFieldFunctionValueFromAPoint.h</file>
+        <file>GetFieldFunctionValueFromAPoint.cpp</file>
+        <file>main.qml</file>
+        <file>helicopter.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

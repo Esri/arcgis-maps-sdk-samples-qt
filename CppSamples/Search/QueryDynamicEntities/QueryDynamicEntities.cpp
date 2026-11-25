@@ -84,7 +84,10 @@ namespace
 
 QueryDynamicEntities::QueryDynamicEntities(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
+  // Create a 15-mile geodetic buffer around Phoenix Airport (PHX).
+  m_phoenixAirportBuffer(GeometryEngine::bufferGeodetic(Point{-112.0101, 33.4352, SpatialReference::wgs84()}, 15,
+                                                        LinearUnit(LinearUnitId::Miles), NAN, GeodeticCurveType::Geodesic))
 {
   m_resultsModel = new FlightInfoListModel(this);
 }
@@ -193,16 +196,12 @@ void QueryDynamicEntities::setUpGraphics()
   m_bufferGraphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_bufferGraphicsOverlay);
 
-  // Create a 15-mile geodetic buffer around Phoenix Airport (PHX).
-  m_phoenixAirportBuffer = new Polygon(GeometryEngine::bufferGeodetic(Point{-112.0101, 33.4352, SpatialReference::wgs84()}, 15,
-                                                                      LinearUnit(LinearUnitId::Miles), NAN, GeodeticCurveType::Geodesic));
-
   // Create a semi-transparent fill symbol for the buffer and add it to the overlay.
   SimpleFillSymbol* bufferSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 75),
                                                         new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("Black"), 1.0, this), this);
 
   // Add the buffer graphic to the overlay and hide it initially.
-  m_bufferGraphicsOverlay->graphics()->append(new Graphic(*m_phoenixAirportBuffer, bufferSymbol));
+  m_bufferGraphicsOverlay->graphics()->append(new Graphic(m_phoenixAirportBuffer, bufferSymbol, this));
   m_bufferGraphicsOverlay->setVisible(false);
 
   setupDynamicEntityDataSource();
@@ -262,7 +261,7 @@ void QueryDynamicEntities::handleQuerySelection(const QString& queryType)
     m_bufferGraphicsOverlay->setVisible(true);
 
 	m_params = new DynamicEntityQueryParameters(this);
-    m_params->setGeometry(*m_phoenixAirportBuffer);
+    m_params->setGeometry(m_phoenixAirportBuffer);
     m_params->setSpatialRelationship(SpatialRelationship::Intersects);
 
     // Perform query using geometry on the data source and select returned dynamic entities.

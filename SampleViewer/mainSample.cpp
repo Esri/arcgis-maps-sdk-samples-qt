@@ -30,9 +30,7 @@
 #include <QFontDatabase>
 #endif
 
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngineQuick>
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebView>
 
 #include "ArcGISRuntimeEnvironment.h"
 #include "ArcGISQt_global.h" // IWYU pragma: keep - for LOCALSERVER_SUPPORTED
@@ -51,17 +49,27 @@
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
 #include "SyntaxHighlighter/SyntaxHighlighter.h"
+#include "TextDocumentUtils.h"
 #include "../CppSamples/Layers/ManageOperationalLayers/DrawOrderLayerListModel.h"
 
 #ifdef ESRI_BUILD
 #include "buildnum.h"
 #endif
 
+#ifdef PERFORMANCE_MONITOR
+#include "PerformanceMonitor.h"
+#include "SampleViewerPerfAdapter.h"
+#endif // PERFORMANCE_MONITOR
+
 // All Samples
 #include "../CppSamples/Accessibility/NavigateMapViewAndIdentifyFeaturesWithKeyboard/NavigateMapViewAndIdentifyFeaturesWithKeyboard.h"
+#include "../CppSamples/Accessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility/UpdateLabelsAndSymbolsToScaleForVisualAccessibility.h"
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
+#include "../CppSamples/Analysis/ControlMapAlgebraInputsWithFloatSuppliers/ControlMapAlgebraInputsWithFloatSuppliers.h"
+#include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
+#include "../CppSamples/Analysis/GetFieldFunctionValueFromAPoint/GetFieldFunctionValueFromAPoint.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
@@ -80,6 +88,7 @@
 #include "../CppSamples/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h"
 #include "../CppSamples/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h"
 #include "../CppSamples/DisplayInformation/DisplayClusters/DisplayClusters.h"
+#include "../CppSamples/DisplayInformation/FilterMosaicDatasetRasterByTimeExtent/FilterMosaicDatasetRasterByTimeExtent.h"
 #include "../CppSamples/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h"
 #include "../CppSamples/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h"
 #include "../CppSamples/DisplayInformation/GOSymbols/GOSymbols.h"
@@ -96,6 +105,7 @@
 #include "../CppSamples/DisplayInformation/Simple_Renderer/Simple_Renderer.h"
 #include "../CppSamples/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h"
 #include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
+#include "../CppSamples/EditData/AddFeaturesWithSharedTemplates/AddFeaturesWithSharedTemplates.h"
 #include "../CppSamples/EditData/ContingentValues/ContingentValues.h"
 #include "../CppSamples/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h"
 #include "../CppSamples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h"
@@ -136,6 +146,7 @@
 #include "../CppSamples/Layers/AddBuildingSceneLayer/AddBuildingSceneLayer.h"
 #include "../CppSamples/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h"
 #include "../CppSamples/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h"
+#include "../CppSamples/Layers/AddKmlLayer/AddKmlLayer.h"
 #include "../CppSamples/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.h"
 #include "../CppSamples/Layers/ApplyMapAlgebra/ApplyMapAlgebra.h"
 #include "../CppSamples/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h"
@@ -153,13 +164,12 @@
 #include "../CppSamples/Layers/DisplayAnnotation/DisplayAnnotation.h"
 #include "../CppSamples/Layers/DisplayDimensions/DisplayDimensions.h"
 #include "../CppSamples/Layers/DisplayFeatureLayers/DisplayFeatureLayers.h"
-#include "../CppSamples/Layers/DisplayKml/DisplayKml.h"
 #include "../CppSamples/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.h"
 #include "../CppSamples/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h"
 #include "../CppSamples/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h"
 #include "../CppSamples/Layers/DisplayWfsLayer/DisplayWfsLayer.h"
-#include "../CppSamples/Layers/ExportTiles/ExportTiles.h"
-#include "../CppSamples/Layers/ExportVectorTiles/ExportVectorTiles.h"
+#include "../CppSamples/Layers/DownloadRasterTilesToLocalCache/DownloadRasterTilesToLocalCache.h"
+#include "../CppSamples/Layers/DownloadVectorTilesToLocalCache/DownloadVectorTilesToLocalCache.h"
 #include "../CppSamples/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h"
 #include "../CppSamples/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h"
 #include "../CppSamples/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h"
@@ -242,6 +252,7 @@
 #include "../CppSamples/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.h"
 #include "../CppSamples/Scenes/Animate3DSymbols/Animate3DSymbols.h"
 #include "../CppSamples/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.h"
+#include "../CppSamples/Scenes/ApplyPointCloudRendererAndFilter/ApplyPointCloudRendererAndFilter.h"
 #include "../CppSamples/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h"
 #include "../CppSamples/Scenes/ChooseCameraController/ChooseCameraController.h"
 #include "../CppSamples/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h"
@@ -300,23 +311,18 @@
 #include "../CppSamples/Layers/RasterFunctionFile/RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
-#ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-#include "../CppSamples/Analysis/AnalyzeTerrainSuitabilityWithSlopeAndAspect/AnalyzeTerrainSuitabilityWithSlopeAndAspect.h"
-#endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+QObject* textDocumentUtilsProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 void registerClasses();
 void registerCppSampleClasses();
 
 int main(int argc, char* argv[])
 {
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngineQuick::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebView::initialize();
 
   QGuiApplication::setApplicationName("ArcGIS Maps Qt Samples");
   QGuiApplication::setOrganizationName("Esri");
@@ -374,6 +380,16 @@ int main(int argc, char* argv[])
 
   engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
+#ifdef PERFORMANCE_MONITOR
+  // load() populates rootObjects() synchronously, so the window exists by now.
+  if (auto* monitor = PerformanceMonitor::install(&engine))
+  {
+    // The adapter feeds sample and GeoView events into the monitor and dies with its parent.
+    new SampleViewerPerfAdapter(monitor, engine.singletonInstance<SampleManager*>("Esri.ArcGISRuntimeSamples", "SampleManager"),
+                                qobject_cast<QQuickWindow*>(engine.rootObjects().constFirst()), monitor);
+  }
+#endif // PERFORMANCE_MONITOR
+
   return app.exec();
 }
 
@@ -388,14 +404,18 @@ void registerCppSampleClasses()
   AddBuildingSceneLayer::init();
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
+  AddFeaturesWithSharedTemplates::init();
   AddGraphicsWithRenderer::init();
   AddIntegratedMeshLayer::init();
+  AddKmlLayer::init();
   AddVectorTiledLayerFromCustomStyle::init();
   AnalyzeHotspots::init();
+  AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
   Animate3DSymbols::init();
   AnimateImagesWithImageOverlay::init();
   ApplyMapAlgebra::init();
   ApplyMosaicRuleToRasters::init();
+  ApplyPointCloudRendererAndFilter::init();
   ApplyScheduledMapUpdates::init();
   ApplyUniqueValuesWithAlternateSymbols::init();
   ArcGISMapImageLayerUrl::init();
@@ -420,6 +440,7 @@ void registerCppSampleClasses()
   ConfigureSceneEnvironment::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();
+  ControlMapAlgebraInputsWithFloatSuppliers::init();
   CreateKmlMultiTrack::init();
   ControlAnnotationSublayerVisibility::init();
   ControlTimeExtentTimeSlider::init();
@@ -446,7 +467,6 @@ void registerCppSampleClasses()
   DisplayDimensions::init();
   DisplayDrawingStatus::init();
   DisplayFeatureLayers::init();
-  DisplayKml::init();
   DisplayKmlNetworkLinks::init();
   DisplayLayerViewDrawState::init();
   DisplayLocalSceneView::init();
@@ -471,8 +491,8 @@ void registerCppSampleClasses()
   EditGeometriesWithProgrammaticReticleTool::init();
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
-  ExportTiles::init();
-  ExportVectorTiles::init();
+  DownloadRasterTilesToLocalCache::init();
+  DownloadVectorTilesToLocalCache::init();
   ExtrudeGraphics::init();
   FeatureCollectionLayerFromPortal::init();
   FeatureCollectionLayerQuery::init();
@@ -487,6 +507,7 @@ void registerCppSampleClasses()
   FilterByDefinitionExpressionOrDisplayFilter::init();
   FilterBuildingSceneLayer::init();
   FilterFeaturesInScene::init();
+  FilterMosaicDatasetRasterByTimeExtent::init();
   FindAddress::init();
   FindClosestFacilityToMultipleIncidentsService::init();
   FindPlace::init();
@@ -502,6 +523,7 @@ void registerCppSampleClasses()
   GenerateOfflineMap_Overrides::init();
   GeodesicOperations::init();
   Geotriggers::init();
+  GetFieldFunctionValueFromAPoint::init();
   GetElevationAtPoint::init();
   GroupLayers::init();
   Hillshade_Renderer::init();
@@ -599,6 +621,7 @@ void registerCppSampleClasses()
   TokenAuthentication::init();
   TraceUtilityNetwork::init();
   Unique_Value_Renderer::init();
+  UpdateLabelsAndSymbolsToScaleForVisualAccessibility::init();
   ValidateUtilityNetworkTopology::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
@@ -617,10 +640,6 @@ void registerCppSampleClasses()
   RasterFunctionFile::init();
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
-#ifdef SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-  AnalyzeTerrainSuitabilityWithSlopeAndAspect::init();
-#endif // SHOW_ANALYZE_TERRAIN_SUITABILITY_SAMPLE
-
 #ifdef LOCALSERVER_SUPPORTED
   LocalServerServices::init();
   LocalServerMapImageLayer::init();
@@ -634,6 +653,7 @@ void registerClasses()
   qmlRegisterSingletonType<SampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager", &esriSampleManagerProvider);
 
   qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter", &syntaxHighlighterProvider);
+  qmlRegisterSingletonType<TextDocumentUtils>("Esri.ArcGISRuntimeSamples", 1, 0, "TextDocumentUtils", &textDocumentUtilsProvider);
   qmlRegisterUncreatableType<DataItem>("Esri.ArcGISRuntimeSamples", 1, 0, "DataItem", "DataItem is an uncreatable type");
   qmlRegisterUncreatableType<DataItemListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "DataItemListModel", "DataItemListModel is an uncreatable type");
   qmlRegisterUncreatableType<CategoryListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "CategoryListModel", "CategoryListModel is an uncreatable type");
@@ -661,4 +681,10 @@ QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine*)
 {
   static SyntaxHighlighter* syntaxHighlighter = new SyntaxHighlighter(engine);
   return syntaxHighlighter;
+}
+
+QObject* textDocumentUtilsProvider(QQmlEngine* engine, QJSEngine*)
+{
+  static TextDocumentUtils* textDocumentUtils = new TextDocumentUtils(engine);
+  return textDocumentUtils;
 }

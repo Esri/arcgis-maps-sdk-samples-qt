@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick
-import QtQuick.Controls
+import Esri.ArcGISRuntime.Toolkit
 import Esri.Samples
 
 Item {
@@ -32,22 +32,12 @@ Item {
         mapView: view
     }
 
-    // Add a background to the column
-    Pane {
-        anchors.fill: col
-    }
-
-    Column {
-        id: col
-        spacing: 15
-        padding: 10
-
-        ComboBox {
-            id: floor_level
-            width: 200
-            model: [qsTr("Level 1"), qsTr("Level 2"), qsTr("Level 3")]
-            onCurrentTextChanged: model.selectFloor(currentText);
+    FloorFilter {
+        geoView: view
+        anchors {
+            left: parent.left
+            margins: 10
+            top: parent.top
         }
     }
-
 }

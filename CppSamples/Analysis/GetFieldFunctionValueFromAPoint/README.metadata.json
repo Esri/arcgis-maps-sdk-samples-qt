@@ -1,0 +1,61 @@
+{
+    "category": "Analysis",
+    "dataItems": [
+        {
+            "itemId": "6bb0ad0e3bd5410fa52191184578f0b2",
+            "path": "~/ArcGIS/Runtime/Data/raster/Meribel.zip"
+        }
+    ],
+    "description": "Sample field function values from a point in an elevation field analysis.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "analysis",
+        "boolean field function",
+        "continuous field function",
+        "elevation",
+        "field analysis",
+        "field sample function",
+        "raster",
+        "AnalysisOverlay",
+        "BooleanFieldFunction",
+        "BooleanFieldSampleFunction",
+        "CalloutData",
+        "Colormap",
+        "ColormapRenderer",
+        "ContinuousFieldFunction",
+        "ContinuousFieldSampleFunction",
+        "ContinuousFieldSupplier",
+        "FieldAnalysis",
+        "FloatSupplier",
+        "MinMaxStretchParameters",
+        "PictureMarkerSymbol",
+        "StretchRenderer"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "AnalysisOverlay",
+        "BooleanFieldFunction",
+        "BooleanFieldSampleFunction",
+        "CalloutData",
+        "Colormap",
+        "ColormapRenderer",
+        "ContinuousFieldFunction",
+        "ContinuousFieldSampleFunction",
+        "ContinuousFieldSupplier",
+        "FieldAnalysis",
+        "FloatSupplier",
+        "MinMaxStretchParameters",
+        "PictureMarkerSymbol",
+        "StretchRenderer"
+    ],
+    "snippets": [
+        "GetFieldFunctionValueFromAPoint.cpp",
+        "GetFieldFunctionValueFromAPoint.h",
+        "GetFieldFunctionValueFromAPoint.qml"
+    ],
+    "title": "Get field function value from a point"
+}

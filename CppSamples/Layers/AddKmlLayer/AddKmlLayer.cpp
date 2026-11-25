@@ -1,0 +1,188 @@
+// [WriteFile Name=AddKmlLayer, Category=Layers]
+// [Legal]
+// Copyright 2018 Esri.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
+// sample headers
+#include "AddKmlLayer.h"
+
+// ArcGIS Maps SDK headers
+#include "ArcGISTiledElevationSource.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "KmlDataset.h"
+#include "KmlLayer.h"
+#include "LayerListModel.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "PortalItem.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
+#include "SpatialReference.h"
+#include "Surface.h"
+#include "Viewpoint.h"
+
+// Qt headers
+#include <QFuture>
+#include <QStandardPaths>
+#include <QtCore/qglobal.h>
+
+using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+#ifdef Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#endif
+
+    return dataPath;
+  }
+} // namespace
+
+AddKmlLayer::AddKmlLayer(QQuickItem* parent /* = nullptr */) :
+  QQuickItem(parent)
+{
+}
+
+AddKmlLayer::~AddKmlLayer() = default;
+
+void AddKmlLayer::init()
+{
+  // Register classes for QML
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<AddKmlLayer>("Esri.Samples", 1, 0, "AddKmlLayerSample");
+}
+
+void AddKmlLayer::componentComplete()
+{
+  QQuickItem::componentComplete();
+
+  // Create a scene and give it to the SceneView
+  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_scene = new Scene(BasemapStyle::ArcGISImagery, this);
+  Surface* surface = new Surface(this);
+  surface->elevationSources()->append(
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
+  m_scene->setBaseSurface(surface);
+  m_sceneView->setArcGISScene(m_scene);
+
+  // Create a viewpoint
+  const Point pt(-98, 39, SpatialReference::wgs84());
+  constexpr int scale = 10000000;
+  const Camera camera(pt, scale, 0, 0, 0);
+  m_viewpoint = Viewpoint(pt, scale, camera);
+}
+
+void AddKmlLayer::createFromUrl()
+{
+  clearLayers();
+
+  // Create the Dataset from an Online URL
+  m_kmlDataset = new KmlDataset(QUrl("https://www.arcgis.com/sharing/rest/content/items/f5e0e5cd088846a5b97b7ed66a8bad5c/data"), this);
+
+  // Create the Layer
+  m_kmlLayer = new KmlLayer(m_kmlDataset, this);
+
+  // Add the layer to the scene
+  addLayerToScene(m_kmlLayer);
+}
+
+void AddKmlLayer::createFromFile()
+{
+  clearLayers();
+
+  // Create the Dataset from a local file
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/kml/";
+  m_kmlDataset = new KmlDataset(QUrl(dataPath + "US_State_Capitals.kml"), this);
+
+  // Create the Layer
+  m_kmlLayer = new KmlLayer(m_kmlDataset, this);
+
+  // Add the layer to the scene
+  addLayerToScene(m_kmlLayer);
+}
+
+void AddKmlLayer::createFromPortalItem()
+{
+  clearLayers();
+
+  // Create the PortalItem
+  m_portalItem = new PortalItem(QStringLiteral("9fe0b1bfdcd64c83bd77ea0452c76253"), this);
+
+  // Create the Layer
+  m_kmlLayer = new KmlLayer(m_portalItem, this);
+
+  // Add the layer to the scene
+  addLayerToScene(m_kmlLayer);
+}
+
+void AddKmlLayer::addLayerToScene(KmlLayer* layer)
+{
+  if (!m_scene)
+  {
+    return;
+  }
+
+  m_scene->operationalLayers()->append(layer);
+
+  if (m_viewpoint.isEmpty())
+  {
+    return;
+  }
+
+  m_sceneView->setViewpointAsync(m_viewpoint);
+}
+
+void AddKmlLayer::clearLayers()
+{
+  if (!m_scene)
+  {
+    return;
+  }
+
+  // remove the layers
+  m_scene->operationalLayers()->clear();
+
+  // clean up the kml datasets
+  if (m_kmlDataset)
+  {
+    delete m_kmlDataset;
+    m_kmlDataset = nullptr;
+  }
+
+  // clean up the portal items
+  if (m_portalItem)
+  {
+    delete m_portalItem;
+    m_portalItem = nullptr;
+  }
+
+  // clean up the kml layers
+  if (m_kmlLayer)
+  {
+    delete m_kmlLayer;
+    m_kmlLayer = nullptr;
+  }
+}

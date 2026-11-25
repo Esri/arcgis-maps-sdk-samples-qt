@@ -25,7 +25,6 @@ namespace Ui
 namespace Esri::ArcGISRuntime
 {
   class Map;
-  class MapGraphicsView;
 } // namespace Esri::ArcGISRuntime
 
 #include <QWidget>
@@ -42,7 +41,6 @@ private:
   void addLayers();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
   Ui::BuildLegend* m_ui = nullptr;
 };
 

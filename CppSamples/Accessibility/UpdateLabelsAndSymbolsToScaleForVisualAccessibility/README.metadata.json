@@ -1,0 +1,29 @@
+{
+    "category": "Accessibility",
+    "description": "Scale feature labels and symbols according to the system text-size setting.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "accessibility",
+        "label",
+        "readability",
+        "scale",
+        "symbol",
+        "text",
+        "visual impairment",
+        "MapView.useSystemTextScale"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "MapView.useSystemTextScale"
+    ],
+    "snippets": [
+        "UpdateLabelsAndSymbolsToScaleForVisualAccessibility.cpp",
+        "UpdateLabelsAndSymbolsToScaleForVisualAccessibility.h",
+        "UpdateLabelsAndSymbolsToScaleForVisualAccessibility.qml"
+    ],
+    "title": "Update labels and symbols to scale for visual accessibility"
+}

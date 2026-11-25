@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/FilterMosaicDatasetRasterByTimeExtent">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>FilterMosaicDatasetRasterByTimeExtent.qml</file>
+        <file>FilterMosaicDatasetRasterByTimeExtent.h</file>
+        <file>FilterMosaicDatasetRasterByTimeExtent.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>chevron-start-24.svg</file>
+        <file>chevron-left-24.svg</file>
+        <file>chevron-right-24.svg</file>
+        <file>chevron-end-24.svg</file>
+    </qresource>
+</RCC>

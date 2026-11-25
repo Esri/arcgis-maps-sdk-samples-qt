@@ -22,12 +22,8 @@
 #include "BrowseBuildingFloors.h"
 
 // ArcGIS Maps SDK headers
-#include "Error.h"
-#include "FloorLevel.h"
-#include "FloorManager.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
 
@@ -41,29 +37,6 @@ BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */) :
 
   // Create a map object using the portalItem
   m_map = new Map(portalItem, this);
-
-  connect(m_map, &Map::doneLoading, this, [this]()
-  {
-    if (m_map->loadStatus() == LoadStatus::Loaded)
-    {
-      m_floorManager = m_map->floorManager();
-    }
-
-    connect(m_floorManager, &FloorManager::doneLoading, this, [this]()
-    {
-      if (m_floorManager && m_floorManager->loadStatus() == LoadStatus::Loaded)
-      {
-        for (FloorLevel* level : m_floorManager->levels())
-        {
-          level->setVisible(false);
-        }
-
-        // Manually set the default floor level to the first floor
-        m_floorManager->levels().at(0)->setVisible(true);
-      }
-    });
-    m_floorManager->load();
-  });
 }
 
 BrowseBuildingFloors::~BrowseBuildingFloors() = default;
@@ -92,37 +65,4 @@ void BrowseBuildingFloors::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   emit mapViewChanged();
-}
-
-void BrowseBuildingFloors::selectFloor(const QString& floor_number)
-{
-  if (m_floorManager && m_floorManager->loadStatus() == LoadStatus::Loaded)
-  {
-    if (floor_number.compare("Level 1") == 0)
-    {
-      m_floorManager->levels().at(0)->setVisible(true);
-
-      //Make the other floors invisible
-      m_floorManager->levels().at(1)->setVisible(false);
-      m_floorManager->levels().at(2)->setVisible(false);
-    }
-
-    if (floor_number.compare("Level 2") == 0)
-    {
-      m_floorManager->levels().at(1)->setVisible(true);
-
-      //Make the other floors invisible
-      m_floorManager->levels().at(0)->setVisible(false);
-      m_floorManager->levels().at(2)->setVisible(false);
-    }
-
-    if (floor_number.compare("Level 3") == 0)
-    {
-      m_floorManager->levels().at(2)->setVisible(true);
-
-      //Make the other floors invisible
-      m_floorManager->levels().at(0)->setVisible(false);
-      m_floorManager->levels().at(1)->setVisible(false);
-    }
-  }
 }

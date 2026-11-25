@@ -20,7 +20,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Map;
-  class MapGraphicsView;
+  class MapViewWidget;
 } // namespace Esri::ArcGISRuntime
 
 #include <QWidget>
@@ -38,7 +38,7 @@ private:
   void addGraphicsOverlay();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
 };
 
 #endif // GORENDERERS_H

@@ -13,4 +13,4 @@
 # limitations under the License.
 #-------------------------------------------------
 
-ARCGIS_RUNTIME_VERSION = 300.1.0
+ARCGIS_RUNTIME_VERSION = 300.2.0

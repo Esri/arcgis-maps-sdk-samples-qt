@@ -53,6 +53,13 @@ FindPlaceSample {
             calloutData: mapView.calloutData
             accessoryButtonVisible: false
             screenOffsetY: -19
+            contentWidth: Math.min(callout.maxWidth, callout.contentItem.implicitWidth)
+
+            contentItem: Label {
+                text: callout.calloutData ? callout.calloutData.title + "\n" + callout.calloutData.detail : ""
+                textFormat: Text.PlainText
+                wrapMode: Text.WordWrap
+            }
         }
     }
 

@@ -26,7 +26,7 @@
 #include "Colormap.h"
 #include "ColormapRenderer.h"
 #include "ContinuousField.h"
-#include "ContinuousFieldFunction.h"
+#include "ContinuousFieldSupplier.h"
 #include "FieldAnalysis.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
@@ -105,7 +105,7 @@ void ShowInteractiveViewshedWithAnalysisOverlay::setMapView(MapQuickView* mapVie
 void ShowInteractiveViewshedWithAnalysisOverlay::setInitialViewpoint()
 {
   // Set an initial viewpoint centered over the observer position.
-  const double latitude  = 55.610000;
+  const double latitude = 55.610000;
   const double longitude = -5.200346;
   const double scale = 100000;
   const Viewpoint initialViewpoint(latitude, longitude, scale);
@@ -178,8 +178,7 @@ void ShowInteractiveViewshedWithAnalysisOverlay::createContinuousField()
   // Create the continuous field from the elevation file.
   const QStringList elevationFilePaths{m_elevationFilePath};
   ContinuousField::createFromFilesAsync(elevationFilePaths, 0, this)
-    .then(this,
-          [this](ContinuousField* continuousField)
+    .then(this, [this](ContinuousField* continuousField)
   {
     if (!continuousField)
     {
@@ -212,13 +211,14 @@ void ShowInteractiveViewshedWithAnalysisOverlay::initializeViewshed()
   m_viewshedParameters->setHeading(m_headingValue);
   m_viewshedParameters->setElevationSamplingInterval(m_elevationSamplingInterval);
 
-  m_viewshedFunction = ViewshedFunction::create(m_continuousField, m_viewshedParameters, this);
+  ContinuousFieldSupplier* continuousFieldFunction = new ContinuousFieldSupplier(m_continuousField, this);
+  m_viewshedFunction = ViewshedFunction::create(continuousFieldFunction, m_viewshedParameters, this);
 
   // Convert the viewshed function to a discrete field function.
   m_discreteViewshed = m_viewshedFunction->toDiscreteFieldFunction();
 
   // Create colormap renderer for displaying viewshed result.
-  const QList<QColor> colors{QColor(100, 100, 100, 160),QColor(90, 170, 90, 160)};
+  const QList<QColor> colors{QColor(100, 100, 100, 160), QColor(90, 170, 90, 160)};
   Colormap* colormap = Colormap::create(colors, this);
   ColormapRenderer* colormapRenderer = new ColormapRenderer(colormap, this);
 
@@ -392,7 +392,8 @@ void ShowInteractiveViewshedWithAnalysisOverlay::startObserverDrag(double x, dou
 
 void ShowInteractiveViewshedWithAnalysisOverlay::dragObserver(double x, double y)
 {
-  if (!m_initialized || !m_isDraggingObserver) {
+  if (!m_initialized || !m_isDraggingObserver)
+  {
     return;
   }
 

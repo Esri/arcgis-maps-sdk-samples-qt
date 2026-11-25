@@ -137,10 +137,6 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   DEFINES += BUILD_FROM_CONFIGURED_SDK
 }
 
-qtHaveModule(webenginequick) {
-  QT += webenginequick
-  DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
-}
 
 QMAKE_TARGET_COMPANY = Esri, Inc.
 QMAKE_TARGET_PRODUCT = ArcGIS Runtime SDK for Qt Samples - Cpp
@@ -152,6 +148,17 @@ include(samples.pri)
 
 # contains source files for zlib-ng and minizip-ng
 include($$PWD/../3rdparty/zlib_minizip_ng.pri)
+
+# Optional performance overlay. Off by default; enable with: qmake CONFIG+=perfmonitor
+# When off, none of its sources, headers or QML are compiled into the binary.
+perfmonitor {
+  message("Performance monitor: ENABLED")
+  DEFINES += PERFORMANCE_MONITOR
+  include($$COMMONVIEWER/PerformanceMonitor/perfmonitor.pri)
+  # The adapter is app code, not module code - it knows SampleManager and the ArcGIS views.
+  HEADERS += $$COMMONVIEWER/SampleViewerPerfAdapter.h
+  SOURCES += $$COMMONVIEWER/SampleViewerPerfAdapter.cpp
+}
 
 CONFIG(precompile_header): DEFINES += PCH_BUILD
 
@@ -179,6 +186,7 @@ HEADERS += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
     $$COMMONVIEWER/SourceCodeListModel.h \
+    $$COMMONVIEWER/TextDocumentUtils.h \
     $$COMMONVIEWER/ZipHelper.h \
     $$COMMONVIEWER/TaskCanceler.h \
     SampleDownloadState.h
@@ -200,6 +208,7 @@ SOURCES += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.cpp \
     $$COMMONVIEWER/SourceCode.cpp \
     $$COMMONVIEWER/SourceCodeListModel.cpp \
+    $$COMMONVIEWER/TextDocumentUtils.cpp \
     $$COMMONVIEWER/mainSample.cpp \
     $$COMMONVIEWER/ZipHelper.cpp
 

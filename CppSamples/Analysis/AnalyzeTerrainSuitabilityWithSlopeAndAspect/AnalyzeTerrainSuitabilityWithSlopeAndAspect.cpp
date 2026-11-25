@@ -30,6 +30,7 @@
 #include "ColormapRenderer.h"
 #include "ContinuousField.h"
 #include "ContinuousFieldFunction.h"
+#include "ContinuousFieldSupplier.h"
 #include "DiscreteFieldFunction.h"
 #include "Envelope.h"
 #include "FieldAnalysis.h"
@@ -130,7 +131,7 @@ void AnalyzeTerrainSuitabilityWithSlopeAndAspect::onContinuousFieldCreated(Conti
   }
 
   // Derive slope and aspect from the elevation field
-  m_elevationFieldFunction = ContinuousFieldFunction::create(continuousField, this);
+  m_elevationFieldFunction = new ContinuousFieldSupplier(continuousField, this);
   m_slopeFunction = m_elevationFieldFunction->slope();
   m_aspectFunction = m_elevationFieldFunction->aspect();
   m_aboveSeaLevelSelection = m_elevationFieldFunction->isGreaterThanOrEqualTo(0.0F);

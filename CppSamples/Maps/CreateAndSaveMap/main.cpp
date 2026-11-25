@@ -24,9 +24,7 @@
 #include <QQmlEngine>
 #include <QQuickView>
 
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngineQuick>
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebView>
 
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
 
@@ -41,9 +39,7 @@
 
 int main(int argc, char* argv[])
 {
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngineQuick::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebView::initialize();
 
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("CreateAndSaveMap"));

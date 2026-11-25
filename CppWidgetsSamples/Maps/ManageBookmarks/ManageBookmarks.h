@@ -20,7 +20,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Map;
-  class MapGraphicsView;
+  class MapViewWidget;
 } // namespace Esri::ArcGISRuntime
 
 class QComboBox;
@@ -46,7 +46,7 @@ private:
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::MapViewWidget* m_mapViewWidget = nullptr;
   QComboBox* m_bookmarkCombo = nullptr;
   QPushButton* m_button = nullptr;
   QInputDialog* m_inputDialog = nullptr;

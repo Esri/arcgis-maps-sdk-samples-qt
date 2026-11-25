@@ -10,22 +10,19 @@ Having map data to aid indoor navigation in buildings with multiple floors such 
 
 ## How to use the sample
 
-Use the dropdown menu to browse different floor levels in the facility. Only the selected floor will be displayed.
+Use the FloorFilter control to select a site, facility, and floor. The map updates to display the selected floor.
 
 ## How it works
 
 1. Create a `PortalItem` using the identifier of a floor-aware web map.
 2. Create a map using the portal item.
 3. Create a map view and assign the map to it.
-4. Wait for the map to load and retrieve the map's `FloorManager`.
-5. Wait for the floor manager to load and get its list of `FloorLevel`s.
-6. Set the `isVisible` property to false for all floor levels.
-7. Set only the selected `FloorLevel` to visible using the `isVisible` property of the floor level.
-* **Note:** Manually set the default floor level to the first floor.
+4. Create a `FloorFilter` toolkit component and associate it with the `MapView`.
+5. Use the component to browse sites, facilities, and floors in the map's `FloorManager`.
 
 ## Relevant API
 
-* FloorLevel
+* FloorFilter
 * FloorManager
 
 ## About the data
@@ -34,8 +31,10 @@ This sample uses a [floor-aware web map](https://www.arcgis.com/home/item.html?i
 
 ## Additional information
 
-The `FloorManager` API also supports browsing different sites and facilities in addition to building floors.
+The `FloorFilter` component supports manual site and facility selection, as well as automatic selection based on the map's viewpoint.
+
+This sample uses the `FloorFilter` component from the [ArcGIS Maps SDK for Qt toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt), which must be cloned and set up locally to build the sample. For setup instructions, see the toolkit's [Qt Quick UI tools documentation](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt/blob/main/uitools/toolkitcpp/README.md).
 
 ## Tags
 
-building, facility, floor, floor-aware, floors, ground floor, indoor, level, site, story
+building, facility, floor, floor-aware, floors, ground floor, indoor, level, site, story, toolkit
